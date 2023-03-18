@@ -9,7 +9,7 @@
     tools:context=".ui.main.MainFragment">
 
     <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/fragmentContainerView2"
+        android:id="@+id/fragment_main"
         android:name="edu.ub.pis.giickos.taskexplorer.TaskExplorer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

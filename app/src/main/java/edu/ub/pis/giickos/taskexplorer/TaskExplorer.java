@@ -9,9 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import edu.ub.pis.giickos.R;
+import edu.ub.pis.giickos.ui.section.Section;
 
 // Main fragment for the task explorer.
-public class TaskExplorer extends Fragment {
+public class TaskExplorer extends Section {
 
     // TODO: ViewModel to fetch tasks
 
