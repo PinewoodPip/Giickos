@@ -1,4 +1,4 @@
-package edu.ub.pis.giickos.taskexplorer;
+package edu.ub.pis.giickos.ui.section.taskexplorer;
 
 import android.os.Bundle;
 
@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import edu.ub.pis.giickos.R;
-import edu.ub.pis.giickos.ui.main.SectionBarItem;
 
 // Container for tasks within TaskExplorer.
 public class TaskList extends Fragment {

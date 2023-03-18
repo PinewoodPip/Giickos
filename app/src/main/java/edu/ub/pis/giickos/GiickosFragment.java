@@ -9,11 +9,12 @@ public class GiickosFragment extends Fragment {
     // Creates a child fragment and parents it.
     public void addChildFragment(Fragment fragment, int parentID) {
         FragmentManager childrenManager = getChildFragmentManager();
-        FragmentTransaction childFragTrans = childrenManager.beginTransaction();
+        FragmentTransaction transaction = childrenManager.beginTransaction();
 
-        childFragTrans.add(parentID, fragment);
-        childFragTrans.addToBackStack(null);
-        childFragTrans.commit();
+        transaction.add(parentID, fragment);
+        transaction.addToBackStack(null);
+
+        transaction.commit();
     }
 
     // Replaces a child fragment.

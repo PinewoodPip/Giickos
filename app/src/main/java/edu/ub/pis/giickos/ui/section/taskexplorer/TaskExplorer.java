@@ -1,8 +1,6 @@
-package edu.ub.pis.giickos.taskexplorer;
+package edu.ub.pis.giickos.ui.section.taskexplorer;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,6 +35,11 @@ public class TaskExplorer extends Section {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public TYPE getType() {
+        return TYPE.TASK_EXPLORER;
     }
 
     @Override

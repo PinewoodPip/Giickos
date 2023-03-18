@@ -6,7 +6,7 @@
     android:layout_height="60dp"
     android:layout_gravity="bottom"
     android:background="#51A354"
-    tools:context=".ui.main.SectionBar">
+    tools:context=".ui.main.sectionbar.SectionBar">
 
     <!-- TODO: Update blank fragment layout -->
     <LinearLayout

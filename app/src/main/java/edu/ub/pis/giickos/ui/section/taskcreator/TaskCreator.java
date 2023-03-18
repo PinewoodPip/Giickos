@@ -1,14 +1,11 @@
-package edu.ub.pis.giickos.taskcreator;
+package edu.ub.pis.giickos.ui.section.taskcreator;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import edu.ub.pis.giickos.GiickosFragment;
 import edu.ub.pis.giickos.R;
 import edu.ub.pis.giickos.ui.section.Section;
 
@@ -37,6 +34,11 @@ public class TaskCreator extends Section {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public TYPE getType() {
+        return TYPE.TASK_CREATOR;
     }
 
     private void addTextField(int iconID, String label) {

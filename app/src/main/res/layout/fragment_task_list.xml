@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".taskexplorer.TaskList">
+    tools:context=".ui.section.taskexplorer.TaskList">
 
     <LinearLayout
         android:id="@+id/list_main"
@@ -14,7 +14,7 @@
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/mock_1"
-            android:name="edu.ub.pis.giickos.taskexplorer.Task"
+            android:name="edu.ub.pis.giickos.ui.section.taskexplorer.Task"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:visibility="gone"
@@ -23,7 +23,7 @@
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/mock_2"
-            android:name="edu.ub.pis.giickos.taskexplorer.Task"
+            android:name="edu.ub.pis.giickos.ui.section.taskexplorer.Task"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:visibility="gone"

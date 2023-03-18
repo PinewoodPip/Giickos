@@ -3,11 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".taskexplorer.TaskExplorer">
+    tools:context=".ui.section.taskexplorer.TaskExplorer">
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragmentContainerView"
-        android:name="edu.ub.pis.giickos.taskexplorer.TaskList"
+        android:name="edu.ub.pis.giickos.ui.section.taskexplorer.TaskList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:layout="@layout/fragment_task_list" />

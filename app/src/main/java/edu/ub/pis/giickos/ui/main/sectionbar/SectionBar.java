@@ -1,4 +1,4 @@
-package edu.ub.pis.giickos.ui.main;
+package edu.ub.pis.giickos.ui.main.sectionbar;
 
 import android.os.Bundle;
 
@@ -9,16 +9,19 @@ import androidx.fragment.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 
+import edu.ub.pis.giickos.ui.observer.ObservableEvent;
+import edu.ub.pis.giickos.ui.observer.Observable;
+import edu.ub.pis.giickos.ui.observer.Observer;
 import edu.ub.pis.giickos.R;
+import edu.ub.pis.giickos.ui.section.Section;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link SectionBar#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class SectionBar extends Fragment {
+public class SectionBar extends Observable<SectionBarEvents> {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -42,14 +45,22 @@ public class SectionBar extends Fragment {
     }
 
     // Adds a new SectionBarItem to the list.
-    public void addItem(int iconID) {
+    public void addItem(Section.TYPE sectionType, int iconID) {
         FragmentManager childrenManager = getChildFragmentManager();
         FragmentTransaction childFragTrans = childrenManager.beginTransaction();
-        SectionBarItem sectionItem = SectionBarItem.newInstance(iconID);
+        SectionBarItem sectionItem = SectionBarItem.newInstance(sectionType, iconID);
 
         childFragTrans.add(R.id.button_list, sectionItem);
         childFragTrans.addToBackStack(null);
         childFragTrans.commit();
+
+        // Forward the events of the item
+        sectionItem.subscribe(SectionBarEvents.SECTION_PRESSED, new Observer() {
+            @Override
+            public void update(ObservableEvent eventData) {
+                notifyObservers(SectionBarEvents.SECTION_PRESSED, eventData);
+            }
+        });
     }
 
     @Override
@@ -65,10 +76,12 @@ public class SectionBar extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_section_bar, container, false);
-        // TODO extract
-        for (int i = 0; i < 4; i++)
-        {
-            addItem(R.drawable.placeholder_notebook);
+
+        // TODO extract; section types should be defined by viewmodel(?) and use some struct to bind icons to it
+        for (int x = 0; x < Section.TYPE.values().length; x++) {
+            Section.TYPE sectionType = Section.TYPE.values()[x];
+
+            addItem(sectionType, R.drawable.placeholder_notebook);
         }
 
         return view;

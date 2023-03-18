@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".taskcreator.TaskCreator">
+    tools:context=".ui.section.taskcreator.TaskCreator">
 
     <LinearLayout
         android:id="@+id/list_main"
@@ -13,7 +13,7 @@
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/mock_field"
-            android:name="edu.ub.pis.giickos.taskcreator.TaskField"
+            android:name="edu.ub.pis.giickos.ui.section.taskcreator.TaskField"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:visibility="gone"
@@ -22,7 +22,7 @@
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/mock_field2"
-            android:name="edu.ub.pis.giickos.taskcreator.TaskField"
+            android:name="edu.ub.pis.giickos.ui.section.taskcreator.TaskField"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:visibility="gone"
