@@ -10,10 +10,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import edu.ub.pis.giickos.GiickosFragment;
 import edu.ub.pis.giickos.R;
 
 // Container for tasks within TaskExplorer.
-public class TaskList extends Fragment {
+public class TaskList extends GiickosFragment {
 
 
     public TaskList() {} // Required empty public constructor
@@ -40,13 +41,7 @@ public class TaskList extends Fragment {
 
     // TODO add params once ViewModel is implemented
     private void addTask() {
-        FragmentManager childrenManager = getChildFragmentManager();
-        FragmentTransaction childFragTrans = childrenManager.beginTransaction();
-        Task task = Task.newInstance(R.drawable.placeholder_notebook, "Testing");
-
-        childFragTrans.add(R.id.list_main, task);
-        childFragTrans.addToBackStack(null);
-        childFragTrans.commit();
+        addChildFragment(Task.newInstance(R.drawable.placeholder_notebook, "Testing"), R.id.list_main);
     }
 
     @Override

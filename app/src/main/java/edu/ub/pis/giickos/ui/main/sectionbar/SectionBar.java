@@ -46,13 +46,9 @@ public class SectionBar extends Observable<SectionBarEvents> {
 
     // Adds a new SectionBarItem to the list.
     public void addItem(Section.TYPE sectionType, int iconID) {
-        FragmentManager childrenManager = getChildFragmentManager();
-        FragmentTransaction childFragTrans = childrenManager.beginTransaction();
         SectionBarItem sectionItem = SectionBarItem.newInstance(sectionType, iconID);
 
-        childFragTrans.add(R.id.button_list, sectionItem);
-        childFragTrans.addToBackStack(null);
-        childFragTrans.commit();
+        addChildFragment(sectionItem, R.id.button_list);
 
         // Forward the events of the item
         sectionItem.subscribe(SectionBarEvents.SECTION_PRESSED, new Observer() {
