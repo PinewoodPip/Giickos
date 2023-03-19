@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import androidx.fragment.app.DialogFragment;
 
 import edu.ub.pis.giickos.R;
+import edu.ub.pis.giickos.ui.main.DatePickerListener;
 import edu.ub.pis.giickos.ui.main.TimePicker;
 import edu.ub.pis.giickos.ui.main.TimePickerListener;
 import edu.ub.pis.giickos.ui.section.Section;
@@ -46,10 +47,16 @@ public class TaskCreator extends Section {
         return TYPE.TASK_CREATOR;
     }
 
-    private void addTextField(int iconID, String label, int inputType) {
+    private TaskField addField(int iconID, String label) {
         TaskField field = TaskField.newInstance(iconID, label);
 
         addChildFragment(field, R.id.list_main, true);
+
+        return field;
+    }
+
+    private void addTextField(int iconID, String label, int inputType) {
+        TaskField field = addField(iconID, label);
 
         // Add text field
         TaskTextField textField = TaskTextField.newInstance("", inputType);
@@ -57,19 +64,34 @@ public class TaskCreator extends Section {
     }
 
     private void addTimeField(String id, int iconID, String label) {
-        TaskField field = TaskField.newInstance(iconID, label);
-
-        addChildFragment(field, R.id.list_main, true);
+        TaskField field = addField(iconID, label);
 
         // Add text field
         TaskTime textField = TaskTime.newInstance(id, "");
         field.addElement(textField);
 
+        // Open time picker on tap
         textField.setListener(new TimePickerListener() {
             @Override
             public void timeSet(String pickerID, int hour, int minute) {
                 // TODO update viewmodel
                 textField.setText(String.format("%d:%d", hour, minute)); // TODO display nicely
+            }
+        });
+    }
+
+    private void addDateField(String id, int iconID, String label) {
+        TaskField field = addField(iconID, label);
+
+        // Add date field
+        TaskDate dateField = TaskDate.newInstance(id, "");
+        field.addElement(dateField);
+
+        dateField.setListener(new DatePickerListener() {
+            @Override
+            public void dateSet(String id, int year, int month, int day) {
+                // TODO update viewmodel
+                dateField.setText(String.format("%d/%d/%d", day, month, year)); // TODO display nicely
             }
         });
     }
@@ -80,6 +102,7 @@ public class TaskCreator extends Section {
         View view = inflater.inflate(R.layout.fragment_task_creator, container, false);
 
         addTextField(R.drawable.placeholder_notebook, getString(R.string.taskcreator_label_title), InputType.TYPE_TEXT_VARIATION_PERSON_NAME);
+        addDateField("Date", R.drawable.placeholder_notebook, getString(R.string.taskcreator_label_date));
         addTimeField("StartTime", R.drawable.placeholder_notebook, getString(R.string.taskcreator_label_time_start));
         addTimeField("EndTime", R.drawable.placeholder_notebook, getString(R.string.taskcreator_label_time_end));
 

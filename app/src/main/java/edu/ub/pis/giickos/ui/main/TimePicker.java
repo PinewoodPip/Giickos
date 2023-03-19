@@ -16,7 +16,8 @@ import java.util.Calendar;
 
 import edu.ub.pis.giickos.R;
 
-// Dialog for picking a time (hour and minutes)
+// Dialog for picking a time (hour and minutes).
+// https://developer.android.com/develop/ui/views/components/pickers#java
 public class TimePicker extends DialogFragment implements TimePickerDialog.OnTimeSetListener {
 
     private String id;
@@ -25,6 +26,10 @@ public class TimePicker extends DialogFragment implements TimePickerDialog.OnTim
     public TimePicker(String id) {
         super();
         this.id = id;
+    }
+
+    public void setListener(TimePickerListener listener) {
+        this.listener = listener;
     }
 
     @Override
@@ -44,9 +49,5 @@ public class TimePicker extends DialogFragment implements TimePickerDialog.OnTim
         if (listener != null) {
             listener.timeSet(id, hourOfDay, minute);
         }
-    }
-
-    public void setListener(TimePickerListener listener) {
-        this.listener = listener;
     }
 }
