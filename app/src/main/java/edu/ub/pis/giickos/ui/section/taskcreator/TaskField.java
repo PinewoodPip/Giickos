@@ -10,10 +10,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import edu.ub.pis.giickos.GiickosFragment;
 import edu.ub.pis.giickos.R;
 
 // Fragment for fields within task creator.
-public class TaskField extends Fragment {
+public class TaskField extends GiickosFragment {
     private static final String ARG_ICON = "Icon";
     private static final String ARG_LABEL = "Label";
 
@@ -31,6 +32,10 @@ public class TaskField extends Fragment {
         fragment.setArguments(args);
 
         return fragment;
+    }
+
+    public void addElement(Fragment fragment) {
+        addChildFragment(fragment, R.id.list_main, true);
     }
 
     @Override

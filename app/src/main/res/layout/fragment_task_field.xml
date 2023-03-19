@@ -7,6 +7,7 @@
     tools:context=".ui.section.taskcreator.TaskField">
 
     <LinearLayout
+        android:id="@+id/list_main"
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:gravity="center|left"
@@ -24,17 +25,10 @@
 
         <TextView
             android:id="@+id/label"
-            android:layout_width="30dp"
+            android:layout_width="80dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="0"
             android:text="@string/taskcreator_label_title" />
 
-        <EditText
-            android:id="@+id/textfield_input"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="10"
-            android:inputType="textPersonName" />
     </LinearLayout>
 </FrameLayout>

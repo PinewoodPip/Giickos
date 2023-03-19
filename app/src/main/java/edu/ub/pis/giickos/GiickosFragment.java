@@ -7,14 +7,24 @@ import androidx.fragment.app.FragmentTransaction;
 public class GiickosFragment extends Fragment {
 
     // Creates a child fragment and parents it.
-    public void addChildFragment(Fragment fragment, int parentID) {
+    public void addChildFragment(Fragment fragment, int parentID, boolean synchronous) {
         FragmentManager childrenManager = getChildFragmentManager();
         FragmentTransaction transaction = childrenManager.beginTransaction();
 
         transaction.add(parentID, fragment);
-        transaction.addToBackStack(null);
 
-        transaction.commit();
+        if (synchronous) {
+            transaction.commitNow();
+        }
+        else {
+            transaction.addToBackStack(null);
+            transaction.commit();
+        }
+    }
+
+    // Asynchronous overload.
+    public void addChildFragment(Fragment fragment, int parentID) {
+        addChildFragment(fragment, parentID, false);
     }
 
     // Replaces a child fragment.

@@ -3,4 +3,8 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="taskcreator_label_title">Title:</string>
+    <string name="taskcreator_label_date">Date:</string>
+    <string name="taskcreator_label_time_start">Start Time:</string>
+    <string name="taskcreator_label_time_end">End Time:</string>
+    <string name="taskcreator_label_settime">Tap to set...</string>
 </resources>
