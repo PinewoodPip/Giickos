@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="60dp"
-    tools:context=".ui.section.taskexplorer.Task">
+    card_view:cardCornerRadius="8dp"
+    tools:context=".ui.section.taskexplorer.Task"
+    style="@style/GiickosInteractableCard">
 
     <LinearLayout
         android:id="@+id/list_main"
@@ -32,4 +35,4 @@
             android:textColor="#1E1E1E" />
     </LinearLayout>
 
-</FrameLayout>
+</androidx.cardview.widget.CardView>
