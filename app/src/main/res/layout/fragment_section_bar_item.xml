@@ -9,10 +9,11 @@
 
     <ImageButton
         android:id="@+id/icon"
+        style="@style/GiickosBackground"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
-        android:layout_margin="5dp"
+        android:layout_margin="0dp"
         android:scaleType="fitCenter"
         android:src="@drawable/placeholder_notebook" />
 </FrameLayout>

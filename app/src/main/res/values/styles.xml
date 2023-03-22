@@ -6,4 +6,8 @@
         <item name="android:clickable">true</item>
         <item name="android:foreground">?attr/selectableItemBackground</item>
     </style>
+
+    <style name="GiickosBackground">
+        <item name="android:backgroundTint">#51A354</item>
+    </style>
 </resources>
