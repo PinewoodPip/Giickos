@@ -1,7 +1,12 @@
 <resources>
     <string name="app_name">Giickos</string>
-    <!-- TODO: Remove or change this placeholder text -->
+
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- Generic/common labels -->
+    <string name="generic_label_delete">Delete</string>
+
+    <!-- Task Creator -->
     <string name="taskcreator_label_title">Title:</string>
     <string name="taskcreator_label_date">Date:</string>
     <string name="taskcreator_label_time_start">Start Time:</string>

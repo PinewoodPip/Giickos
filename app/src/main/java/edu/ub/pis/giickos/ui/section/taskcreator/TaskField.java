@@ -1,7 +1,10 @@
 package edu.ub.pis.giickos.ui.section.taskcreator;
 
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
 
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -17,18 +20,21 @@ import edu.ub.pis.giickos.R;
 public class TaskField extends GiickosFragment {
     private static final String ARG_ICON = "Icon";
     private static final String ARG_LABEL = "Label";
+    private static final String ARG_BG_COLOR = "BackgroundColor";
 
     private int iconID;
     private String label;
+    private int backgroundColorOverride; // Set to -1 to use default background color
 
     public TaskField() {} // Required empty public constructor
 
-    public static TaskField newInstance(int iconID, String label) {
+    public static TaskField newInstance(int iconID, String label, int color) {
         TaskField fragment = new TaskField();
         Bundle args = new Bundle();
 
         args.putInt(ARG_ICON, iconID);
         args.putString(ARG_LABEL, label);
+        args.putInt(ARG_BG_COLOR, color);
         fragment.setArguments(args);
 
         return fragment;
@@ -46,16 +52,23 @@ public class TaskField extends GiickosFragment {
         if (arguments != null) {
             iconID = arguments.getInt(ARG_ICON);
             label = arguments.getString(ARG_LABEL);
+            backgroundColorOverride = arguments.getInt(ARG_BG_COLOR);
         }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_task_field, container, false);
+        CardView view = (CardView)inflater.inflate(R.layout.fragment_task_field, container, false);
         ImageView image = view.findViewById(R.id.image_icon);
         TextView text = view.findViewById(R.id.label);
 
+        // Set background color
+        if (backgroundColorOverride != -1) {
+            view.setBackgroundTintList(ColorStateList.valueOf(backgroundColorOverride));
+        }
+
+        // Set icon and label
         image.setImageResource(iconID);
         text.setText(label);
 

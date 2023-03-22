@@ -1,5 +1,6 @@
 package edu.ub.pis.giickos.ui.section.taskcreator;
 
+import android.graphics.Color;
 import android.os.Bundle;
 
 import android.text.InputType;
@@ -47,12 +48,17 @@ public class TaskCreator extends Section {
         return TYPE.TASK_CREATOR;
     }
 
-    private TaskField addField(int iconID, String label) {
-        TaskField field = TaskField.newInstance(iconID, label);
+    private TaskField addField(int iconID, String label, int backgroundColor) {
+        TaskField field = TaskField.newInstance(iconID, label, backgroundColor);
 
         addChildFragment(field, R.id.list_main, true);
 
         return field;
+    }
+
+    // Overload with no background color override.
+    private TaskField addField(int iconID, String label) {
+        return addField(iconID, label, -1);
     }
 
     private void addTextField(int iconID, String label, int inputType) {
@@ -105,6 +111,7 @@ public class TaskCreator extends Section {
         addDateField("Date", R.drawable.placeholder_notebook, getString(R.string.taskcreator_label_date));
         addTimeField("StartTime", R.drawable.placeholder_notebook, getString(R.string.taskcreator_label_time_start));
         addTimeField("EndTime", R.drawable.placeholder_notebook, getString(R.string.taskcreator_label_time_end));
+        addField(R.drawable.placeholder, getString(R.string.generic_label_delete), getResources().getColor(R.color.destructive_action));
 
         return view;
     }
