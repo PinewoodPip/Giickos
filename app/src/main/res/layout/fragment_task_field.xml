@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    style="@style/GiickosInteractableCard"
     android:layout_width="match_parent"
     android:layout_height="70dp"
+    app:cardCornerRadius="8dp"
     tools:context=".ui.section.taskcreator.TaskField">
 
     <LinearLayout
@@ -31,4 +33,4 @@
             android:text="@string/taskcreator_label_title" />
 
     </LinearLayout>
-</FrameLayout>
+</androidx.cardview.widget.CardView>
