@@ -26,6 +26,8 @@ public class TaskField extends GiickosFragment {
     private String label;
     private int backgroundColorOverride; // Set to -1 to use default background color
 
+    private View.OnClickListener clickListener;
+
     public TaskField() {} // Required empty public constructor
 
     public static TaskField newInstance(int iconID, String label, int color) {
@@ -42,6 +44,20 @@ public class TaskField extends GiickosFragment {
 
     public void addElement(Fragment fragment) {
         addChildFragment(fragment, R.id.list_main, true);
+    }
+
+    public void setClickListener(View.OnClickListener listener) {
+        this.clickListener = listener;
+
+        // Update the listener on the element if this method is called after the view was created
+        updateClickListener(getView());
+    }
+
+    // Updates the click listener on the view.
+    private void updateClickListener(View view) {
+        if (view != null) {
+            view.setOnClickListener(clickListener);
+        }
     }
 
     @Override
@@ -71,6 +87,8 @@ public class TaskField extends GiickosFragment {
         // Set icon and label
         image.setImageResource(iconID);
         text.setText(label);
+
+        updateClickListener(view);
 
         return view;
     }

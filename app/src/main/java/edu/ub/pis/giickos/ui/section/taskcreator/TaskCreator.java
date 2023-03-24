@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 
 import android.text.InputType;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,6 +62,13 @@ public class TaskCreator extends Section {
         return addField(iconID, label, -1);
     }
 
+    // Adds a field with a click listener.
+    private void addClickableField(int iconID, String label, int backgroundColor, View.OnClickListener listener) {
+        TaskField field = addField(iconID, label, backgroundColor);
+
+        field.setClickListener(listener);
+    }
+
     private void addTextField(int iconID, String label, int inputType) {
         TaskField field = addField(iconID, label);
 
@@ -111,7 +119,15 @@ public class TaskCreator extends Section {
         addDateField("Date", R.drawable.placeholder_notebook, getString(R.string.taskcreator_label_date));
         addTimeField("StartTime", R.drawable.placeholder_notebook, getString(R.string.taskcreator_label_time_start));
         addTimeField("EndTime", R.drawable.placeholder_notebook, getString(R.string.taskcreator_label_time_end));
-        addField(R.drawable.placeholder, getString(R.string.generic_label_delete), getResources().getColor(R.color.destructive_action));
+        addTextField(R.drawable.placeholder_notebook, getString(R.string.taskcreator_label_details),
+            InputType.TYPE_TEXT_FLAG_MULTI_LINE); // TODO move to separate tab
+
+        addClickableField(R.drawable.placeholder, getString(R.string.generic_label_delete), getResources().getColor(R.color.destructive_action), new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("TODO", "Delete button clicked");
+            }
+        });
 
         return view;
     }
