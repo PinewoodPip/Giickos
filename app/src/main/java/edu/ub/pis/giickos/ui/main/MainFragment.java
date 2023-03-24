@@ -19,6 +19,7 @@ import edu.ub.pis.giickos.R;
 import edu.ub.pis.giickos.ui.main.sectionbar.SectionBar;
 import edu.ub.pis.giickos.ui.main.sectionbar.SectionBarEvents;
 import edu.ub.pis.giickos.ui.main.sectionbar.SectionBarItemEvent;
+import edu.ub.pis.giickos.ui.section.miscellaneous.MiscellaneousSection;
 import edu.ub.pis.giickos.ui.section.taskcreator.TaskCreator;
 import edu.ub.pis.giickos.ui.section.taskexplorer.TaskExplorer;
 import edu.ub.pis.giickos.ui.section.Section;
@@ -58,6 +59,9 @@ public class MainFragment extends GiickosFragment {
                 section = TaskExplorer.newInstance();
                 break;
             }
+            case MISCELLANEOUS:
+                section = MiscellaneousSection.newInstance();
+                break;
             default:
             {
                 Log.e("NotImplemented", "MainFragment.changeSection(): section type not implemented " + sectionType.toString());

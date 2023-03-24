@@ -1,7 +1,8 @@
 <resources>
+    <!-- Do not translate -->
     <string name="app_name">Giickos</string>
-
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="placeholder">Placeholder</string>
 
     <!-- Generic/common labels -->
     <string name="generic_label_delete">Delete</string>
@@ -12,4 +13,10 @@
     <string name="taskcreator_label_time_start">Start Time:</string>
     <string name="taskcreator_label_time_end">End Time:</string>
     <string name="taskcreator_label_settime">Tap to set...</string>
+    <string name="taskcreator_label_details">Details</string>
+
+    <!-- Miscellaneous section -->
+    <string name="miscellaneous_tab_settings">Settings</string>
+    <string name="miscellaneous_tab_teams">Teams</string>
+    <string name="miscellaneous_tab_statistics">Statistics</string>
 </resources>
