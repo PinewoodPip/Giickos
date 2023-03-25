@@ -5,10 +5,29 @@
     android:layout_height="match_parent"
     tools:context=".ui.section.miscellaneous.settings.SettingsFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
+        android:id="@+id/list_main"
+        style="@style/GiickosFullscreenContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/placeholder" />
+        android:orientation="vertical">
 
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/mock_card1"
+            android:name="edu.ub.pis.giickos.ui.generic.form.FormCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            tools:layout="@layout/fragment_card_form"
+            tools:visibility="visible" />
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/mock_card2"
+            android:name="edu.ub.pis.giickos.ui.generic.form.FormCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            tools:layout="@layout/fragment_card_form"
+            tools:visibility="visible" />
+    </LinearLayout>
 </FrameLayout>
