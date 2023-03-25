@@ -1,8 +1,6 @@
-package edu.ub.pis.giickos.ui.section.taskcreator;
+package edu.ub.pis.giickos.ui.generic.form;
 
 import android.content.res.ColorStateList;
-import android.graphics.Color;
-import android.icu.lang.UCharacterEnums;
 import android.os.Bundle;
 
 import androidx.cardview.widget.CardView;
@@ -17,9 +15,11 @@ import android.widget.TextView;
 
 import edu.ub.pis.giickos.GiickosFragment;
 import edu.ub.pis.giickos.R;
+import edu.ub.pis.giickos.ui.main.DatePickerListener;
+import edu.ub.pis.giickos.ui.main.TimePickerListener;
 
-// Fragment for fields within task creator.
-public class TaskField extends GiickosFragment {
+// Card fragment with an icon, label, and a horizontal list of custom elements.
+public class FormCard extends GiickosFragment {
     private static final String ARG_ICON = "Icon";
     private static final String ARG_LABEL = "Label";
     private static final String ARG_BG_COLOR = "BackgroundColor";
@@ -31,10 +31,10 @@ public class TaskField extends GiickosFragment {
 
     private View.OnClickListener clickListener;
 
-    public TaskField() {} // Required empty public constructor
+    public FormCard() {} // Required empty public constructor
 
-    public static TaskField newInstance(int iconID, String label, int color) {
-        TaskField fragment = new TaskField();
+    public static FormCard newInstance(int iconID, String label, int color) {
+        FormCard fragment = new FormCard();
         Bundle args = new Bundle();
 
         // Default direction is Left-to-right
@@ -48,8 +48,38 @@ public class TaskField extends GiickosFragment {
         return fragment;
     }
 
+    public static FormCard newInstance(int iconID, String label) {
+        return newInstance(iconID, label, -1);
+    }
+
     public void addElement(Fragment fragment) {
         addChildFragment(fragment, R.id.list_main, true);
+    }
+
+
+    public TextField addTextField(int inputType, String label) {
+        TextField textField = TextField.newInstance(label, inputType);
+        addElement(textField);
+
+        return textField;
+    }
+
+    public TimeField addTimeField(String id, String label, TimePickerListener listener) {
+        TimeField timeField = TimeField.newInstance(id, label);
+        addElement(timeField);
+
+        timeField.setListener(listener);
+
+        return timeField;
+    }
+
+    public DateField addDateField(String id, String label, DatePickerListener listener) {
+        DateField dateField = DateField.newInstance(id, label);
+        addElement(dateField);
+
+        dateField.setListener(listener);
+
+        return dateField;
     }
 
     // Sets the direction of the list of child elements added via addElement().
@@ -94,7 +124,7 @@ public class TaskField extends GiickosFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        CardView view = (CardView)inflater.inflate(R.layout.fragment_task_field, container, false);
+        CardView view = (CardView)inflater.inflate(R.layout.fragment_card_form, container, false);
         ImageView image = view.findViewById(R.id.image_icon);
         TextView text = view.findViewById(R.id.label);
 

@@ -1,4 +1,4 @@
-package edu.ub.pis.giickos.ui.section.taskcreator;
+package edu.ub.pis.giickos.ui.generic.form;
 
 import android.os.Bundle;
 
@@ -12,20 +12,18 @@ import android.widget.TextView;
 import edu.ub.pis.giickos.R;
 import edu.ub.pis.giickos.ui.main.DatePicker;
 import edu.ub.pis.giickos.ui.main.DatePickerListener;
-import edu.ub.pis.giickos.ui.main.TimePicker;
-import edu.ub.pis.giickos.ui.main.TimePickerListener;
 
 // A task creator field with a date input.
-public class TaskDate extends Fragment {
+public class DateField extends Fragment {
     private static final String ARG_ID = "ID";
     private static final String ARG_LABEL = "Label";
 
     private DatePickerListener listener;
 
-    public TaskDate() {} // Required empty public constructor
+    public DateField() {} // Required empty public constructor
 
-    public static TaskDate newInstance(String id, String label) {
-        TaskDate fragment = new TaskDate();
+    public static DateField newInstance(String id, String label) {
+        DateField fragment = new DateField();
         Bundle args = new Bundle();
 
         args.putString(ARG_ID, id);
@@ -53,7 +51,7 @@ public class TaskDate extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_task_date, container, false);
+        View view = inflater.inflate(R.layout.fragment_form_field_date, container, false);
         Bundle args = getArguments();
         TextView textField = view.findViewById(R.id.label_date);
 
@@ -62,7 +60,17 @@ public class TaskDate extends Fragment {
             @Override
             public void onClick(View view) {
                 DatePicker dialog = new DatePicker(getArguments().getString(ARG_ID));
-                dialog.setListener(listener);
+                dialog.setListener(new DatePickerListener() {
+                    @Override
+                    public void dateSet(String id, int year, int month, int day) {
+                        setText(String.format("%d/%d/%d", day, month, year)); // TODO display nicely
+
+                        // Forward event
+                        if (listener != null) {
+                            listener.dateSet(id, year, month, day);
+                        }
+                    }
+                });
                 dialog.show(getParentFragmentManager(), "");
             }
         });

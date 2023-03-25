@@ -3,16 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_gravity="center_vertical"
     android:layout_weight="1"
-    tools:context=".ui.section.taskcreator.TaskTime">
+    tools:context=".ui.generic.form.DateField">
 
     <TextView
-        android:id="@+id/label_time"
+        android:id="@+id/label_date"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center_vertical"
-        android:hint="@string/taskcreator_label_settime"
-        android:inputType="date" />
-
+        android:hint="@string/taskcreator_label_settime" />
 </FrameLayout>

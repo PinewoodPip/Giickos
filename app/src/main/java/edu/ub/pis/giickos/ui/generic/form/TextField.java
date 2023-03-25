@@ -1,8 +1,6 @@
-package edu.ub.pis.giickos.ui.section.taskcreator;
+package edu.ub.pis.giickos.ui.generic.form;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,14 +12,14 @@ import edu.ub.pis.giickos.R;
 
 
 // A task creation field with a text input.
-public class TaskTextField extends GiickosFragment {
+public class TextField extends GiickosFragment {
     private static final String ARG_TEXT = "Text";
     private static final String ARG_INPUT_TYPE = "InputType";
 
-    public TaskTextField() {} // Required empty public constructor
+    public TextField() {} // Required empty public constructor
 
-    public static TaskTextField newInstance(String text, int inputType) {
-        TaskTextField fragment = new TaskTextField();
+    public static TextField newInstance(String text, int inputType) {
+        TextField fragment = new TextField();
         Bundle args = new Bundle();
 
         args.putString(ARG_TEXT, text);
@@ -39,7 +37,7 @@ public class TaskTextField extends GiickosFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_task_text_field, container, false);
+        View view = inflater.inflate(R.layout.fragment_form_field_text, container, false);
         EditText textField = view.findViewById(R.id.textfield_input);
         Bundle args = getArguments();
 

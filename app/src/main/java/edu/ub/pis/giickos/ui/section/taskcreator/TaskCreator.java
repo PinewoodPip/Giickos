@@ -1,6 +1,5 @@
 package edu.ub.pis.giickos.ui.section.taskcreator;
 
-import android.graphics.Color;
 import android.os.Bundle;
 
 import android.text.InputType;
@@ -9,11 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.fragment.app.DialogFragment;
-
 import edu.ub.pis.giickos.R;
+import edu.ub.pis.giickos.ui.generic.form.FormCard;
 import edu.ub.pis.giickos.ui.main.DatePickerListener;
-import edu.ub.pis.giickos.ui.main.TimePicker;
 import edu.ub.pis.giickos.ui.main.TimePickerListener;
 import edu.ub.pis.giickos.ui.section.Section;
 
@@ -49,8 +46,8 @@ public class TaskCreator extends Section {
         return TYPE.TASK_CREATOR;
     }
 
-    private TaskField addField(int iconID, String label, int backgroundColor) {
-        TaskField field = TaskField.newInstance(iconID, label, backgroundColor);
+    private FormCard addField(int iconID, String label, int backgroundColor) {
+        FormCard field = FormCard.newInstance(iconID, label, backgroundColor);
 
         addChildFragment(field, R.id.list_main, true);
 
@@ -58,56 +55,33 @@ public class TaskCreator extends Section {
     }
 
     // Overload with no background color override.
-    private TaskField addField(int iconID, String label) {
+    private FormCard addField(int iconID, String label) {
         return addField(iconID, label, -1);
+    }
+
+    private void addTextField(int iconID, String label, String inputLabel, int inputType) {
+        FormCard field = addField(iconID, label);
+
+        field.addTextField(inputType, inputLabel);
     }
 
     // Adds a field with a click listener.
     private void addClickableField(int iconID, String label, int backgroundColor, View.OnClickListener listener) {
-        TaskField field = addField(iconID, label, backgroundColor);
+        FormCard field = addField(iconID, label, backgroundColor);
 
         field.setClickListener(listener);
     }
 
-    private void addTextField(int iconID, String label, int inputType) {
-        TaskField field = addField(iconID, label);
+    private void addTimeField(String id, int iconID, String label, String timeLabel, TimePickerListener listener) {
+        FormCard field = addField(iconID, label);
 
-        // Add text field
-        TaskTextField textField = TaskTextField.newInstance("", inputType);
-        field.addElement(textField);
+        field.addTimeField(id, timeLabel, listener);
     }
 
-    private void addTimeField(String id, int iconID, String label) {
-        TaskField field = addField(iconID, label);
+    private void addDateField(String id, int iconID, String label, String dateLabel, DatePickerListener listener) {
+        FormCard field = addField(iconID, label);
 
-        // Add text field
-        TaskTime textField = TaskTime.newInstance(id, "");
-        field.addElement(textField);
-
-        // Open time picker on tap
-        textField.setListener(new TimePickerListener() {
-            @Override
-            public void timeSet(String pickerID, int hour, int minute) {
-                // TODO update viewmodel
-                textField.setText(String.format("%d:%d", hour, minute)); // TODO display nicely
-            }
-        });
-    }
-
-    private void addDateField(String id, int iconID, String label) {
-        TaskField field = addField(iconID, label);
-
-        // Add date field
-        TaskDate dateField = TaskDate.newInstance(id, "");
-        field.addElement(dateField);
-
-        dateField.setListener(new DatePickerListener() {
-            @Override
-            public void dateSet(String id, int year, int month, int day) {
-                // TODO update viewmodel
-                dateField.setText(String.format("%d/%d/%d", day, month, year)); // TODO display nicely
-            }
-        });
+        field.addDateField(id, dateLabel, listener);
     }
 
     @Override
@@ -115,12 +89,24 @@ public class TaskCreator extends Section {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_task_creator, container, false);
 
-        addTextField(R.drawable.placeholder_notebook, getString(R.string.taskcreator_label_title), InputType.TYPE_TEXT_VARIATION_PERSON_NAME);
-        addDateField("Date", R.drawable.placeholder_notebook, getString(R.string.taskcreator_label_date));
-        addTimeField("StartTime", R.drawable.placeholder_notebook, getString(R.string.taskcreator_label_time_start));
-        addTimeField("EndTime", R.drawable.placeholder_notebook, getString(R.string.taskcreator_label_time_end));
-        addTextField(R.drawable.placeholder_notebook, getString(R.string.taskcreator_label_details),
-            InputType.TYPE_TEXT_FLAG_MULTI_LINE); // TODO move to separate tab
+        addTextField(R.drawable.placeholder_notebook, getString(R.string.taskcreator_label_title), "", InputType.TYPE_TEXT_VARIATION_PERSON_NAME);
+        addDateField("Date", R.drawable.placeholder_notebook, getString(R.string.taskcreator_label_date), "", new DatePickerListener() {
+            @Override
+            public void dateSet(String id, int year, int month, int day) {
+                Log.d("TODO", "Date set");
+            }
+        });
+
+        TimePickerListener timePickerListener = new TimePickerListener() {
+            @Override
+            public void timeSet(String pickerID, int hour, int minute) {
+                Log.d("TODO", "Time set");
+            }
+        };
+
+        addTimeField("StartTime", R.drawable.placeholder_notebook, getString(R.string.taskcreator_label_time_start), "", timePickerListener);
+        addTimeField("EndTime", R.drawable.placeholder_notebook, getString(R.string.taskcreator_label_time_end), "", timePickerListener);
+        addTextField(R.drawable.placeholder_notebook, getString(R.string.taskcreator_label_details), "", InputType.TYPE_TEXT_FLAG_MULTI_LINE); // TODO move to separate tab
 
         addClickableField(R.drawable.placeholder, getString(R.string.generic_label_delete), getResources().getColor(R.color.destructive_action), new View.OnClickListener() {
             @Override
