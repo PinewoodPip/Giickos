@@ -1,7 +1,9 @@
 package edu.ub.pis.giickos.ui.generic.form;
 
+import android.graphics.Color;
 import android.os.Bundle;
 
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,18 +17,25 @@ import edu.ub.pis.giickos.R;
 public class TextField extends GiickosFragment {
     private static final String ARG_TEXT = "Text";
     private static final String ARG_INPUT_TYPE = "InputType";
+    private static final String ARG_EDITABLE = "Editable";
 
     public TextField() {} // Required empty public constructor
 
-    public static TextField newInstance(String text, int inputType) {
+    public static TextField newInstance(String text, int inputType, boolean editable) {
         TextField fragment = new TextField();
         Bundle args = new Bundle();
 
         args.putString(ARG_TEXT, text);
         args.putInt(ARG_INPUT_TYPE, inputType);
+        args.putBoolean(ARG_EDITABLE, editable);
         fragment.setArguments(args);
 
         return fragment;
+    }
+
+    // Overload that defaults to editable.
+    public static TextField newInstance(String text, int inputType) {
+        return newInstance(text, inputType, true);
     }
 
     @Override
@@ -44,6 +53,13 @@ public class TextField extends GiickosFragment {
         // Set text field input type and text
         textField.setInputType(args.getInt(ARG_INPUT_TYPE));
         textField.setText(args.getString(ARG_TEXT));
+
+        if (!args.getBoolean(ARG_EDITABLE)) {
+            // TODO extract method
+            textField.setEnabled(false);
+            textField.setFocusable(false);
+            textField.setBackgroundColor(Color.TRANSPARENT);
+        }
 
         return view;
     }
