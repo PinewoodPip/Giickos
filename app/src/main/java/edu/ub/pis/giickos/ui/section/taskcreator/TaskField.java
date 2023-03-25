@@ -2,6 +2,7 @@ package edu.ub.pis.giickos.ui.section.taskcreator;
 
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.icu.lang.UCharacterEnums;
 import android.os.Bundle;
 
 import androidx.cardview.widget.CardView;
@@ -11,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import edu.ub.pis.giickos.GiickosFragment;
@@ -25,6 +27,7 @@ public class TaskField extends GiickosFragment {
     private int iconID;
     private String label;
     private int backgroundColorOverride; // Set to -1 to use default background color
+    private int listDirection;
 
     private View.OnClickListener clickListener;
 
@@ -33,6 +36,9 @@ public class TaskField extends GiickosFragment {
     public static TaskField newInstance(int iconID, String label, int color) {
         TaskField fragment = new TaskField();
         Bundle args = new Bundle();
+
+        // Default direction is Left-to-right
+        fragment.listDirection = LinearLayout.LAYOUT_DIRECTION_LTR;
 
         args.putInt(ARG_ICON, iconID);
         args.putString(ARG_LABEL, label);
@@ -44,6 +50,19 @@ public class TaskField extends GiickosFragment {
 
     public void addElement(Fragment fragment) {
         addChildFragment(fragment, R.id.list_main, true);
+    }
+
+    // Sets the direction of the list of child elements added via addElement().
+    public void setListDirection(int direction) {
+        View view = getView();
+
+        this.listDirection = direction;
+
+        if (view != null) {
+            LinearLayout listView = view.findViewById(R.id.list_main);
+
+            listView.setLayoutDirection(listDirection);
+        }
     }
 
     public void setClickListener(View.OnClickListener listener) {
@@ -91,5 +110,10 @@ public class TaskField extends GiickosFragment {
         updateClickListener(view);
 
         return view;
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle bundle) {
+        setListDirection(listDirection);
     }
 }
