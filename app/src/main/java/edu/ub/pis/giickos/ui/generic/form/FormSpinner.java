@@ -20,32 +20,53 @@ import edu.ub.pis.giickos.R;
 public class FormSpinner extends Fragment {
 
     private List<Object> items;
+    private int selectedIndex = 0;
     private AdapterView.OnItemSelectedListener listener;
 
     public FormSpinner() {
         // Required empty public constructor
     }
 
-    public static FormSpinner newInstance(List<Object> items) {
+    public static FormSpinner newInstance(List<Object> items, int selectedIndex) {
         FormSpinner fragment = new FormSpinner();
         Bundle args = new Bundle();
         fragment.setArguments(args);
 
         fragment.items = items;
+        fragment.selectedIndex = selectedIndex;
 
         return fragment;
     }
 
+    public void setSelection(int index) {
+        Spinner spinner = getSpinnerView();
+
+        selectedIndex = index;
+
+        if (spinner != null) {
+            spinner.setSelection(index);
+        }
+    }
+
     public void setListener(AdapterView.OnItemSelectedListener listener) {
-        View view = getView();
+        Spinner spinner = getSpinnerView();
 
         this.listener = listener;
 
-        if (view != null) {
-            Spinner spinner = view.findViewById(R.id.spinner);
-
+        if (spinner != null) {
             spinner.setOnItemSelectedListener(listener);
         }
+    }
+
+    private Spinner getSpinnerView() {
+        View view = getView();
+        Spinner spinner = null;
+
+        if (view != null) {
+            spinner = view.findViewById(R.id.spinner);
+        }
+
+        return spinner;
     }
 
     @Override
@@ -62,10 +83,11 @@ public class FormSpinner extends Fragment {
 
     @Override
     public void onViewCreated(View view, Bundle bundle) {
-        Spinner spinner = view.findViewById(R.id.spinner);
+        Spinner spinner = getSpinnerView();
 
         spinner.setAdapter(new ArrayAdapter<>(getContext(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, items));
 
         setListener(listener);
+        setSelection(selectedIndex);
     }
 }

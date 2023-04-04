@@ -2,6 +2,7 @@ package edu.ub.pis.giickos.ui.main;
 
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -25,6 +26,8 @@ import edu.ub.pis.giickos.ui.section.taskexplorer.TaskExplorer;
 import edu.ub.pis.giickos.ui.section.Section;
 
 public class MainFragment extends GiickosFragment {
+
+    public static String INTENT_EXTRA_SECTION = "Section";
 
     private MainViewModel mViewModel;
 
@@ -79,7 +82,21 @@ public class MainFragment extends GiickosFragment {
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
 
-        changeSection(TaskExplorer.newInstance());
+        // Set section from intent (if any)
+        // or default to task explorer
+        Section.TYPE sectionID = Section.TYPE.TASK_EXPLORER;
+        Intent intent = getActivity().getIntent();
+        if (intent != null) {
+            Bundle extras = intent.getExtras();
+            if (extras != null) {
+                int sectionIntegerID = extras.getInt(INTENT_EXTRA_SECTION);
+
+                if (sectionIntegerID != -1) {
+                    sectionID = Section.TYPE.values()[sectionIntegerID];
+                }
+            }
+        }
+        changeSection(sectionID);
 
         // Listen for events from section bar.
         SectionBar sectionBar = (SectionBar)getChildFragmentManager().findFragmentById(R.id.section_bar);

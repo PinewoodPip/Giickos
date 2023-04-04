@@ -1,5 +1,6 @@
 package edu.ub.pis.giickos.ui.section.taskexplorer;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.cardview.widget.CardView;
@@ -12,13 +13,17 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import edu.ub.pis.giickos.GiickosFragment;
+import edu.ub.pis.giickos.MainActivity;
 import edu.ub.pis.giickos.R;
+import edu.ub.pis.giickos.ui.section.Section;
+import edu.ub.pis.giickos.ui.section.taskcreator.TaskCreator;
 
 /*
     Fragment for displaying projects in TaskExplorer.
  */
 public class ProjectFragment extends GiickosFragment {
 
+    private static final String ARG_PROJECT_ID = "ProjectID";
     private static final String ARG_LABEL = "Label";
     private static final String ARG_OPEN = "Open";
 
@@ -26,10 +31,11 @@ public class ProjectFragment extends GiickosFragment {
         // Required empty public constructor
     }
 
-    public static ProjectFragment newInstance(String label, boolean open) {
+    public static ProjectFragment newInstance(String projectID, String label, boolean open) {
         ProjectFragment fragment = new ProjectFragment();
         Bundle args = new Bundle();
 
+        args.putString(ARG_PROJECT_ID, projectID);
         args.putString(ARG_LABEL, label);
         args.putBoolean(ARG_OPEN, open);
         fragment.setArguments(args);
@@ -99,6 +105,15 @@ public class ProjectFragment extends GiickosFragment {
             addTask();
         }
 
-        // TODO add task button listener
+        // Transition to task creator screen when the + button is pressed
+        addTaskButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bundle bundle = new Bundle();
+                bundle.putString(TaskCreator.INTENT_EXTRA_PROJECT_ID, getArguments().getString(ARG_PROJECT_ID));
+
+                MainActivity.transitionToSection(getActivity(), Section.TYPE.TASK_CREATOR, bundle);
+            }
+        });
     }
 }

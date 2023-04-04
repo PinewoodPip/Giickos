@@ -9,6 +9,9 @@
     <string name="generic_label_username">Username</string>
     <string name="generic_label_email">E-mail</string>
 
+    <!-- Task Explorer -->
+    <string name="taskexplorer_label_addtask">Add Task</string>
+
     <!-- Task Creator -->
     <string name="taskcreator_label_project">Project:</string>
     <string name="taskcreator_label_title">Title:</string>

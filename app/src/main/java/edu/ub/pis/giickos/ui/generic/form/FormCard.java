@@ -85,8 +85,8 @@ public class FormCard extends GiickosFragment {
         return dateField;
     }
 
-    public FormSpinner addSpinner(List<Object> items) {
-        FormSpinner spinner = FormSpinner.newInstance(items);
+    public FormSpinner addSpinner(List<Object> items, int selectedIndex) {
+        FormSpinner spinner = FormSpinner.newInstance(items, selectedIndex);
         addElement(spinner);
 
         return spinner;

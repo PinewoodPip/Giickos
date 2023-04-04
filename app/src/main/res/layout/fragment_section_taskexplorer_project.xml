@@ -44,7 +44,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="5dp"
                     android:layout_weight="0"
-                    android:text="Button" />
+                    android:text="@string/taskexplorer_label_addtask" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 

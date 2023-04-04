@@ -40,8 +40,8 @@ public class TaskList extends GiickosFragment {
     }
 
     // TODO add params once viewmodel is implemented
-    private void addProject() {
-        ProjectFragment fragment = ProjectFragment.newInstance("Testing", false);
+    private void addProject(String id) {
+        ProjectFragment fragment = ProjectFragment.newInstance(id,"Testing", false);
 
         addChildFragment(fragment, R.id.list_main);
     }
@@ -52,8 +52,8 @@ public class TaskList extends GiickosFragment {
         View view = inflater.inflate(R.layout.fragment_task_list, container, false);
 
         // TODO remove once ViewModel is added - just a placeholder
-        for (int i = 0; i < 5; i++) {
-            addProject();
+        for (int i = 1; i < 5; i++) {
+            addProject(Integer.toString(i));
         }
 
         return view;

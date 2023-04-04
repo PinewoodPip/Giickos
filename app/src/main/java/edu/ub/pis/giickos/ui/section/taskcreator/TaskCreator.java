@@ -13,6 +13,8 @@ import android.widget.SpinnerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.function.Predicate;
 
 import edu.ub.pis.giickos.R;
 import edu.ub.pis.giickos.ui.generic.form.FormCard;
@@ -23,6 +25,8 @@ import edu.ub.pis.giickos.ui.section.Section;
 
 // Section for creating tasks.
 public class TaskCreator extends Section {
+
+    public static String INTENT_EXTRA_PROJECT_ID = "ProjectID";
 
     // TODO viewmodel
 
@@ -91,22 +95,23 @@ public class TaskCreator extends Section {
         field.addDateField(id, dateLabel, listener);
     }
 
-    private FormSpinner addSpinnerField(int iconID, String label, List<Object> items) {
+    private FormSpinner addSpinnerField(int iconID, String label, List<Object> items, int selectedIndex) {
         FormCard field = addField(iconID, label);
 
-        return field.addSpinner(items);
+        return field.addSpinner(items, selectedIndex);
     }
 
     private void setupProjectSpinner() {
         List projectDescriptors = new ArrayList<>();
+        Bundle extras = getActivity().getIntent().getExtras();
         FormSpinner spinner;
 
         // TODO replace once viewmodel is implemented
-        projectDescriptors.add(new ProjectDescriptor("1", "TEMP"));
+        projectDescriptors.add(new ProjectDescriptor("1", "TEMP1"));
         projectDescriptors.add(new ProjectDescriptor("2", "TEMP2"));
         projectDescriptors.add(new ProjectDescriptor("3", "TEMP3"));
 
-        spinner = addSpinnerField(R.drawable.placeholder, getString(R.string.taskcreator_label_project), projectDescriptors);
+        spinner = addSpinnerField(R.drawable.placeholder, getString(R.string.taskcreator_label_project), projectDescriptors, 0);
         spinner.setListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -118,6 +123,24 @@ public class TaskCreator extends Section {
                 Log.d("TODO", "Project unselected ");
             }
         });
+
+        // Set selection
+        if (extras != null) {
+            String projectID = extras.getString(INTENT_EXTRA_PROJECT_ID);
+            Optional<ProjectDescriptor> desc = projectDescriptors.stream().filter(new Predicate() {
+                @Override
+                public boolean test(Object o) {
+                    ProjectDescriptor desc = (ProjectDescriptor) o;
+                    return desc.getId().equals(projectID);
+                }
+            }).findFirst();
+
+            if (desc.isPresent()) {
+                int index = projectDescriptors.indexOf(desc.get());
+
+                spinner.setSelection(index);
+            }
+        }
     }
 
     @Override
