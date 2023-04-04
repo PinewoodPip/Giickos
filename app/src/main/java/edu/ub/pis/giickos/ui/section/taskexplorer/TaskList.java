@@ -39,9 +39,11 @@ public class TaskList extends GiickosFragment {
         super.onCreate(savedInstanceState);
     }
 
-    // TODO add params once ViewModel is implemented
-    private void addTask() {
-        addChildFragment(Task.newInstance(R.drawable.placeholder_notebook, "Testing"), R.id.list_main);
+    // TODO add params once viewmodel is implemented
+    private void addProject() {
+        ProjectFragment fragment = ProjectFragment.newInstance("Testing", false);
+
+        addChildFragment(fragment, R.id.list_main);
     }
 
     @Override
@@ -51,7 +53,7 @@ public class TaskList extends GiickosFragment {
 
         // TODO remove once ViewModel is added - just a placeholder
         for (int i = 0; i < 5; i++) {
-            addTask();
+            addProject();
         }
 
         return view;
