@@ -7,9 +7,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.SpinnerAdapter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import edu.ub.pis.giickos.R;
 import edu.ub.pis.giickos.ui.generic.form.FormCard;
+import edu.ub.pis.giickos.ui.generic.form.FormSpinner;
 import edu.ub.pis.giickos.ui.main.DatePickerListener;
 import edu.ub.pis.giickos.ui.main.TimePickerListener;
 import edu.ub.pis.giickos.ui.section.Section;
@@ -84,10 +91,41 @@ public class TaskCreator extends Section {
         field.addDateField(id, dateLabel, listener);
     }
 
+    private FormSpinner addSpinnerField(int iconID, String label, List<Object> items) {
+        FormCard field = addField(iconID, label);
+
+        return field.addSpinner(items);
+    }
+
+    private void setupProjectSpinner() {
+        List projectDescriptors = new ArrayList<>();
+        FormSpinner spinner;
+
+        // TODO replace once viewmodel is implemented
+        projectDescriptors.add(new ProjectDescriptor("1", "TEMP"));
+        projectDescriptors.add(new ProjectDescriptor("2", "TEMP2"));
+        projectDescriptors.add(new ProjectDescriptor("3", "TEMP3"));
+
+        spinner = addSpinnerField(R.drawable.placeholder, getString(R.string.taskcreator_label_project), projectDescriptors);
+        spinner.setListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                Log.d("TODO", "Project selected " + projectDescriptors.get(i));
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                Log.d("TODO", "Project unselected ");
+            }
+        });
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_task_creator, container, false);
+
+        setupProjectSpinner();
 
         addTextField(R.drawable.placeholder_notebook, getString(R.string.taskcreator_label_title), "", InputType.TYPE_TEXT_VARIATION_PERSON_NAME);
         addDateField("Date", R.drawable.placeholder_notebook, getString(R.string.taskcreator_label_date), "", new DatePickerListener() {

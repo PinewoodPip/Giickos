@@ -11,7 +11,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.SpinnerAdapter;
 import android.widget.TextView;
+
+import java.util.List;
 
 import edu.ub.pis.giickos.GiickosFragment;
 import edu.ub.pis.giickos.R;
@@ -80,6 +83,13 @@ public class FormCard extends GiickosFragment {
         dateField.setListener(listener);
 
         return dateField;
+    }
+
+    public FormSpinner addSpinner(List<Object> items) {
+        FormSpinner spinner = FormSpinner.newInstance(items);
+        addElement(spinner);
+
+        return spinner;
     }
 
     // Sets the direction of the list of child elements added via addElement().
