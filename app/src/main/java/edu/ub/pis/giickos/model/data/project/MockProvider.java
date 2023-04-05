@@ -53,15 +53,28 @@ public class MockProvider implements ProjectDataProvider {
 
     @Override
     public Set<Task> getTasks(String projectGUID) {
-        return new HashSet<>(tasks.values());
+        Set<Task> tasks = new HashSet<>();
+        Project project = getProject(projectGUID);
+
+        for (String taskGUID : project.getElements()) {
+            Task task = getTask(taskGUID);
+
+            if (task != null) {
+                tasks.add(task);
+            }
+        }
+
+        return tasks;
     }
 
     @Override
     public boolean addTask(String projectGUID, Task task) {
         boolean success = false;
         String projectID = task.getID();
+        Project project = getProject(projectGUID);
 
-        if (getTask(projectID) == null) {
+        if (project != null && getTask(projectID) == null) {
+            project.addElement(task.getID());
             tasks.put(projectID, task);
 
             success = true;
@@ -72,22 +85,21 @@ public class MockProvider implements ProjectDataProvider {
 
     // Creates mock projects and tasks.
     private void addMockData() {
-        List<Project> projects = new ArrayList<>();
-        List<Task> tasks = new ArrayList<>();
-        Project project1 = new Project(UUID.randomUUID(), "Test1");
-        Project project2 = new Project(UUID.randomUUID(), "Test2");
-        Project project3 = new Project(UUID.randomUUID(), "Test3");
+        Project project1 = new Project(UUID.randomUUID(), "Test Project 1");
+        Project project2 = new Project(UUID.randomUUID(), "Test Project 2");
+        Project project3 = new Project(UUID.randomUUID(), "Empty Test Project");
         Task task1 = new Task(UUID.randomUUID().toString(), "Task 1");
         Task task2 = new Task(UUID.randomUUID().toString(), "Task 2");
         Task task3 = new Task(UUID.randomUUID().toString(), "Task 3");
 
         addProject(project1);
-        addProject(project2);
-        addProject(project3);
-
         addTask(project1.getId(), task1);
         addTask(project1.getId(), task2);
 
+        addProject(project2);
         addTask(project2.getId(), task3);
+
+        // Test project with no tasks
+        addProject(project3);
     }
 }
