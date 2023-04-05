@@ -10,12 +10,14 @@ public class Giickos {
     public Giickos(AbstractManagerFactory factory)
     {
         try {
-            this.taskManager = factory.createTaskManager();
+            this.taskManager = factory.createProjectManager();
         }
         catch (Exception e) {
             throw new RuntimeException("Initialization failed");
         }
     }
 
-    public ProjectManager getTaskManager() {return taskManager;}
+    public ProjectManager getTaskManager() {
+        return taskManager;
+    }
 }

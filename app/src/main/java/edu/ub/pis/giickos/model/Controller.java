@@ -1,26 +1,26 @@
 package edu.ub.pis.giickos.model;
 
 import edu.ub.pis.giickos.model.managers.AbstractManagerFactory;
-import edu.ub.pis.giickos.model.managers.GiickosManagerFactory;
+import edu.ub.pis.giickos.model.managers.GiickosMockManagerFactory;
 import edu.ub.pis.giickos.resources.service.AbstractFactoryData;
 import edu.ub.pis.giickos.resources.service.DataService;
 import edu.ub.pis.giickos.resources.service.FactoryMock;
 
-
 //Not sure if this should be in model...
-public enum StartGiickos {
+public enum Controller {
     INSTANCE; //Singleton
+
     private DataService dataService; // Data provider
     private Giickos model;
 
-    StartGiickos()
+    Controller()
     {
         setModel(new FactoryMock()); // Usar mock per defecte
     }
 
     public void setModel(AbstractFactoryData factory) {
         // Uses GiickosComponentFactory by default - use the overload to inject others
-        setModel(factory, new GiickosManagerFactory(dataService));
+        setModel(factory, new GiickosMockManagerFactory(dataService));
     }
     public void setModel(AbstractFactoryData dataFactory, AbstractManagerFactory managerFactory) {
         dataService = new DataService(dataFactory);
@@ -34,10 +34,4 @@ public enum StartGiickos {
             throw e;
         }
     }
-
-
-
-
-
-
 }

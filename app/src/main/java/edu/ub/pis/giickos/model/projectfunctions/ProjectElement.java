@@ -6,14 +6,17 @@ import java.util.UUID;
 //Generic class for elemnts inside a project, for now, just "task", but in the future, maybe other elemnts like reminder...
 public abstract class ProjectElement {
 
-    private String id;
-    private String name;
+    protected String id;
+    protected String name;
 
-    public ProjectElement(String name)
+    public ProjectElement(String id, String name)
     {
-        this.id = UUID.randomUUID().toString();
+        this.id = id;
         setName(name);
+    }
 
+    public String getID() {
+        return id;
     }
 
     public void setName(String name){
@@ -23,4 +26,5 @@ public abstract class ProjectElement {
     public String getName() {
         return name;
     }
+
 }

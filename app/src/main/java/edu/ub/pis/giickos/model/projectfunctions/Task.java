@@ -2,10 +2,11 @@ package edu.ub.pis.giickos.model.projectfunctions;
 
 public class Task extends ProjectElement
 {
-    public Task(String name)
+    public Task(String id, String name)
     {
-        super(name);
+        super(id, name);
     }
+
     /*
     * Methods to fulfill the next functions:
     *

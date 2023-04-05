@@ -11,14 +11,12 @@ public class Project {
     private ArrayList<String> elements;//We use strings to identify the elements (for now we only have tasks)
     // Or maybe we can use (projectName + elementName) as elements ID instead of generated UUID.
 
-    public Project(String name) {
-        setId(UUID.randomUUID().toString());
-        setName(name);
-        this.elements = new ArrayList<>();
+    public Project(String id, String name) {
+        initialize(id, name);
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public Project(UUID guid, String name) {
+        initialize(guid.toString(), name);
     }
 
     public String getId() {
@@ -42,5 +40,14 @@ public class Project {
         this.elements = elements;
     }
 
+    public void addElement(String id) {
+        this.elements.add(id);
+    }
 
+    private void initialize(String id, String name) {
+        this.elements = new ArrayList<>();
+
+        this.id = id;
+        setName(name);
+    }
 }
