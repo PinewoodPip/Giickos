@@ -9,6 +9,11 @@
     <string name="generic_label_username">Username</string>
     <string name="generic_label_email">E-mail</string>
 
+    <!-- Task priority -->
+    <string name="task_priority_low">Low</string>
+    <string name="task_priority_medium">Medium</string>
+    <string name="task_priority_high">High</string>
+
     <!-- Task Explorer -->
     <string name="taskexplorer_label_addtask">Add Task</string>
 
@@ -16,10 +21,12 @@
     <string name="taskcreator_label_project">Project:</string>
     <string name="taskcreator_label_title">Title:</string>
     <string name="taskcreator_label_date">Date:</string>
+    <string name="taskcreator_label_priority">Priority:</string>
     <string name="taskcreator_label_time_start">Start Time:</string>
     <string name="taskcreator_label_time_end">End Time:</string>
     <string name="taskcreator_label_settime">Tap to set...</string>
     <string name="taskcreator_label_details">Details</string>
+    <string name="taskcreator_label_complete">Mark as complete</string>
 
     <!-- Miscellaneous section -->
     <string name="miscellaneous_tab_settings">Settings</string>

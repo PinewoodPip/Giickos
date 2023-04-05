@@ -26,6 +26,23 @@ import edu.ub.pis.giickos.ui.section.Section;
 // Section for creating tasks.
 public class TaskCreator extends Section {
 
+    // TODO move out of UI
+    enum TASK_PRIORITY {
+        LOW(R.string.task_priority_low),
+        MEDIUM(R.string.task_priority_medium),
+        HIGH(R.string.task_priority_high);
+
+        private int stringResource;
+
+        TASK_PRIORITY(int stringResource) {
+            this.stringResource = stringResource;
+        }
+
+        public int getNameResourceID() {
+            return stringResource;
+        }
+    }
+
     public static String INTENT_EXTRA_PROJECT_ID = "ProjectID";
     public static String INTENT_EXTRA_TASK_ID = "TaskID"; // If present the UI will be in edit mode
 
@@ -44,7 +61,6 @@ public class TaskCreator extends Section {
         Bundle args = new Bundle();
 
         fragment.setArguments(args);
-
         return fragment;
     }
 
@@ -148,6 +164,30 @@ public class TaskCreator extends Section {
         }
     }
 
+    private void setupPrioritySpinner() {
+        List options = new ArrayList<>();
+        FormSpinner spinner;
+
+        // Add an option for each priority
+        for (int x = 0; x < TASK_PRIORITY.values().length; x++) {
+            options.add(getString(TASK_PRIORITY.values()[x].stringResource));
+        }
+
+        // TODO set priority
+        spinner = addSpinnerField(R.drawable.placeholder, getString(R.string.taskcreator_label_priority), options, 0);
+        spinner.setListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                Log.d("TODO", "Priority selected " + Integer.toString(i));
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                Log.e("UI", "Current priority removed from spinner; this should not happen");
+            }
+        });
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -163,6 +203,8 @@ public class TaskCreator extends Section {
             }
         });
 
+        setupPrioritySpinner();
+
         TimePickerListener timePickerListener = new TimePickerListener() {
             @Override
             public void timeSet(String pickerID, int hour, int minute) {
@@ -174,8 +216,14 @@ public class TaskCreator extends Section {
         addTimeField("EndTime", R.drawable.placeholder_notebook, getString(R.string.taskcreator_label_time_end), "", timePickerListener);
         addTextField(R.drawable.placeholder_notebook, getString(R.string.taskcreator_label_details), "", InputType.TYPE_TEXT_FLAG_MULTI_LINE); // TODO move to separate tab
 
-        // Only add delete button while editing
         if (!isCreating()) {
+            addClickableField(R.drawable.placeholder, getString(R.string.taskcreator_label_complete), getResources().getColor(R.color.positive_action), new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Log.d("TODO", "Complete button clicked");
+                }
+            });
+            // Only add delete button while editing
             addClickableField(R.drawable.placeholder, getString(R.string.generic_label_delete), getResources().getColor(R.color.destructive_action), new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
