@@ -20,7 +20,15 @@ public class ProjectManager {
         return dataProvider.getProjects();
     }
 
+    public Project getProject(String id) {
+        return dataProvider.getProject(id);
+    }
+
     public Set<Task> getProjectTasks(String projectGUID) {
+        return dataProvider.getTasks(projectGUID);
+    }
+
+    public Set<Task> getTasks(String projectGUID) {
         return dataProvider.getTasks(projectGUID);
     }
 

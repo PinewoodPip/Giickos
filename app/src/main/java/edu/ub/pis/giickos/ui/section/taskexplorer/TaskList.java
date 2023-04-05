@@ -5,10 +5,13 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import java.util.List;
 
 import edu.ub.pis.giickos.GiickosFragment;
 import edu.ub.pis.giickos.R;
@@ -16,6 +19,7 @@ import edu.ub.pis.giickos.R;
 // Container for tasks within TaskExplorer.
 public class TaskList extends GiickosFragment {
 
+    private ViewModel viewModel;
 
     public TaskList() {} // Required empty public constructor
 
@@ -37,13 +41,20 @@ public class TaskList extends GiickosFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        viewModel = new ViewModelProvider(this).get(ViewModel.class);
     }
 
-    // TODO add params once viewmodel is implemented
     private void addProject(String id) {
-        ProjectFragment fragment = ProjectFragment.newInstance(id,"Testing", false);
+        ViewModel.ProjectData project = viewModel.getProject(id);
+        List<ViewModel.TaskData> tasks = viewModel.getTasks(id);
+        ProjectFragment fragment = ProjectFragment.newInstance(id, project.name, false); // TODO keep track of open projects in viewmodel
 
-        addChildFragment(fragment, R.id.list_main);
+        addChildFragment(fragment, R.id.list_main, true);
+
+        for (ViewModel.TaskData task : tasks) {
+            fragment.addTask(task);
+        }
     }
 
     @Override
@@ -51,9 +62,9 @@ public class TaskList extends GiickosFragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_task_list, container, false);
 
-        // TODO remove once ViewModel is added - just a placeholder
-        for (int i = 1; i < 5; i++) {
-            addProject(Integer.toString(i));
+        // Render projects and tasks
+        for (ViewModel.ProjectData project : viewModel.getProjects()) {
+            addProject(project.id);
         }
 
         return view;

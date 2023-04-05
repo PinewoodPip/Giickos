@@ -67,9 +67,11 @@ public class ProjectFragment extends GiickosFragment {
         toggleList(!isOpen);
     }
 
-    // TODO add params once ViewModel is implemented
-    private void addTask() {
-        addChildFragment(Task.newInstance(UUID.randomUUID().toString(), R.drawable.placeholder_notebook, "Testing"), R.id.list_tasks);
+    // Adds a task view to the project's list of tasks.
+    public void addTask(ViewModel.TaskData task) {
+        Task fragment = Task.newInstance(task.id, R.drawable.placeholder_notebook, task.name);
+
+        addChildFragment(fragment, R.id.list_tasks);
     }
 
     @Override
@@ -101,11 +103,6 @@ public class ProjectFragment extends GiickosFragment {
                 toggleList();
             }
         });
-
-        // TODO remove mock code
-        for (int x = 0; x < 5; x++) {
-            addTask();
-        }
 
         // Transition to task creator screen when the + button is pressed
         addTaskButton.setOnClickListener(new View.OnClickListener() {

@@ -5,19 +5,19 @@ import edu.ub.pis.giickos.model.managers.ProjectManager;
 
 public class Giickos {
 
-    private ProjectManager taskManager;
+    private ProjectManager projectManager;
 
     public Giickos(AbstractManagerFactory factory)
     {
         try {
-            this.taskManager = factory.createProjectManager();
+            this.projectManager = factory.createProjectManager();
         }
         catch (Exception e) {
             throw new RuntimeException("Initialization failed");
         }
     }
 
-    public ProjectManager getTaskManager() {
-        return taskManager;
+    public ProjectManager getProjectManager() {
+        return projectManager;
     }
 }

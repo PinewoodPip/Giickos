@@ -2,6 +2,7 @@ package edu.ub.pis.giickos.model;
 
 import edu.ub.pis.giickos.model.managers.AbstractManagerFactory;
 import edu.ub.pis.giickos.model.managers.GiickosMockManagerFactory;
+import edu.ub.pis.giickos.model.managers.ProjectManager;
 import edu.ub.pis.giickos.resources.service.AbstractFactoryData;
 import edu.ub.pis.giickos.resources.service.DataService;
 import edu.ub.pis.giickos.resources.service.FactoryMock;
@@ -33,5 +34,13 @@ public enum Controller {
         } catch (Exception e) {
             throw e;
         }
+    }
+
+    public Giickos getModel() {
+        return model;
+    }
+
+    public ProjectManager getProjectManager() {
+        return model.getProjectManager();
     }
 }
