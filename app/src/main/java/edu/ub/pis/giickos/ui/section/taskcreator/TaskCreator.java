@@ -27,6 +27,7 @@ import edu.ub.pis.giickos.ui.section.Section;
 public class TaskCreator extends Section {
 
     public static String INTENT_EXTRA_PROJECT_ID = "ProjectID";
+    public static String INTENT_EXTRA_TASK_ID = "TaskID"; // If present the UI will be in edit mode
 
     // TODO viewmodel
 
@@ -57,6 +58,10 @@ public class TaskCreator extends Section {
         return TYPE.TASK_CREATOR;
     }
 
+    // Returns whether the fragment is being used to create a task (instead of editing one)
+    private boolean isCreating() {
+        return !getIntentString(INTENT_EXTRA_TASK_ID).isPresent();
+    }
     private FormCard addField(int iconID, String label, int backgroundColor) {
         FormCard field = FormCard.newInstance(iconID, label, backgroundColor);
 
@@ -169,12 +174,15 @@ public class TaskCreator extends Section {
         addTimeField("EndTime", R.drawable.placeholder_notebook, getString(R.string.taskcreator_label_time_end), "", timePickerListener);
         addTextField(R.drawable.placeholder_notebook, getString(R.string.taskcreator_label_details), "", InputType.TYPE_TEXT_FLAG_MULTI_LINE); // TODO move to separate tab
 
-        addClickableField(R.drawable.placeholder, getString(R.string.generic_label_delete), getResources().getColor(R.color.destructive_action), new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d("TODO", "Delete button clicked");
-            }
-        });
+        // Only add delete button while editing
+        if (!isCreating()) {
+            addClickableField(R.drawable.placeholder, getString(R.string.generic_label_delete), getResources().getColor(R.color.destructive_action), new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Log.d("TODO", "Delete button clicked");
+                }
+            });
+        }
 
         return view;
     }

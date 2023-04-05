@@ -12,6 +12,8 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.util.UUID;
+
 import edu.ub.pis.giickos.GiickosFragment;
 import edu.ub.pis.giickos.MainActivity;
 import edu.ub.pis.giickos.R;
@@ -67,7 +69,7 @@ public class ProjectFragment extends GiickosFragment {
 
     // TODO add params once ViewModel is implemented
     private void addTask() {
-        addChildFragment(Task.newInstance(R.drawable.placeholder_notebook, "Testing"), R.id.list_tasks);
+        addChildFragment(Task.newInstance(UUID.randomUUID().toString(), R.drawable.placeholder_notebook, "Testing"), R.id.list_tasks);
     }
 
     @Override

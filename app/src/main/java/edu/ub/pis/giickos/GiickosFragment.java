@@ -1,8 +1,12 @@
 package edu.ub.pis.giickos;
 
+import android.os.Bundle;
+
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+
+import java.util.Optional;
 
 public class GiickosFragment extends Fragment {
 
@@ -36,5 +40,18 @@ public class GiickosFragment extends Fragment {
         transaction.replace(id, newFragment);
 
         transaction.commit();
+    }
+
+    public Optional<String> getIntentString(String key) {
+        Bundle extras = getActivity().getIntent().getExtras();
+        Optional<String> str = Optional.empty();
+
+        if (extras != null && extras.containsKey(key)) {
+            String bundledStr = extras.getString(key);
+
+            str = Optional.of(bundledStr);
+        }
+
+        return str;
     }
 }
