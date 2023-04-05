@@ -11,7 +11,7 @@
 
     <!-- TODO: Update blank fragment layout -->
     <LinearLayout
-        android:id="@+id/button_list"
+        android:id="@+id/list_buttons"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:gravity="center_horizontal"

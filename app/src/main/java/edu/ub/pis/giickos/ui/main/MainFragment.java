@@ -76,11 +76,28 @@ public class MainFragment extends GiickosFragment {
         }
     }
 
+    private void createSectionBar() {
+        SectionBar sectionBar = SectionBar.newInstance();
+        replaceFragment(R.id.section_bar, sectionBar);
+
+        // Listen for presses
+        sectionBar.subscribe(SectionBarEvents.SECTION_PRESSED, new Observer() {
+            @Override
+            public void update(ObservableEvent eventData) {
+                SectionBarItemEvent event = (SectionBarItemEvent) eventData;
+
+                changeSection(event.getSectionID());
+            }
+        });
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
+
+        createSectionBar();
 
         // Set section from intent (if any)
         // or default to task explorer
@@ -97,17 +114,6 @@ public class MainFragment extends GiickosFragment {
             }
         }
         changeSection(sectionID);
-
-        // Listen for events from section bar.
-        SectionBar sectionBar = (SectionBar)getChildFragmentManager().findFragmentById(R.id.section_bar);
-        sectionBar.subscribe(SectionBarEvents.SECTION_PRESSED, new Observer() {
-            @Override
-            public void update(ObservableEvent eventData) {
-                SectionBarItemEvent event = (SectionBarItemEvent) eventData;
-
-                changeSection(event.getSectionID());
-            }
-        });
 
         return view;
     }

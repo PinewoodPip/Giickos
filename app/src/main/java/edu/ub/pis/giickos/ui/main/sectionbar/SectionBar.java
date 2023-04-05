@@ -3,8 +3,6 @@ package edu.ub.pis.giickos.ui.main.sectionbar;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,17 +14,8 @@ import edu.ub.pis.giickos.ui.observer.Observer;
 import edu.ub.pis.giickos.R;
 import edu.ub.pis.giickos.ui.section.Section;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link SectionBar#newInstance} factory method to
- * create an instance of this fragment.
- */
+// Fragment for the section navigation bar.
 public class SectionBar extends Observable<SectionBarEvents> {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
     public SectionBar() {
         // Required empty public constructor
@@ -48,7 +37,7 @@ public class SectionBar extends Observable<SectionBarEvents> {
     public void addItem(Section.TYPE sectionType, int iconID) {
         SectionBarItem sectionItem = SectionBarItem.newInstance(sectionType, iconID);
 
-        addChildFragment(sectionItem, R.id.button_list);
+        addChildFragment(sectionItem, R.id.list_buttons);
 
         // Forward the events of the item
         sectionItem.subscribe(SectionBarEvents.SECTION_PRESSED, new Observer() {
@@ -73,13 +62,17 @@ public class SectionBar extends Observable<SectionBarEvents> {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_section_bar, container, false);
 
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceBundle) {
         // TODO extract; section types should be defined by viewmodel(?) and use some struct to bind icons to it
+
         for (int x = 0; x < Section.TYPE.values().length; x++) {
             Section.TYPE sectionType = Section.TYPE.values()[x];
 
             addItem(sectionType, R.drawable.placeholder_notebook);
         }
-
-        return view;
     }
 }
