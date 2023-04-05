@@ -19,6 +19,7 @@ import java.util.List;
 import edu.ub.pis.giickos.GiickosFragment;
 import edu.ub.pis.giickos.R;
 import edu.ub.pis.giickos.ui.main.DatePickerListener;
+import edu.ub.pis.giickos.ui.main.TagPickerListener;
 import edu.ub.pis.giickos.ui.main.TimePickerListener;
 
 // Card fragment with an icon, label, and a horizontal list of custom elements.
@@ -67,6 +68,7 @@ public class FormCard extends GiickosFragment {
         return textField;
     }
 
+
     public TimeField addTimeField(String id, String label, TimePickerListener listener) {
         TimeField timeField = TimeField.newInstance(id, label);
         addElement(timeField);
@@ -75,6 +77,17 @@ public class FormCard extends GiickosFragment {
 
         return timeField;
     }
+
+
+
+    public FormSpinner addTagField(List<Object> tag, int selectedIndex) {
+        FormSpinner spinner = FormSpinner.newInstance(tag, selectedIndex);
+        addElement(spinner);
+
+        return spinner;
+    }
+
+
 
     public DateField addDateField(String id, String label, DatePickerListener listener) {
         DateField dateField = DateField.newInstance(id, label);

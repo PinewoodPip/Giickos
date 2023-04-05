@@ -8,8 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.SpinnerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -94,6 +92,18 @@ public class TaskCreator extends Section {
         field.addTimeField(id, timeLabel, listener);
     }
 
+
+
+
+    private FormSpinner addTag(int iconID, String label, List<Object> items, int selectedIndex) {
+        FormCard field = addField(iconID, label);
+
+        return field.addSpinner(items, selectedIndex);
+    }
+
+
+
+
     private void addDateField(String id, int iconID, String label, String dateLabel, DatePickerListener listener) {
         FormCard field = addField(iconID, label);
 
@@ -108,13 +118,34 @@ public class TaskCreator extends Section {
 
     private void setupProjectSpinner() {
         List projectDescriptors = new ArrayList<>();
+        List Tags = new ArrayList<>();
         Bundle extras = getActivity().getIntent().getExtras();
-        FormSpinner spinner;
+        FormSpinner spinner,spinnerTag;
 
         // TODO replace once viewmodel is implemented
         projectDescriptors.add(new ProjectDescriptor("1", "TEMP1"));
         projectDescriptors.add(new ProjectDescriptor("2", "TEMP2"));
         projectDescriptors.add(new ProjectDescriptor("3", "TEMP3"));
+
+
+        Tags.add(new TagDescriptor("1", "HIGH"));
+        Tags.add(new TagDescriptor("2", "MEDIUM"));
+        Tags.add(new TagDescriptor("3", "LOW"));
+
+
+        spinnerTag = addSpinnerField(R.drawable.placeholder, getString(R.string.taskcreator_label_priority), Tags, 0);
+
+        spinnerTag.setListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                Log.d("TODO", "Priority selected " + Tags.get(i));
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                Log.d("TODO", "Priority unselected ");
+            }
+        });
 
         spinner = addSpinnerField(R.drawable.placeholder, getString(R.string.taskcreator_label_project), projectDescriptors, 0);
         spinner.setListener(new AdapterView.OnItemSelectedListener() {
