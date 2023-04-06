@@ -5,50 +5,50 @@ import java.util.Set;
 import edu.ub.pis.giickos.model.data.project.ProjectDataProvider;
 import edu.ub.pis.giickos.model.projectfunctions.Project;
 import edu.ub.pis.giickos.model.projectfunctions.Task;
+import edu.ub.pis.giickos.resources.dao.DAOProject;
+import edu.ub.pis.giickos.resources.service.DataService;
 
 public class ProjectManager {
     //Handler of projects
-    //TODO create a UserCases excel in order to spot the interactions.
+    private DAOProject daoProject;
 
-    private ProjectDataProvider dataProvider;
-
-    public ProjectManager(ProjectDataProvider dataProvider) {
-        this.dataProvider = dataProvider;
+    public ProjectManager(DAOProject daoProject) {
+        this.daoProject = daoProject;
     }
 
     public Set<Project> getProjects() {
-        return dataProvider.getProjects();
+        return daoProject.getProjects();
     }
 
     public Project getProject(String id) {
-        return dataProvider.getProject(id);
+        return daoProject.getProject(id);
     }
 
     public Set<Task> getProjectTasks(String projectGUID) {
-        return dataProvider.getTasks(projectGUID);
+        return daoProject.getTasks(projectGUID);
     }
 
     public Set<Task> getTasks(String projectGUID) {
-        return dataProvider.getTasks(projectGUID);
+        return daoProject.getTasks(projectGUID);
     }
 
     public Task getTask(String taskGUID) {
-        return dataProvider.getTask(taskGUID);
+        return daoProject.getTask(taskGUID);
     }
 
     public boolean addTask(String projectGUID, Task task) {
-        return dataProvider.addTask(projectGUID, task);
+        return daoProject.addTask(projectGUID, task);
     }
 
     public boolean updateTask(Task task) {
-        return dataProvider.updateTask(task);
+        return daoProject.updateTask(task);
     }
 
     public Project getTaskProject(String taskID) {
-        return dataProvider.getTaskProject(taskID);
+        return daoProject.getTaskProject(taskID);
     }
 
     public boolean updateProject(Project project) {
-        return dataProvider.updateProject(project);
+        return daoProject.updateProject(project);
     }
 }

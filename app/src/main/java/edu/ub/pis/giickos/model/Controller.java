@@ -21,11 +21,11 @@ public enum Controller {
 
     public void setModel(AbstractFactoryData factory) {
         // Uses GiickosComponentFactory by default - use the overload to inject others
-        setModel(factory, new GiickosMockManagerFactory(dataService));
+        setModel(factory, new GiickosMockManagerFactory());
     }
     public void setModel(AbstractFactoryData dataFactory, AbstractManagerFactory managerFactory) {
         dataService = new DataService(dataFactory);
-
+        managerFactory.setDataService(dataService);
         try {
             model = new Giickos(managerFactory);
             //View-Model that uses the managers...
@@ -35,7 +35,6 @@ public enum Controller {
             throw e;
         }
     }
-
     public Giickos getModel() {
         return model;
     }

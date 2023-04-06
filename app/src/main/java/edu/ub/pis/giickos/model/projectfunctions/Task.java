@@ -1,5 +1,7 @@
 package edu.ub.pis.giickos.model.projectfunctions;
 
+import java.util.ArrayList;
+
 public class Task extends ProjectElement {
 
     public enum PRIORITY {
@@ -11,6 +13,7 @@ public class Task extends ProjectElement {
 
     private PRIORITY priority = PRIORITY.NONE;
     private String description = "";
+    private boolean isCompleted = false;
 
     public Task(String id, String name) // Kamil: I'm not a fan of bloated constructor params, so try to delegate initialization to setters instead (ex. how it's done with priority) with the exception of essential fields like name/id.
     {
@@ -32,26 +35,28 @@ public class Task extends ProjectElement {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public boolean getCompleted() {
+        return isCompleted;
+    }
+
+    public void setCompleted(boolean isCompleted) {
+        this.isCompleted = isCompleted;
+    }
+
     /*
-    * Methods to fulfill the next functions:
-    *
-    * Start from x time
-    * End at x time
-    * Notify x time before start
-    * Repeatable (default - no repeat, custom, select repeatable days)
-    * Description
-    * Add labels
-    * Add members
-    * Task priority level (("no pritority?"), low priority, medium priority, high pritority)
-    * */
-
-
-
-
-
-
-
-
+     * Methods to fulfill the next functions:
+     *
+     * Start from x time
+     * End at x time
+     * Notify x time before start
+     * Repeatable (default - no repeat, custom, select repeatable days)
+     * Description
+     * Add labels
+     * Add members
+     * Task priority level (("no pritority?"), low priority, medium priority, high pritority)
+     * Task status (not completed, completed)
+     * */
 
 
 }

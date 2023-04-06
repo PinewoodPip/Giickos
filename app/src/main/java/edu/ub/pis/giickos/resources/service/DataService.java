@@ -12,7 +12,10 @@ public class DataService {
     {
         this.daoProject = data.getDAOProject();
     }
-
+    public DAOProject getDAOProject()
+    {
+        return daoProject;
+    }
 
 
 }
