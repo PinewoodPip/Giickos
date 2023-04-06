@@ -10,6 +10,7 @@
     <string name="generic_label_username">Username</string>
     <string name="generic_label_email">E-mail</string>
     <string name="generic_label_create">Create</string>
+    <string name="generic_label_save">Save</string>
 
     <!-- Task priority -->
     <string name="task_priority_none">None</string>
@@ -32,6 +33,8 @@
     <string name="taskcreator_label_complete">Mark as complete</string>
     <string name="taskcreator_msg_creation_success">Task created</string>
     <string name="taskcreator_msg_creation_error">Error while creating task</string>
+    <string name="taskcreator_msg_update_success">Task updated</string>
+    <string name="taskcreator_msg_update_error">Error while updating task</string>
 
     <!-- Miscellaneous section -->
     <string name="miscellaneous_tab_settings">Settings</string>

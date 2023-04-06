@@ -2,6 +2,7 @@ package edu.ub.pis.giickos.ui.section.taskcreator;
 
 import android.util.Log;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -10,6 +11,7 @@ import java.util.UUID;
 import edu.ub.pis.giickos.R;
 import edu.ub.pis.giickos.model.Controller;
 import edu.ub.pis.giickos.model.managers.ProjectManager;
+import edu.ub.pis.giickos.model.projectfunctions.Project;
 import edu.ub.pis.giickos.model.projectfunctions.Task;
 import edu.ub.pis.giickos.ui.ViewModelHelpers;
 import edu.ub.pis.giickos.ui.ViewModelHelpers.*;
@@ -69,7 +71,31 @@ public class ViewModel extends androidx.lifecycle.ViewModel {
         return success;
     }
 
-    // TODO method to update task information (if editing)
+    // Returns false if the operation fails
+    public boolean updateTask() {
+        boolean success = false;
+
+        if (taskID != null) {
+            Task task = model.getTask(taskID);
+            Project previousProject = model.getTaskProject(task.getID());
+            Project newProject = model.getProject(projectID);
+            task.setName(taskName);
+            task.setDescription(taskDescription);
+            task.setPriority(priority);
+            // TODO other setters
+
+            // TODO this sucks, at least extract it to ProjectManager
+            ArrayList<String> previousTasks = previousProject.getElements();
+            previousTasks.remove(taskID);
+            newProject.addElement(taskID);
+
+            success = model.updateTask(task);
+            success = success && model.updateProject(previousProject);
+            success = success && model.updateProject(newProject);
+        }
+
+        return success;
+    }
 
     public List<ProjectData> getProjects() {
         return ViewModelHelpers.sortProjects(model.getProjects());

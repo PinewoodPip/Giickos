@@ -67,9 +67,13 @@ public class ProjectFragment extends GiickosFragment {
 
     // Adds a task view to the project's list of tasks.
     public void addTask(TaskData task) {
-        Task fragment = Task.newInstance(task.id, R.drawable.placeholder_notebook, task.name);
+        Task fragment = Task.newInstance(getProjectID(), task.id, R.drawable.placeholder_notebook, task.name);
 
         addChildFragment(fragment, R.id.list_tasks);
+    }
+
+    public String getProjectID() {
+        return getArguments().getString(ARG_PROJECT_ID);
     }
 
     @Override

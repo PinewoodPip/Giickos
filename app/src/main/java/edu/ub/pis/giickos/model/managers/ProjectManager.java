@@ -39,4 +39,16 @@ public class ProjectManager {
     public boolean addTask(String projectGUID, Task task) {
         return dataProvider.addTask(projectGUID, task);
     }
+
+    public boolean updateTask(Task task) {
+        return dataProvider.updateTask(task);
+    }
+
+    public Project getTaskProject(String taskID) {
+        return dataProvider.getTaskProject(taskID);
+    }
+
+    public boolean updateProject(Project project) {
+        return dataProvider.updateProject(project);
+    }
 }

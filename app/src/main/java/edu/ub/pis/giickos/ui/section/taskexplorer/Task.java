@@ -20,6 +20,7 @@ import edu.ub.pis.giickos.ui.section.taskcreator.TaskCreator;
 
 // Displays a task within the task explorer.
 public class Task extends GiickosFragment {
+    public static final String ARG_PROJECT_ID = "ProjectID";
     public static final String ARG_TASK_ID = "TaskID";
     public static final String ARG_ICON = "Icon";
     public static final String ARG_LABEL = "Label";
@@ -38,10 +39,11 @@ public class Task extends GiickosFragment {
      * @param label
      * @return A new instance of fragment Task.
      */
-    public static Task newInstance(String taskID, int iconID, String label) {
+    public static Task newInstance(String projectID, String taskID, int iconID, String label) {
         Task fragment = new Task();
         Bundle args = new Bundle();
 
+        args.putString(ARG_PROJECT_ID, projectID);
         args.putString(ARG_TASK_ID, taskID);
         args.putInt(ARG_ICON, iconID);
         args.putString(ARG_LABEL, label);
@@ -83,7 +85,7 @@ public class Task extends GiickosFragment {
             @Override
             public void onClick(View view) {
                 Bundle transition = new Bundle();
-                transition.putString(TaskCreator.INTENT_EXTRA_PROJECT_ID, "TEMP1"); // TODO
+                transition.putString(TaskCreator.INTENT_EXTRA_PROJECT_ID, getArguments().getString(ARG_PROJECT_ID));
                 transition.putString(TaskCreator.INTENT_EXTRA_TASK_ID, getArguments().getString(ARG_TASK_ID));
 
                 MainActivity.transitionToSection(getActivity(), Section.TYPE.TASK_CREATOR, transition);

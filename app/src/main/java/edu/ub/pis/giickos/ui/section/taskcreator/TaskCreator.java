@@ -134,7 +134,22 @@ public class TaskCreator extends Section {
         projectObjects.addAll(projects);
         FormSpinner spinner;
 
-        spinner = addSpinnerField(R.drawable.placeholder, getString(R.string.taskcreator_label_project), projectObjects, 0);
+        // Restore spinner choice
+        String projectGUID = viewModel.getProjectID();
+        int spinnerIndex = 0;
+        if (projectGUID != null) {
+            for (int i = 0; i < projects.size(); i++) {
+                if (projects.get(i).id.equals(projectGUID)) {
+                    spinnerIndex = i;
+                    break;
+                }
+            }
+        }
+        else {
+            viewModel.setProjectID(projects.get(0).id); // TODO what if there are no projects!
+        }
+
+        spinner = addSpinnerField(R.drawable.placeholder, getString(R.string.taskcreator_label_project), projectObjects, spinnerIndex);
         spinner.setListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -148,27 +163,6 @@ public class TaskCreator extends Section {
                 Log.e("UI", "Project unselected; this should not happen");
             }
         });
-
-        // Set selection
-        if (viewModel.getProjectID() != null) {
-            String projectID = viewModel.getProjectID();
-            Optional<ProjectData> desc = projects.stream().filter(new Predicate() {
-                @Override
-                public boolean test(Object o) {
-                    ProjectData desc = (ProjectData) o;
-                    return desc.id.equals(projectID);
-                }
-            }).findFirst();
-
-            if (desc.isPresent()) {
-                int index = projects.indexOf(desc.get());
-
-                spinner.setSelection(index);
-            }
-        }
-        else {
-            viewModel.setProjectID(projects.get(0).id); // TODO what if there are no projects!
-        }
     }
 
     private void setupPrioritySpinner() {
@@ -277,12 +271,26 @@ public class TaskCreator extends Section {
 
         // Only add delete and complete buttons while editing
         if (!isCreating()) {
+            // Save button
+            addClickableField(R.drawable.placeholder, getString(R.string.generic_label_save), getResources().getColor(R.color.positive_action), new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    boolean success = viewModel.updateTask();
+                    int stringID = success ? R.string.taskcreator_msg_update_success : R.string.taskcreator_msg_update_error;
+
+                    Toast.makeText(getContext(), getString(stringID), Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            // "Mark as complete" button
             addClickableField(R.drawable.placeholder, getString(R.string.taskcreator_label_complete), getResources().getColor(R.color.positive_action), new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Log.d("TODO", "Complete button clicked");
                 }
             });
+
+            // Delete button
             addClickableField(R.drawable.placeholder, getString(R.string.generic_label_delete), getResources().getColor(R.color.destructive_action), new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -296,9 +304,9 @@ public class TaskCreator extends Section {
                 @Override
                 public void onClick(View view) {
                     boolean success = viewModel.createTask();
-                    String msg = success ? getString(R.string.taskcreator_msg_creation_success) : getString(R.string.taskcreator_msg_creation_error);
+                    int stringID = success ? R.string.taskcreator_msg_creation_success : R.string.taskcreator_msg_creation_error;
 
-                    Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), getString(stringID), Toast.LENGTH_SHORT).show();
                 }
             });
         }

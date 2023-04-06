@@ -83,6 +83,51 @@ public class MockProvider implements ProjectDataProvider {
         return success;
     }
 
+    @Override
+    public Project getTaskProject(String taskID) {
+        Project project = null;
+        Task task = getTask(taskID);
+
+        if (task != null) {
+            for (Project p : projects.values()) {
+                if (p.getElements().contains(task.getID())) {
+                    project = p;
+                    break;
+                }
+            }
+        }
+
+        return project;
+    }
+
+    @Override
+    public boolean updateTask(Task task) {
+        boolean success = false;
+        Task existingTask = getTask(task.getID());
+
+        if (existingTask != null) {
+            tasks.replace(existingTask.getID(), task);
+
+            success = true;
+        }
+
+        return success;
+    }
+
+    @Override
+    public boolean updateProject(Project newData) {
+        Project oldData = getProject(newData.getId());
+        boolean success = false;
+
+        if (oldData != null) {
+            projects.replace(oldData.getId(), newData);
+
+            success = true;
+        }
+
+        return success;
+    }
+
     // Creates mock projects and tasks.
     private void addMockData() {
         Project project1 = new Project(UUID.randomUUID(), "Test Project 1");
