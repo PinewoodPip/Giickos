@@ -2,11 +2,9 @@ package edu.ub.pis.giickos.model.managers;
 
 import java.util.Set;
 
-import edu.ub.pis.giickos.model.data.project.ProjectDataProvider;
 import edu.ub.pis.giickos.model.projectfunctions.Project;
 import edu.ub.pis.giickos.model.projectfunctions.Task;
 import edu.ub.pis.giickos.resources.dao.DAOProject;
-import edu.ub.pis.giickos.resources.service.DataService;
 
 public class ProjectManager {
     //Handler of projects
