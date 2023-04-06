@@ -3,13 +3,16 @@
     <string name="app_name">Giickos</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="placeholder">Placeholder</string>
+    <string name="missing_string">MISSING STRING</string>
 
     <!-- Generic/common labels -->
     <string name="generic_label_delete">Delete</string>
     <string name="generic_label_username">Username</string>
     <string name="generic_label_email">E-mail</string>
+    <string name="generic_label_create">Create</string>
 
     <!-- Task priority -->
+    <string name="task_priority_none">None</string>
     <string name="task_priority_low">Low</string>
     <string name="task_priority_medium">Medium</string>
     <string name="task_priority_high">High</string>
@@ -27,6 +30,8 @@
     <string name="taskcreator_label_settime">Tap to set...</string>
     <string name="taskcreator_label_details">Details</string>
     <string name="taskcreator_label_complete">Mark as complete</string>
+    <string name="taskcreator_msg_creation_success">Task created</string>
+    <string name="taskcreator_msg_creation_error">Error while creating task</string>
 
     <!-- Miscellaneous section -->
     <string name="miscellaneous_tab_settings">Settings</string>

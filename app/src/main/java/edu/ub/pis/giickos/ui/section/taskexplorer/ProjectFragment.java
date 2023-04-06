@@ -1,6 +1,5 @@
 package edu.ub.pis.giickos.ui.section.taskexplorer;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.cardview.widget.CardView;
@@ -12,11 +11,10 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.util.UUID;
-
 import edu.ub.pis.giickos.GiickosFragment;
 import edu.ub.pis.giickos.MainActivity;
 import edu.ub.pis.giickos.R;
+import edu.ub.pis.giickos.ui.ViewModelHelpers.*;
 import edu.ub.pis.giickos.ui.section.Section;
 import edu.ub.pis.giickos.ui.section.taskcreator.TaskCreator;
 
@@ -68,7 +66,7 @@ public class ProjectFragment extends GiickosFragment {
     }
 
     // Adds a task view to the project's list of tasks.
-    public void addTask(ViewModel.TaskData task) {
+    public void addTask(TaskData task) {
         Task fragment = Task.newInstance(task.id, R.drawable.placeholder_notebook, task.name);
 
         addChildFragment(fragment, R.id.list_tasks);

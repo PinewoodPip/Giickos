@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 
 import android.text.InputType;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,8 @@ public class TextField extends GiickosFragment {
     private static final String ARG_TEXT = "Text";
     private static final String ARG_INPUT_TYPE = "InputType";
     private static final String ARG_EDITABLE = "Editable";
+
+    private TextWatcher listener = null;
 
     public TextField() {} // Required empty public constructor
 
@@ -36,6 +39,19 @@ public class TextField extends GiickosFragment {
     // Overload that defaults to editable.
     public static TextField newInstance(String text, int inputType) {
         return newInstance(text, inputType, true);
+    }
+
+    public void setListener(TextWatcher listener) {
+        View view = getView();
+
+        if (view != null) {
+            EditText textField = view.findViewById(R.id.textfield_input);
+
+            textField.removeTextChangedListener(this.listener);
+            textField.addTextChangedListener(listener);
+        }
+
+        this.listener = listener;
     }
 
     @Override
@@ -62,5 +78,9 @@ public class TextField extends GiickosFragment {
         }
 
         return view;
+    }
+
+    public void onViewCreated(View view, Bundle savedInstance) {
+        setListener(listener);
     }
 }

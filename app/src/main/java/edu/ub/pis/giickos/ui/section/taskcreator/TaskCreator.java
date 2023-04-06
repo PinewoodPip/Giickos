@@ -2,14 +2,18 @@ package edu.ub.pis.giickos.ui.section.taskcreator;
 
 import android.os.Bundle;
 
+import android.text.Editable;
 import android.text.InputType;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.SpinnerAdapter;
+import android.widget.Toast;
+
+import androidx.annotation.Nullable;
+import androidx.lifecycle.ViewModelProvider;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +21,7 @@ import java.util.Optional;
 import java.util.function.Predicate;
 
 import edu.ub.pis.giickos.R;
+import edu.ub.pis.giickos.ui.ViewModelHelpers.*;
 import edu.ub.pis.giickos.ui.generic.form.FormCard;
 import edu.ub.pis.giickos.ui.generic.form.FormSpinner;
 import edu.ub.pis.giickos.ui.main.DatePickerListener;
@@ -26,27 +31,10 @@ import edu.ub.pis.giickos.ui.section.Section;
 // Section for creating tasks.
 public class TaskCreator extends Section {
 
-    // TODO move out of UI
-    enum TASK_PRIORITY {
-        LOW(R.string.task_priority_low),
-        MEDIUM(R.string.task_priority_medium),
-        HIGH(R.string.task_priority_high);
-
-        private int stringResource;
-
-        TASK_PRIORITY(int stringResource) {
-            this.stringResource = stringResource;
-        }
-
-        public int getNameResourceID() {
-            return stringResource;
-        }
-    }
-
     public static String INTENT_EXTRA_PROJECT_ID = "ProjectID";
     public static String INTENT_EXTRA_TASK_ID = "TaskID"; // If present the UI will be in edit mode
-
-    // TODO viewmodel
+    // TODO edit mode
+    private ViewModel viewModel;
 
     public TaskCreator() {} // Required empty public constructor
 
@@ -67,6 +55,14 @@ public class TaskCreator extends Section {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        this.viewModel = new ViewModelProvider(requireActivity()).get(ViewModel.class);
+
+        // Initialize values from intent
+        Optional<String> projectID = getIntentString(INTENT_EXTRA_PROJECT_ID);
+        if (projectID.isPresent()) {
+            viewModel.setProjectID(projectID.get());
+        }
     }
 
     @Override
@@ -78,6 +74,11 @@ public class TaskCreator extends Section {
     private boolean isCreating() {
         return !getIntentString(INTENT_EXTRA_TASK_ID).isPresent();
     }
+
+    private String getPriorityName(ViewModel.TASK_PRIORITY priority) {
+        return getString(priority.stringResource);
+    }
+
     private FormCard addField(int iconID, String label, int backgroundColor) {
         FormCard field = FormCard.newInstance(iconID, label, backgroundColor);
 
@@ -91,10 +92,10 @@ public class TaskCreator extends Section {
         return addField(iconID, label, -1);
     }
 
-    private void addTextField(int iconID, String label, String inputLabel, int inputType) {
+    private void addTextField(int iconID, String label, String inputLabel, int inputType, @Nullable TextWatcher listener) {
         FormCard field = addField(iconID, label);
 
-        field.addTextField(inputType, inputLabel);
+        field.addTextField(inputType, inputLabel, listener);
     }
 
     // Adds a field with a click listener.
@@ -118,49 +119,55 @@ public class TaskCreator extends Section {
 
     private FormSpinner addSpinnerField(int iconID, String label, List<Object> items, int selectedIndex) {
         FormCard field = addField(iconID, label);
+        List<String> itemStrings = new ArrayList<>();
+        for (Object item : items) {
+            itemStrings.add(item.toString());
+        }
 
-        return field.addSpinner(items, selectedIndex);
+        return field.addSpinner(itemStrings, selectedIndex);
     }
 
     private void setupProjectSpinner() {
-        List projectDescriptors = new ArrayList<>();
         Bundle extras = getActivity().getIntent().getExtras();
+        List<ProjectData> projects = viewModel.getProjects();
+        List<Object> projectObjects = new ArrayList<>();
+        projectObjects.addAll(projects);
         FormSpinner spinner;
 
-        // TODO replace once viewmodel is implemented
-        projectDescriptors.add(new ProjectDescriptor("1", "TEMP1"));
-        projectDescriptors.add(new ProjectDescriptor("2", "TEMP2"));
-        projectDescriptors.add(new ProjectDescriptor("3", "TEMP3"));
-
-        spinner = addSpinnerField(R.drawable.placeholder, getString(R.string.taskcreator_label_project), projectDescriptors, 0);
+        spinner = addSpinnerField(R.drawable.placeholder, getString(R.string.taskcreator_label_project), projectObjects, 0);
         spinner.setListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                Log.d("TODO", "Project selected " + projectDescriptors.get(i));
+                Log.d("TODO", "Project selected " + projects.get(i).name);
+
+                viewModel.setProjectID(projects.get(i).id);
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-                Log.d("TODO", "Project unselected ");
+                Log.e("UI", "Project unselected; this should not happen");
             }
         });
 
         // Set selection
-        if (extras != null) {
-            String projectID = extras.getString(INTENT_EXTRA_PROJECT_ID);
-            Optional<ProjectDescriptor> desc = projectDescriptors.stream().filter(new Predicate() {
+        if (viewModel.getProjectID() != null) {
+            String projectID = viewModel.getProjectID();
+            Optional<ProjectData> desc = projects.stream().filter(new Predicate() {
                 @Override
                 public boolean test(Object o) {
-                    ProjectDescriptor desc = (ProjectDescriptor) o;
-                    return desc.getId().equals(projectID);
+                    ProjectData desc = (ProjectData) o;
+                    return desc.id.equals(projectID);
                 }
             }).findFirst();
 
             if (desc.isPresent()) {
-                int index = projectDescriptors.indexOf(desc.get());
+                int index = projects.indexOf(desc.get());
 
                 spinner.setSelection(index);
             }
+        }
+        else {
+            viewModel.setProjectID(projects.get(0).id); // TODO what if there are no projects!
         }
     }
 
@@ -168,17 +175,16 @@ public class TaskCreator extends Section {
         List options = new ArrayList<>();
         FormSpinner spinner;
 
-        // Add an option for each priority
-        for (int x = 0; x < TASK_PRIORITY.values().length; x++) {
-            options.add(getString(TASK_PRIORITY.values()[x].stringResource));
+        for (int x = 0; x < ViewModel.TASK_PRIORITY.values().length; x++) {
+            options.add(getPriorityName(ViewModel.TASK_PRIORITY.values()[x]));
         }
 
-        // TODO set priority
-        spinner = addSpinnerField(R.drawable.placeholder, getString(R.string.taskcreator_label_priority), options, 0);
+        spinner = addSpinnerField(R.drawable.placeholder, getString(R.string.taskcreator_label_priority), options, viewModel.getPriority());
         spinner.setListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                Log.d("TODO", "Priority selected " + Integer.toString(i));
+                Log.d("View", "Priority selected " + Integer.toString(i));
+                viewModel.setPriority(i);
             }
 
             @Override
@@ -188,18 +194,47 @@ public class TaskCreator extends Section {
         });
     }
 
+    private String formatDate(ViewModel.TaskDate date) {
+        String str = date == null ? "" : String.format("%d/%d/%d", date.day, date.month, date.year);
+
+        return str;
+    }
+
+    private String formatTime(ViewModel.TaskTime time) {
+        String str = time == null ? "" : String.format("%d:%d", time.hour, time.minute); // TODO prettify
+
+        return str;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_task_creator, container, false);
 
+        if (!isCreating()) {
+            viewModel.setTaskID(getIntentString(INTENT_EXTRA_TASK_ID).get());
+        }
+
         setupProjectSpinner();
 
-        addTextField(R.drawable.placeholder_notebook, getString(R.string.taskcreator_label_title), "", InputType.TYPE_TEXT_VARIATION_PERSON_NAME);
-        addDateField("Date", R.drawable.placeholder_notebook, getString(R.string.taskcreator_label_date), "", new DatePickerListener() {
+        addTextField(R.drawable.placeholder_notebook, getString(R.string.taskcreator_label_title), viewModel.getTaskName(), InputType.TYPE_TEXT_VARIATION_PERSON_NAME, new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                viewModel.setTaskName(editable.toString());
+            }
+        });
+
+        addDateField("Date", R.drawable.placeholder_notebook, getString(R.string.taskcreator_label_date), formatDate(viewModel.getStartDate()), new DatePickerListener() {
             @Override
             public void dateSet(String id, int year, int month, int day) {
-                Log.d("TODO", "Date set");
+                Log.d("View", "Date set");
+                viewModel.setStartDate(new ViewModel.TaskDate(day, month, year));
             }
         });
 
@@ -208,14 +243,39 @@ public class TaskCreator extends Section {
         TimePickerListener timePickerListener = new TimePickerListener() {
             @Override
             public void timeSet(String pickerID, int hour, int minute) {
-                Log.d("TODO", "Time set");
+                Log.d("View", "Time set for " + pickerID);
+                ViewModel.TaskTime time = new ViewModel.TaskTime(hour, minute);
+
+                if (pickerID.equals("StartTime")) {
+                    viewModel.setStartTime(time);
+                }
+                else if (pickerID.equals("EndTime")) {
+                    viewModel.setEndTime(time);
+                }
+                else {
+                    Log.e("View", "Unknown time picker listener ID in TaskCreator: " + pickerID);
+                }
             }
         };
 
-        addTimeField("StartTime", R.drawable.placeholder_notebook, getString(R.string.taskcreator_label_time_start), "", timePickerListener);
-        addTimeField("EndTime", R.drawable.placeholder_notebook, getString(R.string.taskcreator_label_time_end), "", timePickerListener);
-        addTextField(R.drawable.placeholder_notebook, getString(R.string.taskcreator_label_details), "", InputType.TYPE_TEXT_FLAG_MULTI_LINE); // TODO move to separate tab
+        addTimeField("StartTime", R.drawable.placeholder_notebook, getString(R.string.taskcreator_label_time_start), formatTime(viewModel.getStartTime()), timePickerListener);
+        addTimeField("EndTime", R.drawable.placeholder_notebook, getString(R.string.taskcreator_label_time_end), formatTime(viewModel.getEndTime()), timePickerListener);
 
+        // TODO move to separate tab
+        addTextField(R.drawable.placeholder_notebook, getString(R.string.taskcreator_label_details), viewModel.getTaskDescription(), InputType.TYPE_TEXT_FLAG_MULTI_LINE, new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                viewModel.setTaskDescription(editable.toString());
+            }
+        });
+
+        // Only add delete and complete buttons while editing
         if (!isCreating()) {
             addClickableField(R.drawable.placeholder, getString(R.string.taskcreator_label_complete), getResources().getColor(R.color.positive_action), new View.OnClickListener() {
                 @Override
@@ -223,11 +283,22 @@ public class TaskCreator extends Section {
                     Log.d("TODO", "Complete button clicked");
                 }
             });
-            // Only add delete button while editing
             addClickableField(R.drawable.placeholder, getString(R.string.generic_label_delete), getResources().getColor(R.color.destructive_action), new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Log.d("TODO", "Delete button clicked");
+                }
+            });
+        }
+        else {
+            // Otherwise add button to create the task
+            addClickableField(R.drawable.placeholder, getString(R.string.generic_label_create), getResources().getColor(R.color.positive_action), new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    boolean success = viewModel.createTask();
+                    String msg = success ? getString(R.string.taskcreator_msg_creation_success) : getString(R.string.taskcreator_msg_creation_error);
+
+                    Toast.makeText(getContext(), msg, Toast.LENGTH_SHORT).show();
                 }
             });
         }

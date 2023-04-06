@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,9 +61,11 @@ public class FormCard extends GiickosFragment {
     }
 
 
-    public TextField addTextField(int inputType, String label) {
+    public TextField addTextField(int inputType, String label, TextWatcher listener) {
         TextField textField = TextField.newInstance(label, inputType);
         addElement(textField);
+
+        textField.setListener(listener);
 
         return textField;
     }
@@ -85,7 +88,7 @@ public class FormCard extends GiickosFragment {
         return dateField;
     }
 
-    public FormSpinner addSpinner(List<Object> items, int selectedIndex) {
+    public FormSpinner addSpinner(List<String> items, int selectedIndex) {
         FormSpinner spinner = FormSpinner.newInstance(items, selectedIndex);
         addElement(spinner);
 

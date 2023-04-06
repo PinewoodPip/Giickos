@@ -2,9 +2,6 @@ package edu.ub.pis.giickos.ui.section.taskexplorer;
 
 import android.os.Bundle;
 
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.view.LayoutInflater;
@@ -15,6 +12,7 @@ import java.util.List;
 
 import edu.ub.pis.giickos.GiickosFragment;
 import edu.ub.pis.giickos.R;
+import edu.ub.pis.giickos.ui.ViewModelHelpers.*;
 
 // Container for tasks within TaskExplorer.
 public class TaskList extends GiickosFragment {
@@ -46,13 +44,13 @@ public class TaskList extends GiickosFragment {
     }
 
     private void addProject(String id) {
-        ViewModel.ProjectData project = viewModel.getProject(id);
-        List<ViewModel.TaskData> tasks = viewModel.getTasks(id);
+        ProjectData project = viewModel.getProject(id);
+        List<TaskData> tasks = viewModel.getTasks(id);
         ProjectFragment fragment = ProjectFragment.newInstance(id, project.name, false); // TODO keep track of open projects in viewmodel
 
         addChildFragment(fragment, R.id.list_main, true);
 
-        for (ViewModel.TaskData task : tasks) {
+        for (TaskData task : tasks) {
             fragment.addTask(task);
         }
     }
@@ -63,7 +61,7 @@ public class TaskList extends GiickosFragment {
         View view = inflater.inflate(R.layout.fragment_task_list, container, false);
 
         // Render projects and tasks
-        for (ViewModel.ProjectData project : viewModel.getProjects()) {
+        for (ProjectData project : viewModel.getProjects()) {
             addProject(project.id);
         }
 

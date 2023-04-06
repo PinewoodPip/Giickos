@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import edu.ub.pis.giickos.R;
@@ -19,15 +20,18 @@ import edu.ub.pis.giickos.R;
 // A wrapper fragment for a combobox / dropdown.
 public class FormSpinner extends Fragment {
 
-    private List<Object> items;
+    private static final String INSTANCE_ITEMS = "Items";
+    private static final String INSTANCE_SELECTED_INDEX = "SelectedIndex";
+
+    private List<String> items;
     private int selectedIndex = 0;
-    private AdapterView.OnItemSelectedListener listener;
+    private AdapterView.OnItemSelectedListener listener = null;
 
     public FormSpinner() {
         // Required empty public constructor
     }
 
-    public static FormSpinner newInstance(List<Object> items, int selectedIndex) {
+    public static FormSpinner newInstance(List<String> items, int selectedIndex) {
         FormSpinner fragment = new FormSpinner();
         Bundle args = new Bundle();
         fragment.setArguments(args);
@@ -85,9 +89,21 @@ public class FormSpinner extends Fragment {
     public void onViewCreated(View view, Bundle bundle) {
         Spinner spinner = getSpinnerView();
 
+        // Restore options list from saved state
+        if (bundle != null) {
+            items = bundle.getStringArrayList(INSTANCE_ITEMS);
+            selectedIndex = bundle.getInt(INSTANCE_SELECTED_INDEX);
+        }
+
         spinner.setAdapter(new ArrayAdapter<>(getContext(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, items));
 
         setListener(listener);
         setSelection(selectedIndex);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle bundle) {
+        bundle.putStringArrayList(INSTANCE_ITEMS, (ArrayList<String>) items);
+        bundle.putInt(INSTANCE_SELECTED_INDEX, selectedIndex);
     }
 }
