@@ -21,4 +21,6 @@ public interface DAOProject {
     Project getTaskProject(String taskID);
 
     boolean updateProject(Project project);
+
+    boolean deleteTask(String taskID);
 }

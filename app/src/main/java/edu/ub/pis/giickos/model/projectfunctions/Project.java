@@ -50,4 +50,8 @@ public class Project {
         this.id = id;
         setName(name);
     }
+
+    public void removeElement(String taskID) {
+        elements.remove(taskID);
+    }
 }

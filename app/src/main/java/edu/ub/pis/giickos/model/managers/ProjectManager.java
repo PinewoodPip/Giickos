@@ -49,4 +49,8 @@ public class ProjectManager {
     public boolean updateProject(Project project) {
         return daoProject.updateProject(project);
     }
+
+    public boolean deleteTask(String taskID) {
+        return daoProject.deleteTask(taskID);
+    }
 }

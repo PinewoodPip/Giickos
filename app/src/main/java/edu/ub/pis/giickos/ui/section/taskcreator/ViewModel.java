@@ -71,6 +71,16 @@ public class ViewModel extends androidx.lifecycle.ViewModel {
         return success;
     }
 
+    public boolean deleteTask() {
+        boolean success = false;
+
+        if (taskID != null) {
+            success = model.deleteTask(taskID);
+        }
+
+        return success;
+    }
+
     // Returns false if the operation fails
     public boolean updateTask() {
         boolean success = false;

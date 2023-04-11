@@ -1,7 +1,7 @@
 package edu.ub.pis.giickos.ui.section.taskcreator;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
-
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
@@ -18,10 +18,11 @@ import androidx.lifecycle.ViewModelProvider;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Predicate;
 
+import edu.ub.pis.giickos.MainActivity;
 import edu.ub.pis.giickos.R;
 import edu.ub.pis.giickos.ui.ViewModelHelpers.*;
+import edu.ub.pis.giickos.ui.dialogs.Alert;
 import edu.ub.pis.giickos.ui.generic.form.FormCard;
 import edu.ub.pis.giickos.ui.generic.form.FormSpinner;
 import edu.ub.pis.giickos.ui.main.DatePickerListener;
@@ -294,7 +295,25 @@ public class TaskCreator extends Section {
             addClickableField(R.drawable.placeholder, getString(R.string.generic_label_delete), getResources().getColor(R.color.destructive_action), new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Log.d("TODO", "Delete button clicked");
+                    Alert alert = new Alert(getActivity(), getString(R.string.taskcreator_msg_delete_title), getString(R.string.taskcreator_msg_delete_body));
+
+                    alert.setPositiveButton(new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int _) {
+                            boolean success = viewModel.deleteTask();
+
+                            showOperationResultToast(success, getString(R.string.taskcreator_msg_deleted_success), getString(R.string.taskcreator_msg_deleted_error));
+
+                            // Return to task explorer on success, and prevent returning to this activity
+                            if (success) {
+                                MainActivity.transitionToSection(getActivity(), TYPE.TASK_EXPLORER, null, true);
+                            }
+
+                            dialog.dismiss();
+                        }
+                    });
+
+                    alert.show();
                 }
             });
         }

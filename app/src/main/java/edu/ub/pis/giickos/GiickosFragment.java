@@ -1,6 +1,7 @@
 package edu.ub.pis.giickos;
 
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -53,5 +54,9 @@ public class GiickosFragment extends Fragment {
         }
 
         return str;
+    }
+
+    public void showOperationResultToast(boolean success, String successString, String failureString) {
+        Toast.makeText(getContext(), success ? successString : failureString, Toast.LENGTH_SHORT).show();
     }
 }

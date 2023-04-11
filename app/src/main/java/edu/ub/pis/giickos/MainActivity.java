@@ -1,5 +1,6 @@
 package edu.ub.pis.giickos;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
@@ -18,10 +19,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // Transitions to a section.
-    public static void transitionToSection(Activity sourceActivity, Section.TYPE sectionID, Bundle bundle) {
+    public static void transitionToSection(Activity sourceActivity, Section.TYPE sectionID, @Nullable Bundle bundle, boolean clearStack) {
         Intent transition = new Intent(sourceActivity, MainActivity.class);
+        if (clearStack) {
+            transition.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        }
+        if (bundle == null) {
+            bundle = new Bundle();
+        }
         transition.putExtras(bundle);
         transition.putExtra(MainFragment.INTENT_EXTRA_SECTION, sectionID.ordinal());
+
         sourceActivity.startActivity(transition);
+    }
+
+    public static void transitionToSection(Activity sourceActivity, Section.TYPE sectionID, @Nullable Bundle bundle) {
+        transitionToSection(sourceActivity, sectionID, bundle, false);
     }
 }

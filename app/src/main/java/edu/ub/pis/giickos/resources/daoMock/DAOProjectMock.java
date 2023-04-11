@@ -115,6 +115,23 @@ public class DAOProjectMock implements DAOProject {
     }
 
     @Override
+    public boolean deleteTask(String taskID) {
+        boolean success = false;
+        Task existingTask = getTask(taskID);
+
+        if (existingTask != null) {
+            Project project = getTaskProject(taskID);
+
+            project.removeElement(taskID);
+            tasks.remove(taskID);
+
+            success = updateProject(project);
+        }
+
+        return success;
+    }
+
+    @Override
     public boolean updateProject(Project newData) {
         Project oldData = getProject(newData.getId());
         boolean success = false;
@@ -147,9 +164,4 @@ public class DAOProjectMock implements DAOProject {
         // Test project with no tasks
         addProject(project3);
     }
-
-
-
-
-
 }
