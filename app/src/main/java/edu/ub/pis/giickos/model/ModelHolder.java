@@ -7,14 +7,14 @@ import edu.ub.pis.giickos.resources.service.AbstractFactoryData;
 import edu.ub.pis.giickos.resources.service.DataService;
 import edu.ub.pis.giickos.resources.service.FactoryMock;
 
-//Not sure if this should be in model...
-public enum Controller {
+// Provides a singleton for the model.
+public enum ModelHolder {
     INSTANCE; //Singleton
 
     private DataService dataService; // Data provider
     private Giickos model;
 
-    Controller()
+    ModelHolder()
     {
         setModel(new FactoryMock()); // Usar mock per defecte
     }

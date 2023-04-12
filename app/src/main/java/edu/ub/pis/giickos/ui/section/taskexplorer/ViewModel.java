@@ -1,11 +1,9 @@
 package edu.ub.pis.giickos.ui.section.taskexplorer;
 
-import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 
-import edu.ub.pis.giickos.model.Controller;
+import edu.ub.pis.giickos.model.ModelHolder;
 import edu.ub.pis.giickos.model.managers.ProjectManager;
 import edu.ub.pis.giickos.model.projectfunctions.Task;
 import edu.ub.pis.giickos.model.projectfunctions.Project;
@@ -16,7 +14,7 @@ public class ViewModel extends androidx.lifecycle.ViewModel {
     private ProjectManager model;
 
     public ViewModel() {
-        this.model = Controller.INSTANCE.getProjectManager();
+        this.model = ModelHolder.INSTANCE.getProjectManager();
     }
 
     public List<ProjectData> getProjects() {

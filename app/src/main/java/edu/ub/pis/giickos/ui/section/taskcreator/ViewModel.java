@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.UUID;
 
 import edu.ub.pis.giickos.R;
-import edu.ub.pis.giickos.model.Controller;
+import edu.ub.pis.giickos.model.ModelHolder;
 import edu.ub.pis.giickos.model.managers.ProjectManager;
 import edu.ub.pis.giickos.model.projectfunctions.Project;
 import edu.ub.pis.giickos.model.projectfunctions.Task;
@@ -61,7 +61,7 @@ public class ViewModel extends androidx.lifecycle.ViewModel {
     private boolean taskEditInitialized = false; // Used to only load data for task editing the first time the view renders
 
     public ViewModel() {
-        this.model = Controller.INSTANCE.getProjectManager();
+        this.model = ModelHolder.INSTANCE.getProjectManager();
     }
 
     // Creates a task with the currently inputted data
