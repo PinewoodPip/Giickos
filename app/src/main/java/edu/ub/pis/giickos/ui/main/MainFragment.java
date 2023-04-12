@@ -1,36 +1,31 @@
 package edu.ub.pis.giickos.ui.main;
 
-import androidx.lifecycle.ViewModelProvider;
-
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+
 import edu.ub.pis.giickos.GiickosFragment;
-import edu.ub.pis.giickos.ui.observer.ObservableEvent;
-import edu.ub.pis.giickos.ui.observer.Observer;
 import edu.ub.pis.giickos.R;
 import edu.ub.pis.giickos.ui.main.sectionbar.SectionBar;
-import edu.ub.pis.giickos.ui.main.sectionbar.SectionBarEvents;
-import edu.ub.pis.giickos.ui.main.sectionbar.SectionBarItemEvent;
+import edu.ub.pis.giickos.ui.section.Section;
 import edu.ub.pis.giickos.ui.section.calendar.CalendarSection;
 import edu.ub.pis.giickos.ui.section.miscellaneous.MiscellaneousSection;
 import edu.ub.pis.giickos.ui.section.taskcreator.TaskCreator;
 import edu.ub.pis.giickos.ui.section.taskexplorer.TaskExplorer;
-import edu.ub.pis.giickos.ui.section.Section;
 
 public class MainFragment extends GiickosFragment {
 
     public static String INTENT_EXTRA_SECTION = "Section";
 
-    private MainViewModel mViewModel;
+    private MainViewModel viewModel;
 
     public static MainFragment newInstance() {
         return new MainFragment();
@@ -39,8 +34,8 @@ public class MainFragment extends GiickosFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(MainViewModel.class);
-        // TODO: Use the ViewModel
+
+        viewModel = new ViewModelProvider(getActivity()).get(MainViewModel.class);
     }
 
     // Changes the active section.
@@ -49,7 +44,7 @@ public class MainFragment extends GiickosFragment {
     }
 
     // Enum overload for changeSection().
-    private void changeSection(Section.TYPE sectionType) {
+    private void changeSection(MainViewModel.TYPE sectionType) {
         Section section = null;
 
         switch (sectionType) {
@@ -83,16 +78,6 @@ public class MainFragment extends GiickosFragment {
     private void createSectionBar() {
         SectionBar sectionBar = SectionBar.newInstance();
         replaceFragment(R.id.section_bar, sectionBar);
-
-        // Listen for presses
-        sectionBar.subscribe(SectionBarEvents.SECTION_PRESSED, new Observer() {
-            @Override
-            public void update(ObservableEvent eventData) {
-                SectionBarItemEvent event = (SectionBarItemEvent) eventData;
-
-                changeSection(event.getSectionID());
-            }
-        });
     }
 
     @Nullable
@@ -101,11 +86,16 @@ public class MainFragment extends GiickosFragment {
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
 
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstance) {
         createSectionBar();
 
         // Set section from intent (if any)
         // or default to task explorer
-        Section.TYPE sectionID = Section.TYPE.TASK_EXPLORER;
+        MainViewModel.TYPE sectionID = MainViewModel.TYPE.TASK_EXPLORER;
         Intent intent = getActivity().getIntent();
         if (intent != null) {
             Bundle extras = intent.getExtras();
@@ -113,12 +103,18 @@ public class MainFragment extends GiickosFragment {
                 int sectionIntegerID = extras.getInt(INTENT_EXTRA_SECTION);
 
                 if (sectionIntegerID != -1) {
-                    sectionID = Section.TYPE.values()[sectionIntegerID];
+                    sectionID = MainViewModel.TYPE.values()[sectionIntegerID];
+                    viewModel.setCurrentSection(sectionID);
                 }
             }
         }
         changeSection(sectionID);
 
-        return view;
+        viewModel.getCurrentSection().observe(getViewLifecycleOwner(), new Observer<MainViewModel.TYPE>() {
+            @Override
+            public void onChanged(MainViewModel.TYPE type) {
+                changeSection(type);
+            }
+        });
     }
 }

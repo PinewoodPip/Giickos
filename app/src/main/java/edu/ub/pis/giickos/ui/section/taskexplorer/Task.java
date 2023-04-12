@@ -1,10 +1,8 @@
 package edu.ub.pis.giickos.ui.section.taskexplorer;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.cardview.widget.CardView;
-import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +13,7 @@ import android.widget.TextView;
 import edu.ub.pis.giickos.GiickosFragment;
 import edu.ub.pis.giickos.MainActivity;
 import edu.ub.pis.giickos.R;
-import edu.ub.pis.giickos.ui.section.Section;
+import edu.ub.pis.giickos.ui.main.MainViewModel;
 import edu.ub.pis.giickos.ui.section.taskcreator.TaskCreator;
 
 // Displays a task within the task explorer.
@@ -88,7 +86,7 @@ public class Task extends GiickosFragment {
                 transition.putString(TaskCreator.INTENT_EXTRA_PROJECT_ID, getArguments().getString(ARG_PROJECT_ID));
                 transition.putString(TaskCreator.INTENT_EXTRA_TASK_ID, getArguments().getString(ARG_TASK_ID));
 
-                MainActivity.transitionToSection(getActivity(), Section.TYPE.TASK_CREATOR, transition);
+                MainActivity.transitionToSection(getActivity(), MainViewModel.TYPE.TASK_CREATOR, transition);
             }
         });
     }

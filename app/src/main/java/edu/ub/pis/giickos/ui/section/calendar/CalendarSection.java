@@ -23,6 +23,7 @@ import com.kizitonwose.calendar.view.WeekHeaderFooterBinder;
 import java.time.LocalDate;
 
 import edu.ub.pis.giickos.R;
+import edu.ub.pis.giickos.ui.main.MainViewModel;
 import edu.ub.pis.giickos.ui.section.Section;
 
 // Fragment for the calendar section.
@@ -131,7 +132,7 @@ public class CalendarSection extends Section {
     }
 
     @Override
-    public TYPE getType() {
-        return TYPE.CALENDAR;
+    public MainViewModel.TYPE getType() {
+        return MainViewModel.TYPE.CALENDAR;
     }
 }

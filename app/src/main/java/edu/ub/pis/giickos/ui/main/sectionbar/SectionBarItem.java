@@ -1,58 +1,72 @@
 package edu.ub.pis.giickos.ui.main.sectionbar;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 
-import edu.ub.pis.giickos.ui.observer.Observable;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+
+import edu.ub.pis.giickos.GiickosFragment;
 import edu.ub.pis.giickos.R;
-import edu.ub.pis.giickos.ui.section.Section;
+import edu.ub.pis.giickos.ui.main.MainViewModel;
+import edu.ub.pis.giickos.ui.observer.Observable;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link SectionBarItem#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class SectionBarItem extends Observable<SectionBarEvents> {
+// Fragment for the navigation buttons in the section bar.
+public class SectionBarItem extends GiickosFragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     public static final String ARG_SECTION_ID = "SectionID";
-    public static final String ARG_ICON = "IconID";
 
-    private int iconID;
-    private Section.TYPE sectionType;
+    private MainViewModel.TYPE sectionType;
+    private boolean selected;
+
+    private MainViewModel viewModel;
 
     public SectionBarItem() {} // Required empty public constructor
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @return A new instance of fragment SectionBarItem.
-     */
-    public static SectionBarItem newInstance(Section.TYPE sectionType, int iconID) {
+    public static SectionBarItem newInstance(MainViewModel.TYPE sectionType) {
         SectionBarItem fragment = new SectionBarItem();
         Bundle args = new Bundle();
+
         args.putInt(ARG_SECTION_ID, sectionType.ordinal());
-        args.putInt(ARG_ICON, iconID);
         fragment.setArguments(args);
+
         return fragment;
+    }
+
+    private void setSelected(boolean selected) {
+        ImageButton button = getButtonView();
+
+        this.selected = selected;
+
+        if (button != null) {
+            // Set button icon
+            button.setImageResource(selected ? sectionType.getSelectedIconResource() : sectionType.getIconResource());
+        }
+    }
+
+    private ImageButton getButtonView() {
+        View view = getView();
+        ImageButton button = null;
+
+        if (view != null) {
+            button = view.findViewById(R.id.icon);
+        }
+
+        return button;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            sectionType = Section.TYPE.values()[getArguments().getInt(ARG_SECTION_ID)];
-            iconID = getArguments().getInt(ARG_ICON);
+            sectionType = MainViewModel.TYPE.values()[getArguments().getInt(ARG_SECTION_ID)];
         }
+
+        viewModel = new ViewModelProvider(getActivity()).get(MainViewModel.class);
     }
 
     @Override
@@ -61,19 +75,26 @@ public class SectionBarItem extends Observable<SectionBarEvents> {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_section_bar_item, container, false);
 
-        // Set button icon
-        ImageButton button = view.findViewById(R.id.icon);
-        button.setImageResource(iconID);
+        return view;
+    }
 
-        button.setOnClickListener(new View.OnClickListener() {
+    public void onViewCreated(View view, Bundle savedInstance) {
+        getButtonView().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("D", "SectionBarItem clicked");
+                Log.d("UI", "SectionBarItem clicked");
 
-                notifyObservers(SectionBarEvents.SECTION_PRESSED, new SectionBarItemEvent(SectionBarItem.this, sectionType));
+                viewModel.setCurrentSection(sectionType);
             }
         });
 
-        return view;
+        // Listen for the section changing to update views
+        final Observer observer = new Observer<MainViewModel.TYPE>() {
+            @Override
+            public void onChanged(MainViewModel.TYPE section) {
+                setSelected(section == sectionType);
+            }
+        };
+        viewModel.getCurrentSection().observe(getViewLifecycleOwner(), observer);
     }
 }

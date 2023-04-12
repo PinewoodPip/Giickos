@@ -8,7 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import edu.ub.pis.giickos.ui.main.MainFragment;
-import edu.ub.pis.giickos.ui.section.Section;
+import edu.ub.pis.giickos.ui.main.MainViewModel;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // Transitions to a section.
-    public static void transitionToSection(Activity sourceActivity, Section.TYPE sectionID, @Nullable Bundle bundle, boolean clearStack) {
+    public static void transitionToSection(Activity sourceActivity, MainViewModel.TYPE sectionID, @Nullable Bundle bundle, boolean clearStack) {
         Intent transition = new Intent(sourceActivity, MainActivity.class);
         if (clearStack) {
             transition.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
         sourceActivity.startActivity(transition);
     }
 
-    public static void transitionToSection(Activity sourceActivity, Section.TYPE sectionID, @Nullable Bundle bundle) {
+    public static void transitionToSection(Activity sourceActivity, MainViewModel.TYPE sectionID, @Nullable Bundle bundle) {
         transitionToSection(sourceActivity, sectionID, bundle, false);
     }
 }

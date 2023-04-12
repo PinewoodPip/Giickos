@@ -1,23 +1,20 @@
 package edu.ub.pis.giickos.ui.section.taskexplorer;
 
 import android.app.AlertDialog;
-import android.app.Fragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
 
-import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 
 import androidx.lifecycle.ViewModelProvider;
 
 import edu.ub.pis.giickos.MainActivity;
 import edu.ub.pis.giickos.R;
-import edu.ub.pis.giickos.ui.generic.form.TextField;
+import edu.ub.pis.giickos.ui.main.MainViewModel;
 import edu.ub.pis.giickos.ui.section.Section;
 
 // Main fragment for the task explorer.
@@ -51,8 +48,8 @@ public class TaskExplorer extends Section {
     }
 
     @Override
-    public TYPE getType() {
-        return TYPE.TASK_EXPLORER;
+    public MainViewModel.TYPE getType() {
+        return MainViewModel.TYPE.TASK_EXPLORER;
     }
 
     @Override
@@ -88,7 +85,7 @@ public class TaskExplorer extends Section {
 
                         if (success) {
                             // TODO use an event / livedata instead to trigger a refresh of the UI
-                            MainActivity.transitionToSection(getActivity(), TYPE.TASK_EXPLORER, null, true);
+                            MainActivity.transitionToSection(getActivity(), MainViewModel.TYPE.TASK_EXPLORER, null, true);
                         }
 
                         dialog.dismiss();

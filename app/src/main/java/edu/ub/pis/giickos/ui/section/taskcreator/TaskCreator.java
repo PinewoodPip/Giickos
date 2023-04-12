@@ -26,6 +26,7 @@ import edu.ub.pis.giickos.ui.dialogs.Alert;
 import edu.ub.pis.giickos.ui.generic.form.FormCard;
 import edu.ub.pis.giickos.ui.generic.form.FormSpinner;
 import edu.ub.pis.giickos.ui.main.DatePickerListener;
+import edu.ub.pis.giickos.ui.main.MainViewModel;
 import edu.ub.pis.giickos.ui.main.TimePickerListener;
 import edu.ub.pis.giickos.ui.section.Section;
 
@@ -61,8 +62,8 @@ public class TaskCreator extends Section {
     }
 
     @Override
-    public TYPE getType() {
-        return TYPE.TASK_CREATOR;
+    public MainViewModel.TYPE getType() {
+        return MainViewModel.TYPE.TASK_CREATOR;
     }
 
     // Returns whether the fragment is being used to create a task (instead of editing one)
@@ -326,7 +327,7 @@ public class TaskCreator extends Section {
 
                             // Return to task explorer on success, and prevent returning to this activity
                             if (success) {
-                                MainActivity.transitionToSection(getActivity(), TYPE.TASK_EXPLORER, null, true);
+                                MainActivity.transitionToSection(getActivity(), MainViewModel.TYPE.TASK_EXPLORER, null, true);
                             }
 
                             dialog.dismiss();

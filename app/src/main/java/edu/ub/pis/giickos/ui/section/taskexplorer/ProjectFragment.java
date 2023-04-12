@@ -15,7 +15,7 @@ import edu.ub.pis.giickos.GiickosFragment;
 import edu.ub.pis.giickos.MainActivity;
 import edu.ub.pis.giickos.R;
 import edu.ub.pis.giickos.ui.ViewModelHelpers.*;
-import edu.ub.pis.giickos.ui.section.Section;
+import edu.ub.pis.giickos.ui.main.MainViewModel;
 import edu.ub.pis.giickos.ui.section.taskcreator.TaskCreator;
 
 /*
@@ -113,7 +113,7 @@ public class ProjectFragment extends GiickosFragment {
                 Bundle bundle = new Bundle();
                 bundle.putString(TaskCreator.INTENT_EXTRA_PROJECT_ID, getArguments().getString(ARG_PROJECT_ID));
 
-                MainActivity.transitionToSection(getActivity(), Section.TYPE.TASK_CREATOR, bundle);
+                MainActivity.transitionToSection(getActivity(), MainViewModel.TYPE.TASK_CREATOR, bundle);
             }
         });
     }
