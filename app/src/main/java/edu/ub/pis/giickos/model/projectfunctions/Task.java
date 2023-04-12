@@ -11,7 +11,14 @@ public class Task extends ProjectElement {
         HIGH,
     }
 
+    public enum REPEAT_MODE {
+        NONE,
+        DAILY,
+        WEEKLY,
+    }
+
     private PRIORITY priority = PRIORITY.NONE;
+    private REPEAT_MODE repeatMode = REPEAT_MODE.NONE;
     private String description = "";
     private boolean isCompleted = false;
 
@@ -42,6 +49,14 @@ public class Task extends ProjectElement {
 
     public void setCompleted(boolean isCompleted) {
         this.isCompleted = isCompleted;
+    }
+
+    public REPEAT_MODE getRepeatMode() {
+        return repeatMode;
+    }
+
+    public void setRepeatMode(REPEAT_MODE repeatMode) {
+        this.repeatMode = repeatMode;
     }
 
     /*

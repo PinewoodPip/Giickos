@@ -33,18 +33,12 @@ import edu.ub.pis.giickos.ui.section.Section;
 public class TaskCreator extends Section {
 
     public static String INTENT_EXTRA_PROJECT_ID = "ProjectID";
-    public static String INTENT_EXTRA_TASK_ID = "TaskID"; // If present the UI will be in edit mode
-    // TODO edit mode
+    public static String INTENT_EXTRA_TASK_ID = "TaskID"; // If present, the UI will open in edit mode
+
     private ViewModel viewModel;
 
     public TaskCreator() {} // Required empty public constructor
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @return A new instance of fragment TaskCreator.
-     */
     public static TaskCreator newInstance() {
         TaskCreator fragment = new TaskCreator();
         Bundle args = new Bundle();
@@ -128,8 +122,33 @@ public class TaskCreator extends Section {
         return field.addSpinner(itemStrings, selectedIndex);
     }
 
+    private void setupRepeatModeSpinner() {
+        List<Object> options = new ArrayList<>();
+        FormSpinner spinner;
+
+        // Create an option for each repeat mode
+        for (int i = 0; i < ViewModel.TASK_REPEAT_MODE.values().length; i++) {
+            options.add(getString(ViewModel.TASK_REPEAT_MODE.values()[i].stringResource));
+        }
+
+        spinner = addSpinnerField(R.drawable.placeholder, getString(R.string.taskcreator_label_time_repeat), options, viewModel.getRepeatMode().ordinal());
+
+        spinner.setListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                Log.d("UI", "Repeat mode set to " + Integer.toString(i));
+
+                viewModel.setRepeatMode(i);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                Log.e("UI", "Repeat mode unselected; this should not happen");
+            }
+        });
+    }
+
     private void setupProjectSpinner() {
-        Bundle extras = getActivity().getIntent().getExtras();
         List<ProjectData> projects = viewModel.getProjects();
         List<Object> projectObjects = new ArrayList<>();
         projectObjects.addAll(projects);
@@ -154,7 +173,7 @@ public class TaskCreator extends Section {
         spinner.setListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                Log.d("TODO", "Project selected " + projects.get(i).name);
+                Log.d("UI", "Project selected " + projects.get(i).name);
 
                 viewModel.setProjectID(projects.get(i).id);
             }
@@ -255,6 +274,7 @@ public class TaskCreator extends Section {
 
         addTimeField("StartTime", R.drawable.placeholder_notebook, getString(R.string.taskcreator_label_time_start), formatTime(viewModel.getStartTime()), timePickerListener);
         addTimeField("EndTime", R.drawable.placeholder_notebook, getString(R.string.taskcreator_label_time_end), formatTime(viewModel.getEndTime()), timePickerListener);
+        setupRepeatModeSpinner();
 
         // TODO move to separate tab
         addTextField(R.drawable.placeholder_notebook, getString(R.string.taskcreator_label_details), viewModel.getTaskDescription(), InputType.TYPE_TEXT_FLAG_MULTI_LINE, new TextWatcher() {

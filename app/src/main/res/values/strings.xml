@@ -16,6 +16,7 @@
     <string name="generic_label_week">Week</string>
     <string name="generic_label_month">Month</string>
     <string name="generic_label_year">Year</string>
+    <string name="generic_label_none">None</string>
 
     <!-- Months of the year -->
     <string name="month_january">January</string>
@@ -32,10 +33,15 @@
     <string name="month_december">December</string>
 
     <!-- Task priority -->
-    <string name="task_priority_none">None</string>
+    <string name="task_priority_none">@string/generic_label_none</string>
     <string name="task_priority_low">Low</string>
     <string name="task_priority_medium">Medium</string>
     <string name="task_priority_high">High</string>
+
+    <!-- Task repeat type -->
+    <string name="task_repeatmode_none">Don\'t repeat</string>
+    <string name="task_repeatmode_daily">Daily</string>
+    <string name="task_repeatmode_weekly">Weekly</string>
 
     <!-- Task Explorer -->
     <string name="taskexplorer_label_addtask">Add Task</string>
@@ -47,6 +53,7 @@
     <string name="taskcreator_label_priority">Priority:</string>
     <string name="taskcreator_label_time_start">Start Time:</string>
     <string name="taskcreator_label_time_end">End Time:</string>
+    <string name="taskcreator_label_time_repeat">Repeat Task:</string>
     <string name="taskcreator_label_settime">Tap to set...</string>
     <string name="taskcreator_label_details">Details</string>
     <string name="taskcreator_label_complete">Mark as complete</string>

@@ -3,9 +3,7 @@ package edu.ub.pis.giickos.ui.section.taskcreator;
 import android.util.Log;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 import edu.ub.pis.giickos.R;
@@ -18,15 +16,30 @@ import edu.ub.pis.giickos.ui.ViewModelHelpers.*;
 
 public class ViewModel extends androidx.lifecycle.ViewModel {
 
+    // These enums mirror the model ones, and provide labels for the UI.
     public enum TASK_PRIORITY {
         NONE(R.string.task_priority_none),
         LOW(R.string.task_priority_low),
         MEDIUM(R.string.task_priority_medium),
-        HIGH(R.string.task_priority_high);
+        HIGH(R.string.task_priority_high),
+        ;
 
         final int stringResource;
 
         TASK_PRIORITY(int stringResource) {
+            this.stringResource = stringResource;
+        }
+    }
+
+    public enum TASK_REPEAT_MODE {
+        NONE(R.string.task_repeatmode_none),
+        DAILY(R.string.task_repeatmode_daily),
+        WEEKLY(R.string.task_repeatmode_weekly),
+        ;
+
+        final int stringResource;
+
+        TASK_REPEAT_MODE(int stringResource) {
             this.stringResource = stringResource;
         }
     }
@@ -38,6 +51,7 @@ public class ViewModel extends androidx.lifecycle.ViewModel {
     private String taskName = "";
     private String taskDescription = "";
     private Task.PRIORITY priority = Task.PRIORITY.NONE;
+    private Task.REPEAT_MODE repeatMode = Task.REPEAT_MODE.NONE;
 
     // Once submitted, these should be converted to a proper date type
     private TaskDate startDate = null;
@@ -62,6 +76,7 @@ public class ViewModel extends androidx.lifecycle.ViewModel {
             Task task = new Task(UUID.randomUUID().toString(), taskName);
             task.setPriority(priority);
             task.setDescription(taskDescription);
+            task.setRepeatMode(Task.REPEAT_MODE.values()[repeatMode.ordinal()]);
 
             // TODO date and time
 
@@ -92,6 +107,8 @@ public class ViewModel extends androidx.lifecycle.ViewModel {
             task.setName(taskName);
             task.setDescription(taskDescription);
             task.setPriority(priority);
+            task.setRepeatMode(Task.REPEAT_MODE.values()[repeatMode.ordinal()]);
+            // TODO repeat mode should error if start time of the task is unset
             // TODO other setters
 
             // TODO this sucks, at least extract it to ProjectManager
@@ -133,6 +150,7 @@ public class ViewModel extends androidx.lifecycle.ViewModel {
                 setTaskName(task.getName()); // TODO other setters (date, time)
                 setTaskDescription(task.getDescription());
                 setPriority(task.getPriority().ordinal());
+                setRepeatMode(TASK_REPEAT_MODE.values()[task.getRepeatMode().ordinal()]);
 
                 taskEditInitialized = true;
             }
@@ -166,6 +184,18 @@ public class ViewModel extends androidx.lifecycle.ViewModel {
         else {
             Log.e("ViewModel", "Received setPriority with invalid index " + Integer.toString(priority) + ", check spinner");
         }
+    }
+
+    public TASK_REPEAT_MODE getRepeatMode() {
+        return TASK_REPEAT_MODE.values()[repeatMode.ordinal()];
+    }
+
+    public void setRepeatMode(TASK_REPEAT_MODE repeatMode) {
+        this.repeatMode = Task.REPEAT_MODE.values()[repeatMode.ordinal()];
+    }
+
+    public void setRepeatMode(int i) {
+        setRepeatMode(TASK_REPEAT_MODE.values()[i]);
     }
 
     public TaskDate getStartDate() {
