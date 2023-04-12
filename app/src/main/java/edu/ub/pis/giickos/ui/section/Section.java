@@ -7,6 +7,7 @@ public abstract class Section extends GiickosFragment {
         TASK_EXPLORER,
         TASK_CREATOR,
         MISCELLANEOUS,
+        CALENDAR,
     }
 
     public abstract TYPE getType();
