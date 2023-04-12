@@ -17,6 +17,7 @@
     <string name="generic_label_month">Month</string>
     <string name="generic_label_year">Year</string>
     <string name="generic_label_none">None</string>
+    <string name="generic_label_name">Name</string>
 
     <!-- Months of the year -->
     <string name="month_january">January</string>
@@ -45,6 +46,9 @@
 
     <!-- Task Explorer -->
     <string name="taskexplorer_label_addtask">Add Task</string>
+    <string name="taskexplorer_label_addproject">New Project</string>
+    <string name="taskexplorer_msg_addproject_success">Project created</string>
+    <string name="taskexplorer_msg_addproject_error">Error creating project</string>
 
     <!-- Task Creator -->
     <string name="taskcreator_label_project">Project:</string>

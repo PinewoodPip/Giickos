@@ -40,7 +40,8 @@ public class TaskList extends GiickosFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        viewModel = new ViewModelProvider(this).get(ViewModel.class);
+        // VM is shared with parent fragment (TaskExplorer)
+        viewModel = new ViewModelProvider(getActivity()).get(ViewModel.class);
     }
 
     private void addProject(String id) {

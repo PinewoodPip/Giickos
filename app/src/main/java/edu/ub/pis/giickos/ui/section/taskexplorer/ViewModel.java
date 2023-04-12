@@ -11,10 +11,15 @@ import edu.ub.pis.giickos.ui.ViewModelHelpers;
 import edu.ub.pis.giickos.ui.ViewModelHelpers.*;
 
 public class ViewModel extends androidx.lifecycle.ViewModel {
+
     private ProjectManager model;
 
     public ViewModel() {
         this.model = ModelHolder.INSTANCE.getProjectManager();
+    }
+
+    public boolean createProject(String name) {
+        return model.createProject(name);
     }
 
     public List<ProjectData> getProjects() {

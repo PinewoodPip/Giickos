@@ -1,6 +1,7 @@
 package edu.ub.pis.giickos.model.managers;
 
 import java.util.Set;
+import java.util.UUID;
 
 import edu.ub.pis.giickos.model.projectfunctions.Project;
 import edu.ub.pis.giickos.model.projectfunctions.Task;
@@ -52,5 +53,18 @@ public class ProjectManager {
 
     public boolean deleteTask(String taskID) {
         return daoProject.deleteTask(taskID);
+    }
+
+    public boolean createProject(String name) {
+        boolean success = false;
+
+        // Cannot create projects with blank name
+        if (!name.isEmpty()) {
+            Project project = new Project(UUID.randomUUID(), name);
+
+            success = daoProject.addProject(project);
+        }
+
+        return success;
     }
 }
