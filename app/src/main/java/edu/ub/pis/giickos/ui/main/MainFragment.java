@@ -20,6 +20,7 @@ import edu.ub.pis.giickos.ui.section.calendar.CalendarSection;
 import edu.ub.pis.giickos.ui.section.miscellaneous.MiscellaneousSection;
 import edu.ub.pis.giickos.ui.section.taskcreator.TaskCreator;
 import edu.ub.pis.giickos.ui.section.taskexplorer.TaskExplorer;
+import edu.ub.pis.giickos.ui.section.timer.TimerSection;
 
 public class MainFragment extends GiickosFragment {
 
@@ -63,6 +64,9 @@ public class MainFragment extends GiickosFragment {
                 break;
             case CALENDAR:
                 section = CalendarSection.newInstance();
+                break;
+            case TIMER:
+                section = TimerSection.newInstance();
                 break;
             default:
             {
