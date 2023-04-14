@@ -10,6 +10,8 @@ public class ViewModel extends androidx.lifecycle.ViewModel {
     public static final int MAX_FUTURE_WEEKS = 5;
     public static final int MAX_PAST_WEEKS = 5;
 
+    public static final int HOURS_IN_DAY = 24;
+
     @Nullable private LocalDate selectedDate = null; // The day selected by the user
     private LocalDate currentWeekDate; // The date that the calendar is displaying the week of
 

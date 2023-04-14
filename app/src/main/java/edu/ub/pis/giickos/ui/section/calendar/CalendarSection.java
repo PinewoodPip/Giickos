@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.kizitonwose.calendar.core.Week;
 import com.kizitonwose.calendar.core.WeekDay;
@@ -25,6 +27,7 @@ import java.time.LocalDate;
 import edu.ub.pis.giickos.R;
 import edu.ub.pis.giickos.ui.main.MainViewModel;
 import edu.ub.pis.giickos.ui.section.Section;
+import edu.ub.pis.giickos.ui.section.calendar.timeframe.RecyclerViewAdapter;
 
 // Fragment for the calendar section.
 public class CalendarSection extends Section {
@@ -129,6 +132,15 @@ public class CalendarSection extends Section {
         calendar.setup(currentCalendarDate.minusWeeks(ViewModel.MAX_PAST_WEEKS), currentCalendarDate.plusWeeks(ViewModel.MAX_FUTURE_WEEKS), firstDayOfWeekFromLocale());
         WeekDay weekDay = new WeekDay(currentCalendarDate, WeekDayPosition.RangeDate);
         calendar.scrollToDay(weekDay);
+
+        // Initialize timeframe list
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter();
+        LinearLayoutManager manager = new LinearLayoutManager(
+                getContext(), LinearLayoutManager.VERTICAL, false
+        );
+        RecyclerView recyclerView = view.findViewById(R.id.recycler_timeframes);
+        recyclerView.setLayoutManager(manager);
+        recyclerView.setAdapter(adapter);
     }
 
     @Override
