@@ -58,7 +58,7 @@ public class CalendarSection extends Section {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        viewModel = new ViewModelProvider(this).get(ViewModel.class);
+        viewModel = new ViewModelProvider(getActivity()).get(ViewModel.class);
     }
 
     @Override
