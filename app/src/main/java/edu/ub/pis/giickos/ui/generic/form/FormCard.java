@@ -24,9 +24,9 @@ import edu.ub.pis.giickos.ui.main.TimePickerListener;
 
 // Card fragment with an icon, label, and a horizontal list of custom elements.
 public class FormCard extends GiickosFragment {
-    private static final String ARG_ICON = "Icon";
-    private static final String ARG_LABEL = "Label";
-    private static final String ARG_BG_COLOR = "BackgroundColor";
+    public static final String ARG_ICON = "Icon";
+    public static final String ARG_LABEL = "Label";
+    public static final String ARG_BG_COLOR = "BackgroundColor";
 
     private int iconID;
     private String label;
