@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -21,13 +22,15 @@ public class ViewModel extends androidx.lifecycle.ViewModel {
     private ProjectManager model;
 
     private MutableLiveData<List<ProjectData>> projects;
+    private Set<String> openedProjects; // Set of IDs of projects that are open (showing their tasks) in the view
     private Observer modelProjectObserver;
     private Observer modelTasksObserver;
 
     public ViewModel() {
         this.model = ModelHolder.INSTANCE.getProjectManager();
+        this.openedProjects = new HashSet<>();
 
-        projects = new MutableLiveData<>(new ArrayList<>());
+        this.projects = new MutableLiveData<>(new ArrayList<>());
         updateProjects();
 
         // Listen for projects being updated in the model
@@ -79,6 +82,19 @@ public class ViewModel extends androidx.lifecycle.ViewModel {
         }
 
         return data;
+    }
+
+    public boolean isProjectOpen(String id) {
+        return openedProjects.contains(id);
+    }
+
+    public void setProjectOpen(String id, boolean open) {
+        if (open) {
+            openedProjects.add(id);
+        }
+        else {
+            openedProjects.remove(id);
+        }
     }
 
     private void updateProjects() {

@@ -3,6 +3,7 @@ package edu.ub.pis.giickos.ui.section.taskexplorer;
 import android.os.Bundle;
 
 import androidx.cardview.widget.CardView;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,7 +26,8 @@ public class ProjectFragment extends GiickosFragment {
 
     private static final String ARG_PROJECT_ID = "ProjectID";
     private static final String ARG_LABEL = "Label";
-    private static final String ARG_OPEN = "Open";
+
+    private ViewModel viewModel;
 
     public ProjectFragment() {
         // Required empty public constructor
@@ -37,7 +39,6 @@ public class ProjectFragment extends GiickosFragment {
 
         args.putString(ARG_PROJECT_ID, projectID);
         args.putString(ARG_LABEL, label);
-        args.putBoolean(ARG_OPEN, open);
         fragment.setArguments(args);
 
         return fragment;
@@ -46,10 +47,8 @@ public class ProjectFragment extends GiickosFragment {
     // Toggles the visibility of the project's task list.
     public void toggleList(boolean open) {
         View view = getView();
-        Bundle args = getArguments();
 
-        args.putBoolean(ARG_OPEN, open);
-        setArguments(args);
+        viewModel.setProjectOpen(getProjectID(), open);
 
         if (view != null) {
             LinearLayout list = view.findViewById(R.id.list_tasks);
@@ -60,7 +59,7 @@ public class ProjectFragment extends GiickosFragment {
 
     // Overload that toggles to the opposite state.
     public void toggleList() {
-        boolean isOpen = getArguments().getBoolean(ARG_OPEN);
+        boolean isOpen = viewModel.isProjectOpen(getProjectID());
 
         toggleList(!isOpen);
     }
@@ -79,6 +78,8 @@ public class ProjectFragment extends GiickosFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        viewModel = new ViewModelProvider(getActivity()).get(ViewModel.class);
     }
 
     @Override
@@ -97,7 +98,7 @@ public class ProjectFragment extends GiickosFragment {
 
         // Set label and visibility of task list
         titleLabel.setText(arguments.getString(ARG_LABEL));
-        toggleList(arguments.getBoolean(ARG_OPEN));
+        toggleList(viewModel.isProjectOpen(getProjectID()));
 
         card.setOnClickListener(new View.OnClickListener() {
             @Override
