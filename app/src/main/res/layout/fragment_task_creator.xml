@@ -5,29 +5,35 @@
     android:layout_height="match_parent"
     tools:context=".ui.section.taskcreator.TaskCreator">
 
-    <LinearLayout
-        android:id="@+id/list_main"
-        style="@style/GiickosFullscreenContainer"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/mock_field"
-            android:name="edu.ub.pis.giickos.ui.generic.form.FormCard"
+        <LinearLayout
+            android:id="@+id/list_main"
+            style="@style/GiickosFullscreenContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone"
-            tools:layout="@layout/fragment_card_form"
-            tools:visibility="visible" />
+            android:orientation="vertical">
 
-        <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/mock_field2"
-            android:name="edu.ub.pis.giickos.ui.generic.form.FormCard"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            tools:layout="@layout/fragment_card_form"
-            tools:visibility="visible" />
-    </LinearLayout>
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/mock_field"
+                android:name="edu.ub.pis.giickos.ui.generic.form.FormCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                tools:layout="@layout/fragment_card_form"
+                tools:visibility="visible" />
+
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/mock_field2"
+                android:name="edu.ub.pis.giickos.ui.generic.form.FormCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                tools:layout="@layout/fragment_card_form"
+                tools:visibility="visible" />
+        </LinearLayout>
+    </ScrollView>
+
 </FrameLayout>
