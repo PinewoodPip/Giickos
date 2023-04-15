@@ -1,5 +1,6 @@
 package edu.ub.pis.giickos.model.managers;
 
+import java.time.LocalDate;
 import java.util.Set;
 import java.util.UUID;
 
@@ -66,5 +67,10 @@ public class ProjectManager {
         }
 
         return success;
+    }
+
+    // TODO move elsewhere
+    public LocalDate getCurrentTime() {
+        return LocalDate.now();
     }
 }

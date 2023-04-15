@@ -6,6 +6,9 @@ import androidx.lifecycle.MutableLiveData;
 
 import java.time.LocalDate;
 
+import edu.ub.pis.giickos.model.ModelHolder;
+import edu.ub.pis.giickos.model.managers.ProjectManager;
+
 public class ViewModel extends androidx.lifecycle.ViewModel {
 
     // Maximum amount of weeks the calendar can be used in the past/future
@@ -14,13 +17,18 @@ public class ViewModel extends androidx.lifecycle.ViewModel {
 
     public static final int HOURS_IN_DAY = 24;
 
+    private ProjectManager model;
+
     @Nullable private MutableLiveData<LocalDate> selectedDate; // The day selected by the user
     private LocalDate currentWeekDate; // The date that the calendar is displaying the week of
 
     public ViewModel() {
-        selectedDate = new MutableLiveData<LocalDate>(null);
+        model = ModelHolder.INSTANCE.getProjectManager();
+        LocalDate currentDate = model.getCurrentTime();
 
-        setCurrentWeekDate(LocalDate.now());
+        // Defaults to current date
+        selectedDate = new MutableLiveData<LocalDate>(currentDate);
+        setCurrentWeekDate(currentDate);
     }
 
     @Nullable
