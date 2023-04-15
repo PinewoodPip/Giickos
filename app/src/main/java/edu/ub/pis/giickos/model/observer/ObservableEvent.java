@@ -1,4 +1,4 @@
-package edu.ub.pis.giickos.ui.observer;
+package edu.ub.pis.giickos.model.observer;
 
 // Base class for events fired by Observables.
 // Holds the object source and the event type (as enum constant)

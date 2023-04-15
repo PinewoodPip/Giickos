@@ -10,10 +10,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+
+import java.util.List;
 
 import edu.ub.pis.giickos.MainActivity;
 import edu.ub.pis.giickos.R;
+import edu.ub.pis.giickos.ui.ViewModelHelpers;
 import edu.ub.pis.giickos.ui.main.MainViewModel;
 import edu.ub.pis.giickos.ui.section.Section;
 
@@ -82,11 +86,6 @@ public class TaskExplorer extends Section {
                         boolean success = viewModel.createProject(projectName);
 
                         showOperationResultToast(success, getString(R.string.taskexplorer_msg_addproject_success), getString(R.string.taskexplorer_msg_addproject_error));
-
-                        if (success) {
-                            // TODO use an event / livedata instead to trigger a refresh of the UI
-                            MainActivity.transitionToSection(getActivity(), MainViewModel.TYPE.TASK_EXPLORER, null, true);
-                        }
 
                         dialog.dismiss();
                     }

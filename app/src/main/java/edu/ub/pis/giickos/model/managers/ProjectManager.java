@@ -4,11 +4,18 @@ import java.time.LocalDate;
 import java.util.Set;
 import java.util.UUID;
 
+import edu.ub.pis.giickos.model.observer.EmptyEvent;
+import edu.ub.pis.giickos.model.observer.Observable;
 import edu.ub.pis.giickos.model.projectfunctions.Project;
 import edu.ub.pis.giickos.model.projectfunctions.Task;
 import edu.ub.pis.giickos.resources.dao.DAOProject;
 
-public class ProjectManager {
+public class ProjectManager extends Observable<ProjectManager.Events> {
+
+    public enum Events {
+        PROJECTS_UPDATED;
+    }
+
     //Handler of projects
     private DAOProject daoProject;
 
@@ -49,7 +56,13 @@ public class ProjectManager {
     }
 
     public boolean updateProject(Project project) {
-        return daoProject.updateProject(project);
+        boolean success = daoProject.updateProject(project);
+
+        if (success) {
+            notifyProjectsUpdated();
+        }
+
+        return success;
     }
 
     public boolean deleteTask(String taskID) {
@@ -66,11 +79,19 @@ public class ProjectManager {
             success = daoProject.addProject(project);
         }
 
+        if (success) {
+            notifyProjectsUpdated();
+        }
+
         return success;
     }
 
     // TODO move elsewhere
     public LocalDate getCurrentTime() {
         return LocalDate.now();
+    }
+
+    private void notifyProjectsUpdated() {
+        notifyObservers(Events.PROJECTS_UPDATED, new EmptyEvent(this, Events.PROJECTS_UPDATED));
     }
 }
