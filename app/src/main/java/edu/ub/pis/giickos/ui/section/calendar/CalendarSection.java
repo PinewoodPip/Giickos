@@ -6,13 +6,14 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.kizitonwose.calendar.core.Week;
 import com.kizitonwose.calendar.core.WeekDay;
@@ -23,11 +24,11 @@ import com.kizitonwose.calendar.view.WeekDayBinder;
 import com.kizitonwose.calendar.view.WeekHeaderFooterBinder;
 
 import java.time.LocalDate;
+import java.util.Locale;
 
 import edu.ub.pis.giickos.R;
 import edu.ub.pis.giickos.ui.main.MainViewModel;
 import edu.ub.pis.giickos.ui.section.Section;
-import edu.ub.pis.giickos.ui.section.calendar.timeframe.RecyclerViewAdapter;
 
 // Fragment for the calendar section.
 public class CalendarSection extends Section {
@@ -71,6 +72,41 @@ public class CalendarSection extends Section {
         return inflater.inflate(R.layout.fragment_section_calendar, container, false);
     }
 
+    // Should be called only once to create the background with time slots
+    private void setupTimeFrames(View view) {
+        LinearLayout list = view.findViewById(R.id.list_timeframes);
+        for (int i = 0; i < ViewModel.HOURS_IN_DAY; i++)
+        {
+            LayoutInflater inflater = LayoutInflater.from(getContext());
+            View timeFrame = inflater.inflate(R.layout.item_calendar_timeframe, list, false);
+            TextView label = timeFrame.findViewById(R.id.label_time);
+            label.setText(String.format(Locale.getDefault(), "%s:00", Integer.toString(i))); // TODO use locale for displaying
+            list.addView(timeFrame);
+        }
+    }
+
+    // Should be called each time the tasks need to be rerendered
+    private void setupTasks() {
+        View view = getView();
+        FrameLayout taskContainer = view.findViewById(R.id.container_tasks);
+        LocalDate selectedDate = viewModel.getSelectedDate().getValue();
+
+        if (selectedDate != null) {
+            taskContainer.removeAllViews();
+            for (int i = 0; i < 24; ++i)
+            {
+                LayoutInflater inflater = LayoutInflater.from(view.getContext());
+                int timeFrameHeight = 190 * i;
+
+                View task = inflater.inflate(R.layout.item_calendar_task, taskContainer, false);
+                taskContainer.addView(task);
+                FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) task.getLayoutParams();
+                layoutParams.setMargins(0, timeFrameHeight, 0, 0);
+                task.setLayoutParams(layoutParams);
+            }
+        }
+    }
+
     @Override
     public void onViewCreated(View view, Bundle savedInstance) {
         WeekCalendarView calendar = getCalendarView();
@@ -90,7 +126,7 @@ public class CalendarSection extends Section {
 
                 labelView.setText(Integer.toString(weekDay.getDate().getDayOfMonth()));
 
-                if (date.equals(viewModel.getSelectedDate())) {
+                if (date.equals(viewModel.getSelectedDate().getValue())) {
                     backgroundImage.setImageResource(R.drawable.calendar_day_selected);
                 }
                 else {
@@ -100,14 +136,16 @@ public class CalendarSection extends Section {
                 view.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        LocalDate previousSelectedDate = viewModel.getSelectedDate();
+                        LocalDate previousSelectedDate = viewModel.getSelectedDate().getValue();
 
+                        // Update the previously selected view
                         if (previousSelectedDate != null) {
-
                             calendar.notifyDateChanged(previousSelectedDate);
                         }
 
                         viewModel.setSelectedDate(date);
+
+                        // Update the new selected view
                         calendar.notifyDateChanged(date);
                     }
                 });
@@ -133,14 +171,16 @@ public class CalendarSection extends Section {
         WeekDay weekDay = new WeekDay(currentCalendarDate, WeekDayPosition.RangeDate);
         calendar.scrollToDay(weekDay);
 
-        // Initialize timeframe list
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter();
-        LinearLayoutManager manager = new LinearLayoutManager(
-                getContext(), LinearLayoutManager.VERTICAL, false
-        );
-        RecyclerView recyclerView = view.findViewById(R.id.recycler_timeframes);
-        recyclerView.setLayoutManager(manager);
-        recyclerView.setAdapter(adapter);
+        setupTimeFrames(view);
+        setupTasks();
+
+        // Listen for selected date being changed to rerender tasks
+        viewModel.getSelectedDate().observe(getViewLifecycleOwner(), new Observer<LocalDate>() {
+            @Override
+            public void onChanged(LocalDate localDate) {
+                setupTasks();
+            }
+        });
     }
 
     @Override

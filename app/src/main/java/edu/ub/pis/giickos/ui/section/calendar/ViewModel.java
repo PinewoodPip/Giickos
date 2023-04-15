@@ -1,6 +1,8 @@
 package edu.ub.pis.giickos.ui.section.calendar;
 
 import androidx.annotation.Nullable;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import java.time.LocalDate;
 
@@ -12,20 +14,22 @@ public class ViewModel extends androidx.lifecycle.ViewModel {
 
     public static final int HOURS_IN_DAY = 24;
 
-    @Nullable private LocalDate selectedDate = null; // The day selected by the user
+    @Nullable private MutableLiveData<LocalDate> selectedDate; // The day selected by the user
     private LocalDate currentWeekDate; // The date that the calendar is displaying the week of
 
     public ViewModel() {
+        selectedDate = new MutableLiveData<LocalDate>(null);
+
         setCurrentWeekDate(LocalDate.now());
     }
 
     @Nullable
-    public LocalDate getSelectedDate() {
+    public LiveData<LocalDate> getSelectedDate() {
         return selectedDate;
     }
 
     public void setSelectedDate(@Nullable LocalDate selectedDate) {
-        this.selectedDate = selectedDate;
+        this.selectedDate.setValue(selectedDate);
     }
 
     public LocalDate getCurrentWeekDate() {

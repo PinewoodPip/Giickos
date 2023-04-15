@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_gravity="right"
     android:orientation="vertical"
     tools:context=".ui.section.calendar.CalendarSection">
 
@@ -12,15 +13,32 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cv_dayViewResource="@layout/calendar_day_view"
-        app:cv_weekHeaderResource="@layout/calendar_week_header" />
+        app:cv_weekHeaderResource="@layout/calendar_week_header">
+
+    </com.kizitonwose.calendar.view.WeekCalendarView>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_timeframes"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content">
+
+            <FrameLayout
+                android:id="@+id/container_tasks"
+                android:layout_width="300dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="right">
+
+            </FrameLayout>
+
+            <LinearLayout
+                android:id="@+id/list_timeframes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+        </FrameLayout>
     </ScrollView>
+
 </LinearLayout>
