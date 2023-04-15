@@ -10,7 +10,6 @@ public class MainViewModel extends ViewModel {
 
     public enum TYPE {
         TASK_EXPLORER(R.drawable.projects, R.drawable.projects_colored),
-        TASK_CREATOR(R.drawable.placeholder_notebook, R.drawable.placeholder_notebook),
         MISCELLANEOUS(R.drawable.profile, R.drawable.profile_colored),
         CALENDAR(R.drawable.calendar, R.drawable.calendar_colored),
         ;

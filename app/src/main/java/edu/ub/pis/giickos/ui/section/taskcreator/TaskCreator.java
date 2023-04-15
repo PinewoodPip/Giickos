@@ -19,19 +19,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import edu.ub.pis.giickos.MainActivity;
+import edu.ub.pis.giickos.GiickosFragment;
 import edu.ub.pis.giickos.R;
 import edu.ub.pis.giickos.ui.ViewModelHelpers.*;
 import edu.ub.pis.giickos.ui.dialogs.Alert;
 import edu.ub.pis.giickos.ui.generic.form.FormCard;
 import edu.ub.pis.giickos.ui.generic.form.FormSpinner;
 import edu.ub.pis.giickos.ui.main.DatePickerListener;
-import edu.ub.pis.giickos.ui.main.MainViewModel;
 import edu.ub.pis.giickos.ui.main.TimePickerListener;
-import edu.ub.pis.giickos.ui.section.Section;
 
 // Section for creating tasks.
-public class TaskCreator extends Section {
+public class TaskCreator extends GiickosFragment {
 
     public static String INTENT_EXTRA_PROJECT_ID = "ProjectID";
     public static String INTENT_EXTRA_TASK_ID = "TaskID"; // If present, the UI will open in edit mode
@@ -59,11 +57,6 @@ public class TaskCreator extends Section {
         if (projectID.isPresent()) {
             viewModel.setProjectID(projectID.get());
         }
-    }
-
-    @Override
-    public MainViewModel.TYPE getType() {
-        return MainViewModel.TYPE.TASK_CREATOR;
     }
 
     // Returns whether the fragment is being used to create a task (instead of editing one)
@@ -221,9 +214,8 @@ public class TaskCreator extends Section {
         return str;
     }
 
-    // Transitions to task explorer, and prevents returning to this activity
-    private void returnToTaskExplorer() {
-        MainActivity.transitionToSection(getActivity(), MainViewModel.TYPE.TASK_EXPLORER, null, true);
+    private void finishActivity() {
+        getActivity().finish();
     }
 
     @Override
@@ -308,7 +300,7 @@ public class TaskCreator extends Section {
                     Toast.makeText(getContext(), getString(stringID), Toast.LENGTH_SHORT).show();
 
                     if (success) {
-                        returnToTaskExplorer();
+                        finishActivity();
                     }
                 }
             });
@@ -335,7 +327,7 @@ public class TaskCreator extends Section {
                             showOperationResultToast(success, getString(R.string.taskcreator_msg_deleted_success), getString(R.string.taskcreator_msg_deleted_error));
 
                             if (success) {
-                                returnToTaskExplorer();
+                                finishActivity();
                             }
 
                             dialog.dismiss();
@@ -357,7 +349,7 @@ public class TaskCreator extends Section {
                     Toast.makeText(getContext(), getString(stringID), Toast.LENGTH_SHORT).show();
 
                     if (success) {
-                        returnToTaskExplorer();
+                        finishActivity();
                     }
                 }
             });

@@ -48,16 +48,9 @@ public class MainFragment extends GiickosFragment {
         Section section = null;
 
         switch (sectionType) {
-            case TASK_CREATOR:
-            {
-                section = TaskCreator.newInstance();
-                break;
-            }
             case TASK_EXPLORER:
-            {
                 section = TaskExplorer.newInstance();
                 break;
-            }
             case MISCELLANEOUS:
                 section = MiscellaneousSection.newInstance();
                 break;

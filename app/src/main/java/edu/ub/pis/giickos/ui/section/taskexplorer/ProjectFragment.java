@@ -1,5 +1,6 @@
 package edu.ub.pis.giickos.ui.section.taskexplorer;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.cardview.widget.CardView;
@@ -17,6 +18,7 @@ import edu.ub.pis.giickos.MainActivity;
 import edu.ub.pis.giickos.R;
 import edu.ub.pis.giickos.ui.ViewModelHelpers.*;
 import edu.ub.pis.giickos.ui.main.MainViewModel;
+import edu.ub.pis.giickos.ui.section.taskcreator.Activity;
 import edu.ub.pis.giickos.ui.section.taskcreator.TaskCreator;
 
 /*
@@ -114,7 +116,9 @@ public class ProjectFragment extends GiickosFragment {
                 Bundle bundle = new Bundle();
                 bundle.putString(TaskCreator.INTENT_EXTRA_PROJECT_ID, getArguments().getString(ARG_PROJECT_ID));
 
-                MainActivity.transitionToSection(getActivity(), MainViewModel.TYPE.TASK_CREATOR, bundle);
+                Intent intent = new Intent(ProjectFragment.this.getContext(), Activity.class);
+                intent.putExtras(bundle);
+                startActivity(intent);
             }
         });
     }
