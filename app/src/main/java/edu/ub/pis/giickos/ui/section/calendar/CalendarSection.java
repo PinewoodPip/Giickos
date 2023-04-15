@@ -23,7 +23,11 @@ import com.kizitonwose.calendar.view.WeekCalendarView;
 import com.kizitonwose.calendar.view.WeekDayBinder;
 import com.kizitonwose.calendar.view.WeekHeaderFooterBinder;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.Locale;
 
 import edu.ub.pis.giickos.R;
@@ -75,12 +79,16 @@ public class CalendarSection extends Section {
     // Should be called only once to create the background with time slots
     private void setupTimeFrames(View view) {
         LinearLayout list = view.findViewById(R.id.list_timeframes);
+        LocalDate date = LocalDate.now();
+
         for (int i = 0; i < ViewModel.HOURS_IN_DAY; i++)
         {
+            LocalDateTime time = date.atTime(i, 0, 0);
+
             LayoutInflater inflater = LayoutInflater.from(getContext());
             View timeFrame = inflater.inflate(R.layout.item_calendar_timeframe, list, false);
             TextView label = timeFrame.findViewById(R.id.label_time);
-            label.setText(String.format(Locale.getDefault(), "%s:00", Integer.toString(i))); // TODO use locale for displaying
+            label.setText(new SimpleDateFormat("HH:00", Locale.getDefault()).format(Date.from(time.atZone(ZoneId.systemDefault()).toInstant())));
             list.addView(timeFrame);
         }
     }
