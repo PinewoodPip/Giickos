@@ -13,7 +13,9 @@ import edu.ub.pis.giickos.resources.dao.DAOProject;
 public class ProjectManager extends Observable<ProjectManager.Events> {
 
     public enum Events {
-        PROJECTS_UPDATED;
+        PROJECTS_UPDATED,
+        TASKS_UPDATED,
+        ;
     }
 
     //Handler of projects
@@ -44,11 +46,23 @@ public class ProjectManager extends Observable<ProjectManager.Events> {
     }
 
     public boolean addTask(String projectGUID, Task task) {
-        return daoProject.addTask(projectGUID, task);
+        boolean success = daoProject.addTask(projectGUID, task);
+
+        if (success) {
+            notifyTasksUpdated();
+        }
+
+        return success;
     }
 
     public boolean updateTask(Task task) {
-        return daoProject.updateTask(task);
+        boolean success = daoProject.updateTask(task);
+
+        if (success) {
+            notifyTasksUpdated();
+        }
+
+        return success;
     }
 
     public Project getTaskProject(String taskID) {
@@ -66,7 +80,13 @@ public class ProjectManager extends Observable<ProjectManager.Events> {
     }
 
     public boolean deleteTask(String taskID) {
-        return daoProject.deleteTask(taskID);
+        boolean success = daoProject.deleteTask(taskID);
+
+        if (success) {
+            notifyTasksUpdated();
+        }
+
+        return success;
     }
 
     public boolean createProject(String name) {
@@ -93,5 +113,9 @@ public class ProjectManager extends Observable<ProjectManager.Events> {
 
     private void notifyProjectsUpdated() {
         notifyObservers(Events.PROJECTS_UPDATED, new EmptyEvent(this, Events.PROJECTS_UPDATED));
+    }
+
+    private void notifyTasksUpdated() {
+        notifyObservers(Events.TASKS_UPDATED, new EmptyEvent(this, Events.TASKS_UPDATED));
     }
 }

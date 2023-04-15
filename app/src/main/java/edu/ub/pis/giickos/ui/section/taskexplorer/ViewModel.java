@@ -22,6 +22,7 @@ public class ViewModel extends androidx.lifecycle.ViewModel {
 
     private MutableLiveData<List<ProjectData>> projects;
     private Observer modelProjectObserver;
+    private Observer modelTasksObserver;
 
     public ViewModel() {
         this.model = ModelHolder.INSTANCE.getProjectManager();
@@ -29,20 +30,30 @@ public class ViewModel extends androidx.lifecycle.ViewModel {
         projects = new MutableLiveData<>(new ArrayList<>());
         updateProjects();
 
-        Observer<ProjectManager.Events> projectObserver = new Observer<ProjectManager.Events>() {
+        // Listen for projects being updated in the model
+        this.modelProjectObserver = new Observer<ProjectManager.Events>() {
             @Override
             public void update(ObservableEvent<ProjectManager.Events> eventData) {
                 updateProjects();
             }
         };
-        modelProjectObserver = projectObserver;
-        model.subscribe(ProjectManager.Events.PROJECTS_UPDATED, projectObserver);
+        model.subscribe(ProjectManager.Events.PROJECTS_UPDATED, this.modelProjectObserver);
+
+        // Listen for tasks being updated in the model
+        this.modelTasksObserver = new Observer() {
+            @Override
+            public void update(ObservableEvent eventData) {
+                updateProjects();
+            }
+        };
+        model.subscribe(ProjectManager.Events.TASKS_UPDATED, this.modelTasksObserver);
     }
 
     @Override
     public void onCleared() {
         // Unsubscribe listeners to prevent memory leaks
         model.unsubscribe(ProjectManager.Events.PROJECTS_UPDATED, modelProjectObserver);
+        model.unsubscribe(ProjectManager.Events.TASKS_UPDATED, modelTasksObserver);
     }
 
     public boolean createProject(String name) {
