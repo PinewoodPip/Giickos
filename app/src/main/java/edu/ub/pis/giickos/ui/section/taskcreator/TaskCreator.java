@@ -221,6 +221,11 @@ public class TaskCreator extends Section {
         return str;
     }
 
+    // Transitions to task explorer, and prevents returning to this activity
+    private void returnToTaskExplorer() {
+        MainActivity.transitionToSection(getActivity(), MainViewModel.TYPE.TASK_EXPLORER, null, true);
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -301,6 +306,10 @@ public class TaskCreator extends Section {
                     int stringID = success ? R.string.taskcreator_msg_update_success : R.string.taskcreator_msg_update_error;
 
                     Toast.makeText(getContext(), getString(stringID), Toast.LENGTH_SHORT).show();
+
+                    if (success) {
+                        returnToTaskExplorer();
+                    }
                 }
             });
 
@@ -325,9 +334,8 @@ public class TaskCreator extends Section {
 
                             showOperationResultToast(success, getString(R.string.taskcreator_msg_deleted_success), getString(R.string.taskcreator_msg_deleted_error));
 
-                            // Return to task explorer on success, and prevent returning to this activity
                             if (success) {
-                                MainActivity.transitionToSection(getActivity(), MainViewModel.TYPE.TASK_EXPLORER, null, true);
+                                returnToTaskExplorer();
                             }
 
                             dialog.dismiss();
@@ -347,6 +355,10 @@ public class TaskCreator extends Section {
                     int stringID = success ? R.string.taskcreator_msg_creation_success : R.string.taskcreator_msg_creation_error;
 
                     Toast.makeText(getContext(), getString(stringID), Toast.LENGTH_SHORT).show();
+
+                    if (success) {
+                        returnToTaskExplorer();
+                    }
                 }
             });
         }
