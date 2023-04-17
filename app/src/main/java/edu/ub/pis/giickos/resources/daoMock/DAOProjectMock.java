@@ -132,6 +132,28 @@ public class DAOProjectMock implements DAOProject {
     }
 
     @Override
+    public boolean deleteProject(String projectID) {
+        boolean success = false;
+        Project project = getProject(projectID);
+
+        if (project != null) {
+            success = true;
+
+            // Delete all tasks assigned to the project
+            for (Task task : getTasks(projectID)) {
+                success = success && deleteTask(task.getID());
+            }
+
+            // Only delete the project if all tasks were deleted without issues
+            if (success) {
+                projects.remove(projectID);
+            }
+        }
+
+        return success;
+    }
+
+    @Override
     public boolean updateProject(Project newData) {
         Project oldData = getProject(newData.getId());
         boolean success = false;

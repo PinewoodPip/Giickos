@@ -49,6 +49,10 @@
     <string name="taskexplorer_label_addproject">New Project</string>
     <string name="taskexplorer_msg_addproject_success">Project created</string>
     <string name="taskexplorer_msg_addproject_error">Error creating project</string>
+    <string name="taskexplorer_msg_deleteproject_title">Delete Project</string>
+    <string name="taskexplorer_msg_deleteproject_body">Are you sure you want to delete the project \'%s\' and all of its tasks?</string>
+    <string name="taskexplorer_msg_deleteproject_success">Project deleted</string>
+    <string name="taskexplorer_msg_deleteproject_error">Error while deleting project</string>
 
     <!-- Task Creator -->
     <string name="taskcreator_label_project">Project:</string>

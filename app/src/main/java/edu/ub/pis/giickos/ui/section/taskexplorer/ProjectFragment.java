@@ -1,5 +1,6 @@
 package edu.ub.pis.giickos.ui.section.taskexplorer;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -14,10 +15,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import edu.ub.pis.giickos.GiickosFragment;
-import edu.ub.pis.giickos.MainActivity;
 import edu.ub.pis.giickos.R;
 import edu.ub.pis.giickos.ui.ViewModelHelpers.*;
-import edu.ub.pis.giickos.ui.main.MainViewModel;
+import edu.ub.pis.giickos.ui.dialogs.Alert;
 import edu.ub.pis.giickos.ui.section.taskcreator.Activity;
 import edu.ub.pis.giickos.ui.section.taskcreator.TaskCreator;
 
@@ -102,10 +102,33 @@ public class ProjectFragment extends GiickosFragment {
         titleLabel.setText(arguments.getString(ARG_LABEL));
         toggleList(viewModel.isProjectOpen(getProjectID()));
 
+        // Clicking the card expands/collapses the task list
         card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 toggleList();
+            }
+        });
+
+        // Long-press on the card prompts to delete the project
+        card.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                String msg = String.format(getString(R.string.taskexplorer_msg_deleteproject_body), arguments.getString(ARG_LABEL));
+                Alert alert = new Alert(getActivity(), getString(R.string.taskexplorer_msg_deleteproject_title), msg);
+
+                alert.setPositiveButton(new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        boolean success = viewModel.deleteProject(getProjectID());
+
+                        showOperationResultToast(success, getString(R.string.taskexplorer_msg_deleteproject_success), getString(R.string.taskexplorer_msg_deleteproject_error));
+                    }
+                });
+
+                alert.show();
+
+                return true;
             }
         });
 

@@ -103,4 +103,8 @@ public class ViewModel extends androidx.lifecycle.ViewModel {
 
         this.projects.setValue(projectData);
     }
+
+    public boolean deleteProject(String projectID) {
+        return model.deleteProject(projectID);
+    }
 }

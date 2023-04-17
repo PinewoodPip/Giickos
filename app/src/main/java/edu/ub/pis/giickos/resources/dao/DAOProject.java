@@ -23,4 +23,6 @@ public interface DAOProject {
     boolean updateProject(Project project);
 
     boolean deleteTask(String taskID);
+
+    boolean deleteProject(String projectID);
 }

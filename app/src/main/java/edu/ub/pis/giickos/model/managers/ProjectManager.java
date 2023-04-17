@@ -106,6 +106,16 @@ public class ProjectManager extends Observable<ProjectManager.Events> {
         return success;
     }
 
+    public boolean deleteProject(String projectID) {
+        boolean success = daoProject.deleteProject(projectID);
+
+        if (success) {
+            notifyTasksUpdated();
+        }
+
+        return success;
+    }
+
     // TODO move elsewhere
     public LocalDate getCurrentTime() {
         return LocalDate.now();
