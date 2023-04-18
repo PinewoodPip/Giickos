@@ -18,6 +18,8 @@
     <string name="generic_label_year">Year</string>
     <string name="generic_label_none">None</string>
     <string name="generic_label_name">Name</string>
+    <string name="generic_label_ok">Ok</string>
+    <string name="generic_label_close">Close</string>
 
     <!-- Months of the year -->
     <string name="month_january">January</string>

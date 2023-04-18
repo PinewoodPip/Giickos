@@ -1,21 +1,23 @@
 package edu.ub.pis.giickos;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
+
+import edu.ub.pis.giickos.ui.GiickosActivity;
 import edu.ub.pis.giickos.ui.main.MainFragment;
 import edu.ub.pis.giickos.ui.main.MainViewModel;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends GiickosActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        setCustomSupportActionBar();
     }
 
     // Transitions to a section.
@@ -35,5 +37,15 @@ public class MainActivity extends AppCompatActivity {
 
     public static void transitionToSection(Activity sourceActivity, MainViewModel.TYPE sectionID, @Nullable Bundle bundle) {
         transitionToSection(sourceActivity, sectionID, bundle, false);
+    }
+
+    @Override
+    public String getName() {
+        return "TODO";
+    }
+
+    @Override
+    public String getHelpMessage() {
+        return "TODO";
     }
 }
