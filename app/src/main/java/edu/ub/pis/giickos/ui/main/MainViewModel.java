@@ -12,6 +12,8 @@ public class MainViewModel extends ViewModel {
         TASK_EXPLORER(R.drawable.projects, R.drawable.projects_colored),
         MISCELLANEOUS(R.drawable.profile, R.drawable.profile_colored),
         CALENDAR(R.drawable.calendar, R.drawable.calendar_colored),
+
+        TIMER(R.drawable.timer, R.drawable.timer_colored),
         ;
 
         private final int iconResource;

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.section.timer.TimerSection">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/timer_textView"
+                android:layout_width="match_parent"
+                android:layout_height="103dp"
+                android:gravity="center"
+                android:text="25:00" />
+
+            <Button
+                android:id="@+id/button_select_task"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Select Task" />
+
+            <CheckBox
+                android:id="@+id/checkBox_detox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Detox" />
+
+            <Button
+                android:id="@+id/button_stop_timer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="STOP" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+</FrameLayout>
