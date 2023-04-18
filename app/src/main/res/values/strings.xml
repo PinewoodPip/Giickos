@@ -47,6 +47,9 @@
     <string name="task_repeatmode_weekly">Weekly</string>
 
     <!-- Task Explorer -->
+    <string name="taskexplorer_name">Projects &amp; Tasks</string>
+    <string name="taskexplorer_help">The projects &amp; tasks screen shows your projects and tasks. Tap on projects to expand or hide their lists of tasks. Tap on a task to edit it. Long-press on a project to delete it.</string>
+
     <string name="taskexplorer_label_addtask">Add Task</string>
     <string name="taskexplorer_label_addproject">New Project</string>
     <string name="taskexplorer_msg_addproject_success">Project created</string>
@@ -57,6 +60,9 @@
     <string name="taskexplorer_msg_deleteproject_error">Error while deleting project</string>
 
     <!-- Task Creator -->
+    <string name="taskcreator_name">Task Creator</string>
+    <string name="taskcreator_help">The task creator is where you can create or edit tasks by filling out various fields. Only the name field is mandatory.</string>
+
     <string name="taskcreator_label_project">Project:</string>
     <string name="taskcreator_label_title">Title:</string>
     <string name="taskcreator_label_date">Date:</string>
@@ -77,6 +83,9 @@
     <string name="taskcreator_msg_deleted_error">Failed to delete task</string>
 
     <!-- Miscellaneous section -->
+    <string name="miscellaneous_name">Settings and More</string>
+    <string name="miscellaneous_help">Here you can change the application\'s settings, view your usage statistics and manage your Giickos Plus subscription and teams.</string>
+
     <string name="miscellaneous_tab_settings">Settings</string>
     <string name="miscellaneous_tab_settings_notifications">Notifications</string>
     <string name="miscellaneous_tab_settings_feedback">Send Feedback</string>
@@ -86,4 +95,12 @@
 
     <string name="miscellaneous_tab_teams">Teams</string>
     <string name="miscellaneous_tab_statistics">Statistics</string>
+
+    <!-- Timer -->
+    <string name="timer_name">Timer &amp; Detox</string>
+    <string name="timer_help">Here you can set a timer to track the amount of time spent working on a task. You may also configure it to work as a pomodoro timer, and enable various \'detox\' options to reduce distractions from your phone.</string>
+
+    <!-- Calendar -->
+    <string name="calendar_name">Timer &amp; Detox</string>
+    <string name="calendar_help">The calendar shows you the tasks you have planned for each day. You may tap a task to view it and edit it, or tap an empty space to create a new task on the chosen date and time.</string>
 </resources>

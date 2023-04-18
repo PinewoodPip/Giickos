@@ -19,11 +19,11 @@ public class Activity extends GiickosActivity {
 
     @Override
     public String getName() {
-        return "TODO";
+        return getString(R.string.taskcreator_name);
     }
 
     @Override
     public String getHelpMessage() {
-        return "TODO";
+        return getString(R.string.taskcreator_help);
     }
 }

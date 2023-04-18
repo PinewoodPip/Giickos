@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
+import androidx.lifecycle.ViewModelProvider;
 
 import edu.ub.pis.giickos.ui.GiickosActivity;
 import edu.ub.pis.giickos.ui.main.MainFragment;
@@ -12,12 +13,16 @@ import edu.ub.pis.giickos.ui.main.MainViewModel;
 
 public class MainActivity extends GiickosActivity {
 
+    private MainViewModel viewModel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         setCustomSupportActionBar();
+
+        viewModel = new ViewModelProvider(this).get(MainViewModel.class);
     }
 
     // Transitions to a section.
@@ -41,11 +46,11 @@ public class MainActivity extends GiickosActivity {
 
     @Override
     public String getName() {
-        return "TODO";
+        return getString(viewModel.getCurrentSection().getValue().getNameStringResource());
     }
 
     @Override
     public String getHelpMessage() {
-        return "TODO";
+        return getString(viewModel.getCurrentSection().getValue().getHelpStringResource());
     }
 }
