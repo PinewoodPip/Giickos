@@ -1,4 +1,4 @@
-package edu.ub.pis.giickos.ui.section.timer;
+package edu.ub.pis.giickos.ui.section.timer.detox;
 
 import android.os.Bundle;
 
@@ -7,29 +7,26 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.CheckBox;
 
+import edu.ub.pis.giickos.GiickosFragment;
 import edu.ub.pis.giickos.R;
-import edu.ub.pis.giickos.ui.main.MainViewModel;
-import edu.ub.pis.giickos.ui.section.Section;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link TimerSection#newInstance} factory method to
+ * Use the {@link DetoxFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class TimerSection extends Section {
+public class DetoxFragment extends GiickosFragment {
 
 
-    public TimerSection() {
+    public DetoxFragment() {
         // Required empty public constructor
     }
 
-
-    public static TimerSection newInstance() {
-        TimerSection fragment = new TimerSection();
+    public static DetoxFragment newInstance() {
+        DetoxFragment fragment = new DetoxFragment();
         Bundle args = new Bundle();
+
         fragment.setArguments(args);
         return fragment;
     }
@@ -44,11 +41,6 @@ public class TimerSection extends Section {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_section_timer, container, false);
-    }
-
-    @Override
-    public MainViewModel.TYPE getType() {
-        return MainViewModel.TYPE.TIMER;
+        return inflater.inflate(R.layout.fragment_section_timer_detox, container, false);
     }
 }

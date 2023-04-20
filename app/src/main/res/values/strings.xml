@@ -99,8 +99,15 @@
     <!-- Timer -->
     <string name="timer_name">Timer &amp; Detox</string>
     <string name="timer_help">Here you can set a timer to track the amount of time spent working on a task. You may also configure it to work as a pomodoro timer, and enable various \'detox\' options to reduce distractions from your phone.</string>
+    <string name="timer_tab_detox">Detox</string>
+    <string name="timer_tab_timer">Pomodoro</string>
+
 
     <!-- Calendar -->
     <string name="calendar_name">Timer &amp; Detox</string>
     <string name="calendar_help">The calendar shows you the tasks you have planned for each day. You may tap a task to view it and edit it, or tap an empty space to create a new task on the chosen date and time.</string>
+    <string name="detox_all_apps_locked">All apps locked</string>
+    <string name="detox_cant_cancel">can\'t cancel</string>
+    <string name="detox_emergency_calls">Only emergency calls</string>
+    <string name="detox_let_your_phone_down">Let your phone down</string>
 </resources>
