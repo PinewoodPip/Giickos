@@ -1,6 +1,9 @@
 package edu.ub.pis.giickos.model.projectfunctions;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+
+import edu.ub.pis.giickos.Utils;
 
 public class Task extends ProjectElement {
 
@@ -21,6 +24,10 @@ public class Task extends ProjectElement {
     private REPEAT_MODE repeatMode = REPEAT_MODE.NONE;
     private String description = "";
     private boolean isCompleted = false;
+
+    private long startTime; // In millis since epoch
+    private int durationInMinutes;
+    private boolean takesAllDay; // If true, startTime indicates the day of the task only and its hour+minute should be disregarded
 
     public Task(String id, String name) // Kamil: I'm not a fan of bloated constructor params, so try to delegate initialization to setters instead (ex. how it's done with priority) with the exception of essential fields like name/id.
     {
@@ -57,6 +64,30 @@ public class Task extends ProjectElement {
 
     public void setRepeatMode(REPEAT_MODE repeatMode) {
         this.repeatMode = repeatMode;
+    }
+
+    public LocalDateTime getStartTime() {
+        return Utils.instantToLocalDateTime(startTime);
+    }
+
+    public void setStartTime(long startTime) {
+        this.startTime = startTime;
+    }
+
+    public int getDuration() {
+        return durationInMinutes;
+    }
+
+    public void setDuration(int durationInMinutes) {
+        this.durationInMinutes = durationInMinutes;
+    }
+
+    public boolean takesAllDay() {
+        return takesAllDay;
+    }
+
+    public void setTakesAllDay(boolean takesAllDay) {
+        this.takesAllDay = takesAllDay;
     }
 
     /*

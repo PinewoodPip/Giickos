@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.NumberPicker;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
@@ -86,6 +87,15 @@ public class FormCard extends GiickosFragment {
         dateField.setListener(listener);
 
         return dateField;
+    }
+
+    public NumberField addNumberField(int value, NumberPicker.OnValueChangeListener listener) {
+        NumberField field = NumberField.newInstance(value);
+        addElement(field);
+
+        field.setListener(listener);
+
+        return field;
     }
 
     public FormSpinner addSpinner(List<String> items, int selectedIndex) {
