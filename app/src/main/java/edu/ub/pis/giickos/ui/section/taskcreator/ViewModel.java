@@ -2,11 +2,13 @@ package edu.ub.pis.giickos.ui.section.taskcreator;
 
 import android.util.Log;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 import edu.ub.pis.giickos.R;
+import edu.ub.pis.giickos.Utils;
 import edu.ub.pis.giickos.model.ModelHolder;
 import edu.ub.pis.giickos.model.managers.ProjectManager;
 import edu.ub.pis.giickos.model.projectfunctions.Project;
@@ -56,7 +58,7 @@ public class ViewModel extends androidx.lifecycle.ViewModel {
     // Once submitted, these should be converted to a proper date type
     private TaskDate startDate = null;
     private TaskTime startTime = null;
-    private TaskTime endTime = null;
+    private int durationInMinutes = -1;
 
     private boolean taskEditInitialized = false; // Used to only load data for task editing the first time the view renders
 
@@ -78,7 +80,7 @@ public class ViewModel extends androidx.lifecycle.ViewModel {
             task.setDescription(taskDescription);
             task.setRepeatMode(Task.REPEAT_MODE.values()[repeatMode.ordinal()]);
 
-            // TODO date and time
+            updateTaskTime(task);
 
             model.addTask(projectID, task);
         }
@@ -109,7 +111,8 @@ public class ViewModel extends androidx.lifecycle.ViewModel {
             task.setPriority(priority);
             task.setRepeatMode(Task.REPEAT_MODE.values()[repeatMode.ordinal()]);
             // TODO repeat mode should error if start time of the task is unset
-            // TODO other setters
+
+            updateTaskTime(task);
 
             // TODO this sucks, at least extract it to ProjectManager
             ArrayList<String> previousTasks = previousProject.getElements();
@@ -151,6 +154,15 @@ public class ViewModel extends androidx.lifecycle.ViewModel {
                 setTaskDescription(task.getDescription());
                 setPriority(task.getPriority().ordinal());
                 setRepeatMode(TASK_REPEAT_MODE.values()[task.getRepeatMode().ordinal()]);
+
+                durationInMinutes = task.getDuration();
+                LocalDateTime localTime = task.getStartTime();
+
+                startDate = new TaskDate(localTime.getDayOfMonth(), localTime.getMonthValue(), localTime.getYear());
+
+                if (!task.takesAllDay()) {
+                    startTime = new TaskTime(localTime.getHour(), localTime.getMinute());
+                }
 
                 taskEditInitialized = true;
             }
@@ -214,12 +226,38 @@ public class ViewModel extends androidx.lifecycle.ViewModel {
         this.startTime = startTime;
     }
 
-    public TaskTime getEndTime() {
-        return endTime;
+    public int getDurationInMinutes() {
+        return durationInMinutes;
     }
 
-    public void setEndTime(TaskTime endTime) {
-        this.endTime = endTime;
+    public void setDurationInMinutes(int durationInMinutes) {
+        this.durationInMinutes = durationInMinutes;
+    }
+
+    private void updateTaskTime(Task task) {
+        task.setDuration(durationInMinutes);
+
+        if (startDate != null) {
+            int hour = 0;
+            int minute = 0;
+
+            if (startTime != null) {
+                hour = startTime.hour;
+                minute = startTime.minute;
+                task.setTakesAllDay(false);
+            }
+            else {
+                task.setTakesAllDay(true);
+            }
+
+            LocalDateTime startTimeObj = LocalDateTime.of(startDate.year, startDate.month, startDate.day, hour, minute);
+
+            task.setStartTime(Utils.localDateToUTC(startTimeObj).toInstant().toEpochMilli());
+        }
+        else {
+            task.setStartTime(-1);
+            task.setTakesAllDay(true);
+        }
     }
 
     /*

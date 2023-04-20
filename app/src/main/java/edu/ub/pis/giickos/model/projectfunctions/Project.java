@@ -1,15 +1,13 @@
 package edu.ub.pis.giickos.model.projectfunctions;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.UUID;
 
 public class Project {
     //In this class, we define a project with elements that we verify, create, and erase.
     private String id;
     private String name;
-    private ArrayList<String> elements;//We use strings to identify the elements (for now we only have tasks)
-    // Or maybe we can use (projectName + elementName) as elements ID instead of generated UUID.
+    private ArrayList<String> elements;//We use strings to identify the elements (for now we only have tasks). Or maybe we can use (projectName + elementName) as elements ID instead of generated UUID.
 
     public Project(String id, String name) {
         initialize(id, name);

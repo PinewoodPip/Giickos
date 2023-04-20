@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.NumberPicker;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -104,6 +105,11 @@ public class TaskCreator extends GiickosFragment {
         FormCard field = addField(iconID, label);
 
         field.addDateField(id, dateLabel, listener);
+    }
+
+    private void addNumberField(int value, int iconID, String label, NumberPicker.OnValueChangeListener listener) {
+        FormCard card = addField(iconID, label);
+        card.addNumberField(value, listener);
     }
 
     private FormSpinner addSpinnerField(int iconID, String label, List<Object> items, int selectedIndex) {
@@ -261,9 +267,6 @@ public class TaskCreator extends GiickosFragment {
                 if (pickerID.equals("StartTime")) {
                     viewModel.setStartTime(time);
                 }
-                else if (pickerID.equals("EndTime")) {
-                    viewModel.setEndTime(time);
-                }
                 else {
                     Log.e("View", "Unknown time picker listener ID in TaskCreator: " + pickerID);
                 }
@@ -271,7 +274,14 @@ public class TaskCreator extends GiickosFragment {
         };
 
         addTimeField("StartTime", R.drawable.placeholder_notebook, getString(R.string.taskcreator_label_time_start), formatTime(viewModel.getStartTime()), timePickerListener);
-        addTimeField("EndTime", R.drawable.placeholder_notebook, getString(R.string.taskcreator_label_time_end), formatTime(viewModel.getEndTime()), timePickerListener);
+
+        addNumberField(viewModel.getDurationInMinutes(), R.drawable.placeholder_notebook, getString(R.string.taskcreator_label_duration), new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker numberPicker, int oldValue, int minutes) {
+                viewModel.setDurationInMinutes(minutes);
+            }
+        });
+
         setupRepeatModeSpinner();
 
         // TODO move to separate tab
