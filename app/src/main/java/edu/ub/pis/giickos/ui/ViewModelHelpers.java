@@ -69,6 +69,7 @@ public class ViewModelHelpers {
 
     public static class TaskData {
         public final String id;
+        public final String projectID;
         public final String name;
         public final LocalDateTime startTime;
         public final int durationInMinutes;
@@ -76,6 +77,7 @@ public class ViewModelHelpers {
 
         public TaskData(Task task) {
             this.id = task.getID();
+            this.projectID = task.getProjectID();
             this.name = task.getName();
             this.startTime = task.getStartTime();
             this.durationInMinutes = task.getDuration();

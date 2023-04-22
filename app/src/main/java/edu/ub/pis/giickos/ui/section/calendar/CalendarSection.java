@@ -13,6 +13,7 @@ import android.widget.Space;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -36,6 +37,7 @@ import edu.ub.pis.giickos.R;
 import edu.ub.pis.giickos.ui.ViewModelHelpers;
 import edu.ub.pis.giickos.ui.main.MainViewModel;
 import edu.ub.pis.giickos.ui.section.Section;
+import edu.ub.pis.giickos.ui.section.taskcreator.TaskCreator;
 
 // Fragment for the calendar section.
 public class CalendarSection extends Section {
@@ -108,27 +110,48 @@ public class CalendarSection extends Section {
             for (ViewModelHelpers.TaskData task : tasks) {
                 // TODO figure out how to handle these
                 if (!task.takesAllDay) {
-                    LayoutInflater inflater = LayoutInflater.from(view.getContext());
-                    final float TIMEFRAME_HEIGHT = 271; // TODO calculate this programmatically
-                    int timeFrameY = (int) ((TIMEFRAME_HEIGHT * task.startTime.getHour() + ((task.startTime.getHour() - 1) * -1.5f)));
-                    timeFrameY += (TIMEFRAME_HEIGHT)/60 * task.startTime.getMinute();
-
-                    View taskView = inflater.inflate(R.layout.item_calendar_task, taskContainer, false);
-                    TextView nameLabel = taskView.findViewById(R.id.label_name);
-                    nameLabel.setText(task.name);
-                    taskContainer.addView(taskView);
-
-                    // Set position in the list
-                    FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) taskView.getLayoutParams();
-                    FrameLayout.LayoutParams newLayout = new FrameLayout.LayoutParams(layoutParams.width, 10 * task.durationInMinutes);
-                    newLayout.setMargins(0, timeFrameY, 0, 0);
-                    taskView.setLayoutParams(newLayout);
-
-                    Space spaceWidget = taskView.findViewById(R.id.space);
-                    spaceWidget.setMinimumHeight((int) (TIMEFRAME_HEIGHT / 60 * task.durationInMinutes));
+                    addTask(taskContainer, task);
                 }
             }
         }
+    }
+
+    private void addTask(FrameLayout container, ViewModelHelpers.TaskData task) {
+        View view = getView();
+        LayoutInflater inflater = LayoutInflater.from(view.getContext());
+        final float TIMEFRAME_HEIGHT = 271; // TODO calculate this programmatically
+        int timeFrameY = (int) ((TIMEFRAME_HEIGHT * task.startTime.getHour() + ((task.startTime.getHour() - 1) * -1.5f)));
+        timeFrameY += (TIMEFRAME_HEIGHT)/60 * task.startTime.getMinute();
+
+        View taskView = inflater.inflate(R.layout.item_calendar_task, container, false);
+        TextView nameLabel = taskView.findViewById(R.id.label_name);
+        nameLabel.setText(task.name);
+        container.addView(taskView);
+
+        // Set position in the list
+        FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) taskView.getLayoutParams();
+        FrameLayout.LayoutParams newLayout = new FrameLayout.LayoutParams(layoutParams.width, 10 * task.durationInMinutes);
+        newLayout.setMargins(0, timeFrameY, 0, 0);
+        taskView.setLayoutParams(newLayout);
+
+        Space spaceWidget = taskView.findViewById(R.id.space);
+        spaceWidget.setMinimumHeight((int) (TIMEFRAME_HEIGHT / 60 * task.durationInMinutes));
+
+        CardView card = taskView.findViewById(R.id.card_main);
+        card.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Open the task creator for that task
+                TaskCreator.openActivity(getActivity(), task.projectID, task.id);
+            }
+        });
+    }
+
+    public void onResume() {
+        super.onResume();
+
+        // Re-render tasks when the activity is resumed, as their data might've changed
+        setupTasks();
     }
 
     @Override

@@ -24,6 +24,7 @@ public class Task extends ProjectElement {
     private REPEAT_MODE repeatMode = REPEAT_MODE.NONE;
     private String description = "";
     private boolean isCompleted = false;
+    private String projectID;
 
     private long startTime; // In millis since epoch
     private int durationInMinutes;
@@ -32,6 +33,14 @@ public class Task extends ProjectElement {
     public Task(String id, String name) // Kamil: I'm not a fan of bloated constructor params, so try to delegate initialization to setters instead (ex. how it's done with priority) with the exception of essential fields like name/id.
     {
         super(id, name);
+    }
+
+    public String getProjectID() {
+        return projectID;
+    }
+
+    public void setProjectID(String projectID) {
+        this.projectID = projectID;
     }
 
     public PRIORITY getPriority() {

@@ -84,13 +84,7 @@ public class Task extends GiickosFragment {
         card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Bundle bundle = new Bundle();
-                bundle.putString(TaskCreator.INTENT_EXTRA_PROJECT_ID, getArguments().getString(ARG_PROJECT_ID));
-                bundle.putString(TaskCreator.INTENT_EXTRA_TASK_ID, getArguments().getString(ARG_TASK_ID));
-
-                Intent intent = new Intent(Task.this.getContext(), Activity.class);
-                intent.putExtras(bundle);
-                startActivity(intent);
+                TaskCreator.openActivity(Task.this.getActivity(), getArguments().getString(ARG_PROJECT_ID), getArguments().getString(ARG_TASK_ID));
             }
         });
     }

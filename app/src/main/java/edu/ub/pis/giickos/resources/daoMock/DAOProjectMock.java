@@ -85,6 +85,8 @@ public class DAOProjectMock implements DAOProject {
             project.addElement(task.getID());
             tasks.put(projectID, task);
 
+            task.setProjectID(projectGUID);
+
             success = true;
         }
 

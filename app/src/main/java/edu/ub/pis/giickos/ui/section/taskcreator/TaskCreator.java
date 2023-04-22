@@ -1,6 +1,7 @@
 package edu.ub.pis.giickos.ui.section.taskcreator;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputType;
@@ -14,6 +15,8 @@ import android.widget.NumberPicker;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import java.util.ArrayList;
@@ -28,6 +31,7 @@ import edu.ub.pis.giickos.ui.generic.form.FormCard;
 import edu.ub.pis.giickos.ui.generic.form.FormSpinner;
 import edu.ub.pis.giickos.ui.main.DatePickerListener;
 import edu.ub.pis.giickos.ui.main.TimePickerListener;
+import edu.ub.pis.giickos.ui.section.taskexplorer.Task;
 
 // Section for creating tasks.
 public class TaskCreator extends GiickosFragment {
@@ -45,6 +49,16 @@ public class TaskCreator extends GiickosFragment {
 
         fragment.setArguments(args);
         return fragment;
+    }
+
+    public static void openActivity(FragmentActivity source, String projectID, String taskID) {
+        Bundle bundle = new Bundle();
+        bundle.putString(TaskCreator.INTENT_EXTRA_PROJECT_ID, projectID);
+        bundle.putString(TaskCreator.INTENT_EXTRA_TASK_ID, taskID);
+
+        Intent intent = new Intent(source, Activity.class);
+        intent.putExtras(bundle);
+        source.startActivity(intent);
     }
 
     @Override
