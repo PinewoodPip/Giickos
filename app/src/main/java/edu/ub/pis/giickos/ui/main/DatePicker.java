@@ -40,7 +40,7 @@ public class DatePicker extends DialogFragment
     @Override
     public void onDateSet(android.widget.DatePicker view, int year, int month, int day) {
         if (listener != null) {
-            listener.dateSet(id, year, month, day);
+            listener.dateSet(id, year, month + 1, day); // Month is changed to be 1-based
         }
     }
 }
