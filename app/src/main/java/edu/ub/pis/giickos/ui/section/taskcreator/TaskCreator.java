@@ -208,13 +208,13 @@ public class TaskCreator extends GiickosFragment {
         });
     }
 
-    private String formatDate(ViewModel.TaskDate date) {
+    private String formatDate(TaskDate date) {
         String str = date == null ? "" : String.format("%d/%d/%d", date.day, date.month, date.year);
 
         return str;
     }
 
-    private String formatTime(ViewModel.TaskTime time) {
+    private String formatTime(TaskTime time) {
         String str = time == null ? "" : String.format("%d:%d", time.hour, time.minute); // TODO prettify
 
         return str;
@@ -252,7 +252,7 @@ public class TaskCreator extends GiickosFragment {
             @Override
             public void dateSet(String id, int year, int month, int day) {
                 Log.d("View", "Date set");
-                viewModel.setStartDate(new ViewModel.TaskDate(day, month, year));
+                viewModel.setStartDate(new TaskDate(day, month, year));
             }
         });
 
@@ -262,7 +262,7 @@ public class TaskCreator extends GiickosFragment {
             @Override
             public void timeSet(String pickerID, int hour, int minute) {
                 Log.d("View", "Time set for " + pickerID);
-                ViewModel.TaskTime time = new ViewModel.TaskTime(hour, minute);
+                TaskTime time = new TaskTime(hour, minute);
 
                 if (pickerID.equals("StartTime")) {
                     viewModel.setStartTime(time);

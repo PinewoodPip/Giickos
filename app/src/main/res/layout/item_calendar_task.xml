@@ -6,10 +6,16 @@
     <androidx.cardview.widget.CardView
         style="@style/GiickosInteractableCard"
         android:layout_width="match_parent"
-        android:layout_height="50dp">
+        android:layout_height="wrap_content">
+
+        <Space
+            android:id="@+id/space"
+            android:layout_width="10dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left" />
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/label_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"

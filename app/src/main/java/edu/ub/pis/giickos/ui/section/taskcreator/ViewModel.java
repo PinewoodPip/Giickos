@@ -259,27 +259,4 @@ public class ViewModel extends androidx.lifecycle.ViewModel {
             task.setTakesAllDay(true);
         }
     }
-
-    /*
-        Auxiliary classes
-    */
-
-    static class TaskDate {
-        public final int day, month, year;
-
-        public TaskDate(int day, int month, int year) {
-            this.day = day;
-            this.month = month;
-            this.year = year;
-        }
-    }
-
-    static class TaskTime {
-        public final int hour, minute;
-
-        public TaskTime(int hour, int minute) {
-            this.hour = hour;
-            this.minute = minute;
-        }
-    }
 }

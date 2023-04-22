@@ -14,7 +14,8 @@
 
         <View
             android:id="@+id/divider"
-            style="@style/horizontal_divider" />
+            style="@style/horizontal_divider"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/label_time"

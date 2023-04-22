@@ -1,6 +1,8 @@
 package edu.ub.pis.giickos.model.managers;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
@@ -114,6 +116,22 @@ public class ProjectManager extends Observable<ProjectManager.Events> {
         }
 
         return success;
+    }
+
+    // Returns all tasks that occur on a day, regardless of project.
+    public Set<Task> getTasksForDay(LocalDateTime day) {
+        Set<Task> allTasks = daoProject.getTasks();
+        Set<Task> tasks = new HashSet<>();
+
+        for (Task task : allTasks) {
+            LocalDateTime taskTime = task.getStartTime();
+
+            if (taskTime.getDayOfYear() == day.getDayOfYear() && taskTime.getYear() == day.getYear()) {
+                tasks.add(task);
+            }
+        }
+
+        return tasks;
     }
 
     // TODO move elsewhere

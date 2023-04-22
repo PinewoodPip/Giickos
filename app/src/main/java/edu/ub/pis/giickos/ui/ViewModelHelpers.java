@@ -1,5 +1,6 @@
 package edu.ub.pis.giickos.ui;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -30,7 +31,7 @@ public class ViewModelHelpers {
         List<TaskData> orderedTasks = new ArrayList<>();
 
         for (Task task : tasks) {
-            orderedTasks.add(new TaskData(task.getID(), task.getName()));
+            orderedTasks.add(new TaskData(task));
         }
 
         // Order by name
@@ -44,6 +45,10 @@ public class ViewModelHelpers {
 
         return orderedTasks;
     }
+
+    /*
+        Auxiliary classes
+    */
 
     // Classes for providing data to the view without coupling with the actual model classes
     // These mirror only the data the view could care about
@@ -65,15 +70,40 @@ public class ViewModelHelpers {
     public static class TaskData {
         public final String id;
         public final String name;
+        public final LocalDateTime startTime;
+        public final int durationInMinutes;
+        public final boolean takesAllDay;
 
-        public TaskData(String guid, String name) {
-            this.id = guid;
-            this.name = name;
+        public TaskData(Task task) {
+            this.id = task.getID();
+            this.name = task.getName();
+            this.startTime = task.getStartTime();
+            this.durationInMinutes = task.getDuration();
+            this.takesAllDay = task.takesAllDay();
         }
 
         @Override
         public String toString() {
             return name;
+        }
+    }
+
+    public static class TaskDate {
+        public final int day, month, year;
+
+        public TaskDate(int day, int month, int year) {
+            this.day = day;
+            this.month = month;
+            this.year = year;
+        }
+    }
+
+    public static class TaskTime {
+        public final int hour, minute;
+
+        public TaskTime(int hour, int minute) {
+            this.hour = hour;
+            this.minute = minute;
         }
     }
 }

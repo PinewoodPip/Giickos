@@ -1,10 +1,12 @@
 package edu.ub.pis.giickos.resources.daoMock;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
+import edu.ub.pis.giickos.Utils;
 import edu.ub.pis.giickos.model.projectfunctions.Project;
 import edu.ub.pis.giickos.model.projectfunctions.Task;
 import edu.ub.pis.giickos.resources.dao.DAOProject;
@@ -63,6 +65,12 @@ public class DAOProjectMock implements DAOProject {
                 tasks.add(task);
             }
         }
+
+        return tasks;
+    }
+
+    public Set<Task> getTasks() {
+        Set<Task> tasks = new HashSet<>(this.tasks.values());
 
         return tasks;
     }
@@ -175,6 +183,16 @@ public class DAOProjectMock implements DAOProject {
         Task task1 = new Task(UUID.randomUUID().toString(), "Task 1");
         Task task2 = new Task(UUID.randomUUID().toString(), "Task 2");
         Task task3 = new Task(UUID.randomUUID().toString(), "Task 3");
+
+        // Set dummy tasks to begin today
+        LocalDateTime now = LocalDateTime.now();
+        task1.setStartTime(Utils.localDateToUTC(LocalDateTime.of(now.getYear(), now.getMonthValue(), now.getDayOfMonth(), 1, 0)).toInstant().toEpochMilli());
+        task2.setStartTime(Utils.localDateToUTC(LocalDateTime.of(now.getYear(), now.getMonthValue(), now.getDayOfMonth(), 21, 0)).toInstant().toEpochMilli());
+        task3.setStartTime(Utils.localDateToUTC(LocalDateTime.now()).toInstant().toEpochMilli());
+
+        task1.setDuration(60);
+        task2.setDuration(30);
+        task3.setDuration(120);
 
         addProject(project1);
         addTask(project1.getId(), task1);

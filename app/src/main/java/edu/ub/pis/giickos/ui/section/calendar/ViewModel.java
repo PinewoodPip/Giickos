@@ -5,9 +5,13 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 import edu.ub.pis.giickos.model.ModelHolder;
 import edu.ub.pis.giickos.model.managers.ProjectManager;
+import edu.ub.pis.giickos.model.projectfunctions.Task;
+import edu.ub.pis.giickos.ui.ViewModelHelpers;
 
 public class ViewModel extends androidx.lifecycle.ViewModel {
 
@@ -46,5 +50,16 @@ public class ViewModel extends androidx.lifecycle.ViewModel {
 
     public void setCurrentWeekDate(LocalDate currentWeekDate) {
         this.currentWeekDate = currentWeekDate;
+    }
+
+    // Returns the tasks for the selected day.
+    public Set<ViewModelHelpers.TaskData> getTasks() {
+        Set<ViewModelHelpers.TaskData> tasks = new HashSet<>();
+
+        for (Task task : model.getTasksForDay(getSelectedDate().getValue().atStartOfDay())) {
+            tasks.add(new ViewModelHelpers.TaskData(task));
+        }
+
+        return tasks;
     }
 }

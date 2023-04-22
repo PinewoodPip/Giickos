@@ -13,6 +13,7 @@ public interface DAOProject {
 
     Task getTask(String guid);
     Set<Task> getTasks(String projectGUID);
+    Set<Task> getTasks(); // Should return all tasks
     boolean addTask(String projectGUID, Task task); // Should return false if operation fails
 
     boolean updateTask(Task task);

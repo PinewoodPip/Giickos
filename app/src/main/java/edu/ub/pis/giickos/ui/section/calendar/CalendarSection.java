@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Space;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -29,8 +30,10 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Set;
 
 import edu.ub.pis.giickos.R;
+import edu.ub.pis.giickos.ui.ViewModelHelpers;
 import edu.ub.pis.giickos.ui.main.MainViewModel;
 import edu.ub.pis.giickos.ui.section.Section;
 
@@ -98,19 +101,32 @@ public class CalendarSection extends Section {
         View view = getView();
         FrameLayout taskContainer = view.findViewById(R.id.container_tasks);
         LocalDate selectedDate = viewModel.getSelectedDate().getValue();
+        Set<ViewModelHelpers.TaskData> tasks = viewModel.getTasks();
 
         if (selectedDate != null) {
             taskContainer.removeAllViews();
-            for (int i = 0; i < 24; ++i)
-            {
-                LayoutInflater inflater = LayoutInflater.from(view.getContext());
-                int timeFrameHeight = 190 * i;
+            for (ViewModelHelpers.TaskData task : tasks) {
+                // TODO figure out how to handle these
+                if (!task.takesAllDay) {
+                    LayoutInflater inflater = LayoutInflater.from(view.getContext());
+                    final float TIMEFRAME_HEIGHT = 271; // TODO calculate this programmatically
+                    int timeFrameY = (int) ((TIMEFRAME_HEIGHT * task.startTime.getHour() + ((task.startTime.getHour() - 1) * -1.5f)));
+                    timeFrameY += (TIMEFRAME_HEIGHT)/60 * task.startTime.getMinute();
 
-                View task = inflater.inflate(R.layout.item_calendar_task, taskContainer, false);
-                taskContainer.addView(task);
-                FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) task.getLayoutParams();
-                layoutParams.setMargins(0, timeFrameHeight, 0, 0);
-                task.setLayoutParams(layoutParams);
+                    View taskView = inflater.inflate(R.layout.item_calendar_task, taskContainer, false);
+                    TextView nameLabel = taskView.findViewById(R.id.label_name);
+                    nameLabel.setText(task.name);
+                    taskContainer.addView(taskView);
+
+                    // Set position in the list
+                    FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) taskView.getLayoutParams();
+                    FrameLayout.LayoutParams newLayout = new FrameLayout.LayoutParams(layoutParams.width, 10 * task.durationInMinutes);
+                    newLayout.setMargins(0, timeFrameY, 0, 0);
+                    taskView.setLayoutParams(newLayout);
+
+                    Space spaceWidget = taskView.findViewById(R.id.space);
+                    spaceWidget.setMinimumHeight((int) (TIMEFRAME_HEIGHT / 60 * task.durationInMinutes));
+                }
             }
         }
     }
