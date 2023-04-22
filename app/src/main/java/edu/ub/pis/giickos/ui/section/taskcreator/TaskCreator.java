@@ -15,7 +15,6 @@ import android.widget.NumberPicker;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -25,20 +24,26 @@ import java.util.Optional;
 
 import edu.ub.pis.giickos.GiickosFragment;
 import edu.ub.pis.giickos.R;
-import edu.ub.pis.giickos.ui.ViewModelHelpers.*;
+import edu.ub.pis.giickos.ui.ViewModelHelpers.ProjectData;
+import edu.ub.pis.giickos.ui.ViewModelHelpers.TaskDate;
+import edu.ub.pis.giickos.ui.ViewModelHelpers.TaskTime;
 import edu.ub.pis.giickos.ui.dialogs.Alert;
 import edu.ub.pis.giickos.ui.generic.form.FormCard;
 import edu.ub.pis.giickos.ui.generic.form.FormSpinner;
 import edu.ub.pis.giickos.ui.generic.form.TextField;
 import edu.ub.pis.giickos.ui.main.DatePickerListener;
 import edu.ub.pis.giickos.ui.main.TimePickerListener;
-import edu.ub.pis.giickos.ui.section.taskexplorer.Task;
 
 // Section for creating tasks.
 public class TaskCreator extends GiickosFragment {
 
     public static String INTENT_EXTRA_PROJECT_ID = "ProjectID";
     public static String INTENT_EXTRA_TASK_ID = "TaskID"; // If present, the UI will open in edit mode
+    public static String INTENT_EXTRA_TASK_SETDATETIME = "TaskSetDateTime";
+    public static String INTENT_EXTRA_TASK_DATE_DAY = "TaskDateDay";
+    public static String INTENT_EXTRA_TASK_DATE_MONTH = "TaskDateMonth";
+    public static String INTENT_EXTRA_TASK_DATE_YEAR = "TaskDateYear";
+    public static String INTENT_EXTRA_TASK_TIME_HOUR = "TaskTimeHour";
 
     private ViewModel viewModel;
 
@@ -52,10 +57,23 @@ public class TaskCreator extends GiickosFragment {
         return fragment;
     }
 
-    public static void openActivity(FragmentActivity source, String projectID, String taskID) {
+    public static void openEditActivity(FragmentActivity source, String projectID, String taskID) {
         Bundle bundle = new Bundle();
         bundle.putString(TaskCreator.INTENT_EXTRA_PROJECT_ID, projectID);
         bundle.putString(TaskCreator.INTENT_EXTRA_TASK_ID, taskID);
+
+        Intent intent = new Intent(source, Activity.class);
+        intent.putExtras(bundle);
+        source.startActivity(intent);
+    }
+
+    public static void openCreateActivity(FragmentActivity source, TaskDate date, TaskTime time) {
+        Bundle bundle = new Bundle();
+        bundle.putBoolean(INTENT_EXTRA_TASK_SETDATETIME, true);
+        bundle.putInt(TaskCreator.INTENT_EXTRA_TASK_DATE_YEAR, date.year);
+        bundle.putInt(TaskCreator.INTENT_EXTRA_TASK_DATE_MONTH, date.month);
+        bundle.putInt(TaskCreator.INTENT_EXTRA_TASK_DATE_DAY, date.day);
+        bundle.putInt(TaskCreator.INTENT_EXTRA_TASK_TIME_HOUR, time.hour);
 
         Intent intent = new Intent(source, Activity.class);
         intent.putExtras(bundle);
@@ -72,6 +90,17 @@ public class TaskCreator extends GiickosFragment {
         Optional<String> projectID = getIntentString(INTENT_EXTRA_PROJECT_ID);
         if (projectID.isPresent()) {
             viewModel.setProjectID(projectID.get());
+        }
+        else if (getIntentBoolean(INTENT_EXTRA_TASK_SETDATETIME)) {
+            int year = getIntentInteger(INTENT_EXTRA_TASK_DATE_YEAR).get().intValue();
+            int month = getIntentInteger(INTENT_EXTRA_TASK_DATE_MONTH).get().intValue();
+            int day = getIntentInteger(INTENT_EXTRA_TASK_DATE_DAY).get().intValue();
+            int hour = getIntentInteger(INTENT_EXTRA_TASK_TIME_HOUR).get().intValue();
+            TaskDate date = new TaskDate(day, month, year);
+            TaskTime time = new TaskTime(hour, 0);
+
+            viewModel.setStartDate(date);
+            viewModel.setStartTime(time);
         }
     }
 

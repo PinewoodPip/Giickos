@@ -88,6 +88,8 @@ public class CalendarSection extends Section {
 
         for (int i = 0; i < ViewModel.HOURS_IN_DAY; i++)
         {
+            int hour = i; // Necessary to be accessible from anonymous listener class
+
             LocalDateTime time = date.atTime(i, 0, 0);
 
             LayoutInflater inflater = LayoutInflater.from(getContext());
@@ -95,6 +97,18 @@ public class CalendarSection extends Section {
             TextView label = timeFrame.findViewById(R.id.label_time);
             label.setText(new SimpleDateFormat("HH:00", Locale.getDefault()).format(Date.from(time.atZone(ZoneId.systemDefault()).toInstant())));
             list.addView(timeFrame);
+
+            // Open task creator on click, with the date and time set
+            timeFrame.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    LocalDate selectedDate = viewModel.getSelectedDate().getValue();
+                    ViewModelHelpers.TaskDate date = new ViewModelHelpers.TaskDate(selectedDate.getDayOfMonth(), selectedDate.getMonthValue(), selectedDate.getYear());
+                    ViewModelHelpers.TaskTime time = new ViewModelHelpers.TaskTime(hour, 0);
+
+                    TaskCreator.openCreateActivity(getActivity(), date, time);
+                }
+            });
         }
     }
 
@@ -142,7 +156,7 @@ public class CalendarSection extends Section {
             @Override
             public void onClick(View view) {
                 // Open the task creator for that task
-                TaskCreator.openActivity(getActivity(), task.projectID, task.id);
+                TaskCreator.openEditActivity(getActivity(), task.projectID, task.id);
             }
         });
     }

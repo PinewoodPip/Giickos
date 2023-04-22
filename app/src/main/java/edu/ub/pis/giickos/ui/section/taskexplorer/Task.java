@@ -1,6 +1,5 @@
 package edu.ub.pis.giickos.ui.section.taskexplorer;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.cardview.widget.CardView;
@@ -12,10 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import edu.ub.pis.giickos.GiickosFragment;
-import edu.ub.pis.giickos.MainActivity;
 import edu.ub.pis.giickos.R;
-import edu.ub.pis.giickos.ui.main.MainViewModel;
-import edu.ub.pis.giickos.ui.section.taskcreator.Activity;
 import edu.ub.pis.giickos.ui.section.taskcreator.TaskCreator;
 
 // Displays a task within the task explorer.
@@ -84,7 +80,7 @@ public class Task extends GiickosFragment {
         card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                TaskCreator.openActivity(Task.this.getActivity(), getArguments().getString(ARG_PROJECT_ID), getArguments().getString(ARG_TASK_ID));
+                TaskCreator.openEditActivity(Task.this.getActivity(), getArguments().getString(ARG_PROJECT_ID), getArguments().getString(ARG_TASK_ID));
             }
         });
     }

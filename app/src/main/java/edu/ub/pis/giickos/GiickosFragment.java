@@ -56,6 +56,28 @@ public class GiickosFragment extends Fragment {
         return str;
     }
 
+    public boolean getIntentBoolean(String key) {
+        Bundle extras = getActivity().getIntent().getExtras();
+        boolean bool = false;
+
+        if (extras != null && extras.containsKey(key)) {
+            bool = extras.getBoolean(key);
+        }
+
+        return bool;
+    }
+
+    public Optional<Integer> getIntentInteger(String key) {
+        Bundle extras = getActivity().getIntent().getExtras();
+        Optional<Integer> integer = Optional.empty();
+
+        if (extras != null && extras.containsKey(key)) {
+            integer = Optional.of(Integer.valueOf(extras.getInt(key)));
+        }
+
+        return integer;
+    }
+
     public void showOperationResultToast(boolean success, String successString, String failureString) {
         Toast.makeText(getContext(), success ? successString : failureString, Toast.LENGTH_SHORT).show();
     }

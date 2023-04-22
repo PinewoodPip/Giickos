@@ -25,6 +25,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <LinearLayout
+                android:id="@+id/list_timeframes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+            </LinearLayout>
+
             <FrameLayout
                 android:id="@+id/container_tasks"
                 android:layout_width="300dp"
@@ -32,12 +40,6 @@
                 android:layout_gravity="right">
 
             </FrameLayout>
-
-            <LinearLayout
-                android:id="@+id/list_timeframes"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical" />
         </FrameLayout>
     </ScrollView>
 
