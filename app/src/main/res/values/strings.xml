@@ -70,6 +70,7 @@
     <string name="taskcreator_label_time_start">Start Time:</string>
     <string name="taskcreator_label_time_end">End Time:</string>
     <string name="taskcreator_label_duration">Duration:</string>
+    <string name="taskcreator_label_duration_field">minutes</string>
     <string name="taskcreator_label_time_repeat">Repeat Task:</string>
     <string name="taskcreator_label_settime">Tap to set...</string>
     <string name="taskcreator_label_details">Details</string>

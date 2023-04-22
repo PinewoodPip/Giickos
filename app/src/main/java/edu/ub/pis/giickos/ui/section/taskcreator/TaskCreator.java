@@ -29,6 +29,7 @@ import edu.ub.pis.giickos.ui.ViewModelHelpers.*;
 import edu.ub.pis.giickos.ui.dialogs.Alert;
 import edu.ub.pis.giickos.ui.generic.form.FormCard;
 import edu.ub.pis.giickos.ui.generic.form.FormSpinner;
+import edu.ub.pis.giickos.ui.generic.form.TextField;
 import edu.ub.pis.giickos.ui.main.DatePickerListener;
 import edu.ub.pis.giickos.ui.main.TimePickerListener;
 import edu.ub.pis.giickos.ui.section.taskexplorer.Task;
@@ -121,9 +122,11 @@ public class TaskCreator extends GiickosFragment {
         field.addDateField(id, dateLabel, listener);
     }
 
-    private void addNumberField(int value, int iconID, String label, NumberPicker.OnValueChangeListener listener) {
+    private FormCard addNumberField(int value, int minValue, int maxValue, int iconID, String label, NumberPicker.OnValueChangeListener listener, NumberPicker.Formatter formatter) {
         FormCard card = addField(iconID, label);
-        card.addNumberField(value, listener);
+        card.addNumberField(value, minValue, maxValue, listener, formatter);
+
+        return card;
     }
 
     private FormSpinner addSpinnerField(int iconID, String label, List<Object> items, int selectedIndex) {
@@ -289,12 +292,13 @@ public class TaskCreator extends GiickosFragment {
 
         addTimeField("StartTime", R.drawable.placeholder_notebook, getString(R.string.taskcreator_label_time_start), formatTime(viewModel.getStartTime()), timePickerListener);
 
-        addNumberField(viewModel.getDurationInMinutes(), R.drawable.placeholder_notebook, getString(R.string.taskcreator_label_duration), new NumberPicker.OnValueChangeListener() {
+        FormCard durationCard = addNumberField(viewModel.getDurationInMinutes(), ViewModel.MIN_DURATION, ViewModel.MAX_DURATION, R.drawable.placeholder_notebook, getString(R.string.taskcreator_label_duration), new NumberPicker.OnValueChangeListener() {
             @Override
             public void onValueChange(NumberPicker numberPicker, int oldValue, int minutes) {
                 viewModel.setDurationInMinutes(minutes);
             }
-        });
+        }, null);
+        durationCard.addElement(TextField.newInstance(getString(R.string.taskcreator_label_duration_field), InputType.TYPE_TEXT_VARIATION_PERSON_NAME, false));
 
         setupRepeatModeSpinner();
 

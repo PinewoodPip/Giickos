@@ -89,11 +89,12 @@ public class FormCard extends GiickosFragment {
         return dateField;
     }
 
-    public NumberField addNumberField(int value, NumberPicker.OnValueChangeListener listener) {
-        NumberField field = NumberField.newInstance(value);
+    public NumberField addNumberField(int value, int minValue, int maxValue, NumberPicker.OnValueChangeListener listener, NumberPicker.Formatter formatter) {
+        NumberField field = NumberField.newInstance(value, minValue, maxValue);
         addElement(field);
 
         field.setListener(listener);
+        field.setFormatter(formatter);
 
         return field;
     }

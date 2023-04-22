@@ -46,6 +46,9 @@ public class ViewModel extends androidx.lifecycle.ViewModel {
         }
     }
 
+    public static final int MIN_DURATION = 0;
+    public static final int MAX_DURATION = 300;
+
     private ProjectManager model;
 
     private String projectID = null;

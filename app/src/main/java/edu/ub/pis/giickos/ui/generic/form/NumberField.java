@@ -15,17 +15,22 @@ import edu.ub.pis.giickos.R;
 public class NumberField extends Fragment {
 
     private static final String ARG_VALUE = "Value";
+    private static final String ARG_MIN_VALUE = "MinValue";
+    private static final String ARG_MAX_VALUE = "MaxValue";
 
     private NumberPicker.OnValueChangeListener listener;
+    private NumberPicker.Formatter formatter;
 
     public NumberField() {
         // Required empty public constructor
     }
 
-    public static NumberField newInstance(int value) {
+    public static NumberField newInstance(int value, int minValue, int maxValue) {
         NumberField fragment = new NumberField();
         Bundle args = new Bundle();
         args.putInt(ARG_VALUE, value);
+        args.putInt(ARG_MIN_VALUE, minValue);
+        args.putInt(ARG_MAX_VALUE, maxValue);
         fragment.setArguments(args);
 
         return fragment;
@@ -38,6 +43,16 @@ public class NumberField extends Fragment {
 
         if (view != null) {
             getPickerView().setOnValueChangedListener(listener);
+        }
+    }
+
+    public void setFormatter(NumberPicker.Formatter formatter) {
+        View view = getView();
+
+        this.formatter = formatter;
+
+        if (view != null) {
+            getPickerView().setFormatter(formatter);
         }
     }
 
@@ -63,10 +78,11 @@ public class NumberField extends Fragment {
         }
 
         // Set picker value and listener
-        picker.setMinValue(0);
-        picker.setMaxValue(60 * 24); // TODO extract
+        picker.setMinValue(arguments.getInt(ARG_MIN_VALUE, 0));
+        picker.setMaxValue(arguments.getInt(ARG_MAX_VALUE, 99));
         picker.setWrapSelectorWheel(false);
         picker.setValue(value);
+        setFormatter(formatter);
         setListener(listener);
     }
 
