@@ -2,6 +2,7 @@ package edu.ub.pis.giickos.ui.section.calendar;
 
 import static com.kizitonwose.calendar.core.ExtensionsKt.firstDayOfWeekFromLocale;
 
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -159,6 +160,9 @@ public class CalendarSection extends Section {
                 TaskCreator.openEditActivity(getActivity(), task.projectID, task.id);
             }
         });
+
+        // Set color of card based on task priority
+        card.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(task.priority.colorResource)));
     }
 
     public void onResume() {

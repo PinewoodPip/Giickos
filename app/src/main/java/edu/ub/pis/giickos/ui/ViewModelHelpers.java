@@ -8,6 +8,8 @@ import java.util.Set;
 
 import edu.ub.pis.giickos.model.projectfunctions.Project;
 import edu.ub.pis.giickos.model.projectfunctions.Task;
+import edu.ub.pis.giickos.ui.section.taskcreator.TaskCreator;
+import edu.ub.pis.giickos.ui.section.taskcreator.ViewModel;
 
 public class ViewModelHelpers {
     public static List<ProjectData> sortProjects(Set<Project> projects) {
@@ -74,6 +76,7 @@ public class ViewModelHelpers {
         public final LocalDateTime startTime;
         public final int durationInMinutes;
         public final boolean takesAllDay;
+        public final ViewModel.TASK_PRIORITY priority; // TODO move enum here?
 
         public TaskData(Task task) {
             this.id = task.getID();
@@ -82,6 +85,7 @@ public class ViewModelHelpers {
             this.startTime = task.getStartTime();
             this.durationInMinutes = task.getDuration();
             this.takesAllDay = task.takesAllDay();
+            this.priority = ViewModel.TASK_PRIORITY.values()[task.getPriority().ordinal()];
         }
 
         @Override

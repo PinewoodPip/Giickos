@@ -20,16 +20,18 @@ public class ViewModel extends androidx.lifecycle.ViewModel {
 
     // These enums mirror the model ones, and provide labels for the UI.
     public enum TASK_PRIORITY {
-        NONE(R.string.task_priority_none),
-        LOW(R.string.task_priority_low),
-        MEDIUM(R.string.task_priority_medium),
-        HIGH(R.string.task_priority_high),
+        NONE(R.string.task_priority_none, R.color.task_priority_none),
+        LOW(R.string.task_priority_low, R.color.task_priority_low),
+        MEDIUM(R.string.task_priority_medium, R.color.task_priority_medium),
+        HIGH(R.string.task_priority_high, R.color.task_priority_high),
         ;
 
-        final int stringResource;
+        public final int stringResource;
+        public final int colorResource;
 
-        TASK_PRIORITY(int stringResource) {
+        TASK_PRIORITY(int stringResource, int colorResource) {
             this.stringResource = stringResource;
+            this.colorResource = colorResource;
         }
     }
 

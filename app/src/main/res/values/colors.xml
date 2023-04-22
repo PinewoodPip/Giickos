@@ -10,4 +10,9 @@
 
     <color name="destructive_action">#C23E6E</color>
     <color name="positive_action">#55C272</color>
+
+    <color name="task_priority_none">#84DD9C</color>
+    <color name="task_priority_low">#82DCCA</color>
+    <color name="task_priority_medium">#DFB161</color>
+    <color name="task_priority_high">#FA7590</color>
 </resources>
