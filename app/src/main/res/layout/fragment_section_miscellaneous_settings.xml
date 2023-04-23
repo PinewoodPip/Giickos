@@ -1,33 +1,197 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.section.miscellaneous.settings.SettingsFragment">
 
-    <LinearLayout
-        android:id="@+id/list_main"
-        style="@style/GiickosFullscreenContainer"
+    <RelativeLayout
+        android:id="@+id/relative_settings_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/mock_card1"
-            android:name="edu.ub.pis.giickos.ui.generic.form.FormCard"
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            tools:layout="@layout/fragment_card_form"
-            tools:visibility="visible" />
+            android:layout_height="match_parent">
 
-        <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/mock_card2"
-            android:name="edu.ub.pis.giickos.ui.generic.form.FormCard"
+            <LinearLayout
+                android:id="@+id/settings_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <androidx.fragment.app.FragmentContainerView
+                    android:id="@+id/mock_card1"
+                    android:name="edu.ub.pis.giickos.ui.generic.form.FormCard"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    tools:layout="@layout/fragment_card_form"
+                    tools:visibility="visible" />
+
+                <androidx.fragment.app.FragmentContainerView
+                    android:id="@+id/mock_card2"
+                    android:name="edu.ub.pis.giickos.ui.generic.form.FormCard"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    tools:layout="@layout/fragment_card_form"
+                    tools:visibility="visible" />
+            </LinearLayout>
+        </ScrollView>
+
+        <FrameLayout
+            android:id="@+id/show_giickos_plus"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            tools:layout="@layout/fragment_card_form"
-            tools:visibility="visible" />
-    </LinearLayout>
+            android:layout_height="match_parent"
+            android:touchscreenBlocksFocus="true"
+            tools:context=".ui.section.miscellaneous.settings.GiickosPlusFragment">
+
+            <View
+                android:id="@+id/view_blocker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#00FFFFFF" />
+
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="424dp"
+                android:layout_height="732dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/blank"
+                app:srcCompat="@drawable/blank"
+                app:tint="#60000000" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#00FFFFFF"
+                android:paddingHorizontal="30dp"
+                android:paddingVertical="45dp">
+
+                <ImageView
+                    android:id="@+id/imageView4"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/blank"
+                    app:srcCompat="@drawable/blank"
+                    app:tint="#33273E" />
+
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingHorizontal="10dp"
+                    android:paddingVertical="10dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/blank"
+                    app:srcCompat="@drawable/blank"
+                    app:tint="#5F4973" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/giickos_settings_label_giickos_plus"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="Giickos plus"
+                        android:textColor="#FFC700"
+                        android:textSize="34sp"
+                        app:layout_constraintBottom_toTopOf="@+id/giickos_settings_gickos_plus_offer"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.505"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.547" />
+
+                    <TextView
+                        android:id="@+id/giickos_settings_gickos_plus_offer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="start"
+                        android:paddingHorizontal="20dp"
+                        android:text="@string/giickos_settings_offer"
+                        android:textColor="#FFF2C4"
+                        android:textSize="16sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.595"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.386" />
+
+                    <RelativeLayout
+                        android:id="@+id/relativeLayout"
+                        android:layout_width="293dp"
+                        android:layout_height="63dp"
+                        android:layout_weight="0"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.497"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/giickos_settings_gickos_plus_offer"
+                        app:layout_constraintVertical_bias="0.258">
+
+                        <ImageView
+                            android:id="@+id/purchase_cancel_icon"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scaleType="fitXY"
+                            android:tintMode="add"
+                            app:srcCompat="@drawable/green_button" />
+
+                        <TextView
+                            android:id="@+id/giickos_plus_purchase_cancel"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:paddingBottom="8dp"
+                            android:text="@string/giickos_plus_purchasable"
+                            android:textColor="#FFFFFF"
+                            android:textSize="24sp" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="245dp"
+                        android:layout_height="49dp"
+                        android:layout_weight="0"
+
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/relativeLayout"
+                        app:layout_constraintVertical_bias="0.5">
+
+                        <ImageView
+                            android:id="@+id/exit_giickos_plus"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/red_button" />
+
+                        <TextView
+                            android:id="@+id/exit_purchase_menu_giickos_plus"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:paddingBottom="8dp"
+                            android:text="Back"
+                            android:textColor="#FFFFFF"
+                            android:textSize="24sp" />
+
+                    </RelativeLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </RelativeLayout>
+
+        </FrameLayout>
+
+    </RelativeLayout>
+
 </FrameLayout>

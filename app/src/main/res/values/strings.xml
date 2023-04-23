@@ -92,8 +92,10 @@
     <string name="miscellaneous_tab_settings_notifications">Notifications</string>
     <string name="miscellaneous_tab_settings_feedback">Send Feedback</string>
     <string name="miscellaneous_tab_settings_about">About us</string>
-    <string name="miscellaneous_tab_settings_changeaccount">Change Account</string>
+    <string name="miscellaneous_tab_settings_change_account">Change Account</string>
     <string name="miscellaneous_tab_settings_logout">Log Out</string>
+    <string name="miscellaneous_tab_settings_delete_account">Delete Account</string>
+    <string name="miscellaneous_tab_settings_giickos_plus">Giickos Plus:</string>
 
     <string name="miscellaneous_tab_teams">Teams</string>
     <string name="miscellaneous_tab_statistics">Statistics</string>
@@ -117,4 +119,7 @@
     <string name="statistics_text_button_today">Today</string>
     <string name="statistics_date_start">Start date</string>
     <string name="statistics_date_end">End date</string>
+    <string name="giickos_settings_offer">By purchasing Giickos plus you unlock:\n\n-Teams: Create a team, and share tasks with your team members.\n\n-Other features coming soon!\n
+    </string>
+    <string name="giickos_plus_purchasable">Purchase for 5.00€/month</string>:
 </resources>

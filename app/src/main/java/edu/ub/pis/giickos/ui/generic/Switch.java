@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
-import android.widget.RadioGroup;
 
 import edu.ub.pis.giickos.R;
 
@@ -66,5 +65,26 @@ public class Switch extends Fragment {
 
         // Set checked listener, if one was provided
         setListener(listener);
+    }
+
+    public void setChecked(boolean b) {
+        View view = getView();
+
+        if (view != null) {
+            android.widget.Switch switchView = view.findViewById(R.id.view_switch);
+
+            switchView.setChecked(b);
+        }
+    }
+    public boolean isChecked() {
+        View view = getView();
+
+        if (view != null) {
+            android.widget.Switch switchView = view.findViewById(R.id.view_switch);
+
+            return switchView.isChecked();
+        }
+
+        return false;
     }
 }

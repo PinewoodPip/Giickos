@@ -11,6 +11,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="#D1D1D1"
         android:orientation="vertical">
 
         <TableLayout
@@ -36,9 +37,9 @@
                     android:layout_width="104dp"
                     android:layout_height="56dp"
                     android:ems="10"
-                    android:inputType="date"
                     android:focusable="false"
                     android:focusableInTouchMode="false"
+                    android:inputType="date"
                     android:text="@string/statistics_date_start" />
 
                 <EditText
@@ -67,7 +68,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center|center_vertical"
-                android:orientation="vertical" >
+                android:orientation="vertical">
 
             </TableRow>
 

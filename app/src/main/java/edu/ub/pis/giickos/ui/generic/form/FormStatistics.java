@@ -58,12 +58,8 @@ public class FormStatistics extends GiickosFragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        thisView = inflater.inflate(R.layout.fragment_card_statistics, container, false);
         // Inflate the layout for this fragment
-        return thisView;
-    }
-    public View getThisView() {
-        return thisView;
+        return inflater.inflate(R.layout.fragment_card_statistics, container, false);
     }
 
     @Override
@@ -77,8 +73,6 @@ public class FormStatistics extends GiickosFragment
         image.setImageResource(iconID);
         label.setText(this.label);
         value.setText(this.value);
-
-
     }
 
 
