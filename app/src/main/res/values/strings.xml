@@ -112,4 +112,9 @@
     <string name="detox_cant_cancel">can\'t cancel</string>
     <string name="detox_emergency_calls">Only emergency calls</string>
     <string name="detox_let_your_phone_down">Let your phone down</string>
+    <string name="statistics_label" />
+    <string name="statistics_value" />
+    <string name="statistics_text_button_today">Today</string>
+    <string name="statistics_date_start">Start date</string>
+    <string name="statistics_date_end">End date</string>
 </resources>

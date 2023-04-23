@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:orientation="horizontal"
+    tools:context=".ui.main.sectionbar.SectionBarItem">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="0"
+        android:orientation="vertical"
+        android:paddingHorizontal="20dp">
+
+        <ImageView
+            android:id="@+id/Statistics_Icon"
+            android:layout_width="89dp"
+            android:layout_height="98dp"
+            android:src="@drawable/bamboo" />
+
+        <TextView
+            android:id="@+id/Statistics_Label"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:autoSizeMaxTextSize="24sp"
+            android:autoSizeMinTextSize="18sp"
+            android:gravity="center|center_horizontal"
+            android:text="@string/statistics_label"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/Statistics_Value"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/statistics_value"
+            android:textSize="28sp" />
+
+    </LinearLayout>
+
+</LinearLayout>
