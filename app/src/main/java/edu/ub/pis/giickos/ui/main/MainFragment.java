@@ -16,6 +16,7 @@ import edu.ub.pis.giickos.GiickosFragment;
 import edu.ub.pis.giickos.R;
 import edu.ub.pis.giickos.ui.main.sectionbar.SectionBar;
 import edu.ub.pis.giickos.ui.section.Section;
+import edu.ub.pis.giickos.ui.section.bamboogarden.BambooGarden;
 import edu.ub.pis.giickos.ui.section.calendar.CalendarSection;
 import edu.ub.pis.giickos.ui.section.miscellaneous.MiscellaneousSection;
 import edu.ub.pis.giickos.ui.section.taskcreator.TaskCreator;
@@ -60,6 +61,9 @@ public class MainFragment extends GiickosFragment {
                 break;
             case TIMER:
                 section = TimerSection.newInstance();
+                break;
+            case BAMBOO:
+                section = BambooGarden.newInstance();
                 break;
             default:
             {

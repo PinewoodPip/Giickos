@@ -105,6 +105,15 @@
     <string name="miscellaneous_tab_teams">Teams</string>
     <string name="miscellaneous_tab_statistics">Statistics</string>
 
+    <string name="statistics_label" />
+    <string name="statistics_value" />
+    <string name="statistics_text_button_today">Today</string>
+    <string name="statistics_date_start">Start date</string>
+    <string name="statistics_date_end">End date</string>
+    <string name="giickos_settings_offer">By purchasing Giickos plus you unlock:\n\n-Teams: Create a team, and share tasks with your team members.\n\n-Other features coming soon!\n
+    </string>
+    <string name="giickos_plus_purchasable">Purchase for 5.00€/month</string>:
+
     <!-- Timer -->
     <string name="timer_name">Timer &amp; Detox</string>
     <string name="timer_help">Here you can set a timer to track the amount of time spent working on a task. You may also configure it to work as a pomodoro timer, and enable various \'detox\' options to reduce distractions from your phone.</string>
@@ -119,12 +128,11 @@
     <string name="detox_cant_cancel">can\'t cancel</string>
     <string name="detox_emergency_calls">Only emergency calls</string>
     <string name="detox_let_your_phone_down">Let your phone down</string>
-    <string name="statistics_label" />
-    <string name="statistics_value" />
-    <string name="statistics_text_button_today">Today</string>
-    <string name="statistics_date_start">Start date</string>
-    <string name="statistics_date_end">End date</string>
-    <string name="giickos_settings_offer">By purchasing Giickos plus you unlock:\n\n-Teams: Create a team, and share tasks with your team members.\n\n-Other features coming soon!\n
-    </string>
-    <string name="giickos_plus_purchasable">Purchase for 5.00€/month</string>:
+
+    <!-- Bamboo -->
+    <string name="bamboo_name">Bamboo garden</string>
+    <string name="bamboo_help">The bamboo garden is a place where you can track your progress by growing bamboo. Each bamboo has a unique label. By completing tasks with the associated label, a bamboo can grow once a day. The bamboo contains your goal, and a letter that you write for the future you. The letter can be collected after the bamboo is mature and it will be stored in the storage. </string>
+    <string name="bamboo_garden_tab">Garden</string>
+    <string name="bamboo_storage_tab">Storage</string>
+
 </resources>

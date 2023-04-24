@@ -17,6 +17,7 @@ public class MainViewModel extends ViewModel {
         MISCELLANEOUS(R.drawable.profile, R.drawable.profile_colored, R.string.miscellaneous_name, R.string.miscellaneous_help),
         CALENDAR(R.drawable.calendar, R.drawable.calendar_colored, R.string.calendar_name, R.string.calendar_help),
         TIMER(R.drawable.timer, R.drawable.timer_colored, R.string.timer_name, R.string.timer_help),
+        BAMBOO(R.drawable.bamboo, R.drawable.bamboo_colored, R.string.bamboo_name, R.string.bamboo_help),
         ;
 
         private final int iconResource;
