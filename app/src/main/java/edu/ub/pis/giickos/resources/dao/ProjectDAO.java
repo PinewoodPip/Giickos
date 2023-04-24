@@ -4,9 +4,11 @@ import java.util.Set;
 
 import edu.ub.pis.giickos.model.project.Project;
 import edu.ub.pis.giickos.model.project.Task;
+import edu.ub.pis.giickos.model.user.User;
 
-public interface DAOProject {
-    //Interface with the methods that the DAOProject must implement
+public interface ProjectDAO {
+
+    void loadDataForUser(User user, DataLoadedListener listener);
     Project getProject(String guid);
     Set<Project> getProjects();
     boolean addProject(Project project); // Should return false if operation fails
@@ -26,4 +28,8 @@ public interface DAOProject {
     boolean deleteTask(String taskID);
 
     boolean deleteProject(String projectID);
+
+    public static abstract class DataLoadedListener {
+        public abstract void onLoad(boolean success);
+    }
 }

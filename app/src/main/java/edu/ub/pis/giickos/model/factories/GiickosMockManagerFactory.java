@@ -2,6 +2,7 @@ package edu.ub.pis.giickos.model.factories;
 
 import edu.ub.pis.giickos.model.project.ProjectManager;
 import edu.ub.pis.giickos.model.user.UserManager;
+import edu.ub.pis.giickos.resources.dao.firebase.ProjectDAO;
 import edu.ub.pis.giickos.resources.dataservice.DataService;
 
 public class GiickosMockManagerFactory extends AbstractManagerFactory {
@@ -15,8 +16,8 @@ public class GiickosMockManagerFactory extends AbstractManagerFactory {
     }
 
     @Override
-    public ProjectManager createProjectManager() {
-        return new ProjectManager(data.getDAOProject());
+    public ProjectManager createProjectManager(UserManager userManager) {
+        return new ProjectManager(data.getDAOProject(), userManager);
     }
 
     @Override

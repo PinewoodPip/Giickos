@@ -12,8 +12,8 @@ public class Giickos {
     public Giickos(AbstractManagerFactory factory)
     {
         try {
-            this.projectManager = factory.createProjectManager();
             this.userManager = factory.createUserManager();
+            this.projectManager = factory.createProjectManager(this.userManager);
         }
         catch (Exception e) {
             throw new RuntimeException("Initialization failed");

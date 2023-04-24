@@ -68,6 +68,8 @@ public class TaskExplorer extends Section {
     public void onViewCreated(View view, Bundle savedInstance) {
         Button addProjectButton = view.findViewById(R.id.button_newproject);
 
+        viewModel.updateProjects(); // TODO use livedata
+
         // Open dialog for creating projects
         addProjectButton.setOnClickListener(new View.OnClickListener() {
             @Override

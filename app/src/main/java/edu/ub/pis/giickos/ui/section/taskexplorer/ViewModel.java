@@ -97,7 +97,7 @@ public class ViewModel extends androidx.lifecycle.ViewModel {
         }
     }
 
-    private void updateProjects() {
+    public void updateProjects() {
         Set<Project> projects = model.getProjects();
         List<ProjectData> projectData = ViewModelHelpers.sortProjects(projects);
 

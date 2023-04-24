@@ -7,7 +7,7 @@ import edu.ub.pis.giickos.resources.dataservice.DataService;
 //Components that we need in the model
 public abstract class AbstractManagerFactory {
     public abstract void setDataService(DataService dataService);
-    public abstract ProjectManager createProjectManager();
+    public abstract ProjectManager createProjectManager(UserManager userManager);
 
     public abstract UserManager createUserManager();
 }

@@ -8,7 +8,10 @@ import java.util.UUID;
 
 import edu.ub.pis.giickos.model.observer.EmptyEvent;
 import edu.ub.pis.giickos.model.observer.Observable;
-import edu.ub.pis.giickos.resources.dao.DAOProject;
+import edu.ub.pis.giickos.model.observer.ObservableEvent;
+import edu.ub.pis.giickos.model.observer.Observer;
+import edu.ub.pis.giickos.model.user.UserManager;
+import edu.ub.pis.giickos.resources.dao.ProjectDAO;
 
 public class ProjectManager extends Observable<ProjectManager.Events> {
 
@@ -18,11 +21,25 @@ public class ProjectManager extends Observable<ProjectManager.Events> {
         ;
     }
 
-    //Handler of projects
-    private DAOProject daoProject;
+    private ProjectDAO daoProject;
 
-    public ProjectManager(DAOProject daoProject) {
+    public ProjectManager(ProjectDAO daoProject, UserManager userManager) {
         this.daoProject = daoProject;
+
+        // Reload user data when login changes
+        userManager.subscribe(UserManager.Events.LOGGED_IN, new Observer() {
+            @Override
+            public void update(ObservableEvent eventData) {
+                daoProject.loadDataForUser(userManager.getLoggedInUser(), new ProjectDAO.DataLoadedListener() {
+                    @Override
+                    public void onLoad(boolean success) {
+                        // TODO decide how to handle failure
+                        notifyProjectsUpdated();
+                        notifyTasksUpdated();
+                    }
+                });
+            }
+        });
     }
 
     public Set<Project> getProjects() {

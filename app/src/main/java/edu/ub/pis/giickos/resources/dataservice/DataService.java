@@ -1,17 +1,18 @@
 package edu.ub.pis.giickos.resources.dataservice;
 
-import edu.ub.pis.giickos.resources.dao.DAOProject;
+import edu.ub.pis.giickos.resources.dao.DAOFactory;
+import edu.ub.pis.giickos.resources.dao.ProjectDAO;
 
-public class DataService {
+public class DataService { // TODO remove - unnecessary, confusing wrapper
     //We use this class to retrieve the data from Mock, Firebase...
-    private DAOProject daoProject;
+    private ProjectDAO daoProject;
 
     //Retrieve data from the factory
-    public DataService(AbstractFactoryData data)
+    public DataService(DAOFactory data)
     {
         this.daoProject = data.getDAOProject();
     }
-    public DAOProject getDAOProject()
+    public ProjectDAO getDAOProject()
     {
         return daoProject;
     }
