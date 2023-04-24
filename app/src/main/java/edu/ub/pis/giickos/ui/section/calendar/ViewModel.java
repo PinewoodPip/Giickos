@@ -9,8 +9,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 import edu.ub.pis.giickos.model.ModelHolder;
-import edu.ub.pis.giickos.model.managers.ProjectManager;
-import edu.ub.pis.giickos.model.projectfunctions.Task;
+import edu.ub.pis.giickos.model.project.ProjectManager;
+import edu.ub.pis.giickos.model.project.Task;
 import edu.ub.pis.giickos.ui.ViewModelHelpers;
 
 public class ViewModel extends androidx.lifecycle.ViewModel {

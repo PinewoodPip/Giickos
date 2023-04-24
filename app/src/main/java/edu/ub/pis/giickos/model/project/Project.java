@@ -1,4 +1,4 @@
-package edu.ub.pis.giickos.model.projectfunctions;
+package edu.ub.pis.giickos.model.project;
 
 import java.util.ArrayList;
 import java.util.UUID;

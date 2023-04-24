@@ -1,4 +1,4 @@
-package edu.ub.pis.giickos.resources.service;
+package edu.ub.pis.giickos.resources.dataservice;
 
 import edu.ub.pis.giickos.resources.dao.DAOProject;
 

@@ -1,11 +1,10 @@
-package edu.ub.pis.giickos.resources.service;
+package edu.ub.pis.giickos.resources.dataservice;
 
 import edu.ub.pis.giickos.resources.dao.DAOProject;
 
 public class DataService {
     //We use this class to retrieve the data from Mock, Firebase...
     private DAOProject daoProject;
-
 
     //Retrieve data from the factory
     public DataService(AbstractFactoryData data)
@@ -16,6 +15,4 @@ public class DataService {
     {
         return daoProject;
     }
-
-
 }

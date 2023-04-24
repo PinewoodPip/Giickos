@@ -2,8 +2,8 @@ package edu.ub.pis.giickos.resources.dao;
 
 import java.util.Set;
 
-import edu.ub.pis.giickos.model.projectfunctions.Project;
-import edu.ub.pis.giickos.model.projectfunctions.Task;
+import edu.ub.pis.giickos.model.project.Project;
+import edu.ub.pis.giickos.model.project.Task;
 
 public interface DAOProject {
     //Interface with the methods that the DAOProject must implement

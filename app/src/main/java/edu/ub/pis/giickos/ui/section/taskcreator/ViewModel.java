@@ -10,9 +10,9 @@ import java.util.UUID;
 import edu.ub.pis.giickos.R;
 import edu.ub.pis.giickos.Utils;
 import edu.ub.pis.giickos.model.ModelHolder;
-import edu.ub.pis.giickos.model.managers.ProjectManager;
-import edu.ub.pis.giickos.model.projectfunctions.Project;
-import edu.ub.pis.giickos.model.projectfunctions.Task;
+import edu.ub.pis.giickos.model.project.ProjectManager;
+import edu.ub.pis.giickos.model.project.Project;
+import edu.ub.pis.giickos.model.project.Task;
 import edu.ub.pis.giickos.ui.ViewModelHelpers;
 import edu.ub.pis.giickos.ui.ViewModelHelpers.*;
 

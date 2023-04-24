@@ -1,4 +1,4 @@
-package edu.ub.pis.giickos.resources.daoMock;
+package edu.ub.pis.giickos.resources.dao.mock;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -7,8 +7,8 @@ import java.util.Set;
 import java.util.UUID;
 
 import edu.ub.pis.giickos.Utils;
-import edu.ub.pis.giickos.model.projectfunctions.Project;
-import edu.ub.pis.giickos.model.projectfunctions.Task;
+import edu.ub.pis.giickos.model.project.Project;
+import edu.ub.pis.giickos.model.project.Task;
 import edu.ub.pis.giickos.resources.dao.DAOProject;
 
 public class DAOProjectMock implements DAOProject {

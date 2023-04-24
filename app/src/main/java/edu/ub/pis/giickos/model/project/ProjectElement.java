@@ -1,9 +1,6 @@
-package edu.ub.pis.giickos.model.projectfunctions;
+package edu.ub.pis.giickos.model.project;
 
-
-import java.util.UUID;
-
-//Generic class for elemnts inside a project, for now, just "task", but in the future, maybe other elemnts like reminder...
+//Generic class for elements inside a project, for now, just "task", but in the future, maybe other elemnts like reminder...
 public abstract class ProjectElement {
 
     protected String id;
@@ -26,5 +23,4 @@ public abstract class ProjectElement {
     public String getName() {
         return name;
     }
-
 }

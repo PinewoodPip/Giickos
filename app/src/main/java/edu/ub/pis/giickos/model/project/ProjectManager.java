@@ -1,4 +1,4 @@
-package edu.ub.pis.giickos.model.managers;
+package edu.ub.pis.giickos.model.project;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -8,8 +8,6 @@ import java.util.UUID;
 
 import edu.ub.pis.giickos.model.observer.EmptyEvent;
 import edu.ub.pis.giickos.model.observer.Observable;
-import edu.ub.pis.giickos.model.projectfunctions.Project;
-import edu.ub.pis.giickos.model.projectfunctions.Task;
 import edu.ub.pis.giickos.resources.dao.DAOProject;
 
 public class ProjectManager extends Observable<ProjectManager.Events> {

@@ -6,9 +6,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 
-import edu.ub.pis.giickos.model.projectfunctions.Project;
-import edu.ub.pis.giickos.model.projectfunctions.Task;
-import edu.ub.pis.giickos.ui.section.taskcreator.TaskCreator;
+import edu.ub.pis.giickos.model.project.Project;
+import edu.ub.pis.giickos.model.project.Task;
 import edu.ub.pis.giickos.ui.section.taskcreator.ViewModel;
 
 public class ViewModelHelpers {

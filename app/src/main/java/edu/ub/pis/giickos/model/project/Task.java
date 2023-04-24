@@ -1,9 +1,9 @@
-package edu.ub.pis.giickos.model.projectfunctions;
+package edu.ub.pis.giickos.model.project;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 
 import edu.ub.pis.giickos.Utils;
+import edu.ub.pis.giickos.model.project.ProjectElement;
 
 public class Task extends ProjectElement {
 

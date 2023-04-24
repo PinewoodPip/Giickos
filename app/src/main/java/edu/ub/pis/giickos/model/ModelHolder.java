@@ -2,43 +2,44 @@ package edu.ub.pis.giickos.model;
 
 import edu.ub.pis.giickos.model.managers.AbstractManagerFactory;
 import edu.ub.pis.giickos.model.managers.GiickosMockManagerFactory;
-import edu.ub.pis.giickos.model.managers.ProjectManager;
-import edu.ub.pis.giickos.resources.service.AbstractFactoryData;
-import edu.ub.pis.giickos.resources.service.DataService;
-import edu.ub.pis.giickos.resources.service.FactoryMock;
+import edu.ub.pis.giickos.model.project.ProjectManager;
+import edu.ub.pis.giickos.resources.dataservice.AbstractFactoryData;
+import edu.ub.pis.giickos.resources.dataservice.DataService;
+import edu.ub.pis.giickos.resources.dataservice.FactoryMock;
 
 // Provides a singleton for the model.
 public enum ModelHolder {
-    INSTANCE; //Singleton
+    INSTANCE; // Singleton instance
 
     private DataService dataService; // Data provider
     private Giickos model;
 
     ModelHolder()
     {
-        setModel(new FactoryMock()); // Usar mock per defecte
+        setModel(new FactoryMock()); // Uses mock DAOs for now
     }
 
     public void setModel(AbstractFactoryData factory) {
-        // Uses GiickosComponentFactory by default - use the overload to inject others
+        // Uses GiickosMockManagerFactory by default - use the overload to inject others
         setModel(factory, new GiickosMockManagerFactory());
     }
+
     public void setModel(AbstractFactoryData dataFactory, AbstractManagerFactory managerFactory) {
         dataService = new DataService(dataFactory);
         managerFactory.setDataService(dataService);
         try {
             model = new Giickos(managerFactory);
-            //View-Model that uses the managers...
-            //Example: a Project needs to load its info, so it uses ProjectManager..
 
         } catch (Exception e) {
             throw e;
         }
     }
+
     public Giickos getModel() {
         return model;
     }
 
+    // Shorthand method for fetching the project manager
     public ProjectManager getProjectManager() {
         return model.getProjectManager();
     }

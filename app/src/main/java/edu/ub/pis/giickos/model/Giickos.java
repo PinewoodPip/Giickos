@@ -1,7 +1,7 @@
 package edu.ub.pis.giickos.model;
 
 import edu.ub.pis.giickos.model.managers.AbstractManagerFactory;
-import edu.ub.pis.giickos.model.managers.ProjectManager;
+import edu.ub.pis.giickos.model.project.ProjectManager;
 
 public class Giickos {
 
