@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "170608884655",
+    "project_id": "giickos",
+    "storage_bucket": "giickos.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:170608884655:android:e957dcf8ad2088dbed0d5a",
+        "android_client_info": {
+          "package_name": "edu.ub.pis.giickos"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "170608884655-21ahlsaikcs4e2jco6dh3fpqo111l09v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAB0cEM-m7N81BoIwCfvQSuJD6puv8nEd8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "170608884655-21ahlsaikcs4e2jco6dh3fpqo111l09v.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

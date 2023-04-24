@@ -1,8 +1,9 @@
 package edu.ub.pis.giickos.model;
 
-import edu.ub.pis.giickos.model.managers.AbstractManagerFactory;
-import edu.ub.pis.giickos.model.managers.GiickosMockManagerFactory;
+import edu.ub.pis.giickos.model.factories.AbstractManagerFactory;
+import edu.ub.pis.giickos.model.factories.GiickosMockManagerFactory;
 import edu.ub.pis.giickos.model.project.ProjectManager;
+import edu.ub.pis.giickos.model.user.UserManager;
 import edu.ub.pis.giickos.resources.dataservice.AbstractFactoryData;
 import edu.ub.pis.giickos.resources.dataservice.DataService;
 import edu.ub.pis.giickos.resources.dataservice.FactoryMock;
@@ -42,5 +43,9 @@ public enum ModelHolder {
     // Shorthand method for fetching the project manager
     public ProjectManager getProjectManager() {
         return model.getProjectManager();
+    }
+
+    public UserManager getUserManager() {
+        return model.getUserManager();
     }
 }

@@ -35,6 +35,10 @@
     <string name="month_november">November</string>
     <string name="month_december">December</string>
 
+    <!-- Authentication -->
+    <string name="auth_login_success">Successfully logged in</string>
+    <string name="auth_login_failure">Failed to log in</string>
+
     <!-- Task priority -->
     <string name="task_priority_none">@string/generic_label_none</string>
     <string name="task_priority_low">Low</string>

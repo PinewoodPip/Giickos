@@ -5,6 +5,10 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import edu.ub.pis.giickos.R;
+import edu.ub.pis.giickos.model.ModelHolder;
+import edu.ub.pis.giickos.model.user.UserManager;
+
+import com.google.android.gms.tasks.Task;
 
 public class MainViewModel extends ViewModel {
 
@@ -44,9 +48,13 @@ public class MainViewModel extends ViewModel {
         }
     }
 
+    private UserManager userManager;
+
     private MutableLiveData<TYPE> currentSection;
 
     public MainViewModel() {
+        userManager = ModelHolder.INSTANCE.getUserManager();
+
         currentSection = new MutableLiveData<>(TYPE.CALENDAR);
     }
 
@@ -56,5 +64,9 @@ public class MainViewModel extends ViewModel {
 
     public void setCurrentSection(TYPE newSection) {
         currentSection.setValue(newSection);
+    }
+
+    public Task tryLogIn(String username, String password) {
+        return userManager.tryLogIn(username, password);
     }
 }
