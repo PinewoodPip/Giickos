@@ -2,6 +2,7 @@ package edu.ub.pis.giickos.ui.generic.form;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -55,6 +56,41 @@ public class TextField extends GiickosFragment {
         }
 
         this.listener = listener;
+    }
+
+    // Sets the text of the field.
+    public void setText(String text) {
+        View view = getView();
+        Bundle arguments = getArguments();
+
+        if (arguments == null) {
+            arguments = new Bundle();
+            setArguments(arguments); // TODO is this safe to call before operating on the bundle?
+        }
+
+        arguments.putString(ARG_TEXT, text);
+
+        if (view != null) {
+            EditText textField = view.findViewById(R.id.textfield_input);
+
+            textField.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                }
+
+                @Override
+                public void afterTextChanged(Editable editable) {
+
+                }
+            });
+            textField.setText(text);
+        }
     }
 
     @Override

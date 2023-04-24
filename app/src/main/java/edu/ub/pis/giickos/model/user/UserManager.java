@@ -59,4 +59,8 @@ public class UserManager extends Observable<UserManager.Events> {
 
         return task;
     }
+
+    public void logOut() {
+        this.loggedInUser = null;
+    }
 }

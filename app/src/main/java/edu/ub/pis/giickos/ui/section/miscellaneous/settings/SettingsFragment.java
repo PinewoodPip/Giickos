@@ -10,6 +10,8 @@ import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.text.InputType;
 import android.util.Log;
@@ -33,6 +35,8 @@ import edu.ub.pis.giickos.ui.generic.form.TextField;
 // Displays the settings of the app. TODO
 public class SettingsFragment extends GiickosFragment {
 
+    private ViewModel viewModel;
+
     public SettingsFragment() {
         // Required empty public constructor
     }
@@ -49,6 +53,8 @@ public class SettingsFragment extends GiickosFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        viewModel = new ViewModelProvider(getActivity()).get(ViewModel.class);
     }
 
     @Override
@@ -64,6 +70,7 @@ public class SettingsFragment extends GiickosFragment {
 
         return card;
     }
+
     private FormCardStatisticsSettings addCardWithTint(int iconID, String label, int colorLeft, int colorRight, int colorText) {
         FormCardStatisticsSettings card = FormCardStatisticsSettings.newInstance(iconID, label, colorLeft, colorRight, colorText);
         addChildFragment(card, R.id.settings_list, true);
@@ -71,10 +78,31 @@ public class SettingsFragment extends GiickosFragment {
         return card;
     }
 
+    private String getDisplayedUserName() {
+        ViewModel.UserData user = viewModel.getLoggedInUser().getValue();
+        String username = getString(R.string.miscellaneous_tab_settings_notloggedin);
+
+        if (user != null) {
+            username = user.username;
+        }
+
+        return username;
+    }
+
+    private String getDisplayedEmail() {
+        ViewModel.UserData user = viewModel.getLoggedInUser().getValue();
+        String username = getString(R.string.miscellaneous_tab_settings_notloggedin);
+
+        if (user != null) {
+            username = user.email;
+        }
+
+        return username;
+    }
+
     @Override
     public void onViewCreated(View view, Bundle bundle)
     {
-        //TODO: live data username and email, some action to trigger the update -> tab change?
         View giickosPlusMenu = view.findViewById(R.id.show_giickos_plus);
         giickosPlusMenu.setVisibility(View.GONE);
 
@@ -99,14 +127,13 @@ public class SettingsFragment extends GiickosFragment {
         FormCardStatisticsSettings feedbackCard = addCard(R.drawable.feed_back, getString(R.string.miscellaneous_tab_settings_feedback));
         FormCardStatisticsSettings aboutUsCard = addCard(R.drawable.info, getString(R.string.miscellaneous_tab_settings_about));
 
-
         FormCardStatisticsSettings usernameCard = addCard(R.drawable.profile_white, getString(R.string.generic_label_username));
-        TextField usernameTextField = TextField.newInstance("TODO", InputType.TYPE_TEXT_VARIATION_PERSON_NAME, false, Color.WHITE);
+        TextField usernameTextField = TextField.newInstance(getDisplayedUserName(), InputType.TYPE_TEXT_VARIATION_PERSON_NAME, false, Color.WHITE);
 
         usernameCard.addElement(usernameTextField);
 
         FormCardStatisticsSettings emailCard = addCard(R.drawable.user, getString(R.string.generic_label_email));
-        TextField emailTextField = TextField.newInstance("TODO", InputType.TYPE_CLASS_TEXT, false, Color.WHITE);
+        TextField emailTextField = TextField.newInstance(getDisplayedEmail(), InputType.TYPE_CLASS_TEXT, false, Color.WHITE);
         emailCard.addElement(emailTextField);
 
         FormCardStatisticsSettings giickosPlusCard = addCardWithTint(R.drawable.giickos_plus, getString(R.string.miscellaneous_tab_settings_giickos_plus),
@@ -178,7 +205,8 @@ public class SettingsFragment extends GiickosFragment {
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                //TODO go to login
+                                // TODO go to login or update the text fields
+                                viewModel.logOut();
                             }
                         });
                 builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {

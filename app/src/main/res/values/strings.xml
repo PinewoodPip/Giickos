@@ -100,6 +100,7 @@
     <string name="miscellaneous_tab_settings_logout">Log Out</string>
     <string name="miscellaneous_tab_settings_delete_account">Delete Account</string>
     <string name="miscellaneous_tab_settings_giickos_plus">Giickos Plus:</string>
+    <string name="miscellaneous_tab_settings_notloggedin">Not logged in</string>
 
     <string name="miscellaneous_tab_teams">Teams</string>
     <string name="miscellaneous_tab_statistics">Statistics</string>
