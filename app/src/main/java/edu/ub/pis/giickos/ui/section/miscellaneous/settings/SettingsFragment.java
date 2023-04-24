@@ -64,8 +64,8 @@ public class SettingsFragment extends GiickosFragment {
 
         return card;
     }
-    private FormCardStatisticsSettings addCardWithTint(int iconID, String label,int colorLeft,int colorRight,int colorText) {
-        FormCardStatisticsSettings card = FormCardStatisticsSettings.newInstance(iconID, label,colorLeft,colorRight,colorText);
+    private FormCardStatisticsSettings addCardWithTint(int iconID, String label, int colorLeft, int colorRight, int colorText) {
+        FormCardStatisticsSettings card = FormCardStatisticsSettings.newInstance(iconID, label, colorLeft, colorRight, colorText);
         addChildFragment(card, R.id.settings_list, true);
 
         return card;
@@ -110,19 +110,19 @@ public class SettingsFragment extends GiickosFragment {
         emailCard.addElement(emailTextField);
 
         FormCardStatisticsSettings giickosPlusCard = addCardWithTint(R.drawable.giickos_plus, getString(R.string.miscellaneous_tab_settings_giickos_plus),
-                                                                Color.rgb(126,105,0),//left frame
-                                                                Color.rgb(163,136,0),//right frame
-                                                                Color.rgb(160,32,240));//text color);
+                                                                Color.rgb(126,105,0), //left frame
+                                                                Color.rgb(163,136,0), //right frame
+                                                                Color.rgb(160,32,240)); //text color);
 
         FormCardStatisticsSettings logoutCard = addCardWithTint(R.drawable.exit, getString(R.string.miscellaneous_tab_settings_logout),
-                                                                Color.rgb(113,48,12),//left frame
-                                                                Color.rgb(158,66,16),//right frame
-                                                                Color.WHITE);//text color
+                                                                Color.rgb(113,48,12), //left frame
+                                                                Color.rgb(158,66,16), //right frame
+                                                                Color.WHITE); //text color
 
         FormCardStatisticsSettings removeAccountCard = addCardWithTint(R.drawable.delete_account, getString(R.string.miscellaneous_tab_settings_delete_account),
-                                                                Color.rgb(80,0,0),//left frame
-                                                                Color.rgb(100,0,0),//right frame
-                                                                Color.WHITE);//text color
+                                                                Color.rgb(80,0,0), //left frame
+                                                                Color.rgb(100,0,0), //right frame
+                                                                Color.WHITE); //text color
         view.findViewById(R.id.exit_purchase_menu_giickos_plus).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -218,6 +218,5 @@ public class SettingsFragment extends GiickosFragment {
                 dialog.show();
             }
         });
-
     }
 }

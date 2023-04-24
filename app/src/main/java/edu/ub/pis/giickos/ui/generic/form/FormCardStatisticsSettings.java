@@ -47,7 +47,6 @@ public class FormCardStatisticsSettings extends GiickosFragment
         FormCardStatisticsSettings fragment = new FormCardStatisticsSettings();
         Bundle args = new Bundle();
 
-
         args.putInt(ARG_ICON, iconID);
         args.putString(ARG_LABEL, label);
         args.putInt(ARG_TL_COLOR, colorLeft);
@@ -109,16 +108,18 @@ public class FormCardStatisticsSettings extends GiickosFragment
         ImageView leftFrame = getView().findViewById(R.id.statistics_frame_left);
         ImageView rightFrame = getView().findViewById(R.id.statistics_frame_right);
         TextView text = view.findViewById(R.id.statistics_settings_label);
-        // Set icon and labeld
+
+        // Set icon and label
         icon.setImageResource(iconID);
         text.setText(label);
 
-        if(colorLeft != -1 && colorRight != -1)
+        if (colorLeft != -1 && colorRight != -1)
         {
             leftFrame.setColorFilter(colorLeft, PorterDuff.Mode.ADD);
             rightFrame.setColorFilter(colorRight, PorterDuff.Mode.ADD);
             text.setTextColor(colorText);
         }
+
         updateClickListener(view);
     }
 

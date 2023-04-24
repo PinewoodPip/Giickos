@@ -2,14 +2,11 @@ package edu.ub.pis.giickos.ui.generic.form;
 
 import android.graphics.Color;
 import android.os.Bundle;
-
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 
 import edu.ub.pis.giickos.GiickosFragment;
 import edu.ub.pis.giickos.R;
@@ -21,8 +18,6 @@ public class TextField extends GiickosFragment {
     private static final String ARG_INPUT_TYPE = "InputType";
     private static final String ARG_EDITABLE = "Editable";
     private static final String ARG_TEXT_COLOR = "TextColor";
-
-    private int listDirection;
 
     private TextWatcher listener = null;
 
@@ -43,10 +38,10 @@ public class TextField extends GiickosFragment {
 
     // Overload that defaults to editable.
     public static TextField newInstance(String text, int inputType, boolean editable) {
-        return newInstance(text, inputType, editable,0);
+        return newInstance(text, inputType, editable, 0);
     }
     public static TextField newInstance(String text, int inputType) {
-        return newInstance(text, inputType, true,0);
+        return newInstance(text, inputType, true, 0);
     }
 
     public void setListener(TextWatcher listener) {
@@ -92,6 +87,4 @@ public class TextField extends GiickosFragment {
     public void onViewCreated(View view, Bundle savedInstance) {
         setListener(listener);
     }
-
-    // Sets the direction of the list of child elements added via addElement().
 }

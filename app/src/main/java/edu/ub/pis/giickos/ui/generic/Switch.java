@@ -76,6 +76,7 @@ public class Switch extends Fragment {
             switchView.setChecked(b);
         }
     }
+
     public boolean isChecked() {
         View view = getView();
 
