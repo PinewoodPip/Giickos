@@ -1,14 +1,305 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#D1D1D1"
+    android:orientation="vertical"
     tools:context=".ui.section.miscellaneous.team.TeamsFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/placeholder" />
+        android:layout_height="match_parent">
 
-</FrameLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/teams_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#00FFFFFF"
+            android:scrollbars="vertical">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+        <LinearLayout
+            android:layout_width="120dp"
+            android:layout_height="400dp"
+            android:layout_alignParentStart="false"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="0dp"
+            android:gravity="bottom|center"
+            android:orientation="vertical"
+            android:paddingBottom="10dp">
+
+            <RelativeLayout
+                android:layout_width="100dp"
+                android:layout_height="100dp">
+
+                <ImageButton
+                    android:id="@+id/teams_invitation_button"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:background="#00FFFFFF"
+                    android:contentDescription="watch team invitations"
+                    android:contextClickable="false"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/mail" />
+
+                <RelativeLayout
+                    android:layout_width="38dp"
+                    android:layout_height="39dp"
+                    android:layout_alignParentRight="true"
+                    android:paddingTop="10dp"
+                    android:paddingRight="10dp">
+
+                    <ImageView
+                        android:id="@+id/imageView2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentRight="true"
+                        android:background="#00FFFFFF"
+                        android:src="@drawable/circle"
+                        app:tint="#FF0000" />
+
+                    <TextView
+                        android:id="@+id/teams_invitations_alert_count"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentRight="false"
+                        android:autoSizeTextType="uniform"
+                        android:gravity="center"
+                        android:paddingHorizontal="1dp"
+                        android:paddingVertical="1dp"
+                        android:text="0"
+                        android:textColor="#FFFFFF"
+                        android:textSize="16sp" />
+
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+            <ImageButton
+                android:id="@+id/teams_add_button"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:background="#00FFFFFF"
+                android:contentDescription="create team"
+                android:scaleType="fitXY"
+                android:src="@drawable/add" />
+
+        </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/show_create_team_menu"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="false"
+            android:layout_alignParentEnd="false"
+            android:visibility="invisible"
+            tools:visibility="visible">
+
+            <View
+                android:id="@+id/view_blocker3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#80000000" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingHorizontal="20dp"
+                android:paddingVertical="20dp">
+
+                <ImageView
+                    android:id="@+id/imageView14"
+                    android:layout_width="319dp"
+                    android:layout_height="508dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/blank"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.502"
+                    app:tint="#634E34" />
+
+                <ImageView
+                    android:id="@+id/exit_create_menu"
+                    android:layout_width="130dp"
+                    android:layout_height="38dp"
+                    android:src="@drawable/red_button"
+                    app:layout_constraintBottom_toBottomOf="@+id/imageView14"
+                    app:layout_constraintEnd_toEndOf="@+id/imageView14"
+                    app:layout_constraintHorizontal_bias="0.105"
+                    app:layout_constraintStart_toStartOf="@+id/imageView14"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.926" />
+
+                <TextView
+                    android:id="@+id/textView4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:paddingBottom="8dp"
+                    android:text="Back"
+                    android:textColor="#FFFFFF"
+                    android:textSize="24sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/exit_create_menu"
+                    app:layout_constraintEnd_toEndOf="@+id/exit_create_menu"
+                    app:layout_constraintStart_toStartOf="@+id/exit_create_menu"
+                    app:layout_constraintTop_toTopOf="@+id/exit_create_menu" />
+
+                <ImageView
+                    android:id="@+id/create_team"
+                    android:layout_width="130dp"
+                    android:layout_height="38dp"
+                    android:src="@drawable/green_button"
+                    app:layout_constraintBottom_toBottomOf="@+id/imageView14"
+                    app:layout_constraintEnd_toEndOf="@+id/imageView14"
+                    app:layout_constraintHorizontal_bias="0.925"
+                    app:layout_constraintStart_toStartOf="@+id/imageView14"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.924" />
+
+                <TextView
+                    android:id="@+id/textView6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:paddingBottom="8dp"
+                    android:text="Create"
+                    android:textColor="#FFFFFF"
+                    android:textSize="24sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/create_team"
+                    app:layout_constraintEnd_toEndOf="@+id/create_team"
+                    app:layout_constraintStart_toStartOf="@+id/create_team"
+                    app:layout_constraintTop_toTopOf="@+id/create_team" />
+
+                <TextView
+                    android:id="@+id/textView7"
+                    android:layout_width="233dp"
+                    android:layout_height="56dp"
+                    android:autoSizeTextType="uniform"
+                    android:text="Create new team"
+                    android:textColor="#FFFFFF"
+                    app:layout_constraintBottom_toBottomOf="@+id/imageView14"
+                    app:layout_constraintEnd_toEndOf="@+id/imageView14"
+                    app:layout_constraintStart_toStartOf="@+id/imageView14"
+                    app:layout_constraintTop_toTopOf="@+id/imageView14"
+                    app:layout_constraintVertical_bias="0.088" />
+
+                <LinearLayout
+                    android:id="@+id/create_team_list"
+                    android:layout_width="293dp"
+                    android:layout_height="315dp"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="@+id/imageView14"
+                    app:layout_constraintEnd_toEndOf="@+id/imageView14"
+                    app:layout_constraintHorizontal_bias="0.461"
+                    app:layout_constraintStart_toStartOf="@+id/imageView14"
+                    app:layout_constraintTop_toBottomOf="@+id/textView7"
+                    app:layout_constraintVertical_bias="0.0" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/show_team_invitation_menu"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="invisible">
+
+            <View
+                android:id="@+id/view_blocker2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#80000000" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingHorizontal="20dp"
+                android:paddingVertical="20dp">
+
+
+                <ImageView
+                    android:id="@+id/imageView10"
+                    android:layout_width="357dp"
+                    android:layout_height="562dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/rectangular_frame"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.511"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.451"
+                    app:srcCompat="@drawable/blank"
+                    app:tint="#2E3F59" />
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:paddingTop="30dp"
+                    android:text="Group Invitations"
+                    android:textColor="#FFFFFF"
+                    android:textSize="34sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/imageView10"
+                    app:layout_constraintVertical_bias="0.069" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/teams_invitations_recycler_view"
+                    android:layout_width="294dp"
+                    android:layout_height="288dp"
+                    android:layout_marginBottom="24dp"
+                    android:paddingHorizontal="10dp"
+                    android:paddingVertical="10dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/imageView10"
+                    app:layout_constraintEnd_toEndOf="@+id/imageView10"
+                    app:layout_constraintHorizontal_bias="0.483"
+                    app:layout_constraintStart_toStartOf="@+id/imageView10"
+                    app:layout_constraintTop_toBottomOf="@+id/textView2"
+                    app:layout_constraintVertical_bias="0.156" />
+
+                <ImageView
+                    android:id="@+id/exit_invitation_menu"
+                    android:layout_width="265dp"
+                    android:layout_height="61dp"
+                    android:src="@drawable/red_button"
+                    app:layout_constraintBottom_toBottomOf="@+id/imageView10"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.527"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/teams_invitations_recycler_view"
+                    app:layout_constraintVertical_bias="0.0" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:paddingBottom="8dp"
+                    android:text="Back"
+                    android:textColor="#FFFFFF"
+                    android:textSize="24sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/exit_invitation_menu"
+                    app:layout_constraintEnd_toEndOf="@+id/exit_invitation_menu"
+                    app:layout_constraintHorizontal_bias="0.485"
+                    app:layout_constraintStart_toStartOf="@+id/exit_invitation_menu"
+                    app:layout_constraintTop_toBottomOf="@+id/teams_invitations_recycler_view"
+                    app:layout_constraintVertical_bias="0.476" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </FrameLayout>
+
+    </RelativeLayout>
+
+</LinearLayout>

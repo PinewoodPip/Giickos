@@ -60,8 +60,6 @@ public class FormCard extends GiickosFragment {
     public void addElement(Fragment fragment) {
         addChildFragment(fragment, R.id.list_main, true);
     }
-
-
     public TextField addTextField(int inputType, String label, TextWatcher listener) {
         TextField textField = TextField.newInstance(label, inputType);
         addElement(textField);

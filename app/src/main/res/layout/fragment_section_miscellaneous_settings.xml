@@ -47,22 +47,14 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:touchscreenBlocksFocus="true"
+            android:visibility="invisible"
             tools:context=".ui.section.miscellaneous.settings.GiickosPlusFragment">
 
             <View
                 android:id="@+id/view_blocker"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="#00FFFFFF" />
-
-            <ImageView
-                android:id="@+id/imageView3"
-                android:layout_width="424dp"
-                android:layout_height="732dp"
-                android:scaleType="fitXY"
-                android:src="@drawable/blank"
-                app:srcCompat="@drawable/blank"
-                app:tint="#60000000" />
+                android:background="#80000000" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
