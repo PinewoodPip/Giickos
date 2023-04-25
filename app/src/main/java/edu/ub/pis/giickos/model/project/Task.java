@@ -79,6 +79,10 @@ public class Task extends ProjectElement {
         return Utils.instantToLocalDateTime(startTime);
     }
 
+    public long getStartTimeMillis() {
+        return startTime;
+    }
+
     public void setStartTime(long startTime) {
         this.startTime = startTime;
     }

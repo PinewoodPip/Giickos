@@ -6,6 +6,7 @@ import edu.ub.pis.giickos.model.project.ProjectManager;
 import edu.ub.pis.giickos.model.user.UserManager;
 import edu.ub.pis.giickos.resources.dao.firebase.FirebaseDAOFactory;
 import edu.ub.pis.giickos.resources.dao.DAOFactory;
+import edu.ub.pis.giickos.resources.dao.mock.MockDAOFactory;
 import edu.ub.pis.giickos.resources.dataservice.DataService;
 
 // Provides a singleton for the model.
@@ -17,7 +18,7 @@ public enum ModelHolder {
 
     ModelHolder()
     {
-        setModel(new FirebaseDAOFactory()); // Uses mock DAOs for now
+        setModel(new FirebaseDAOFactory());
     }
 
     public void setModel(DAOFactory factory) {
