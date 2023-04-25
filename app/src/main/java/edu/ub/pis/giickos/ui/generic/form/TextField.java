@@ -39,10 +39,10 @@ public class TextField extends GiickosFragment {
 
     // Overload that defaults to editable.
     public static TextField newInstance(String text, int inputType, boolean editable) {
-        return newInstance(text, inputType, editable, 0);
+        return newInstance(text, inputType, editable, Color.BLACK);
     }
     public static TextField newInstance(String text, int inputType) {
-        return newInstance(text, inputType, true, 0);
+        return newInstance(text, inputType, true, Color.BLACK);
     }
 
     public void setListener(TextWatcher listener) {
@@ -73,22 +73,6 @@ public class TextField extends GiickosFragment {
         if (view != null) {
             EditText textField = view.findViewById(R.id.textfield_input);
 
-            textField.addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-                }
-
-                @Override
-                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-                }
-
-                @Override
-                public void afterTextChanged(Editable editable) {
-
-                }
-            });
             textField.setText(text);
         }
     }
