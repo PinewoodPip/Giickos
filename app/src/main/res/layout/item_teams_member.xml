@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#00FFFFFF"
+    app:cardBackgroundColor="#00FFFFFF"
+    app:cardElevation="0dp">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/team_card"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="#00FFFFFF"
+        app:cardBackgroundColor="#00FFFFFF"
+        app:cardElevation="0dp"
+        app:contentPaddingBottom="5dp">
+
+        <ImageView
+            android:id="@+id/team_member_frame"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#46B589"
+            android:scaleType="fitXY" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="20dp">
+
+            <TextView
+                android:id="@+id/team_member_name"
+                android:layout_width="210dp"
+                android:layout_height="29dp"
+                android:layout_alignParentLeft="true"
+                android:text="Giickos Team"
+                android:textColor="#000000"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/team_member_role"
+                android:layout_width="210dp"
+                android:layout_height="29dp"
+                android:layout_alignParentRight="true"
+                android:gravity="right"
+                android:text="role"
+                android:textColor="#000000"
+                android:textSize="16sp" />
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</androidx.cardview.widget.CardView>

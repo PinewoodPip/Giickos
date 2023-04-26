@@ -3,15 +3,54 @@ package edu.ub.pis.giickos.model.team;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.List;
+
 public class Team {
     //Provisional class for the team object. It lacks team id etc...
+
+    public enum Role {
+        OWNER ("Owner"),
+        MEMBER  ("Member"),
+        ;
+        private String role;
+
+        Role(String role) {
+            this.role = role;
+        }
+        public String getRole() {
+            return role;
+        }
+    }
     private int teamImage;
     private String teamName;
     private String teamDescription;
+    private List<Member> teamMembers;
 
-    private String[] teamMembers;
+    private String owner;
 
-    public Team(int teamImage, String teamName, String teamDescription, String[] teamMembers) {
+    public static class Member {
+        private String name;
+        private Role role;
+        public Member(String name, Role role) {
+            this.name = name;
+            this.role = role;
+        }
+        public String getRole() {
+            return role.getRole();
+        }
+        public void setRole(Role role) {
+            this.role = role;
+        }
+        public String getName() {
+            return name;
+        }
+        public void setName(String name) {
+            this.name = name;
+        }
+
+    }
+
+    public Team(int teamImage, String teamName, String teamDescription, List<Member> teamMembers) {
         this.teamImage = teamImage;
         this.teamName = teamName;
         this.teamDescription = teamDescription;
@@ -42,23 +81,38 @@ public class Team {
         this.teamDescription = teamDescription;
     }
 
-    public String[] getTeamMembers() {
+    public List<Member> getTeamMembers() {
         return teamMembers;
     }
 
-    public void setTeamMembers(String[] teamMembers) {
+    public void addTeamMember(Member member)
+    {
+        teamMembers.add(member);
+    }
+    public void setTeamMembers(List<Member> teamMembers) {
         this.teamMembers = teamMembers;
+    }
+    public String getTeamOwner()
+    {
+        for (Member member : teamMembers)
+        {
+            if (member.getRole().equalsIgnoreCase(Role.OWNER.getRole()))
+            {
+                return member.getName();
+            }
+        }
+        return null;
     }
 
     public String getSomeMembers(int numMembers)
     {
-        if (numMembers > teamMembers.length)
-            numMembers = teamMembers.length;
+        if (numMembers > teamMembers.size())
+            numMembers = teamMembers.size();
 
         String members = "";
         for(int i = 0; i < numMembers; i++)
         {
-            members += teamMembers[i];
+            members += teamMembers.get(i).name;
             if(i != numMembers - 1)
             {
                 members += ", ";
@@ -68,7 +122,6 @@ public class Team {
     }
     public String getSomeMembers()
     {
-        return getSomeMembers(3);
+        return getSomeMembers(2);
     }
-
 }

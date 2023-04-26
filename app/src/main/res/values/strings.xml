@@ -135,4 +135,10 @@
     <string name="bamboo_garden_tab">Garden</string>
     <string name="bamboo_storage_tab">Storage</string>
 
+    <!-- General button actions -->
+    <string name="decline_label">Decline</string>
+    <string name="return_label">Back</string>
+    <string name="accept_label">Accept</string>
+
+
 </resources>

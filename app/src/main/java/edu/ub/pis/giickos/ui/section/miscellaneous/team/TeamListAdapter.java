@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -17,9 +18,14 @@ import edu.ub.pis.giickos.model.team.Team;
 
 public class TeamListAdapter extends RecyclerView.Adapter<TeamListAdapter.ViewHolder>
 {
+    public interface OnItemClickListener {
+        void onItemClick(Team team);
+    }
     private List<Team> teams;
     private LayoutInflater inflater;
     private Context context;
+
+    private OnItemClickListener mListener;
 
     public TeamListAdapter(Context context, List<Team> teams)
     {
@@ -38,15 +44,21 @@ public class TeamListAdapter extends RecyclerView.Adapter<TeamListAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull TeamListAdapter.ViewHolder holder, int position) {
-        holder.bind(teams.get(position));
+        holder.bind(teams.get(holder.getBindingAdapterPosition()));
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               //TODO open menu
+                if (mListener != null) {
+                    mListener.onItemClick(teams.get(holder.getBindingAdapterPosition()));
+                }
             }
         });
     }
 
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        mListener = listener;
+    }
 
 
     @Override
