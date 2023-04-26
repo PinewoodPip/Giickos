@@ -6,7 +6,7 @@ import edu.ub.pis.giickos.resources.dao.ProjectDAO;
 public class MockDAOFactory implements DAOFactory {
     //Implementation of the factory using mock DAOs
     @Override
-    public ProjectDAO getDAOProject() {
+    public ProjectDAO getProjectDAO() {
         return new MockProjectDAO();
     }
 }
