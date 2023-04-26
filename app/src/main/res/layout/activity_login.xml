@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center|left"
+    android:orientation="vertical"
+    android:paddingHorizontal="5dp"
+    tools:context=".LoginActivity"
+    android:id="@+id/login">
+
+    <TextView
+        android:id="@+id/title_login"
+        android:layout_width="match_parent"
+        android:layout_height="91dp"
+        android:gravity="center"
+        android:text="@string/app_name"
+        android:textColor="#356003"
+        android:textSize="60sp"
+        />
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/email_login"
+        android:name="edu.ub.pis.giickos.ui.login.EmailFragment"
+        android:layout_width="match_parent"
+        android:layout_height="91dp"
+        tools:layout="@layout/fragment_card_form">
+    </androidx.fragment.app.FragmentContainerView>
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/psw_login"
+        android:name="edu.ub.pis.giickos.ui.login.PswFragment"
+        android:layout_width="match_parent"
+        android:layout_height="91dp"
+        tools:layout="@layout/fragment_card_form">
+    </androidx.fragment.app.FragmentContainerView>
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/checkbox_login"
+        android:name="edu.ub.pis.giickos.ui.login.CheckboxLoginFragment"
+        android:layout_width="match_parent"
+        android:layout_height="91dp"
+
+        tools:layout="@layout/fragment_checkbox_label_login">
+    </androidx.fragment.app.FragmentContainerView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="91dp"
+        android:orientation="horizontal"
+        android:gravity="center"
+        >
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/sign_in_login"
+            android:text="@string/action_sign_in_short"
+            android:layout_marginRight="20dp"
+            >
+        </Button>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/register_login"
+            android:text="@string/register"
+            android:layout_marginLeft="20dp"
+
+            >
+        </Button>
+    </LinearLayout>
+
+    <androidx.fragment.app.FragmentContainerView
+        android:layout_width="match_parent"
+        android:layout_height="91dp"
+        android:id="@+id/find_psw_login"
+        android:name="edu.ub.pis.giickos.ui.login.FindPswFragment"
+        tools:layout="@layout/fragment_find_psw">
+    </androidx.fragment.app.FragmentContainerView>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/guest"
+        android:id="@+id/guest_login"
+        >
+    </Button>
+</LinearLayout>
+
+

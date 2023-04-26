@@ -101,7 +101,6 @@
     <string name="miscellaneous_tab_settings_delete_account">Delete Account</string>
     <string name="miscellaneous_tab_settings_giickos_plus">Giickos Plus:</string>
     <string name="miscellaneous_tab_settings_notloggedin">Not logged in</string>
-
     <string name="miscellaneous_tab_teams">Teams</string>
     <string name="miscellaneous_tab_statistics">Statistics</string>
 
@@ -140,5 +139,29 @@
     <string name="return_label">Back</string>
     <string name="accept_label">Accept</string>
 
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome!"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+    <string name="remember_me">"Remember me"</string>
+    <string name="register">Register</string>
+    <string name="text_find_psw">Forgot password?</string>
+    <string name="click_here">click here</string>
+    <string name="guest">Enter as guest</string>
+    <string name="msg_email">Enter your email</string>
+    <string name="msg_psw">Enter your password</string>
+
+    <!-- Strings related to register -->
+    <string name="title_register">Create new account</string>
+    <string name="msg_confirm_psw">Confirm your password</string>
+    <string name="repeate_psw">Repeat password</string>
+    <string name="username">Username</string>
+    <string name="msg_username">Enter your username</string>
 
 </resources>

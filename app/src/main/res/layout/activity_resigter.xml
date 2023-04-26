@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center|left"
+    android:orientation="vertical"
+    android:paddingHorizontal="5dp"
+    tools:context=".RegisterActivity"
+    android:id="@+id/register">
+
+    <TextView
+        android:id="@+id/title_login"
+        android:layout_width="match_parent"
+        android:layout_height="91dp"
+        android:gravity="center"
+        android:text="Giickos"
+        android:textColor="#356003"
+        android:textSize="60sp"
+        />
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/user_login"
+        android:name="edu.ub.pis.giickos.ui.register.UserFragment"
+        android:layout_width="match_parent"
+        android:layout_height="91dp"
+        tools:layout="@layout/fragment_card_form">
+    </androidx.fragment.app.FragmentContainerView>
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/email_reg"
+        android:name="edu.ub.pis.giickos.ui.login.EmailFragment"
+        android:layout_width="match_parent"
+        android:layout_height="91dp"
+        tools:layout="@layout/fragment_card_form">
+    </androidx.fragment.app.FragmentContainerView>
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/psw_reg"
+        android:name="edu.ub.pis.giickos.ui.login.PswFragment"
+        android:layout_width="match_parent"
+        android:layout_height="91dp"
+        tools:layout="@layout/fragment_card_form">
+    </androidx.fragment.app.FragmentContainerView>
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/psw_confirm_reg"
+        android:name="edu.ub.pis.giickos.ui.register.ConfirmPswFragment"
+        android:layout_width="match_parent"
+        android:layout_height="91dp"
+        tools:layout="@layout/fragment_card_form">
+    </androidx.fragment.app.FragmentContainerView>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/register_reg"
+        android:text="@string/register"
+        android:layout_gravity="center">
+
+    </Button>
+</LinearLayout>
