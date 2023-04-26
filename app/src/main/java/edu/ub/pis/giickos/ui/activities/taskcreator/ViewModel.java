@@ -1,4 +1,4 @@
-package edu.ub.pis.giickos.ui.section.taskcreator;
+package edu.ub.pis.giickos.ui.activities.taskcreator;
 
 import android.util.Log;
 

@@ -38,7 +38,7 @@ import edu.ub.pis.giickos.R;
 import edu.ub.pis.giickos.ui.ViewModelHelpers;
 import edu.ub.pis.giickos.ui.main.MainViewModel;
 import edu.ub.pis.giickos.ui.section.Section;
-import edu.ub.pis.giickos.ui.section.taskcreator.TaskCreator;
+import edu.ub.pis.giickos.ui.activities.taskcreator.TaskCreator;
 
 // Fragment for the calendar section.
 public class CalendarSection extends Section {

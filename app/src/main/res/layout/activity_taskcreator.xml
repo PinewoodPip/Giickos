@@ -4,11 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.section.taskcreator.Activity">
+    tools:context=".ui.activities.taskcreator.Activity">
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragment_taskcreator"
-        android:name="edu.ub.pis.giickos.ui.section.taskcreator.TaskCreator"
+        android:name="edu.ub.pis.giickos.ui.activities.taskcreator.TaskCreator"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:layout="@layout/fragment_task_creator" />

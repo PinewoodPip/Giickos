@@ -1,4 +1,4 @@
-package edu.ub.pis.giickos.ui;
+package edu.ub.pis.giickos.ui.activities;
 
 import android.view.View;
 import android.widget.FrameLayout;

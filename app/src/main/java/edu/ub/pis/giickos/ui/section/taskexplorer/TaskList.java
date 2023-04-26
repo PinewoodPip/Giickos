@@ -50,7 +50,7 @@ public class TaskList extends GiickosFragment {
     private void addProject(String id) {
         ProjectData project = viewModel.getProject(id);
         List<TaskData> tasks = viewModel.getTasks(id);
-        ProjectFragment fragment = ProjectFragment.newInstance(id, project.name, false); // TODO keep track of open projects in viewmodel
+        ProjectFragment fragment = ProjectFragment.newInstance(id, project.name);
 
         addChildFragment(fragment, R.id.list_main, true);
 

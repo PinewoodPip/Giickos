@@ -8,7 +8,7 @@ import java.util.Set;
 
 import edu.ub.pis.giickos.model.project.Project;
 import edu.ub.pis.giickos.model.project.Task;
-import edu.ub.pis.giickos.ui.section.taskcreator.ViewModel;
+import edu.ub.pis.giickos.ui.activities.taskcreator.ViewModel;
 
 public class ViewModelHelpers {
     public static List<ProjectData> sortProjects(Set<Project> projects) {

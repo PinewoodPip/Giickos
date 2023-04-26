@@ -1,11 +1,9 @@
-package edu.ub.pis.giickos.ui.section.taskcreator;
-
-import androidx.appcompat.app.AppCompatActivity;
+package edu.ub.pis.giickos.ui.activities.taskcreator;
 
 import android.os.Bundle;
 
 import edu.ub.pis.giickos.R;
-import edu.ub.pis.giickos.ui.GiickosActivity;
+import edu.ub.pis.giickos.ui.activities.GiickosActivity;
 
 public class Activity extends GiickosActivity {
 

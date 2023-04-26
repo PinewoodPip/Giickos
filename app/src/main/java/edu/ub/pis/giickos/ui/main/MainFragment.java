@@ -19,7 +19,6 @@ import edu.ub.pis.giickos.ui.section.Section;
 import edu.ub.pis.giickos.ui.section.bamboogarden.BambooGarden;
 import edu.ub.pis.giickos.ui.section.calendar.CalendarSection;
 import edu.ub.pis.giickos.ui.section.miscellaneous.MiscellaneousSection;
-import edu.ub.pis.giickos.ui.section.taskcreator.TaskCreator;
 import edu.ub.pis.giickos.ui.section.taskexplorer.TaskExplorer;
 import edu.ub.pis.giickos.ui.section.timer.TimerSection;
 

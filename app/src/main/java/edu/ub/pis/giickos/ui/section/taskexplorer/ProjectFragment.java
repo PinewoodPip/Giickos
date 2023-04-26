@@ -18,8 +18,8 @@ import edu.ub.pis.giickos.GiickosFragment;
 import edu.ub.pis.giickos.R;
 import edu.ub.pis.giickos.ui.ViewModelHelpers.*;
 import edu.ub.pis.giickos.ui.dialogs.Alert;
-import edu.ub.pis.giickos.ui.section.taskcreator.Activity;
-import edu.ub.pis.giickos.ui.section.taskcreator.TaskCreator;
+import edu.ub.pis.giickos.ui.activities.taskcreator.Activity;
+import edu.ub.pis.giickos.ui.activities.taskcreator.TaskCreator;
 
 /*
     Fragment for displaying projects in TaskExplorer.
@@ -35,7 +35,7 @@ public class ProjectFragment extends GiickosFragment {
         // Required empty public constructor
     }
 
-    public static ProjectFragment newInstance(String projectID, String label, boolean open) {
+    public static ProjectFragment newInstance(String projectID, String label) {
         ProjectFragment fragment = new ProjectFragment();
         Bundle args = new Bundle();
 

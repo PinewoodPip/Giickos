@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import edu.ub.pis.giickos.GiickosFragment;
 import edu.ub.pis.giickos.R;
-import edu.ub.pis.giickos.ui.section.taskcreator.TaskCreator;
+import edu.ub.pis.giickos.ui.activities.taskcreator.TaskCreator;
 
 // Displays a task within the task explorer.
 public class Task extends GiickosFragment {

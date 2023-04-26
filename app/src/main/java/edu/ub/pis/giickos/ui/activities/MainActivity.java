@@ -1,4 +1,4 @@
-package edu.ub.pis.giickos;
+package edu.ub.pis.giickos.ui.activities;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -9,7 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 
-import edu.ub.pis.giickos.ui.GiickosActivity;
+import edu.ub.pis.giickos.R;
 import edu.ub.pis.giickos.ui.main.MainFragment;
 import edu.ub.pis.giickos.ui.main.MainViewModel;
 

@@ -12,11 +12,11 @@
         android:theme="@style/Theme.Giickos"
         tools:targetApi="31">
         <activity
-            android:name=".ui.section.taskcreator.Activity"
+            android:name=".ui.activities.taskcreator.Activity"
             android:exported="false"
             android:noHistory="true" />
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.activities.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
