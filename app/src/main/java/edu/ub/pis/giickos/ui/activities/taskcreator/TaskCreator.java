@@ -177,7 +177,7 @@ public class TaskCreator extends GiickosFragment {
             options.add(getString(ViewModel.TASK_REPEAT_MODE.values()[i].stringResource));
         }
 
-        spinner = addSpinnerField(R.drawable.placeholder, getString(R.string.taskcreator_label_time_repeat), options, viewModel.getRepeatMode().ordinal());
+        spinner = addSpinnerField(R.drawable.reuse, getString(R.string.taskcreator_label_time_repeat), options, viewModel.getRepeatMode().ordinal());
 
         spinner.setListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -215,7 +215,7 @@ public class TaskCreator extends GiickosFragment {
             viewModel.setProjectID(projects.get(0).id); // TODO what if there are no projects!
         }
 
-        spinner = addSpinnerField(R.drawable.placeholder, getString(R.string.taskcreator_label_project), projectObjects, spinnerIndex);
+        spinner = addSpinnerField(R.drawable.folder, getString(R.string.taskcreator_label_project), projectObjects, spinnerIndex);
         spinner.setListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -239,7 +239,7 @@ public class TaskCreator extends GiickosFragment {
             options.add(getPriorityName(ViewModel.TASK_PRIORITY.values()[x]));
         }
 
-        spinner = addSpinnerField(R.drawable.placeholder, getString(R.string.taskcreator_label_priority), options, viewModel.getPriority());
+        spinner = addSpinnerField(R.drawable.priority, getString(R.string.taskcreator_label_priority), options, viewModel.getPriority());
         spinner.setListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -281,7 +281,7 @@ public class TaskCreator extends GiickosFragment {
 
         setupProjectSpinner();
 
-        addTextField(R.drawable.placeholder_notebook, getString(R.string.taskcreator_label_title), viewModel.getTaskName(), InputType.TYPE_TEXT_VARIATION_PERSON_NAME, new TextWatcher() {
+        addTextField(R.drawable.title, getString(R.string.taskcreator_label_title), viewModel.getTaskName(), InputType.TYPE_TEXT_VARIATION_PERSON_NAME, new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
 
@@ -294,7 +294,7 @@ public class TaskCreator extends GiickosFragment {
             }
         });
 
-        addDateField("Date", R.drawable.placeholder_notebook, getString(R.string.taskcreator_label_date), formatDate(viewModel.getStartDate()), new DatePickerListener() {
+        addDateField("Date", R.drawable.timer, getString(R.string.taskcreator_label_date), formatDate(viewModel.getStartDate()), new DatePickerListener() {
             @Override
             public void dateSet(String id, int year, int month, int day) {
                 Log.d("View", "Date set");
@@ -319,9 +319,9 @@ public class TaskCreator extends GiickosFragment {
             }
         };
 
-        addTimeField("StartTime", R.drawable.placeholder_notebook, getString(R.string.taskcreator_label_time_start), formatTime(viewModel.getStartTime()), timePickerListener);
+        addTimeField("StartTime", R.drawable.timer, getString(R.string.taskcreator_label_time_start), formatTime(viewModel.getStartTime()), timePickerListener);
 
-        FormCard durationCard = addNumberField(viewModel.getDurationInMinutes(), ViewModel.MIN_DURATION, ViewModel.MAX_DURATION, R.drawable.placeholder_notebook, getString(R.string.taskcreator_label_duration), new NumberPicker.OnValueChangeListener() {
+        FormCard durationCard = addNumberField(viewModel.getDurationInMinutes(), ViewModel.MIN_DURATION, ViewModel.MAX_DURATION, R.drawable.timer, getString(R.string.taskcreator_label_duration), new NumberPicker.OnValueChangeListener() {
             @Override
             public void onValueChange(NumberPicker numberPicker, int oldValue, int minutes) {
                 viewModel.setDurationInMinutes(minutes);
@@ -332,7 +332,7 @@ public class TaskCreator extends GiickosFragment {
         setupRepeatModeSpinner();
 
         // TODO move to separate tab
-        addTextField(R.drawable.placeholder_notebook, getString(R.string.taskcreator_label_details), viewModel.getTaskDescription(), InputType.TYPE_TEXT_FLAG_MULTI_LINE, new TextWatcher() {
+        addTextField(R.drawable.description_white, getString(R.string.taskcreator_label_details), viewModel.getTaskDescription(), InputType.TYPE_TEXT_FLAG_MULTI_LINE, new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
 
@@ -348,7 +348,7 @@ public class TaskCreator extends GiickosFragment {
         // Only add delete and complete buttons while editing
         if (!isCreating()) {
             // Save button
-            addClickableField(R.drawable.placeholder, getString(R.string.generic_label_save), getResources().getColor(R.color.positive_action), new View.OnClickListener() {
+            addClickableField(R.drawable.description_white, getString(R.string.generic_label_save), getResources().getColor(R.color.positive_action), new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     boolean success = viewModel.updateTask();
@@ -363,7 +363,7 @@ public class TaskCreator extends GiickosFragment {
             });
 
             // "Mark as complete" button
-            addClickableField(R.drawable.placeholder, getString(R.string.taskcreator_label_complete), getResources().getColor(R.color.positive_action), new View.OnClickListener() {
+            addClickableField(R.drawable.folder_task_completed, getString(R.string.taskcreator_label_complete), getResources().getColor(R.color.positive_action), new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Log.d("TODO", "Complete button clicked");
@@ -371,7 +371,7 @@ public class TaskCreator extends GiickosFragment {
             });
 
             // Delete button
-            addClickableField(R.drawable.placeholder, getString(R.string.generic_label_delete), getResources().getColor(R.color.destructive_action), new View.OnClickListener() {
+            addClickableField(R.drawable.delete_account, getString(R.string.generic_label_delete), getResources().getColor(R.color.destructive_action), new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Alert alert = new Alert(getActivity(), getString(R.string.taskcreator_msg_delete_title), getString(R.string.taskcreator_msg_delete_body));

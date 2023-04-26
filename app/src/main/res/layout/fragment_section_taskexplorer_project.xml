@@ -29,7 +29,8 @@
                     android:layout_height="50dp"
                     android:layout_marginHorizontal="5dp"
                     android:layout_weight="0"
-                    android:src="@drawable/placeholder" />
+                    android:src="@drawable/folder"
+                    app:srcCompat="@drawable/folder" />
 
                 <TextView
                     android:id="@+id/label_title"
