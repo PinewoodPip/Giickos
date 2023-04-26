@@ -8,7 +8,6 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
 
@@ -62,7 +61,7 @@ public class ProjectDAO extends CachedProjectDAO {
         Map<String, Object> projectsMap = new HashMap<>();
 
         projectEntry.put("name", project.getName());
-        projectEntry.put("tasks", new ArrayList<>(project.getElements()));
+        projectEntry.put("tasks", new ArrayList<>(project.getTasks()));
         projectsMap.put(project.getId(), projectEntry);
         entry.put("projects", projectsMap);
 

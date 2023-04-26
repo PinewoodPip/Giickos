@@ -1,13 +1,14 @@
 package edu.ub.pis.giickos.model.project;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
+// Represents a project, which aggregates tasks.
 public class Project {
-    //In this class, we define a project with elements that we verify, create, and erase.
     private String id;
     private String name;
-    private ArrayList<String> elements;//We use strings to identify the elements (for now we only have tasks). Or maybe we can use (projectName + elementName) as elements ID instead of generated UUID.
+    private List<String> tasks; // IDs of tasks assigned to the project
 
     public Project(String id, String name) {
         initialize(id, name);
@@ -28,28 +29,26 @@ public class Project {
         return name;
     }
 
-
-    //TODO add, remove and other functions like checking...
-    public ArrayList<String> getElements() {
-        return elements;
+    public List<String> getTasks() {
+        return tasks;
     }
 
-    public void setElements(ArrayList<String> elements) {
-        this.elements = elements;
+    public void setTasks(List<String> tasks) {
+        this.tasks = tasks;
     }
 
     public void addElement(String id) {
-        this.elements.add(id);
+        this.tasks.add(id);
     }
 
     private void initialize(String id, String name) {
-        this.elements = new ArrayList<>();
+        this.tasks = new ArrayList<>();
 
         this.id = id;
         setName(name);
     }
 
     public void removeElement(String taskID) {
-        elements.remove(taskID);
+        tasks.remove(taskID);
     }
 }

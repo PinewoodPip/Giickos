@@ -3,9 +3,8 @@ package edu.ub.pis.giickos.model.project;
 import java.time.LocalDateTime;
 
 import edu.ub.pis.giickos.Utils;
-import edu.ub.pis.giickos.model.project.ProjectElement;
 
-public class Task extends ProjectElement {
+public class Task {
 
     public enum PRIORITY {
         NONE,
@@ -20,6 +19,8 @@ public class Task extends ProjectElement {
         WEEKLY,
     }
 
+    private String id;
+    private String name;
     private PRIORITY priority = PRIORITY.NONE;
     private REPEAT_MODE repeatMode = REPEAT_MODE.NONE;
     private String description = "";
@@ -32,7 +33,20 @@ public class Task extends ProjectElement {
 
     public Task(String id, String name) // Kamil: I'm not a fan of bloated constructor params, so try to delegate initialization to setters instead (ex. how it's done with priority) with the exception of essential fields like name/id.
     {
-        super(id, name);
+        this.id = id;
+        this.name = name;
+    }
+
+    public String getID() {
+        return id;
+    }
+
+    public void setName(String name){
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public String getProjectID() {
@@ -102,20 +116,4 @@ public class Task extends ProjectElement {
     public void setTakesAllDay(boolean takesAllDay) {
         this.takesAllDay = takesAllDay;
     }
-
-    /*
-     * Methods to fulfill the next functions:
-     *
-     * Start from x time
-     * End at x time
-     * Notify x time before start
-     * Repeatable (default - no repeat, custom, select repeatable days)
-     * Description
-     * Add labels
-     * Add members
-     * Task priority level (("no pritority?"), low priority, medium priority, high pritority)
-     * Task status (not completed, completed)
-     * */
-
-
 }

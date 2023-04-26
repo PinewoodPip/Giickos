@@ -52,7 +52,7 @@ public abstract class CachedProjectDAO implements ProjectDAO {
         Set<Task> tasks = new HashSet<>();
         Project project = getProject(projectGUID);
 
-        for (String taskGUID : project.getElements()) {
+        for (String taskGUID : project.getTasks()) {
             Task task = getTask(taskGUID);
 
             if (task != null) {
@@ -94,7 +94,7 @@ public abstract class CachedProjectDAO implements ProjectDAO {
 
         if (task != null) {
             for (Project p : projects.values()) {
-                if (p.getElements().contains(task.getID())) {
+                if (p.getTasks().contains(task.getID())) {
                     project = p;
                     break;
                 }

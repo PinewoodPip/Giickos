@@ -120,7 +120,7 @@ public class ViewModel extends androidx.lifecycle.ViewModel {
             updateTaskTime(task);
 
             // TODO this sucks, at least extract it to ProjectManager
-            ArrayList<String> previousTasks = previousProject.getElements();
+            List<String> previousTasks = previousProject.getTasks();
             previousTasks.remove(taskID);
             newProject.addElement(taskID);
 
