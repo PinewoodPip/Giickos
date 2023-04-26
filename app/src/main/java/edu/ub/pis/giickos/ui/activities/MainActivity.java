@@ -31,19 +31,21 @@ public class MainActivity extends GiickosActivity {
         viewModel = new ViewModelProvider(this).get(MainViewModel.class);
 
         // TODO remove once login screen is implemented
-        Task loginTask = viewModel.tryLogIn("pip@pinewood.team", "hunter2");
-        loginTask.addOnSuccessListener(new OnSuccessListener() {
-            @Override
-            public void onSuccess(Object o) {
-                Toast.makeText(MainActivity.this, getString(R.string.auth_login_success), Toast.LENGTH_SHORT).show();
-            }
-        });
-        loginTask.addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(MainActivity.this, getString(R.string.auth_login_failure), Toast.LENGTH_SHORT).show();
-            }
-        });
+        if (!viewModel.isLoggedIn()) {
+            Task loginTask = viewModel.tryLogIn("pip@pinewood.team", "hunter2");
+            loginTask.addOnSuccessListener(new OnSuccessListener() {
+                @Override
+                public void onSuccess(Object o) {
+                    Toast.makeText(MainActivity.this, getString(R.string.auth_login_success), Toast.LENGTH_SHORT).show();
+                }
+            });
+            loginTask.addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(MainActivity.this, getString(R.string.auth_login_failure), Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
 
     // Transitions to a section.
