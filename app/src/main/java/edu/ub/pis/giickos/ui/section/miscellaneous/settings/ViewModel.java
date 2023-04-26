@@ -15,19 +15,29 @@ public class ViewModel extends androidx.lifecycle.ViewModel {
 
     private MutableLiveData<UserData> loggedInUser;
 
+    private Observer loggedInObserver;
+
     public ViewModel() {
         userManager = ModelHolder.INSTANCE.getUserManager();
         loggedInUser = new MutableLiveData<>(null);
 
-        // Listen for log ins. This is necessary as the corresponding fragment might exist in the "background" while the user logs back in from the login activity.
-        userManager.subscribe(UserManager.Events.LOGGED_IN, new Observer() {
+        loggedInObserver = new Observer() {
             @Override
             public void update(ObservableEvent eventData) {
                 updateLoggedInUser();
             }
-        });
+        };
+
+        // Listen for log-ins and update the LiveData for the logged in user. This is necessary as the corresponding fragment to this VM might exist in the "background" while the user logs back in from the login activity.
+        userManager.subscribe(UserManager.Events.LOGGED_IN, loggedInObserver);
 
         updateLoggedInUser();
+    }
+
+    @Override
+    public void onCleared() {
+        // Unsubscribe listeners to prevent memory leaks
+        userManager.unsubscribe(UserManager.Events.LOGGED_IN, loggedInObserver);
     }
 
     public void logOut() {
