@@ -5,30 +5,35 @@
     android:layout_height="match_parent"
     tools:context=".ui.section.taskexplorer.TaskList">
 
-    <LinearLayout
-        android:id="@+id/list_main"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        style="@style/GiickosFullscreenContainer">
+        android:layout_height="match_parent">
 
-        <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/mock_1"
-            android:name="edu.ub.pis.giickos.ui.section.taskexplorer.Task"
+        <LinearLayout
+            android:id="@+id/list_main"
+            style="@style/GiickosFullscreenContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone"
-            tools:layout="@layout/fragment_task"
-            tools:visibility="visible" />
+            android:orientation="vertical">
 
-        <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/mock_2"
-            android:name="edu.ub.pis.giickos.ui.section.taskexplorer.Task"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            tools:layout="@layout/fragment_task"
-            tools:visibility="visible" />
-    </LinearLayout>
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/mock_1"
+                android:name="edu.ub.pis.giickos.ui.section.taskexplorer.Task"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                tools:layout="@layout/fragment_task"
+                tools:visibility="visible" />
+
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/mock_2"
+                android:name="edu.ub.pis.giickos.ui.section.taskexplorer.Task"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                tools:layout="@layout/fragment_task"
+                tools:visibility="visible" />
+        </LinearLayout>
+    </ScrollView>
 
 </FrameLayout>
