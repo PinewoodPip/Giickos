@@ -18,8 +18,11 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 
 import edu.ub.pis.giickos.GiickosFragment;
@@ -261,9 +264,7 @@ public class TaskCreator extends GiickosFragment {
     }
 
     private String formatTime(TaskTime time) {
-        String str = time == null ? "" : String.format("%d:%d", time.hour, time.minute); // TODO prettify
-
-        return str;
+        return time != null ? new SimpleDateFormat("HH:00", Locale.getDefault()).format(new Date(2000, 1, 1, time.hour, time.minute)) : "";
     }
 
     private void finishActivity() {
