@@ -3,6 +3,7 @@ package edu.ub.pis.giickos;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -12,19 +13,27 @@ import java.util.Optional;
 public class GiickosFragment extends Fragment {
 
     // Creates a child fragment and parents it.
-    public void addChildFragment(Fragment fragment, int parentID, boolean synchronous) {
+    public void addChildFragment(Fragment fragment, int parentID, boolean synchronous, @Nullable String backStackName) {
         FragmentManager childrenManager = getChildFragmentManager();
         FragmentTransaction transaction = childrenManager.beginTransaction();
 
         transaction.add(parentID, fragment);
 
+        if (backStackName != null) {
+            transaction.addToBackStack(backStackName);
+        }
+
         if (synchronous) {
             transaction.commitNow();
         }
         else {
-            transaction.addToBackStack(null);
+            //transaction.addToBackStack(null);
             transaction.commit();
         }
+    }
+
+    public void addChildFragment(Fragment fragment, int parentID, boolean synchronous) {
+        addChildFragment(fragment, parentID, synchronous, null);
     }
 
     // Asynchronous overload.
@@ -33,14 +42,22 @@ public class GiickosFragment extends Fragment {
     }
 
     // Replaces a child fragment.
-    public void replaceFragment(int id, Fragment newFragment) {
-        FragmentManager childrenManager = getChildFragmentManager();
+    public void replaceFragment(int id, Fragment newFragment, @Nullable String backStackName) {
+        FragmentManager childrenManager = getParentFragmentManager();
         FragmentTransaction transaction = childrenManager.beginTransaction();
         transaction.setReorderingAllowed(true);
+
+        if (backStackName != null) {
+            transaction.addToBackStack(backStackName);
+        }
 
         transaction.replace(id, newFragment);
 
         transaction.commit();
+    }
+
+    public void replaceFragment(int id, Fragment newFragment) {
+        replaceFragment(id, newFragment, null);
     }
 
     public Optional<String> getIntentString(String key) {

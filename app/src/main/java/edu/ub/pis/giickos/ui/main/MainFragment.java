@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -27,6 +28,8 @@ public class MainFragment extends GiickosFragment {
     public static String INTENT_EXTRA_SECTION = "Section";
 
     private MainViewModel viewModel;
+    private int previousBackStackCount = 0;
+    private boolean initialized = false;
 
     public static MainFragment newInstance() {
         return new MainFragment();
@@ -36,12 +39,41 @@ public class MainFragment extends GiickosFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        getParentFragmentManager().addOnBackStackChangedListener(
+            new FragmentManager.OnBackStackChangedListener() {
+            @Override
+            public void onBackStackChanged() {
+                FragmentManager manager = getParentFragmentManager();
+                int backStackCount = manager.getBackStackEntryCount();
+
+                if (backStackCount != 0) {
+                    FragmentManager.BackStackEntry entry = manager.getBackStackEntryAt(backStackCount - 1);
+                    MainViewModel.TYPE section;
+
+                    // If a pop occurred
+                    if (backStackCount < previousBackStackCount) {
+                        // Catch section back navigation
+                        try {
+                            section = MainViewModel.TYPE.valueOf(entry.getName());
+                            viewModel.setPoppingStack(true);
+                            viewModel.setCurrentSection(section);
+                            viewModel.setPoppingStack(false);
+                        }
+                        catch (Exception e) {
+
+                        }
+                    }
+                    previousBackStackCount = backStackCount;
+                }
+            }
+        });
+
         viewModel = new ViewModelProvider(getActivity()).get(MainViewModel.class);
     }
 
     // Changes the active section.
     private void changeSection(Section section) {
-        replaceFragment(R.id.fragmentcontainer_main, section);
+        replaceFragment(R.id.fragmentcontainer_main, section, initialized ? section.getType().toString() : null);
     }
 
     // Enum overload for changeSection().
@@ -113,8 +145,12 @@ public class MainFragment extends GiickosFragment {
         viewModel.getCurrentSection().observe(getViewLifecycleOwner(), new Observer<MainViewModel.TYPE>() {
             @Override
             public void onChanged(MainViewModel.TYPE type) {
-                changeSection(type);
+                if (!viewModel.isPoppingStack()) {
+                    changeSection(type);
+                }
             }
         });
+
+        initialized = true;
     }
 }

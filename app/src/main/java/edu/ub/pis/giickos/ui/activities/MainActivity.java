@@ -1,6 +1,7 @@
 package edu.ub.pis.giickos.ui.activities;
 
 import android.app.Activity;
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
@@ -65,6 +66,16 @@ public class MainActivity extends GiickosActivity {
 
     public static void transitionToSection(Activity sourceActivity, MainViewModel.TYPE sectionID, @Nullable Bundle bundle) {
         transitionToSection(sourceActivity, sectionID, bundle, false);
+    }
+
+    @Override
+    public void onBackPressed() {
+        FragmentManager fm = getFragmentManager();
+        if (fm.getBackStackEntryCount() > 0) {
+            fm.popBackStack();
+        } else {
+            super.onBackPressed();
+        }
     }
 
     @Override

@@ -52,6 +52,7 @@ public class MainViewModel extends ViewModel {
     private UserManager userManager;
 
     private MutableLiveData<TYPE> currentSection;
+    private boolean isPoppingStack = false;
 
     public MainViewModel() {
         userManager = ModelHolder.INSTANCE.getUserManager();
@@ -73,5 +74,13 @@ public class MainViewModel extends ViewModel {
 
     public boolean isLoggedIn() {
         return userManager.isLoggedIn();
+    }
+
+    public boolean isPoppingStack() {
+        return isPoppingStack;
+    }
+
+    public void setPoppingStack(boolean poppingStack) {
+        isPoppingStack = poppingStack;
     }
 }

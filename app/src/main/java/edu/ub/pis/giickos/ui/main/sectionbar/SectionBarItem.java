@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import edu.ub.pis.giickos.GiickosFragment;
 import edu.ub.pis.giickos.R;
+import edu.ub.pis.giickos.ui.main.MainFragment;
 import edu.ub.pis.giickos.ui.main.MainViewModel;
 
 // Fragment for the navigation buttons in the section bar.
