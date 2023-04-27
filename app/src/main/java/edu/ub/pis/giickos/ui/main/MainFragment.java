@@ -126,8 +126,8 @@ public class MainFragment extends GiickosFragment {
         createSectionBar();
 
         // Set section from intent (if any)
-        // or default to task explorer
-        MainViewModel.TYPE sectionID = MainViewModel.TYPE.TASK_EXPLORER;
+        // or default to the one stored in VM
+        MainViewModel.TYPE sectionID = viewModel.getCurrentSection().getValue();
         Intent intent = getActivity().getIntent();
         if (intent != null) {
             Bundle extras = intent.getExtras();
