@@ -65,7 +65,9 @@ public class MainViewModel extends ViewModel {
     }
 
     public void setCurrentSection(TYPE newSection) {
-        currentSection.setValue(newSection);
+        if (newSection != currentSection.getValue()) {
+            currentSection.setValue(newSection);
+        }
     }
 
     public Task tryLogIn(String username, String password) {
