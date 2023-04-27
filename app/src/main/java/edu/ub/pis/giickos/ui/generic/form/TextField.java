@@ -52,7 +52,13 @@ public class TextField extends GiickosFragment {
             EditText textField = view.findViewById(R.id.textfield_input);
 
             textField.removeTextChangedListener(this.listener);
-            textField.addTextChangedListener(listener);
+
+            if (listener != null) {
+                textField.addTextChangedListener(listener);
+            }
+            else {
+                textField.removeTextChangedListener(this.listener);
+            }
         }
 
         this.listener = listener;
