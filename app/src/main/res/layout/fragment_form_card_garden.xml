@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#00FFFFFF"
+    tools:context=".ui.generic.form.FormCardGarden">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#00FFFFFF"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:background="#1F4B16" />
+
+            <TextView
+                android:id="@+id/garden_question_label"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:autoSizeTextType="uniform"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="10dp"
+                android:text="Here we put the question or something"
+                android:textColor="#FFFFFF" />
+
+        </RelativeLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#A5BC80"
+            android:paddingBottom="10dp">
+
+            <EditText
+                android:id="@+id/garden_answer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Type something...\n"
+                android:inputType="textLongMessage|textMultiLine|text|textImeMultiLine" />
+        </FrameLayout>
+
+    </LinearLayout>
+
+</FrameLayout>

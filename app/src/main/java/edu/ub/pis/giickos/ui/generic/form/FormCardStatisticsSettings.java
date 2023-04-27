@@ -123,4 +123,10 @@ public class FormCardStatisticsSettings extends GiickosFragment
         updateClickListener(view);
     }
 
+    public void updateLabel(String label)
+    {
+        TextView text = getView().findViewById(R.id.statistics_settings_label);
+        text.setText(label);
+    }
+
 }

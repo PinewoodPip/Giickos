@@ -1,14 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.section.bamboogarden.storage.StorageFragment">
+    android:background="#D1D1D1"
+    tools:context=".ui.section.bamboogarden.storage.StorageFragment" >
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/bamboo_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:fadeScrollbars="false"
+        android:isScrollContainer="true"
+        android:scrollIndicators="right"
+        app:fastScrollEnabled="false" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/storage_bamboo_info_menu"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        tools:visibility="invisible">
+
+        <ImageView
+            android:id="@+id/storage_blocker_info"
+            android:layout_width="474dp"
+            android:layout_height="827dp"
+            android:background="#80000000"
+            android:scaleType="fitXY"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:layout_width="370dp"
+            android:layout_height="457dp"
+            android:paddingHorizontal="20dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/frame_garden"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ScrollView
+            android:id="@+id/scrollView3"
+            android:layout_width="287dp"
+            android:layout_height="378dp"
+            android:contentDescription=".."
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.496"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.435">
+
+            <LinearLayout
+                android:id="@+id/storage_bambo_goals"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"></LinearLayout>
+        </ScrollView>
+
+        <RelativeLayout
+            android:layout_width="282dp"
+            android:layout_height="45dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.496"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/scrollView3"
+            app:layout_constraintVertical_bias="0.0">
+
+            <RelativeLayout
+                android:layout_width="137dp"
+                android:layout_height="match_parent"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/storage_back_info_menu"
+                    android:layout_width="122dp"
+                    android:layout_height="45dp"
+                    android:src="@drawable/red_button" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignStart="@+id/storage_back_info_menu"
+                    android:layout_alignEnd="@+id/storage_back_info_menu"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginStart="42dp"
+                    android:layout_marginTop="13dp"
+                    android:layout_marginEnd="49dp"
+                    android:layout_marginBottom="13dp"
+                    android:gravity="center"
+                    android:text="@string/return_label"
+                    android:textColor="#FFFFFF" />
+            </RelativeLayout>
+        </RelativeLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

@@ -133,6 +133,12 @@
     <string name="bamboo_help">The bamboo garden is a place where you can track your progress by growing bamboo. Each bamboo has a unique label. By completing tasks with the associated label, a bamboo can grow once a day. The bamboo contains your goal, and a letter that you write for the future you. The letter can be collected after the bamboo is mature and it will be stored in the storage. </string>
     <string name="bamboo_garden_tab">Garden</string>
     <string name="bamboo_storage_tab">Storage</string>
+    <string name="bamboo_question_1">Objectives, new habits, remove bad habits. (No mora than 3 tasks; they must be countable and measurable)
+ What are your objectives?</string>
+    <string name="bamboo_question_2">What are the steps to achieve your objectives? (Be specific)</string>
+    <string name="bamboo_question_3">What are the obstacles that you will face and how will you react?</string>
+    <string name="bamboo_question_4">What are the benefits of achieving your objectives?</string>
+    <string name="bamboo_question_letter">Write a letter for yourself for the future you, talking about the benefits or consequences of achieving this goal:</string>
 
     <!-- General button actions -->
     <string name="decline_label">Decline</string>
