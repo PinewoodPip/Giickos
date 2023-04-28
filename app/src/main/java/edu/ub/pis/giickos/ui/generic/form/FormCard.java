@@ -59,13 +59,18 @@ public class FormCard extends GiickosFragment {
     public void addElement(Fragment fragment) {
         addChildFragment(fragment, R.id.list_main, true);
     }
-    public TextField addTextField(int inputType, String label, TextWatcher listener) {
-        TextField textField = TextField.newInstance(label, inputType);
+
+    public TextField addTextField(int inputType, String label, TextWatcher listener, String hintLabel) {
+        TextField textField = TextField.newInstance(label, inputType, true, hintLabel);
         addElement(textField);
 
         textField.setListener(listener);
 
         return textField;
+    }
+
+    public TextField addTextField(int inputType, String label, TextWatcher listener) {
+        return addTextField(inputType, label, listener, "");
     }
 
     public TimeField addTimeField(String id, String label, TimePickerListener listener) {

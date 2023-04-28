@@ -70,10 +70,6 @@ public class MainViewModel extends ViewModel {
         }
     }
 
-    public Task tryLogIn(String username, String password) {
-        return userManager.tryLogIn(username, password);
-    }
-
     public boolean isLoggedIn() {
         return userManager.isLoggedIn();
     }
