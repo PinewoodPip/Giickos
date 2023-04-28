@@ -21,6 +21,7 @@
     <string name="generic_label_ok">Ok</string>
     <string name="generic_label_close">Close</string>
     <string name="generic_label_go">Go</string>
+    <string name="generic_label_confirm">Confirm</string>
 
     <!-- Months of the year -->
     <string name="month_january">January</string>
@@ -102,7 +103,15 @@
     <string name="miscellaneous_tab_settings_delete_account">Delete Account</string>
     <string name="miscellaneous_tab_settings_giickos_plus">Giickos Plus:</string>
     <string name="miscellaneous_tab_settings_notloggedin">Not logged in</string>
+    <string name="miscellaneous_tab_settings_msg_logout_title">Log Out</string>
+    <string name="miscellaneous_tab_settings_msg_logout_body">Are you sure you want to log out from your account?</string>
+    <string name="miscellaneous_tab_settings_msg_deleteaccount_title">Delete Account</string>
+    <string name="miscellaneous_tab_settings_msg_deleteaccount_body">Are you sure you want to delete your account? This action is irreversible.</string>
+    <string name="miscellaneous_tab_settings_msg_deleteaccount_success">Your account has been successfully deleted.</string>
+    <string name="miscellaneous_tab_settings_msg_deleteaccount_error">Failed to delete account. Check your connection or contact support.</string>
+
     <string name="miscellaneous_tab_teams">Teams</string>
+
     <string name="miscellaneous_tab_statistics">Statistics</string>
 
     <string name="statistics_label" />

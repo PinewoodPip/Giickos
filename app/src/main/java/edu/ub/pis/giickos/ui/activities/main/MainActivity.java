@@ -4,18 +4,13 @@ import android.app.Activity;
 import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 
 import edu.ub.pis.giickos.R;
 import edu.ub.pis.giickos.ui.activities.GiickosActivity;
-
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
+import edu.ub.pis.giickos.ui.activities.login.LoginActivity;
 
 public class MainActivity extends GiickosActivity {
 
@@ -48,6 +43,14 @@ public class MainActivity extends GiickosActivity {
 
     public static void transitionToSection(Activity sourceActivity, MainViewModel.SECTION_TYPE sectionID, @Nullable Bundle bundle) {
         transitionToSection(sourceActivity, sectionID, bundle, false);
+    }
+
+    // TODO move this call elsewhere?
+    public static void goToLogin(Activity source) {
+        Intent intent = new Intent(source, LoginActivity.class);
+
+        source.startActivity(intent);
+        source.finish();
     }
 
     @Override
