@@ -10,8 +10,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import edu.ub.pis.giickos.R;
-import edu.ub.pis.giickos.ui.main.DatePicker;
-import edu.ub.pis.giickos.ui.main.DatePickerListener;
+import edu.ub.pis.giickos.ui.generic.DatePicker;
+import edu.ub.pis.giickos.ui.generic.DatePickerListener;
 
 // A task creator field with a date input.
 public class DateField extends Fragment {

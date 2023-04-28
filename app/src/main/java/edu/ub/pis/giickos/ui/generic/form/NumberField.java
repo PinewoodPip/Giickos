@@ -1,13 +1,14 @@
 package edu.ub.pis.giickos.ui.generic.form;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.NumberPicker;
+
+import androidx.fragment.app.Fragment;
+
+import com.github.stephenvinouze.materialnumberpickercore.MaterialNumberPicker;
 
 import edu.ub.pis.giickos.R;
 
@@ -70,7 +71,7 @@ public class NumberField extends Fragment {
 
     @Override
     public void onViewCreated(View view, Bundle savedInstance) {
-        NumberPicker picker = getPickerView();
+        MaterialNumberPicker picker = getPickerView();
         Bundle arguments = getArguments();
         int value = 0;
         if (arguments != null) {
@@ -86,7 +87,7 @@ public class NumberField extends Fragment {
         setListener(listener);
     }
 
-    private NumberPicker getPickerView() {
+    private MaterialNumberPicker getPickerView() {
         return getView().findViewById(R.id.picker);
     }
 }

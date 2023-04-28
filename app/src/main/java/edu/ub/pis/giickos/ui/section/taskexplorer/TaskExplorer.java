@@ -13,7 +13,7 @@ import android.widget.EditText;
 import androidx.lifecycle.ViewModelProvider;
 
 import edu.ub.pis.giickos.R;
-import edu.ub.pis.giickos.ui.main.MainViewModel;
+import edu.ub.pis.giickos.ui.activities.main.MainViewModel;
 import edu.ub.pis.giickos.ui.section.Section;
 
 // Main fragment for the task explorer.
@@ -47,8 +47,8 @@ public class TaskExplorer extends Section {
     }
 
     @Override
-    public MainViewModel.TYPE getType() {
-        return MainViewModel.TYPE.TASK_EXPLORER;
+    public MainViewModel.SECTION_TYPE getType() {
+        return MainViewModel.SECTION_TYPE.TASK_EXPLORER;
     }
 
     @Override

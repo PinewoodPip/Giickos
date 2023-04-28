@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:orientation="horizontal"
-    tools:context=".ui.main.sectionbar.SectionBarItem">
+    tools:context=".ui.activities.main.sectionbar.SectionBarItem">
 
     <LinearLayout
         android:layout_width="match_parent"

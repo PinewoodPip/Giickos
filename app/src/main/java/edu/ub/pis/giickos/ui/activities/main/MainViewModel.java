@@ -1,4 +1,4 @@
-package edu.ub.pis.giickos.ui.main;
+package edu.ub.pis.giickos.ui.activities.main;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -12,7 +12,7 @@ import com.google.android.gms.tasks.Task;
 
 public class MainViewModel extends ViewModel {
 
-    public enum TYPE {
+    public enum SECTION_TYPE {
         TASK_EXPLORER(R.drawable.projects, R.drawable.projects_colored, R.string.taskexplorer_name, R.string.taskexplorer_help),
         MISCELLANEOUS(R.drawable.profile, R.drawable.profile_colored, R.string.miscellaneous_name, R.string.miscellaneous_help),
         CALENDAR(R.drawable.calendar, R.drawable.calendar_colored, R.string.calendar_name, R.string.calendar_help),
@@ -25,7 +25,7 @@ public class MainViewModel extends ViewModel {
         private final int nameStringResource;
         private final int helpStringResource;
 
-        TYPE(int iconResource, int selectedIconResource, int nameStringResource, int helpStringResource) {
+        SECTION_TYPE(int iconResource, int selectedIconResource, int nameStringResource, int helpStringResource) {
             this.iconResource = iconResource;
             this.selectedIconResource = selectedIconResource;
             this.nameStringResource = nameStringResource;
@@ -51,27 +51,23 @@ public class MainViewModel extends ViewModel {
 
     private UserManager userManager;
 
-    private MutableLiveData<TYPE> currentSection;
+    private MutableLiveData<SECTION_TYPE> currentSection;
     private boolean isPoppingStack = false;
 
     public MainViewModel() {
         userManager = ModelHolder.INSTANCE.getUserManager();
 
-        currentSection = new MutableLiveData<>(TYPE.CALENDAR);
+        currentSection = new MutableLiveData<>(SECTION_TYPE.CALENDAR);
     }
 
-    public LiveData<TYPE> getCurrentSection() {
+    public LiveData<SECTION_TYPE> getCurrentSection() {
         return currentSection;
     }
 
-    public void setCurrentSection(TYPE newSection) {
+    public void setCurrentSection(SECTION_TYPE newSection) {
         if (newSection != currentSection.getValue()) {
             currentSection.setValue(newSection);
         }
-    }
-
-    public Task tryLogIn(String username, String password) {
-        return userManager.tryLogIn(username, password);
     }
 
     public boolean isLoggedIn() {

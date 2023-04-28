@@ -16,6 +16,7 @@ import edu.ub.pis.giickos.R;
 // A task creation field with a text input.
 public class TextField extends GiickosFragment {
     private static final String ARG_TEXT = "Text";
+    private static final String ARG_HINT = "Hint";
     private static final String ARG_INPUT_TYPE = "InputType";
     private static final String ARG_EDITABLE = "Editable";
     private static final String ARG_TEXT_COLOR = "TextColor";
@@ -24,11 +25,12 @@ public class TextField extends GiickosFragment {
 
     public TextField() {} // Required empty public constructor
 
-    public static TextField newInstance(String text, int inputType, boolean editable, int color) {
+    public static TextField newInstance(String text, int inputType, boolean editable, int color, String hintLabel) { // TODO cleanup params, make some aux class for initializing
         TextField fragment = new TextField();
         Bundle args = new Bundle();
 
         args.putString(ARG_TEXT, text);
+        args.putString(ARG_HINT, hintLabel);
         args.putInt(ARG_INPUT_TYPE, inputType);
         args.putBoolean(ARG_EDITABLE, editable);
         args.putInt(ARG_TEXT_COLOR, color);
@@ -37,12 +39,18 @@ public class TextField extends GiickosFragment {
         return fragment;
     }
 
-    // Overload that defaults to editable.
-    public static TextField newInstance(String text, int inputType, boolean editable) {
-        return newInstance(text, inputType, editable, Color.BLACK);
+    // Overloads.
+    public static TextField newInstance(String text, int inputType, boolean editable, int color) {
+        return newInstance(text, inputType, editable, color, "");
+    }
+    public static TextField newInstance(String text, int inputType, boolean editable, String hintLabel) {
+        return newInstance(text, inputType, editable, Color.BLACK, hintLabel);
     }
     public static TextField newInstance(String text, int inputType) {
-        return newInstance(text, inputType, true, Color.BLACK);
+        return newInstance(text, inputType, true, Color.BLACK, "");
+    }
+    public static TextField newInstance(String text, int inputType, boolean editable) {
+        return newInstance(text, inputType, editable, Color.BLACK, "");
     }
 
     public void setListener(TextWatcher listener) {
@@ -98,6 +106,7 @@ public class TextField extends GiickosFragment {
         // Set text field input type and text
         textField.setInputType(args.getInt(ARG_INPUT_TYPE));
         textField.setText(args.getString(ARG_TEXT));
+        textField.setHint(args.getString(ARG_HINT));
 
         if (!args.getBoolean(ARG_EDITABLE)) {
             // TODO extract method

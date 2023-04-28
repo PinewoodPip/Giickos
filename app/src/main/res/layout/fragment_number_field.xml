@@ -1,17 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
-    android:layout_height="match_parent"
+    android:layout_height="70dp"
     android:layout_margin="5dp"
+    android:fadeScrollbars="false"
+    android:fadingEdge="none"
+    android:fadingEdgeLength="0dp"
+    android:requiresFadingEdge="none"
     tools:context=".ui.generic.form.NumberField">
 
-    <NumberPicker
+    <com.github.stephenvinouze.materialnumberpickercore.MaterialNumberPicker
         android:id="@+id/picker"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="top"
         android:layout_marginTop="0dp"
-        android:solidColor="#00FF00" />
+        android:fadingEdge="none"
+        android:solidColor="#0000FF00"
+        app:mnpEditable="true" />
 
 </FrameLayout>

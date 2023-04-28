@@ -2,6 +2,7 @@ package edu.ub.pis.giickos.ui.section.miscellaneous.settings;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -17,6 +18,9 @@ import android.widget.Toast;
 
 import edu.ub.pis.giickos.GiickosFragment;
 import edu.ub.pis.giickos.R;
+import edu.ub.pis.giickos.ui.activities.login.LoginActivity;
+import edu.ub.pis.giickos.ui.activities.main.MainActivity;
+import edu.ub.pis.giickos.ui.dialogs.Alert;
 import edu.ub.pis.giickos.ui.generic.Switch;
 import edu.ub.pis.giickos.ui.generic.form.FormCardStatisticsSettings;
 import edu.ub.pis.giickos.ui.generic.form.TextField;
@@ -181,58 +185,42 @@ public class SettingsFragment extends GiickosFragment {
                 giickosPlusMenu.setVisibility(View.VISIBLE);
             }
         });
+
         logoutCard.setClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("TODO", "Logout clicked");
+                Alert alert = new Alert(getActivity(), getString(R.string.miscellaneous_tab_settings_msg_logout_title), getString(R.string.miscellaneous_tab_settings_msg_logout_body));
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                builder.setCancelable(true);
-                builder.setTitle("LOG OUT");
-                builder.setMessage("Are you sure you want to LOG OUT from your account?");
-                builder.setPositiveButton("Confirm",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                // TODO go to login or update the text fields
-                                viewModel.logOut();
-                            }
-                        });
-                builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                alert.setPositiveButton(getString(R.string.generic_label_confirm), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        //do nothing
+                        viewModel.logOut();
+                        MainActivity.goToLogin(getActivity());
                     }
                 });
+                alert.setNegativeButton(android.R.string.cancel, null);
 
-                AlertDialog dialog = builder.create();
-                dialog.show();
+                alert.show();
             }
         });
+
         removeAccountCard.setClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                builder.setCancelable(true);
-                builder.setTitle("DANGEROUS OPERATION");
-                builder.setMessage("Are you sure you want to DELETE your account?");
-                builder.setPositiveButton("Confirm",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                //TODO: delete account
-                                Toast.makeText(getContext(), "Your account have been successfully deleted", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                Alert alert = new Alert(getActivity(), getString(R.string.miscellaneous_tab_settings_msg_deleteaccount_title), getString(R.string.miscellaneous_tab_settings_msg_deleteaccount_body));
+
+                alert.setPositiveButton(getString(R.string.generic_label_confirm), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        //do nothing
+                        //TODO: delete account
+                        viewModel.logOut();
+                        Toast.makeText(getContext(), getString(R.string.miscellaneous_tab_settings_msg_deleteaccount_success), Toast.LENGTH_SHORT).show();
+                        MainActivity.goToLogin(getActivity());
                     }
                 });
+                alert.setNegativeButton(getString(android.R.string.cancel), null);
 
-                AlertDialog dialog = builder.create();
-                dialog.show();
+                alert.show();
             }
         });
     }

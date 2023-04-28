@@ -13,15 +13,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.NumberPicker;
-import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
 import java.util.List;
 
 import edu.ub.pis.giickos.GiickosFragment;
 import edu.ub.pis.giickos.R;
-import edu.ub.pis.giickos.ui.main.DatePickerListener;
-import edu.ub.pis.giickos.ui.main.TimePickerListener;
+import edu.ub.pis.giickos.ui.generic.DatePickerListener;
+import edu.ub.pis.giickos.ui.generic.TimePickerListener;
 
 // Card fragment with an icon, label, and a horizontal list of custom elements.
 public class FormCard extends GiickosFragment {
@@ -60,13 +59,18 @@ public class FormCard extends GiickosFragment {
     public void addElement(Fragment fragment) {
         addChildFragment(fragment, R.id.list_main, true);
     }
-    public TextField addTextField(int inputType, String label, TextWatcher listener) {
-        TextField textField = TextField.newInstance(label, inputType);
+
+    public TextField addTextField(int inputType, String label, TextWatcher listener, String hintLabel) {
+        TextField textField = TextField.newInstance(label, inputType, true, hintLabel);
         addElement(textField);
 
         textField.setListener(listener);
 
         return textField;
+    }
+
+    public TextField addTextField(int inputType, String label, TextWatcher listener) {
+        return addTextField(inputType, label, listener, "");
     }
 
     public TimeField addTimeField(String id, String label, TimePickerListener listener) {

@@ -62,4 +62,8 @@ public class ViewModel extends androidx.lifecycle.ViewModel {
 
         return tasks;
     }
+
+    public boolean hasProjects() {
+        return model.getProjects().size() > 0;
+    }
 }

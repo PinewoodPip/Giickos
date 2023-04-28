@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import edu.ub.pis.giickos.R;
-import edu.ub.pis.giickos.ui.main.MainViewModel;
+import edu.ub.pis.giickos.ui.activities.main.MainViewModel;
 import edu.ub.pis.giickos.ui.section.Section;
 
 // Section that contains miscellanous funcionality:
@@ -41,7 +41,7 @@ public class MiscellaneousSection extends Section {
     }
 
     @Override
-    public MainViewModel.TYPE getType() {
-        return MainViewModel.TYPE.MISCELLANEOUS;
+    public MainViewModel.SECTION_TYPE getType() {
+        return MainViewModel.SECTION_TYPE.MISCELLANEOUS;
     }
 }

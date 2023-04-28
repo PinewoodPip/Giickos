@@ -8,33 +8,37 @@
     android:gravity="center|left"
     android:orientation="vertical"
     android:paddingHorizontal="5dp"
-    tools:context=".ui.activities.LoginActivity"
+    tools:context=".ui.activities.login.LoginActivity"
     android:id="@+id/login">
 
     <TextView
         android:id="@+id/title_login"
         android:layout_width="match_parent"
-        android:layout_height="91dp"
+        android:layout_height="wrap_content"
         android:gravity="center"
         android:text="@string/app_name"
         android:textColor="#356003"
-        android:textSize="60sp"
-        />
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/email_login"
-        android:name="edu.ub.pis.giickos.ui.login.EmailFragment"
-        android:layout_width="match_parent"
-        android:layout_height="91dp"
-        tools:layout="@layout/fragment_card_form">
-    </androidx.fragment.app.FragmentContainerView>
+        android:textSize="60sp" />
 
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/psw_login"
-        android:name="edu.ub.pis.giickos.ui.login.PswFragment"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="91dp"
-        tools:layout="@layout/fragment_card_form">
-    </androidx.fragment.app.FragmentContainerView>
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/card_email"
+            android:name="edu.ub.pis.giickos.ui.generic.form.FormCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:layout="@layout/fragment_card_form" />
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/card_password"
+            android:name="edu.ub.pis.giickos.ui.generic.form.FormCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:layout="@layout/fragment_card_form" />
+    </LinearLayout>
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/checkbox_login"

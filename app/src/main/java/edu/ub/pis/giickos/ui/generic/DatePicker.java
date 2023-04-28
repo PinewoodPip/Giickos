@@ -1,4 +1,4 @@
-package edu.ub.pis.giickos.ui.main;
+package edu.ub.pis.giickos.ui.generic;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;

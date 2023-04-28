@@ -1,4 +1,4 @@
-package edu.ub.pis.giickos.ui.main;
+package edu.ub.pis.giickos.ui.generic;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;

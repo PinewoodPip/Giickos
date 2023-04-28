@@ -2,6 +2,7 @@ package edu.ub.pis.giickos.ui.section.calendar;
 
 import static com.kizitonwose.calendar.core.ExtensionsKt.firstDayOfWeekFromLocale;
 
+import android.content.DialogInterface;
 import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -36,9 +37,10 @@ import java.util.Set;
 
 import edu.ub.pis.giickos.R;
 import edu.ub.pis.giickos.ui.ViewModelHelpers;
-import edu.ub.pis.giickos.ui.main.MainViewModel;
-import edu.ub.pis.giickos.ui.section.Section;
+import edu.ub.pis.giickos.ui.activities.main.MainViewModel;
 import edu.ub.pis.giickos.ui.activities.taskcreator.TaskCreator;
+import edu.ub.pis.giickos.ui.dialogs.Alert;
+import edu.ub.pis.giickos.ui.section.Section;
 
 // Fragment for the calendar section.
 public class CalendarSection extends Section {
@@ -103,11 +105,30 @@ public class CalendarSection extends Section {
             timeFrame.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    LocalDate selectedDate = viewModel.getSelectedDate().getValue();
-                    ViewModelHelpers.TaskDate date = new ViewModelHelpers.TaskDate(selectedDate.getDayOfMonth(), selectedDate.getMonthValue(), selectedDate.getYear());
-                    ViewModelHelpers.TaskTime time = new ViewModelHelpers.TaskTime(hour, 0);
+                    // Check if there are any projects before trying to go to the task creator
+                    if (viewModel.hasProjects()) {
+                        LocalDate selectedDate = viewModel.getSelectedDate().getValue();
+                        ViewModelHelpers.TaskDate date = new ViewModelHelpers.TaskDate(selectedDate.getDayOfMonth(), selectedDate.getMonthValue(), selectedDate.getYear());
+                        ViewModelHelpers.TaskTime time = new ViewModelHelpers.TaskTime(hour, 0);
 
-                    TaskCreator.openCreateActivity(getActivity(), date, time);
+                        TaskCreator.openCreateActivity(getActivity(), date, time);
+                    }
+                    else {
+                        // Prompt the user to create their first project
+                        Alert alert = new Alert(getActivity(), getString(R.string.calendar_msg_noprojects_title), getString(R.string.calendar_msg_noprojects_body));
+
+                        alert.setPositiveButton(R.string.generic_label_go, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                MainViewModel viewModel = new ViewModelProvider(getActivity()).get(MainViewModel.class);
+
+                                viewModel.setCurrentSection(MainViewModel.SECTION_TYPE.TASK_EXPLORER);
+                            }
+                        });
+                        alert.setNegativeButton("", null); // "Cancel"/"No" doesn't make sense in this dialog.
+
+                        alert.show();
+                    }
                 }
             });
         }
@@ -249,7 +270,7 @@ public class CalendarSection extends Section {
     }
 
     @Override
-    public MainViewModel.TYPE getType() {
-        return MainViewModel.TYPE.CALENDAR;
+    public MainViewModel.SECTION_TYPE getType() {
+        return MainViewModel.SECTION_TYPE.CALENDAR;
     }
 }

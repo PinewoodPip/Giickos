@@ -8,11 +8,9 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.CheckBox;
 
 import edu.ub.pis.giickos.R;
-import edu.ub.pis.giickos.ui.main.MainViewModel;
+import edu.ub.pis.giickos.ui.activities.main.MainViewModel;
 import edu.ub.pis.giickos.ui.section.Section;
 
 /**
@@ -49,7 +47,7 @@ public class TimerSection extends Section {
     }
 
     @Override
-    public MainViewModel.TYPE getType() {
-        return MainViewModel.TYPE.TIMER;
+    public MainViewModel.SECTION_TYPE getType() {
+        return MainViewModel.SECTION_TYPE.TIMER;
     }
 }

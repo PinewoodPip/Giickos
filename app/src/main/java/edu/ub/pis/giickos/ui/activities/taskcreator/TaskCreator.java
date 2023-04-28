@@ -34,8 +34,8 @@ import edu.ub.pis.giickos.ui.dialogs.Alert;
 import edu.ub.pis.giickos.ui.generic.form.FormCard;
 import edu.ub.pis.giickos.ui.generic.form.FormSpinner;
 import edu.ub.pis.giickos.ui.generic.form.TextField;
-import edu.ub.pis.giickos.ui.main.DatePickerListener;
-import edu.ub.pis.giickos.ui.main.TimePickerListener;
+import edu.ub.pis.giickos.ui.generic.DatePickerListener;
+import edu.ub.pis.giickos.ui.generic.TimePickerListener;
 
 // Section for creating tasks.
 public class TaskCreator extends GiickosFragment {
@@ -333,7 +333,7 @@ public class TaskCreator extends GiickosFragment {
         setupRepeatModeSpinner();
 
         // TODO move to separate tab
-        addTextField(R.drawable.description_white, getString(R.string.taskcreator_label_details), viewModel.getTaskDescription(), InputType.TYPE_TEXT_FLAG_MULTI_LINE, new TextWatcher() {
+        addTextField(R.drawable.description_white, getString(R.string.taskcreator_label_details), viewModel.getTaskDescription(), InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_MULTI_LINE, new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
 

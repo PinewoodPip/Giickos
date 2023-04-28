@@ -20,6 +20,8 @@
     <string name="generic_label_name">Name</string>
     <string name="generic_label_ok">Ok</string>
     <string name="generic_label_close">Close</string>
+    <string name="generic_label_go">Go</string>
+    <string name="generic_label_confirm">Confirm</string>
 
     <!-- Months of the year -->
     <string name="month_january">January</string>
@@ -101,7 +103,15 @@
     <string name="miscellaneous_tab_settings_delete_account">Delete Account</string>
     <string name="miscellaneous_tab_settings_giickos_plus">Giickos Plus:</string>
     <string name="miscellaneous_tab_settings_notloggedin">Not logged in</string>
+    <string name="miscellaneous_tab_settings_msg_logout_title">Log Out</string>
+    <string name="miscellaneous_tab_settings_msg_logout_body">Are you sure you want to log out from your account?</string>
+    <string name="miscellaneous_tab_settings_msg_deleteaccount_title">Delete Account</string>
+    <string name="miscellaneous_tab_settings_msg_deleteaccount_body">Are you sure you want to delete your account? This action is irreversible.</string>
+    <string name="miscellaneous_tab_settings_msg_deleteaccount_success">Your account has been successfully deleted.</string>
+    <string name="miscellaneous_tab_settings_msg_deleteaccount_error">Failed to delete account. Check your connection or contact support.</string>
+
     <string name="miscellaneous_tab_teams">Teams</string>
+
     <string name="miscellaneous_tab_statistics">Statistics</string>
 
     <string name="statistics_label" />
@@ -123,10 +133,13 @@
     <!-- Calendar -->
     <string name="calendar_name">Timer &amp; Detox</string>
     <string name="calendar_help">The calendar shows you the tasks you have planned for each day. You may tap a task to view it and edit it, or tap an empty space to create a new task on the chosen date and time.</string>
+
     <string name="detox_all_apps_locked">All apps locked</string>
     <string name="detox_cant_cancel">can\'t cancel</string>
     <string name="detox_emergency_calls">Only emergency calls</string>
     <string name="detox_let_your_phone_down">Let your phone down</string>
+    <string name="calendar_msg_noprojects_title">No Projects</string>
+    <string name="calendar_msg_noprojects_body">You must create a project to add tasks. Select \"New Project\" in the Task Explorer to get started.</string>
 
     <!-- Bamboo -->
     <string name="bamboo_name">Bamboo garden</string>
