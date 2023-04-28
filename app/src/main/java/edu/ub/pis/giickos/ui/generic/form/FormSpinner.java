@@ -1,16 +1,14 @@
 package edu.ub.pis.giickos.ui.generic.form;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
+
+import androidx.fragment.app.Fragment;
 
 import java.util.ArrayList;
 import java.util.List;

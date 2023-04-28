@@ -333,7 +333,7 @@ public class TaskCreator extends GiickosFragment {
         setupRepeatModeSpinner();
 
         // TODO move to separate tab
-        addTextField(R.drawable.description_white, getString(R.string.taskcreator_label_details), viewModel.getTaskDescription(), InputType.TYPE_TEXT_FLAG_MULTI_LINE, new TextWatcher() {
+        addTextField(R.drawable.description_white, getString(R.string.taskcreator_label_details), viewModel.getTaskDescription(), InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_MULTI_LINE, new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
 
