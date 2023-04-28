@@ -52,7 +52,7 @@ public class MainActivity extends GiickosActivity {
     public static void transitionToSection(Activity sourceActivity, MainViewModel.SECTION_TYPE sectionID, @Nullable Bundle bundle, boolean clearStack) {
         Intent transition = new Intent(sourceActivity, MainActivity.class);
         if (clearStack) {
-            transition.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            transition.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         }
         if (bundle == null) {
             bundle = new Bundle();

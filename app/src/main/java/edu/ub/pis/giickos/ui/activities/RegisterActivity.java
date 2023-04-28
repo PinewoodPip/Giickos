@@ -13,6 +13,7 @@ import edu.ub.pis.giickos.ui.activities.main.MainViewModel;
 public class RegisterActivity extends AppCompatActivity {
     Button register;
     RegisterActivity regActivity;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,7 +23,8 @@ public class RegisterActivity extends AppCompatActivity {
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                MainActivity.transitionToSection(regActivity, MainViewModel.SECTION_TYPE.CALENDAR, null);
+                MainActivity.transitionToSection(regActivity, MainViewModel.SECTION_TYPE.CALENDAR, null, true);
+                finish();
             }
         });
     }

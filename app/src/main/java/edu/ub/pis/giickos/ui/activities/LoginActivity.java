@@ -32,22 +32,15 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        guest.setOnClickListener(new View.OnClickListener() {
+        View.OnClickListener clickListener = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 MainActivity.transitionToSection(loginActivity, MainViewModel.SECTION_TYPE.CALENDAR, null);
+                finish();
             }
-        });
-        sign_in.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                MainActivity.transitionToSection(loginActivity, MainViewModel.SECTION_TYPE.CALENDAR, null);
-            }
-        });
+        };
 
+        guest.setOnClickListener(clickListener);
+        sign_in.setOnClickListener(clickListener);
     }
-
-
-
-
 }
