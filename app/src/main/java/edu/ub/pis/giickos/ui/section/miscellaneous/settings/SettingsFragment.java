@@ -2,6 +2,7 @@ package edu.ub.pis.giickos.ui.section.miscellaneous.settings;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -17,6 +18,7 @@ import android.widget.Toast;
 
 import edu.ub.pis.giickos.GiickosFragment;
 import edu.ub.pis.giickos.R;
+import edu.ub.pis.giickos.ui.activities.login.LoginActivity;
 import edu.ub.pis.giickos.ui.generic.Switch;
 import edu.ub.pis.giickos.ui.generic.form.FormCardStatisticsSettings;
 import edu.ub.pis.giickos.ui.generic.form.TextField;
@@ -184,8 +186,6 @@ public class SettingsFragment extends GiickosFragment {
         logoutCard.setClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("TODO", "Logout clicked");
-
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                 builder.setCancelable(true);
                 builder.setTitle("LOG OUT");
@@ -194,8 +194,10 @@ public class SettingsFragment extends GiickosFragment {
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                // TODO go to login or update the text fields
                                 viewModel.logOut();
+                                Intent intent = new Intent(getActivity(), LoginActivity.class);
+                                startActivity(intent);
+                                getActivity().finish();
                             }
                         });
                 builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
