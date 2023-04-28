@@ -71,6 +71,23 @@ public class MainFragment extends GiickosFragment {
         });
 
         viewModel = new ViewModelProvider(getActivity()).get(MainViewModel.class);
+
+        // Set section from intent, if any
+        Intent intent = getActivity().getIntent();
+        if (intent != null) {
+            Bundle extras = intent.getExtras();
+            if (extras != null) {
+                int sectionIntegerID = extras.getInt(INTENT_EXTRA_SECTION);
+
+                if (sectionIntegerID != -1) {
+                    MainViewModel.SECTION_TYPE sectionID = MainViewModel.SECTION_TYPE.values()[sectionIntegerID];
+                    viewModel.setCurrentSection(sectionID);
+
+                    // Do not set the section again a config change
+                    intent.removeExtra(INTENT_EXTRA_SECTION);
+                }
+            }
+        }
     }
 
     // Changes the active section.
@@ -127,22 +144,7 @@ public class MainFragment extends GiickosFragment {
     public void onViewCreated(View view, Bundle savedInstance) {
         createSectionBar();
 
-        // Set section from intent (if any)
-        // or default to the one stored in VM
-        MainViewModel.SECTION_TYPE sectionID = viewModel.getCurrentSection().getValue();
-        Intent intent = getActivity().getIntent();
-        if (intent != null) {
-            Bundle extras = intent.getExtras();
-            if (extras != null) {
-                int sectionIntegerID = extras.getInt(INTENT_EXTRA_SECTION);
-
-                if (sectionIntegerID != -1) {
-                    sectionID = MainViewModel.SECTION_TYPE.values()[sectionIntegerID];
-                    viewModel.setCurrentSection(sectionID);
-                }
-            }
-        }
-        changeSection(sectionID);
+        changeSection(viewModel.getCurrentSection().getValue());
 
         viewModel.getCurrentSection().observe(getViewLifecycleOwner(), new Observer<MainViewModel.SECTION_TYPE>() {
             @Override
