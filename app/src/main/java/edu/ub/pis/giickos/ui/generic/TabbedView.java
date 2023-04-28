@@ -1,9 +1,8 @@
-package edu.ub.pis.giickos.ui.main;
+package edu.ub.pis.giickos.ui.generic;
 
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.view.LayoutInflater;

@@ -1,4 +1,4 @@
-package edu.ub.pis.giickos.ui.main.sectionbar;
+package edu.ub.pis.giickos.ui.activities.main.sectionbar;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 
 import edu.ub.pis.giickos.GiickosFragment;
 import edu.ub.pis.giickos.R;
-import edu.ub.pis.giickos.ui.main.MainViewModel;
+import edu.ub.pis.giickos.ui.activities.main.MainViewModel;
 
 // Fragment for the section navigation bar.
 public class SectionBar extends GiickosFragment {
@@ -24,7 +24,7 @@ public class SectionBar extends GiickosFragment {
     }
 
     // Adds a new SectionBarItem to the list.
-    public void addItem(MainViewModel.TYPE sectionType) {
+    private void addItem(MainViewModel.SECTION_TYPE sectionType) {
         SectionBarItem sectionItem = SectionBarItem.newInstance(sectionType);
 
         addChildFragment(sectionItem, R.id.list_buttons);
@@ -46,8 +46,8 @@ public class SectionBar extends GiickosFragment {
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceBundle) {
-        for (int x = 0; x < MainViewModel.TYPE.values().length; x++) {
-            MainViewModel.TYPE sectionType = MainViewModel.TYPE.values()[x];
+        for (int x = 0; x < MainViewModel.SECTION_TYPE.values().length; x++) {
+            MainViewModel.SECTION_TYPE sectionType = MainViewModel.SECTION_TYPE.values()[x];
 
             addItem(sectionType);
         }

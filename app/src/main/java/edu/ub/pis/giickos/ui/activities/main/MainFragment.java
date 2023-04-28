@@ -1,4 +1,4 @@
-package edu.ub.pis.giickos.ui.main;
+package edu.ub.pis.giickos.ui.activities.main;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,7 +15,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import edu.ub.pis.giickos.GiickosFragment;
 import edu.ub.pis.giickos.R;
-import edu.ub.pis.giickos.ui.main.sectionbar.SectionBar;
+import edu.ub.pis.giickos.ui.activities.main.sectionbar.SectionBar;
 import edu.ub.pis.giickos.ui.section.Section;
 import edu.ub.pis.giickos.ui.section.bamboogarden.BambooGarden;
 import edu.ub.pis.giickos.ui.section.calendar.CalendarSection;
@@ -28,7 +28,7 @@ public class MainFragment extends GiickosFragment {
     public static String INTENT_EXTRA_SECTION = "Section";
 
     private MainViewModel viewModel;
-    private int previousBackStackCount = 0;
+    private int previousBackStackCount = 0; // Used to determine if changes in the backstack are pops or pushes
     private boolean initialized = false;
 
     public static MainFragment newInstance() {
@@ -39,6 +39,8 @@ public class MainFragment extends GiickosFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // Janky implementation of back-navigation
+        // We need to listen for pops in the fragment manager to update the variables that hold which section the app is in
         getParentFragmentManager().addOnBackStackChangedListener(
             new FragmentManager.OnBackStackChangedListener() {
             @Override
@@ -48,13 +50,13 @@ public class MainFragment extends GiickosFragment {
 
                 if (backStackCount != 0) {
                     FragmentManager.BackStackEntry entry = manager.getBackStackEntryAt(backStackCount - 1);
-                    MainViewModel.TYPE section;
+                    MainViewModel.SECTION_TYPE section;
 
                     // If a pop occurred
                     if (backStackCount < previousBackStackCount) {
                         // Catch section back navigation
                         try {
-                            section = MainViewModel.TYPE.valueOf(entry.getName());
+                            section = MainViewModel.SECTION_TYPE.valueOf(entry.getName());
                             viewModel.setPoppingStack(true);
                             viewModel.setCurrentSection(section);
                             viewModel.setPoppingStack(false);
@@ -77,7 +79,7 @@ public class MainFragment extends GiickosFragment {
     }
 
     // Enum overload for changeSection().
-    private void changeSection(MainViewModel.TYPE sectionType) {
+    private void changeSection(MainViewModel.SECTION_TYPE sectionType) {
         Section section = null;
 
         switch (sectionType) {
@@ -127,7 +129,7 @@ public class MainFragment extends GiickosFragment {
 
         // Set section from intent (if any)
         // or default to the one stored in VM
-        MainViewModel.TYPE sectionID = viewModel.getCurrentSection().getValue();
+        MainViewModel.SECTION_TYPE sectionID = viewModel.getCurrentSection().getValue();
         Intent intent = getActivity().getIntent();
         if (intent != null) {
             Bundle extras = intent.getExtras();
@@ -135,16 +137,16 @@ public class MainFragment extends GiickosFragment {
                 int sectionIntegerID = extras.getInt(INTENT_EXTRA_SECTION);
 
                 if (sectionIntegerID != -1) {
-                    sectionID = MainViewModel.TYPE.values()[sectionIntegerID];
+                    sectionID = MainViewModel.SECTION_TYPE.values()[sectionIntegerID];
                     viewModel.setCurrentSection(sectionID);
                 }
             }
         }
         changeSection(sectionID);
 
-        viewModel.getCurrentSection().observe(getViewLifecycleOwner(), new Observer<MainViewModel.TYPE>() {
+        viewModel.getCurrentSection().observe(getViewLifecycleOwner(), new Observer<MainViewModel.SECTION_TYPE>() {
             @Override
-            public void onChanged(MainViewModel.TYPE type) {
+            public void onChanged(MainViewModel.SECTION_TYPE type) {
                 if (!viewModel.isPoppingStack()) {
                     changeSection(type);
                 }

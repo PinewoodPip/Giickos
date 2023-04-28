@@ -1,4 +1,4 @@
-package edu.ub.pis.giickos.ui.activities;
+package edu.ub.pis.giickos.ui.activities.main;
 
 import android.app.Activity;
 import android.app.FragmentManager;
@@ -11,8 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 
 import edu.ub.pis.giickos.R;
-import edu.ub.pis.giickos.ui.main.MainFragment;
-import edu.ub.pis.giickos.ui.main.MainViewModel;
+import edu.ub.pis.giickos.ui.activities.GiickosActivity;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -50,7 +49,7 @@ public class MainActivity extends GiickosActivity {
     }
 
     // Transitions to a section.
-    public static void transitionToSection(Activity sourceActivity, MainViewModel.TYPE sectionID, @Nullable Bundle bundle, boolean clearStack) {
+    public static void transitionToSection(Activity sourceActivity, MainViewModel.SECTION_TYPE sectionID, @Nullable Bundle bundle, boolean clearStack) {
         Intent transition = new Intent(sourceActivity, MainActivity.class);
         if (clearStack) {
             transition.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -64,7 +63,7 @@ public class MainActivity extends GiickosActivity {
         sourceActivity.startActivity(transition);
     }
 
-    public static void transitionToSection(Activity sourceActivity, MainViewModel.TYPE sectionID, @Nullable Bundle bundle) {
+    public static void transitionToSection(Activity sourceActivity, MainViewModel.SECTION_TYPE sectionID, @Nullable Bundle bundle) {
         transitionToSection(sourceActivity, sectionID, bundle, false);
     }
 

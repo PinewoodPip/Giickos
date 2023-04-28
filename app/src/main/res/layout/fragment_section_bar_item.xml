@@ -5,7 +5,7 @@
     android:layout_width="60dp"
     android:layout_height="60dp"
     android:layout_gravity="center"
-    tools:context=".ui.main.sectionbar.SectionBarItem">
+    tools:context=".ui.activities.main.sectionbar.SectionBarItem">
 
     <ImageButton
         android:id="@+id/icon"

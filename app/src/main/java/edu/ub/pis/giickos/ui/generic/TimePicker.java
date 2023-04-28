@@ -1,20 +1,14 @@
-package edu.ub.pis.giickos.ui.main;
+package edu.ub.pis.giickos.ui.generic;
 
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
 
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
 
 import android.text.format.DateFormat;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import java.util.Calendar;
-
-import edu.ub.pis.giickos.R;
 
 // Dialog for picking a time (hour and minutes).
 // https://developer.android.com/develop/ui/views/components/pickers#java

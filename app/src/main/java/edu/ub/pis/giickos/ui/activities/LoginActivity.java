@@ -8,7 +8,8 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 
 import edu.ub.pis.giickos.R;
-import edu.ub.pis.giickos.ui.main.MainViewModel;
+import edu.ub.pis.giickos.ui.activities.main.MainActivity;
+import edu.ub.pis.giickos.ui.activities.main.MainViewModel;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -34,13 +35,13 @@ public class LoginActivity extends AppCompatActivity {
         guest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                MainActivity.transitionToSection(loginActivity, MainViewModel.TYPE.CALENDAR, null);
+                MainActivity.transitionToSection(loginActivity, MainViewModel.SECTION_TYPE.CALENDAR, null);
             }
         });
         sign_in.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                MainActivity.transitionToSection(loginActivity, MainViewModel.TYPE.CALENDAR, null);
+                MainActivity.transitionToSection(loginActivity, MainViewModel.SECTION_TYPE.CALENDAR, null);
             }
         });
 

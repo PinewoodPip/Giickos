@@ -36,7 +36,7 @@ import java.util.Set;
 
 import edu.ub.pis.giickos.R;
 import edu.ub.pis.giickos.ui.ViewModelHelpers;
-import edu.ub.pis.giickos.ui.main.MainViewModel;
+import edu.ub.pis.giickos.ui.activities.main.MainViewModel;
 import edu.ub.pis.giickos.ui.section.Section;
 import edu.ub.pis.giickos.ui.activities.taskcreator.TaskCreator;
 
@@ -249,7 +249,7 @@ public class CalendarSection extends Section {
     }
 
     @Override
-    public MainViewModel.TYPE getType() {
-        return MainViewModel.TYPE.CALENDAR;
+    public MainViewModel.SECTION_TYPE getType() {
+        return MainViewModel.SECTION_TYPE.CALENDAR;
     }
 }

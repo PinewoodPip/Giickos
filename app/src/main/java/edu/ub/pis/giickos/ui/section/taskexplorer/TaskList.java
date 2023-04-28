@@ -81,6 +81,7 @@ public class TaskList extends GiickosFragment {
 
     @Override
     public void onViewCreated(View view, Bundle savedInstance) {
+        // Update list of projects when the model data changes
         viewModel.getProjects().observe(getViewLifecycleOwner(), new Observer<List<ProjectData>>() {
             @Override
             public void onChanged(List<ViewModelHelpers.ProjectData> projectData) {

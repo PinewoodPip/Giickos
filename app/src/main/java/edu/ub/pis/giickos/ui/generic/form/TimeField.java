@@ -10,8 +10,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import edu.ub.pis.giickos.R;
-import edu.ub.pis.giickos.ui.main.TimePicker;
-import edu.ub.pis.giickos.ui.main.TimePickerListener;
+import edu.ub.pis.giickos.ui.generic.TimePicker;
+import edu.ub.pis.giickos.ui.generic.TimePickerListener;
 
 // A task creation field with a time input.
 public class TimeField extends Fragment {

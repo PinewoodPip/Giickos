@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import edu.ub.pis.giickos.R;
-import edu.ub.pis.giickos.ui.main.MainViewModel;
+import edu.ub.pis.giickos.ui.activities.main.MainViewModel;
 import edu.ub.pis.giickos.ui.section.Section;
 
 // Section that the bamboo garden functionality:
@@ -40,7 +40,7 @@ public class BambooGarden extends Section {
     }
 
     @Override
-    public MainViewModel.TYPE getType() {
-        return MainViewModel.TYPE.BAMBOO;
+    public MainViewModel.SECTION_TYPE getType() {
+        return MainViewModel.SECTION_TYPE.BAMBOO;
     }
 }

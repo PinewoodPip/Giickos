@@ -13,15 +13,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.NumberPicker;
-import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
 import java.util.List;
 
 import edu.ub.pis.giickos.GiickosFragment;
 import edu.ub.pis.giickos.R;
-import edu.ub.pis.giickos.ui.main.DatePickerListener;
-import edu.ub.pis.giickos.ui.main.TimePickerListener;
+import edu.ub.pis.giickos.ui.generic.DatePickerListener;
+import edu.ub.pis.giickos.ui.generic.TimePickerListener;
 
 // Card fragment with an icon, label, and a horizontal list of custom elements.
 public class FormCard extends GiickosFragment {

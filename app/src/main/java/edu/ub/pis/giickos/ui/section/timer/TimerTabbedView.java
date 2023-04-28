@@ -6,12 +6,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.ub.pis.giickos.R;
-import edu.ub.pis.giickos.ui.main.TabbedViewAdapter;
+import edu.ub.pis.giickos.ui.generic.TabbedView;
+import edu.ub.pis.giickos.ui.generic.TabbedViewAdapter;
 import edu.ub.pis.giickos.ui.section.timer.detox.DetoxFragment;
-import edu.ub.pis.giickos.ui.section.timer.TimerFragment;
 
 // Tabbed view for the miscellaneous section.
-public class TimerTabbedView extends edu.ub.pis.giickos.ui.main.TabbedView {
+public class TimerTabbedView extends TabbedView {
     @Override
     protected TabbedViewAdapter getAdapter() {
         List<TabbedViewAdapter.TabbedViewTab> tabs = new ArrayList<>();

@@ -34,8 +34,8 @@ import edu.ub.pis.giickos.ui.dialogs.Alert;
 import edu.ub.pis.giickos.ui.generic.form.FormCard;
 import edu.ub.pis.giickos.ui.generic.form.FormSpinner;
 import edu.ub.pis.giickos.ui.generic.form.TextField;
-import edu.ub.pis.giickos.ui.main.DatePickerListener;
-import edu.ub.pis.giickos.ui.main.TimePickerListener;
+import edu.ub.pis.giickos.ui.generic.DatePickerListener;
+import edu.ub.pis.giickos.ui.generic.TimePickerListener;
 
 // Section for creating tasks.
 public class TaskCreator extends GiickosFragment {
