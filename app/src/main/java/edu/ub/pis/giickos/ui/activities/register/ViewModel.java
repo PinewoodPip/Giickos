@@ -61,12 +61,6 @@ public class ViewModel extends androidx.lifecycle.ViewModel {
 
                 auth.getCurrentUser().updateProfile(builder.build());
                 userManager.tryLogIn(email, password);
-
-                FirebaseFirestore db = FirebaseFirestore.getInstance();
-                Map<String, Object> doc = new HashMap<>();
-                doc.put("projects", new HashMap<>());
-                doc.put("tasks", new HashMap<>());
-                db.collection("userdata").document(email).set(doc);
             }
         });
 

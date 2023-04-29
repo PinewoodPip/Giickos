@@ -1,15 +1,14 @@
 package edu.ub.pis.giickos.resources.dao.firebase;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.SetOptions;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,14 +20,17 @@ import edu.ub.pis.giickos.model.project.Task;
 import edu.ub.pis.giickos.model.user.User;
 import edu.ub.pis.giickos.resources.dao.CachedProjectDAO;
 
-// TODO: updating database. Currently only reads, never writes.
 public class ProjectDAO extends CachedProjectDAO {
 
     private String userEmail;
     private boolean dataLoaded = false;
 
+    private FirebaseFirestore db;
+
     public ProjectDAO() {
         super();
+
+        this.db = FirebaseFirestore.getInstance();
     }
 
     @Override
@@ -54,19 +56,15 @@ public class ProjectDAO extends CachedProjectDAO {
         return success;
     }
 
-    private void updateProjectEntry(Project project) { // TODO investigate bug with moving tasks between projects - merge is possibly the issue
-        DocumentReference ref = getUserDocument();
+    private void updateProjectEntry(Project project) {
+        DocumentReference ref = getProjectDocument(project.getId());
         Map<String, Object> entry = new HashMap<>();
-        Map<String, Object> projectEntry = new HashMap<>();
-        Map<String, Object> projectsMap = new HashMap<>();
 
-        projectEntry.put("name", project.getName());
-        projectEntry.put("tasks", new ArrayList<>(project.getTasks()));
-        projectsMap.put(project.getId(), projectEntry);
-        entry.put("projects", projectsMap);
+        entry.put("name", project.getName());
+        entry.put("tasks", new ArrayList<>(project.getTasks()));
 
         // TODO decide how to handle failure - need an event system
-        ref.set(entry, SetOptions.merge());
+        ref.set(entry);
     }
 
     @Override
@@ -74,20 +72,9 @@ public class ProjectDAO extends CachedProjectDAO {
         boolean success = super.deleteProject(projectID);
 
         if (success) {
-            DocumentReference ref = getUserDocument();
+            DocumentReference ref = getProjectDocument(projectID);
 
-            // TODO decide how to handle failure - need an event system
-            ref.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                @Override
-                public void onSuccess(DocumentSnapshot documentSnapshot) {
-                    // TODO use documents for these instead; this is inefficient
-                    Map<String, Object> doc = documentSnapshot.getData();
-                    Map<String, Object> projects = (Map<String, Object>) doc.get("projects");
-                    projects.remove(projectID);
-
-                    ref.update(doc);
-                }
-            });
+            ref.delete();
         }
 
         return success;
@@ -112,23 +99,12 @@ public class ProjectDAO extends CachedProjectDAO {
         boolean success = super.deleteTask(taskID);
 
         if (success && dataLoaded) {
+            DocumentReference ref = getTaskDocument(taskID);
+
+            ref.delete();
+
             // Update project
             updateProjectEntry(getProject(projectID));
-
-            DocumentReference ref = getUserDocument();
-
-            // TODO decide how to handle failure - need an event system
-            ref.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                @Override
-                public void onSuccess(DocumentSnapshot documentSnapshot) {
-                    // TODO use documents for these instead; this is inefficient
-                    Map<String, Object> doc = documentSnapshot.getData();
-                    Map<String, Object> tasks = (Map<String, Object>) doc.get("tasks");
-                    tasks.remove(taskID);
-
-                    ref.update(doc);
-                }
-            });
         }
 
         return success;
@@ -149,43 +125,24 @@ public class ProjectDAO extends CachedProjectDAO {
     }
 
     private void updateTaskEntry(Task task) {
-        DocumentReference ref = getUserDocument();
+        DocumentReference ref = getTaskDocument(task.getID());
         Map<String, Object> entry = new HashMap<>();
-        Map<String, Object> taskEntry = new HashMap<>();
-        Map<String, Object> tasksMap = new HashMap<>();
 
-        taskEntry.put("completed", task.getCompleted());
-        taskEntry.put("description", task.getDescription());
-        taskEntry.put("duration_minutes", task.getDuration());
-        taskEntry.put("name", task.getName());
-        taskEntry.put("priority", task.getPriority().ordinal());
-        taskEntry.put("project_id", task.getProjectID());
-        taskEntry.put("repeat_mode", task.getRepeatMode().ordinal());
-        taskEntry.put("start_time", task.getStartTimeMillis());
-        taskEntry.put("takes_all_day", task.takesAllDay());
-
-        tasksMap.put(task.getID(), taskEntry);
-        entry.put("tasks", tasksMap);
+        entry.put("completed", task.getCompleted());
+        entry.put("description", task.getDescription());
+        entry.put("duration_minutes", task.getDuration());
+        entry.put("name", task.getName());
+        entry.put("priority", task.getPriority().ordinal());
+        entry.put("project_id", task.getProjectID());
+        entry.put("repeat_mode", task.getRepeatMode().ordinal());
+        entry.put("start_time", task.getStartTimeMillis());
+        entry.put("takes_all_day", task.takesAllDay());
 
         // TODO decide how to handle failure - need an event system
-        ref.set(entry, SetOptions.merge());
+        ref.set(entry);
 
         // Update project
-        ref.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                Map<String, Object> doc = documentSnapshot.getData();
-                Map<String, Object> projects = (Map<String, Object>) doc.get("projects");
-                Map<String, Object> project = (Map<String, Object>) projects.get(task.getProjectID());
-                ArrayList<String> tasks = (ArrayList<String>) project.get("tasks");
-
-                if (!tasks.contains(task.getID())) {
-                    tasks.add(task.getID());
-                }
-
-                ref.set(doc, SetOptions.merge());
-            }
-        });
+        updateProject(getProject(task.getProjectID()));
     }
 
     @Override
@@ -193,33 +150,21 @@ public class ProjectDAO extends CachedProjectDAO {
         userEmail = user.getEmail();
         dataLoaded = false;
 
-        DocumentReference ref = getUserDocument();
+        CollectionReference tasksRef = db.collection(String.format("userdata/%s/tasks", userEmail));
+        CollectionReference projectsRef = db.collection(String.format("userdata/%s/projects", userEmail));
 
         projects.clear();
         tasks.clear();
 
-        ref.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+        projectsRef.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                Map<String, Object> doc = documentSnapshot.getData();
-
-                // Happens on registration - TODO handle this better
-                if (doc == null || !doc.containsKey("projects")) {
-                    listener.onLoad(true);
-                    dataLoaded = true;
-                    return;
-                }
-
-                Map<String, Object> projects = (Map<String, Object>) doc.get("projects");
-                Map<String, Object> tasks = (Map<String, Object>) doc.get("tasks");
-
-                // Load projects
-                for (String guid : projects.keySet()) {
-                    Map<String, Object> project = (Map<String, Object>) projects.get(guid);
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                for (DocumentSnapshot projectDoc : queryDocumentSnapshots.getDocuments()) {
+                    Map<String, Object> project = projectDoc.getData();
                     List<String> projectTasks = (List<String>) project.get("tasks");
                     String projectName = (String) project.get("name");
 
-                    Project projectInstance = new Project(guid, projectName);
+                    Project projectInstance = new Project(projectDoc.getId(), projectName);
 
                     for (String taskID : projectTasks) {
                         projectInstance.addElement(taskID);
@@ -228,39 +173,48 @@ public class ProjectDAO extends CachedProjectDAO {
                     addProject(projectInstance);
                 }
 
-                // Load tasks
-                for (String taskID : tasks.keySet()) {
-                    Map<String, Object> task = (Map<String, Object>) tasks.get(taskID);
-                    Task taskInstance = new Task(taskID, (String) task.get("name"));
+                // Tasks must be loaded afterwards - TODO improve, as this is inefficient. Querying in parallel would be ideal.
+                tasksRef.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        for (DocumentSnapshot taskDoc : queryDocumentSnapshots.getDocuments()) {
+                            Map<String, Object> task = taskDoc.getData();
+                            Task taskInstance = new Task(taskDoc.getId(), (String) task.get("name"));
 
-                    taskInstance.setDescription((String) task.get("description"));
-                    taskInstance.setStartTime((Long) task.get("start_time"));
-                    taskInstance.setRepeatMode(Task.REPEAT_MODE.values()[((Long) task.get("repeat_mode")).intValue()]);
-                    taskInstance.setDuration(((Long) task.get("duration_minutes")).intValue());
-                    taskInstance.setPriority(Task.PRIORITY.values()[((Long) task.get("priority")).intValue()]);
-                    taskInstance.setProjectID((String) task.get("project_id"));
-                    taskInstance.setTakesAllDay((Boolean) task.get("takes_all_day"));
+                            taskInstance.setDescription((String) task.get("description"));
+                            taskInstance.setStartTime((Long) task.get("start_time"));
+                            taskInstance.setRepeatMode(Task.REPEAT_MODE.values()[((Long) task.get("repeat_mode")).intValue()]);
+                            taskInstance.setDuration(((Long) task.get("duration_minutes")).intValue());
+                            taskInstance.setPriority(Task.PRIORITY.values()[((Long) task.get("priority")).intValue()]);
+                            taskInstance.setProjectID((String) task.get("project_id"));
+                            taskInstance.setTakesAllDay((Boolean) task.get("takes_all_day"));
 
-                    addTask(taskInstance.getProjectID(), taskInstance);
-                }
+                            addTask(taskInstance.getProjectID(), taskInstance);
+                        }
 
-                listener.onLoad(true);
-                dataLoaded = true;
+                        dataLoaded = true;
+                        listener.onLoad(true);
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        listener.onLoad(false);
+                    }
+                });
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Log.d("DAO", "Failed to load document");
-
                 listener.onLoad(false);
             }
         });
     }
 
-    private DocumentReference getUserDocument() {
-        FirebaseFirestore firestore = FirebaseFirestore.getInstance();
-        DocumentReference ref = firestore.collection("userdata").document(userEmail);
+    private DocumentReference getTaskDocument(String taskID) {
+        return db.document(String.format("userdata/%s/tasks/%s", userEmail, taskID));
+    }
 
-        return ref;
+    private DocumentReference getProjectDocument(String projectID) {
+        return db.document(String.format("userdata/%s/projects/%s", userEmail, projectID));
     }
 }
