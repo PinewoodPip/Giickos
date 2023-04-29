@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/register"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center|left"
+    android:orientation="vertical"
+    android:paddingHorizontal="5dp"
+    tools:context=".ui.activities.register.RegisterActivity">
+
+    <TextView
+        android:id="@+id/title_login"
+        android:layout_width="match_parent"
+        android:layout_height="91dp"
+        android:gravity="center"
+        android:text="Giickos"
+        android:textColor="#356003"
+        android:textSize="60sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/card_email"
+            android:name="edu.ub.pis.giickos.ui.generic.form.FormCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:layout="@layout/fragment_card_form" />
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/card_username"
+            android:name="edu.ub.pis.giickos.ui.generic.form.FormCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:layout="@layout/fragment_card_form" />
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/card_password"
+            android:name="edu.ub.pis.giickos.ui.generic.form.FormCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:layout="@layout/fragment_card_form" />
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/card_confirmpassword"
+            android:name="edu.ub.pis.giickos.ui.generic.form.FormCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:layout="@layout/fragment_card_form" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/register_reg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/register">
+
+    </Button>
+</LinearLayout>

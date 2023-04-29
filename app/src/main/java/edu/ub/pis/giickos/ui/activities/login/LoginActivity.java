@@ -19,7 +19,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
 import edu.ub.pis.giickos.R;
-import edu.ub.pis.giickos.ui.activities.RegisterActivity;
+import edu.ub.pis.giickos.ui.activities.register.RegisterActivity;
 import edu.ub.pis.giickos.ui.activities.main.MainActivity;
 import edu.ub.pis.giickos.ui.activities.main.MainViewModel;
 import edu.ub.pis.giickos.ui.generic.form.FormCard;

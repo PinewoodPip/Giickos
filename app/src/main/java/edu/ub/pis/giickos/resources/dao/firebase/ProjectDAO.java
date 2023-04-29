@@ -202,6 +202,14 @@ public class ProjectDAO extends CachedProjectDAO {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 Map<String, Object> doc = documentSnapshot.getData();
+
+                // Happens on registration - TODO handle this better
+                if (doc == null || !doc.containsKey("projects")) {
+                    listener.onLoad(true);
+                    dataLoaded = true;
+                    return;
+                }
+
                 Map<String, Object> projects = (Map<String, Object>) doc.get("projects");
                 Map<String, Object> tasks = (Map<String, Object>) doc.get("tasks");
 

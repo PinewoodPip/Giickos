@@ -179,8 +179,12 @@
     <!-- Strings related to register -->
     <string name="title_register">Create new account</string>
     <string name="msg_confirm_psw">Confirm your password</string>
-    <string name="repeate_psw">Repeat password</string>
+    <string name="register_password_confirm">Confirm Password</string>
     <string name="username">Username</string>
     <string name="msg_username">Enter your username</string>
+
+    <string name="register_msg_createaccount_error_passwordmismatch">Password fields do not match.</string>
+    <string name="register_msg_createaccount_error_missingfgields">All fields must be filled out.</string>
+    <string name="register_msg_createaccount_error_fallback">Error while creating account. Check your connection, the fields or contact support.</string>
 
 </resources>

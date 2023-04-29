@@ -37,7 +37,7 @@ public class UserManager extends Observable<UserManager.Events> {
         return loggedInUser;
     }
 
-    // Will throw LOGGED_IN or LOGIN_FAILED event.
+    // Will throw LOGGED_IN or LOGIN_FAILED event in addition to returning a task.
     public Task tryLogIn(String email, String password) {
         Task task = firebaseAuth.signInWithEmailAndPassword(email, password);
 
