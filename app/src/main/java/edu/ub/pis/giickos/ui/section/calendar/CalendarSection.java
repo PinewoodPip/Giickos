@@ -139,7 +139,7 @@ public class CalendarSection extends Section {
         View view = getView();
         FrameLayout taskContainer = view.findViewById(R.id.container_tasks);
         LocalDate selectedDate = viewModel.getSelectedDate().getValue();
-        Set<ViewModelHelpers.TaskData> tasks = viewModel.getTasks();
+        Set<ViewModelHelpers.TaskData> tasks = viewModel.getTasks().getValue();
 
         if (selectedDate != null) {
             taskContainer.removeAllViews();
@@ -260,10 +260,10 @@ public class CalendarSection extends Section {
         setupTimeFrames(view);
         setupTasks();
 
-        // Listen for selected date being changed to rerender tasks
-        viewModel.getSelectedDate().observe(getViewLifecycleOwner(), new Observer<LocalDate>() {
+        // Listen for tasks being changed to rerender tasks
+        viewModel.getTasks().observe(getViewLifecycleOwner(), new Observer<Set<ViewModelHelpers.TaskData>>() {
             @Override
-            public void onChanged(LocalDate localDate) {
+            public void onChanged(Set<ViewModelHelpers.TaskData> taskData) {
                 setupTasks();
             }
         });
