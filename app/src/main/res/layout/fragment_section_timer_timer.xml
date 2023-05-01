@@ -27,10 +27,10 @@
 
             <Button
                 android:id="@+id/button_set_minutes"
-                android:layout_width="100sp"
+                android:layout_width="wrap_content"
                 android:layout_height="40sp"
-                android:gravity="right"
-                android:text="Button" />
+                android:gravity="center"
+                android:text="Set time" />
 
         </TableRow>
 

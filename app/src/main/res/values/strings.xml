@@ -135,7 +135,7 @@
     <string name="calendar_help">The calendar shows you the tasks you have planned for each day. You may tap a task to view it and edit it, or tap an empty space to create a new task on the chosen date and time.</string>
 
     <string name="detox_all_apps_locked">All apps locked</string>
-    <string name="detox_cant_cancel">can\'t cancel</string>
+    <string name="detox_no_notification">No notification</string>
     <string name="detox_emergency_calls">Only emergency calls</string>
     <string name="detox_let_your_phone_down">Let your phone down</string>
     <string name="calendar_msg_noprojects_title">No Projects</string>

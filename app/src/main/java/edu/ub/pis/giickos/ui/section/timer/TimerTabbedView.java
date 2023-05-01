@@ -10,7 +10,7 @@ import edu.ub.pis.giickos.ui.generic.TabbedView;
 import edu.ub.pis.giickos.ui.generic.TabbedViewAdapter;
 import edu.ub.pis.giickos.ui.section.timer.detox.DetoxFragment;
 
-// Tabbed view for the miscellaneous section.
+// Tabbed view for the timer section.
 public class TimerTabbedView extends TabbedView {
     @Override
     protected TabbedViewAdapter getAdapter() {

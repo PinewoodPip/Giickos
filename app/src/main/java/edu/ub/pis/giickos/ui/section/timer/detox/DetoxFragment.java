@@ -9,9 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.Switch;
 
 import edu.ub.pis.giickos.GiickosFragment;
 import edu.ub.pis.giickos.R;
+import edu.ub.pis.giickos.ui.section.timer.TimerFragment;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -20,6 +22,11 @@ import edu.ub.pis.giickos.R;
  */
 public class DetoxFragment extends GiickosFragment {
 
+    private Switch noNotificationSwitch;
+
+    private Switch emergencyCallsSwitch;
+
+    private Switch allAppsLockedSwitch;
 
     public DetoxFragment() {
         // Required empty public constructor
@@ -41,18 +48,30 @@ public class DetoxFragment extends GiickosFragment {
 
     public void onViewCreated(View view, Bundle bundle){
 
-        Button detoxStartButton = view.findViewById(R.id.button_detox_start);
 
-        detoxStartButton.setOnClickListener(new View.OnClickListener() {
+        emergencyCallsSwitch = view.findViewById(R.id.switch_emergency_calls);
+        noNotificationSwitch = view.findViewById(R.id.switch_no_notification);
+        allAppsLockedSwitch = view.findViewById(R.id.switch_all_apps_locked);
+
+
+        emergencyCallsSwitch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO;
-                System.out.println("detoxStartButton clicked");
-                if (detoxStartButton.getText().equals("STOP")){
-                    detoxStartButton.setText("START");
-                }else{
-                    detoxStartButton.setText("STOP");
-                }
+                System.out.println("emergency calls switched");
+            }
+        });
+
+        noNotificationSwitch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                System.out.println("no notification switched");
+            }
+        });
+
+        allAppsLockedSwitch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                System.out.println("all apps locked switched");
             }
         });
 
