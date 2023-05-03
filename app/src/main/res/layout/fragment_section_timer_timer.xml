@@ -18,7 +18,7 @@
 
             <EditText
                 android:id="@+id/edit_text_minutes"
-                android:layout_width="121dp"
+                android:layout_width="82dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:hint="minutes"
@@ -31,6 +31,22 @@
                 android:layout_height="40sp"
                 android:gravity="center"
                 android:text="Set time" />
+
+            <EditText
+                android:id="@+id/edit_text_minutes_break"
+                android:layout_width="82dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:hint="minutes"
+                android:inputType="number"
+                android:maxLength="3" />
+
+            <Button
+                android:id="@+id/button_set_break"
+                android:layout_width="wrap_content"
+                android:layout_height="40sp"
+                android:gravity="center"
+                android:text="Set break" />
 
         </TableRow>
 

@@ -29,8 +29,13 @@ public class TimerFragment extends Fragment {
 
     private Button resetButton;
     private Button setMinuteButton;
+
+    private Button setBreakButton;
+
     private CheckBox detoxCheckbox;
     private EditText editMinuteEdittext;
+
+    private EditText editBreakMinuteEdittext;
     private TextView timerView;
 
     private CountDownTimer countDownTimer;
@@ -40,6 +45,8 @@ public class TimerFragment extends Fragment {
     private long startTimeInMillis;
     private long timeLeftInMillis;
     private long endTime;
+
+    private long breakTime;
 
     public TimerFragment() {
         // Required empty public constructor
@@ -65,9 +72,11 @@ public class TimerFragment extends Fragment {
         selectTaskButton = view.findViewById(R.id.button_select_task);
         setMinuteButton = view.findViewById(R.id.button_set_minutes);
         resetButton = view.findViewById(R.id.button_reset_timer);
+        setBreakButton = view.findViewById(R.id.button_set_break);
 
         detoxCheckbox = view.findViewById(R.id.checkBox_detox);
         editMinuteEdittext = view.findViewById(R.id.edit_text_minutes);
+        editBreakMinuteEdittext = view.findViewById(R.id.edit_text_minutes_break);
         timerView = view.findViewById(R.id.textView_timer);
 
 
@@ -76,17 +85,33 @@ public class TimerFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                System.out.println("set button clickat");
+
                 String input = editMinuteEdittext.getText().toString();
 
+                //change minutes to milisecons
                 long millisInput = Long.parseLong(input) * 60000;
 
                 if (input.length() >= 0 && millisInput >= 0){
                     System.out.println("set metode correcte");
                     setTime(millisInput);
-
                     editMinuteEdittext.setText("");
                 }
+
+
+            }
+        });
+
+        setBreakButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String input = editBreakMinuteEdittext.getText().toString();
+                long millisInput = Long.parseLong(input) * 60000;
+                if (input.length() >= 0 && millisInput >= 0){
+                    System.out.println("set metode correcte");
+                    breakTime = millisInput;
+                    editBreakMinuteEdittext.setText("");
+                }
+
 
             }
         });
@@ -95,7 +120,7 @@ public class TimerFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                System.out.println("startButton clicked");
+                //System.out.println("startButton clicked");
 
                 if (istimerRunning) {
                     pauseTimer();
@@ -147,7 +172,14 @@ public class TimerFragment extends Fragment {
             @Override
             public void onFinish() {
                 istimerRunning = false;
-                updateWatchInterface();
+                //updateWatchInterface();
+
+
+                timeLeftInMillis = breakTime;
+                setTime(timeLeftInMillis);
+                updateCountDownText();
+                //updateWatchInterface();
+
                 //TODO: notification
             }
         }.start();
@@ -189,12 +221,16 @@ public class TimerFragment extends Fragment {
     private void updateWatchInterface() {
         if (istimerRunning) {
             editMinuteEdittext.setVisibility(View.INVISIBLE);
+            editBreakMinuteEdittext.setVisibility(View.INVISIBLE);
             setMinuteButton.setVisibility(View.INVISIBLE);
+            setBreakButton.setVisibility(View.INVISIBLE);
             resetButton.setVisibility(View.INVISIBLE);
             startPauseButton.setText("Pause");
         } else {
             editMinuteEdittext.setVisibility(View.VISIBLE);
+            editBreakMinuteEdittext.setVisibility(View.VISIBLE);
             setMinuteButton.setVisibility(View.VISIBLE);
+            setBreakButton.setVisibility(View.VISIBLE);
             startPauseButton.setText("Start");
 
             if (timeLeftInMillis < 1000) {
