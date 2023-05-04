@@ -46,7 +46,10 @@ public class ViewModel extends androidx.lifecycle.ViewModel {
         // Unsubscribe listeners to prevent memory leaks
         userManager.unsubscribe(UserManager.Events.LOGGED_IN, loggedInObserver);
     }
-
+    public boolean isGuest()
+    {   //If the user is not logged in, it is a guest
+        return !(userManager.isLoggedIn());
+    }
     public void logOut() {
         userManager.logOut();
     }
