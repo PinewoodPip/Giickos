@@ -1,5 +1,7 @@
 package edu.ub.pis.giickos.model.project;
 
+import androidx.annotation.Nullable;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashSet;
@@ -133,20 +135,27 @@ public class ProjectManager extends Observable<ProjectManager.Events> {
         return success;
     }
 
-    // Returns all tasks that occur on a day, regardless of project.
-    public Set<Task> getTasksForDay(LocalDateTime day) {
+    // Returns all tasks that occur on a day, regardless of project. Accepts an optional predicate for custom filtering.
+    public Set<Task> getTasksForDay(LocalDateTime day, @Nullable TaskPredicate predicate) {
         Set<Task> allTasks = daoProject.getTasks();
         Set<Task> tasks = new HashSet<>();
 
         for (Task task : allTasks) {
             LocalDateTime taskTime = task.getStartTime();
 
+            // Check if date matches
             if (taskTime.getDayOfYear() == day.getDayOfYear() && taskTime.getYear() == day.getYear()) {
+                // Check predicate, if any
+                if (predicate == null || predicate.isValid(task))
                 tasks.add(task);
             }
         }
 
         return tasks;
+    }
+
+    public Set<Task> getTasksForDay(LocalDateTime day) {
+        return getTasksForDay(day, null);
     }
 
     // TODO move elsewhere
@@ -160,5 +169,9 @@ public class ProjectManager extends Observable<ProjectManager.Events> {
 
     private void notifyTasksUpdated() {
         notifyObservers(Events.TASKS_UPDATED, new EmptyEvent(this, Events.TASKS_UPDATED));
+    }
+
+    public static abstract class TaskPredicate {
+        public abstract boolean isValid(Task task);
     }
 }
