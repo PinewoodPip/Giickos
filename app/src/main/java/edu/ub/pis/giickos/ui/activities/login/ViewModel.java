@@ -11,6 +11,7 @@ public class ViewModel extends androidx.lifecycle.ViewModel {
 
     private String email = "";
     private String password = "";
+    private boolean rememberLogin = false;
 
     public ViewModel() {
         userManager = ModelHolder.INSTANCE.getUserManager();
@@ -38,5 +39,13 @@ public class ViewModel extends androidx.lifecycle.ViewModel {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public boolean getRememberLogin() {
+        return rememberLogin;
+    }
+
+    public void setRememberLogin(boolean rememberLogin) {
+        this.rememberLogin = rememberLogin;
     }
 }
