@@ -1,5 +1,7 @@
 package edu.ub.pis.giickos.ui.section.miscellaneous.settings;
 
+import static androidx.core.content.ContextCompat.startActivity;
+
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -162,6 +164,15 @@ public class SettingsFragment extends GiickosFragment {
             public void onClick(View view) {
                 Log.d("TODO", "Feedback clicked");
                 //Generates intent to send email to giickos
+                //)
+                String[] email = new String[]{getString(R.string.giickos_contact_email)};
+                String subject = getString(R.string.miscellaneous_tab_settings_feedback_subject);
+
+                Intent emailIntent = viewModel.composeEmail(email, subject);
+                if(emailIntent.resolveActivity(getActivity().getPackageManager()) != null)
+                    startActivity(emailIntent);
+                else
+                    Toast.makeText(getActivity(), getString(R.string.miscellaneous_tab_settings_msg_no_email_app), Toast.LENGTH_SHORT).show();
             }
         });
         aboutUsCard.setClickListener(new View.OnClickListener() {
@@ -169,6 +180,11 @@ public class SettingsFragment extends GiickosFragment {
             public void onClick(View view) {
                 Log.d("TODO", "About us clicked");
                 //send to web or something
+                Intent browserIntent = viewModel.openBrowser(getString(R.string.giickos_website));
+                if(browserIntent.resolveActivity(getActivity().getPackageManager()) != null)
+                    startActivity(browserIntent);
+                else
+                    Toast.makeText(getActivity(), getString(R.string.miscellaneous_tab_settings_msg_no_browser_app), Toast.LENGTH_SHORT).show();
             }
         });
 

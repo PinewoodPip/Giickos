@@ -1,8 +1,15 @@
 package edu.ub.pis.giickos.ui.section.miscellaneous.settings;
 
+import static androidx.core.content.ContextCompat.startActivity;
+
+import android.content.Intent;
+import android.net.Uri;
+import android.view.View;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import edu.ub.pis.giickos.R;
 import edu.ub.pis.giickos.model.ModelHolder;
 import edu.ub.pis.giickos.model.observer.ObservableEvent;
 import edu.ub.pis.giickos.model.observer.Observer;
@@ -72,4 +79,21 @@ public class ViewModel extends androidx.lifecycle.ViewModel {
             this.username = username;
         }
     }
+    public Intent composeEmail(String[] emails, String subject)
+    {
+        Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
+        emailIntent.setData(Uri.parse("mailto:")); // only email apps should handle this
+
+        emailIntent.putExtra(Intent.EXTRA_EMAIL, emails);
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, subject);
+        return emailIntent;
+    }
+    public Intent openBrowser(String url)
+    {
+        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+        return browserIntent;
+    }
+
+
+
 }
