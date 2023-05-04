@@ -69,6 +69,11 @@ public class Switch extends Fragment {
 
     public void setChecked(boolean b) {
         View view = getView();
+        Bundle args = getArguments();
+
+        if (args != null) {
+            args.putBoolean(ARG_STATE, b);
+        }
 
         if (view != null) {
             android.widget.Switch switchView = view.findViewById(R.id.view_switch);

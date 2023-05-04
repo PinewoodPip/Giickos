@@ -11,6 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.CompoundButton;
+import android.widget.LinearLayout;
 import android.widget.NumberPicker;
 import android.widget.Toast;
 
@@ -31,6 +33,7 @@ import edu.ub.pis.giickos.ui.ViewModelHelpers.ProjectData;
 import edu.ub.pis.giickos.ui.ViewModelHelpers.TaskDate;
 import edu.ub.pis.giickos.ui.ViewModelHelpers.TaskTime;
 import edu.ub.pis.giickos.ui.dialogs.Alert;
+import edu.ub.pis.giickos.ui.generic.Switch;
 import edu.ub.pis.giickos.ui.generic.form.FormCard;
 import edu.ub.pis.giickos.ui.generic.form.FormSpinner;
 import edu.ub.pis.giickos.ui.generic.form.TextField;
@@ -140,6 +143,16 @@ public class TaskCreator extends GiickosFragment {
         FormCard field = addField(iconID, label, backgroundColor);
 
         field.setClickListener(listener);
+    }
+
+    private void addSwitchField(int iconID, String label, int backgroundColor, boolean checked, CompoundButton.OnCheckedChangeListener listener) {
+        FormCard card = addField(iconID, label, backgroundColor);
+        edu.ub.pis.giickos.ui.generic.Switch switchFragment = Switch.newInstance(true);
+        switchFragment.setListener(listener);
+        switchFragment.setChecked(checked);
+
+        card.addElement(switchFragment);
+        card.setListDirection(LinearLayout.LAYOUT_DIRECTION_RTL);
     }
 
     private void addTimeField(String id, int iconID, String label, String timeLabel, TimePickerListener listener) {
@@ -364,10 +377,10 @@ public class TaskCreator extends GiickosFragment {
             });
 
             // "Mark as complete" button
-            addClickableField(R.drawable.folder_task_completed, getString(R.string.taskcreator_label_complete), getResources().getColor(R.color.positive_action), new View.OnClickListener() {
+            addSwitchField(R.drawable.folder_task_completed, getString(R.string.taskcreator_label_complete), getResources().getColor(R.color.positive_action), viewModel.isCompleted(), new CompoundButton.OnCheckedChangeListener() {
                 @Override
-                public void onClick(View view) {
-                    Log.d("TODO", "Complete button clicked");
+                public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                    viewModel.setCompleted(b);
                 }
             });
 

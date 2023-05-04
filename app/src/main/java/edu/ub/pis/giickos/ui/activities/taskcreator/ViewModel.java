@@ -59,6 +59,7 @@ public class ViewModel extends androidx.lifecycle.ViewModel {
     private String taskDescription = "";
     private Task.PRIORITY priority = Task.PRIORITY.NONE;
     private Task.REPEAT_MODE repeatMode = Task.REPEAT_MODE.NONE;
+    private boolean completed = false;
 
     // Once submitted, these should be converted to a proper date type
     private TaskDate startDate = null;
@@ -84,6 +85,7 @@ public class ViewModel extends androidx.lifecycle.ViewModel {
             task.setPriority(priority);
             task.setDescription(taskDescription);
             task.setRepeatMode(Task.REPEAT_MODE.values()[repeatMode.ordinal()]);
+            task.setCompleted(completed);
 
             updateTaskTime(task);
 
@@ -115,6 +117,7 @@ public class ViewModel extends androidx.lifecycle.ViewModel {
             task.setDescription(taskDescription);
             task.setPriority(priority);
             task.setRepeatMode(Task.REPEAT_MODE.values()[repeatMode.ordinal()]);
+            task.setCompleted(completed);
             // TODO repeat mode should error if start time of the task is unset
 
             updateTaskTime(task);
@@ -155,7 +158,7 @@ public class ViewModel extends androidx.lifecycle.ViewModel {
             Task task = model.getTask(taskID);
 
             if (task != null) {
-                setTaskName(task.getName()); // TODO other setters (date, time)
+                setTaskName(task.getName());
                 setTaskDescription(task.getDescription());
                 setPriority(task.getPriority().ordinal());
                 setRepeatMode(TASK_REPEAT_MODE.values()[task.getRepeatMode().ordinal()]);
@@ -168,6 +171,8 @@ public class ViewModel extends androidx.lifecycle.ViewModel {
                 if (!task.takesAllDay()) {
                     startTime = new TaskTime(localTime.getHour(), localTime.getMinute());
                 }
+
+                completed = task.getCompleted();
 
                 taskEditInitialized = true;
             }
@@ -237,6 +242,14 @@ public class ViewModel extends androidx.lifecycle.ViewModel {
 
     public void setDurationInMinutes(int durationInMinutes) {
         this.durationInMinutes = durationInMinutes;
+    }
+
+    public boolean isCompleted() {
+        return completed;
+    }
+
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
     }
 
     private void updateTaskTime(Task task) {
