@@ -122,29 +122,94 @@ public class SettingsFragment extends GiickosFragment {
         FormCardStatisticsSettings feedbackCard = addCard(R.drawable.feed_back, getString(R.string.miscellaneous_tab_settings_feedback));
         FormCardStatisticsSettings aboutUsCard = addCard(R.drawable.info, getString(R.string.miscellaneous_tab_settings_about));
 
-        FormCardStatisticsSettings usernameCard = addCard(R.drawable.profile_white, getString(R.string.generic_label_username));
-        TextField usernameTextField = TextField.newInstance(getDisplayedUserName(), InputType.TYPE_TEXT_VARIATION_PERSON_NAME, false, Color.WHITE);
 
-        usernameCard.addElement(usernameTextField);
 
-        FormCardStatisticsSettings emailCard = addCard(R.drawable.user, getString(R.string.generic_label_email));
-        TextField emailTextField = TextField.newInstance(getDisplayedEmail(), InputType.TYPE_CLASS_TEXT, false, Color.WHITE);
-        emailCard.addElement(emailTextField);
+        //If the user is a guest
+        if(viewModel.isGuest())
+        {
+            FormCardStatisticsSettings loginCard = addCardWithTint(R.drawable.profile_white, getString(R.string.miscellaneous_tab_settings_login),
+                    Color.rgb(0,80,0), //left frame
+                    Color.rgb(0,100,0), //right frame
+                    Color.WHITE); //text color
+            loginCard.setClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getActivity(), LoginActivity.class);
+                    startActivity(intent);
+                }
+            });
+        }
+        else
+        {
+            FormCardStatisticsSettings usernameCard = addCard(R.drawable.profile_white, getString(R.string.generic_label_username));
+            TextField usernameTextField = TextField.newInstance(getDisplayedUserName(), InputType.TYPE_TEXT_VARIATION_PERSON_NAME, false, Color.WHITE);
+            usernameCard.addElement(usernameTextField);
 
-        FormCardStatisticsSettings giickosPlusCard = addCardWithTint(R.drawable.giickos_plus, getString(R.string.miscellaneous_tab_settings_giickos_plus),
-                                                                Color.rgb(126,105,0), //left frame
-                                                                Color.rgb(163,136,0), //right frame
-                                                                Color.rgb(160,32,240)); //text color);
+            FormCardStatisticsSettings emailCard = addCard(R.drawable.user, getString(R.string.generic_label_email));
+            TextField emailTextField = TextField.newInstance(getDisplayedEmail(), InputType.TYPE_CLASS_TEXT, false, Color.WHITE);
+            emailCard.addElement(emailTextField);
 
-        FormCardStatisticsSettings logoutCard = addCardWithTint(R.drawable.exit, getString(R.string.miscellaneous_tab_settings_logout),
-                                                                Color.rgb(113,48,12), //left frame
-                                                                Color.rgb(158,66,16), //right frame
-                                                                Color.WHITE); //text color
+            FormCardStatisticsSettings giickosPlusCard = addCardWithTint(R.drawable.giickos_plus, getString(R.string.miscellaneous_tab_settings_giickos_plus),
+                    Color.rgb(126,105,0), //left frame
+                    Color.rgb(163,136,0), //right frame
+                    Color.rgb(160,32,240)); //text color);
 
-        FormCardStatisticsSettings removeAccountCard = addCardWithTint(R.drawable.delete_account, getString(R.string.miscellaneous_tab_settings_delete_account),
-                                                                Color.rgb(80,0,0), //left frame
-                                                                Color.rgb(100,0,0), //right frame
-                                                                Color.WHITE); //text color
+            FormCardStatisticsSettings logoutCard = addCardWithTint(R.drawable.exit, getString(R.string.miscellaneous_tab_settings_logout),
+                    Color.rgb(113,48,12), //left frame
+                    Color.rgb(158,66,16), //right frame
+                    Color.WHITE); //text color
+
+            FormCardStatisticsSettings removeAccountCard = addCardWithTint(R.drawable.delete_account, getString(R.string.miscellaneous_tab_settings_delete_account),
+                    Color.rgb(80,0,0), //left frame
+                    Color.rgb(100,0,0), //right frame
+                    Color.WHITE); //text color
+            giickosPlusCard.setClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    giickosPlusMenu.setVisibility(View.VISIBLE);
+                }
+            });
+
+            logoutCard.setClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Alert alert = new Alert(getActivity(), getString(R.string.miscellaneous_tab_settings_msg_logout_title), getString(R.string.miscellaneous_tab_settings_msg_logout_body));
+
+                    alert.setPositiveButton(getString(R.string.generic_label_confirm), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            viewModel.logOut();
+                            MainActivity.goToLogin(getActivity());
+                        }
+                    });
+                    alert.setNegativeButton(android.R.string.cancel, null);
+
+                    alert.show();
+                }
+            });
+
+            removeAccountCard.setClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Alert alert = new Alert(getActivity(), getString(R.string.miscellaneous_tab_settings_msg_deleteaccount_title), getString(R.string.miscellaneous_tab_settings_msg_deleteaccount_body));
+
+                    alert.setPositiveButton(getString(R.string.generic_label_confirm), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            //TODO: delete account
+                            viewModel.logOut();
+                            Toast.makeText(getContext(), getString(R.string.miscellaneous_tab_settings_msg_deleteaccount_success), Toast.LENGTH_SHORT).show();
+                            MainActivity.goToLogin(getActivity());
+                        }
+                    });
+                    alert.setNegativeButton(getString(android.R.string.cancel), null);
+
+                    alert.show();
+                }
+            });
+        }
+
+
         view.findViewById(R.id.exit_purchase_menu_giickos_plus).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -195,49 +260,6 @@ public class SettingsFragment extends GiickosFragment {
             }
         });
 
-        giickosPlusCard.setClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                giickosPlusMenu.setVisibility(View.VISIBLE);
-            }
-        });
 
-        logoutCard.setClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Alert alert = new Alert(getActivity(), getString(R.string.miscellaneous_tab_settings_msg_logout_title), getString(R.string.miscellaneous_tab_settings_msg_logout_body));
-
-                alert.setPositiveButton(getString(R.string.generic_label_confirm), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        viewModel.logOut();
-                        MainActivity.goToLogin(getActivity());
-                    }
-                });
-                alert.setNegativeButton(android.R.string.cancel, null);
-
-                alert.show();
-            }
-        });
-
-        removeAccountCard.setClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Alert alert = new Alert(getActivity(), getString(R.string.miscellaneous_tab_settings_msg_deleteaccount_title), getString(R.string.miscellaneous_tab_settings_msg_deleteaccount_body));
-
-                alert.setPositiveButton(getString(R.string.generic_label_confirm), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        //TODO: delete account
-                        viewModel.logOut();
-                        Toast.makeText(getContext(), getString(R.string.miscellaneous_tab_settings_msg_deleteaccount_success), Toast.LENGTH_SHORT).show();
-                        MainActivity.goToLogin(getActivity());
-                    }
-                });
-                alert.setNegativeButton(getString(android.R.string.cancel), null);
-
-                alert.show();
-            }
-        });
     }
 }

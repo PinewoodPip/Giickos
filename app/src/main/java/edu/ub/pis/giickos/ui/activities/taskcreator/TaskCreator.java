@@ -277,7 +277,7 @@ public class TaskCreator extends GiickosFragment {
     }
 
     private String formatTime(TaskTime time) {
-        return time != null ? new SimpleDateFormat("HH:00", Locale.getDefault()).format(new Date(2000, 1, 1, time.hour, time.minute)) : "";
+        return time != null ? new SimpleDateFormat("HH:mm", Locale.getDefault()).format(new Date(2000, 1, 1, time.hour, time.minute)) : "";
     }
 
     private void finishActivity() {

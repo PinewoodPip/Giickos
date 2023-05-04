@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -46,6 +47,7 @@ import edu.ub.pis.giickos.ui.section.Section;
 public class CalendarSection extends Section {
 
     private ViewModel viewModel;
+    private int timeframeHeight = 271;
 
     public CalendarSection() {
         // Required empty public constructor
@@ -101,6 +103,17 @@ public class CalendarSection extends Section {
             label.setText(new SimpleDateFormat("HH:00", Locale.getDefault()).format(Date.from(time.atZone(ZoneId.systemDefault()).toInstant())));
             list.addView(timeFrame);
 
+            ViewTreeObserver viewTreeObserver = timeFrame.getViewTreeObserver();
+            if (viewTreeObserver.isAlive()) {
+                viewTreeObserver.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                    @Override
+                    public void onGlobalLayout() {
+                        timeFrame.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                        timeframeHeight = timeFrame.getHeight();
+                    }
+                });
+            }
+
             // Open task creator on click, with the date and time set
             timeFrame.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -155,9 +168,10 @@ public class CalendarSection extends Section {
     private void addTask(FrameLayout container, ViewModelHelpers.TaskData task) {
         View view = getView();
         LayoutInflater inflater = LayoutInflater.from(view.getContext());
-        final float TIMEFRAME_HEIGHT = 271; // TODO calculate this programmatically
-        int timeFrameY = (int) ((TIMEFRAME_HEIGHT * task.startTime.getHour() + ((task.startTime.getHour() - 1) * -1.5f)));
-        timeFrameY += (TIMEFRAME_HEIGHT)/60 * task.startTime.getMinute();
+        final float TIMEFRAME_HEIGHT = timeframeHeight;
+        int timeFrameY = (int) ((TIMEFRAME_HEIGHT * task.startTime.getHour()));
+        int minutes = task.startTime.getMinute();
+        timeFrameY += (TIMEFRAME_HEIGHT)/60 * minutes;
 
         View taskView = inflater.inflate(R.layout.item_calendar_task, container, false);
         TextView nameLabel = taskView.findViewById(R.id.label_name);

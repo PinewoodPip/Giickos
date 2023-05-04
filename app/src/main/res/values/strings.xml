@@ -103,6 +103,7 @@
     <string name="miscellaneous_tab_settings_change_account">Change Account</string>
     <string name="miscellaneous_tab_settings_logout">Log Out</string>
     <string name="miscellaneous_tab_settings_delete_account">Delete Account</string>
+    <string name="miscellaneous_tab_settings_login">Log In</string>
     <string name="miscellaneous_tab_settings_giickos_plus">Giickos Plus:</string>
     <string name="miscellaneous_tab_settings_notloggedin">Not logged in</string>
     <string name="miscellaneous_tab_settings_msg_logout_title">Log Out</string>
