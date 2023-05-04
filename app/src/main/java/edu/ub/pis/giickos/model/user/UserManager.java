@@ -46,8 +46,7 @@ public class UserManager extends Observable<UserManager.Events> {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
                     FirebaseUser firebaseUser = task.getResult().getUser();
-
-                    loggedInUser = new User(email, email); // TODO username
+                    loggedInUser = new User(email, firebaseUser.getDisplayName()); // TODO username
 
                     notifyObservers(Events.LOGGED_IN, new EmptyEvent(UserManager.this, Events.LOGGED_IN));
                 }
@@ -63,4 +62,12 @@ public class UserManager extends Observable<UserManager.Events> {
     public void logOut() {
         this.loggedInUser = null;
     }
+
+    public void removeAccount()
+    {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        user.delete();
+    }
+
+
 }

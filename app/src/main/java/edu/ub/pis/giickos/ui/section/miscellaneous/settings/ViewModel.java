@@ -69,6 +69,11 @@ public class ViewModel extends androidx.lifecycle.ViewModel {
 
         loggedInUser.setValue(userData);
     }
+    public void removeAccount()
+    {
+        userManager.removeAccount();
+    }
+
 
     /*
         Auxiliary classes

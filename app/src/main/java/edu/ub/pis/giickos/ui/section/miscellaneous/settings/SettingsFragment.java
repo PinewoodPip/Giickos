@@ -196,7 +196,7 @@ public class SettingsFragment extends GiickosFragment {
                     alert.setPositiveButton(getString(R.string.generic_label_confirm), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            //TODO: delete account
+                            viewModel.removeAccount();
                             viewModel.logOut();
                             Toast.makeText(getContext(), getString(R.string.miscellaneous_tab_settings_msg_deleteaccount_success), Toast.LENGTH_SHORT).show();
                             MainActivity.goToLogin(getActivity());
@@ -221,15 +221,14 @@ public class SettingsFragment extends GiickosFragment {
             @Override
             public void onClick(View view) {
                 Log.d("TODO", "Purchase/cancel subs");
-                //Purchase or cancel subscription
+                //TODO: purchase/cancel subs. purchaseSuccess? viewModel.setGiickosPlus(true); visi.gone :do nothing
+                // viewModel.getGiickosPlus() == true? changeToCancelSubs : changeToPurchase
             }
         });
         feedbackCard.setClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("TODO", "Feedback clicked");
                 //Generates intent to send email to giickos
-                //)
                 String[] email = new String[]{getString(R.string.giickos_contact_email)};
                 String subject = getString(R.string.miscellaneous_tab_settings_feedback_subject);
 
@@ -243,8 +242,7 @@ public class SettingsFragment extends GiickosFragment {
         aboutUsCard.setClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("TODO", "About us clicked");
-                //send to web or something
+                //Generates intent to a website
                 Intent browserIntent = viewModel.openBrowser(getString(R.string.giickos_website));
                 if(browserIntent.resolveActivity(getActivity().getPackageManager()) != null)
                     startActivity(browserIntent);

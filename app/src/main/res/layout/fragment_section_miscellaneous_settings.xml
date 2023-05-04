@@ -48,7 +48,8 @@
             android:layout_height="match_parent"
             android:touchscreenBlocksFocus="true"
             android:visibility="invisible"
-            tools:context=".ui.section.miscellaneous.settings.GiickosPlusFragment">
+            tools:context=".ui.section.miscellaneous.settings.GiickosPlusFragment"
+            tools:visibility="visible">
 
             <View
                 android:id="@+id/view_blocker"
