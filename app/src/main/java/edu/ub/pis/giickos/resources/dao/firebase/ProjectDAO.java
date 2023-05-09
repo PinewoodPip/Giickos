@@ -128,7 +128,6 @@ public class ProjectDAO extends CachedProjectDAO {
         DocumentReference ref = getTaskDocument(task.getID());
         Map<String, Object> entry = new HashMap<>();
 
-        entry.put("completed", task.getCompleted());
         entry.put("description", task.getDescription());
         entry.put("duration_minutes", task.getDuration());
         entry.put("name", task.getName());
@@ -137,6 +136,7 @@ public class ProjectDAO extends CachedProjectDAO {
         entry.put("repeat_mode", task.getRepeatMode().ordinal());
         entry.put("start_time", task.getStartTimeMillis());
         entry.put("takes_all_day", task.takesAllDay());
+        entry.put("completion_dates", new ArrayList<>(task.getCompletedDates()));
 
         // TODO decide how to handle failure - need an event system
         ref.set(entry);
@@ -188,6 +188,13 @@ public class ProjectDAO extends CachedProjectDAO {
                             taskInstance.setPriority(Task.PRIORITY.values()[((Long) task.get("priority")).intValue()]);
                             taskInstance.setProjectID((String) task.get("project_id"));
                             taskInstance.setTakesAllDay((Boolean) task.get("takes_all_day"));
+
+                            List<String> completionDates = (List<String>) task.get("completion_dates");
+                            if (completionDates != null) { // This field was added on 9/5/23
+                                for (String dateID : completionDates) {
+                                    taskInstance.setCompletedOnDay(dateID, true);
+                                }
+                            }
 
                             addTask(taskInstance.getProjectID(), taskInstance);
                         }

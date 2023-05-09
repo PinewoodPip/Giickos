@@ -1,6 +1,10 @@
 package edu.ub.pis.giickos.model.project;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Locale;
+import java.util.Set;
 
 import edu.ub.pis.giickos.Utils;
 
@@ -24,7 +28,7 @@ public class Task {
     private PRIORITY priority = PRIORITY.NONE;
     private REPEAT_MODE repeatMode = REPEAT_MODE.NONE;
     private String description = "";
-    private boolean isCompleted = false;
+    private Set<String> completionDates; // Dates this task was completed on. Recurring tasks may be completed on multiple different days.
     private String projectID;
 
     private long startTime; // In millis since epoch
@@ -35,6 +39,7 @@ public class Task {
     {
         this.id = id;
         this.name = name;
+        this.completionDates = new HashSet<>();
     }
 
     public String getID() {
@@ -73,14 +78,6 @@ public class Task {
         this.description = description;
     }
 
-    public boolean getCompleted() {
-        return isCompleted;
-    }
-
-    public void setCompleted(boolean isCompleted) {
-        this.isCompleted = isCompleted;
-    }
-
     public REPEAT_MODE getRepeatMode() {
         return repeatMode;
     }
@@ -115,5 +112,34 @@ public class Task {
 
     public void setTakesAllDay(boolean takesAllDay) {
         this.takesAllDay = takesAllDay;
+    }
+
+    public boolean isCompletedOnDay(LocalDate day) {
+        return completionDates.contains(getDateID(day));
+    }
+
+    public void setCompletedOnDay(String dateID, boolean completed) {
+        if (completed) {
+            completionDates.add(dateID);
+        }
+        else {
+            completionDates.remove(dateID);
+        }
+    }
+
+    public void setCompletedOnDay(LocalDate day, boolean completed) {
+        String dateID = getDateID(day);
+
+        setCompletedOnDay(dateID, completed);
+    }
+
+    public Set<String> getCompletedDates() {
+        return completionDates;
+    }
+
+    private String getDateID(LocalDate day) {
+        String dateID = String.format(Locale.getDefault(), "%d/%d/%d", day.getDayOfMonth(), day.getMonthValue(), day.getYear());
+
+        return dateID;
     }
 }

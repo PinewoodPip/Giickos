@@ -10,6 +10,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 import edu.ub.pis.giickos.GiickosFragment;
 import edu.ub.pis.giickos.R;
 import edu.ub.pis.giickos.ui.activities.taskcreator.TaskCreator;
@@ -80,7 +83,7 @@ public class Task extends GiickosFragment {
         card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                TaskCreator.openEditActivity(Task.this.getActivity(), getArguments().getString(ARG_PROJECT_ID), getArguments().getString(ARG_TASK_ID));
+                TaskCreator.openEditActivity(Task.this.getActivity(), getArguments().getString(ARG_PROJECT_ID), getArguments().getString(ARG_TASK_ID), LocalDate.now());
             }
         });
     }

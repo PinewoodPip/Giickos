@@ -89,7 +89,7 @@ public class ViewModel extends androidx.lifecycle.ViewModel {
             @Override
             public boolean isValid(Task task) {
                 // Do not show completed tasks.
-                return !task.getCompleted();
+                return !task.isCompletedOnDay(selectedDate.getValue());
             }
         };
 

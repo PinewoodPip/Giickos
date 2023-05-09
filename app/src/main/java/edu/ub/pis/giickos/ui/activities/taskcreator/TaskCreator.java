@@ -21,6 +21,8 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -33,12 +35,12 @@ import edu.ub.pis.giickos.ui.ViewModelHelpers.ProjectData;
 import edu.ub.pis.giickos.ui.ViewModelHelpers.TaskDate;
 import edu.ub.pis.giickos.ui.ViewModelHelpers.TaskTime;
 import edu.ub.pis.giickos.ui.dialogs.Alert;
+import edu.ub.pis.giickos.ui.generic.DatePickerListener;
 import edu.ub.pis.giickos.ui.generic.Switch;
+import edu.ub.pis.giickos.ui.generic.TimePickerListener;
 import edu.ub.pis.giickos.ui.generic.form.FormCard;
 import edu.ub.pis.giickos.ui.generic.form.FormSpinner;
 import edu.ub.pis.giickos.ui.generic.form.TextField;
-import edu.ub.pis.giickos.ui.generic.DatePickerListener;
-import edu.ub.pis.giickos.ui.generic.TimePickerListener;
 
 // Section for creating tasks.
 public class TaskCreator extends GiickosFragment {
@@ -50,6 +52,11 @@ public class TaskCreator extends GiickosFragment {
     public static String INTENT_EXTRA_TASK_DATE_MONTH = "TaskDateMonth";
     public static String INTENT_EXTRA_TASK_DATE_YEAR = "TaskDateYear";
     public static String INTENT_EXTRA_TASK_TIME_HOUR = "TaskTimeHour";
+
+    public static String INTENT_EXTRA_TASK_SETSELECTEDDATE = "SetSelectedDay";
+    public static String INTENT_EXTRA_SELECTED_DATE_DAY = "SelectedDateDay";
+    public static String INTENT_EXTRA_SELECTED_DATE_MONTH = "SelectedDateMonth";
+    public static String INTENT_EXTRA_SELECTED_DATE_YEAR = "SelectedDateYear";
 
     private ViewModel viewModel;
 
@@ -63,10 +70,14 @@ public class TaskCreator extends GiickosFragment {
         return fragment;
     }
 
-    public static void openEditActivity(FragmentActivity source, String projectID, String taskID) {
+    public static void openEditActivity(FragmentActivity source, String projectID, String taskID, LocalDate date) {
         Bundle bundle = new Bundle();
         bundle.putString(TaskCreator.INTENT_EXTRA_PROJECT_ID, projectID);
         bundle.putString(TaskCreator.INTENT_EXTRA_TASK_ID, taskID);
+        bundle.putBoolean(INTENT_EXTRA_TASK_SETSELECTEDDATE, true);
+        bundle.putInt(TaskCreator.INTENT_EXTRA_SELECTED_DATE_YEAR, date.getYear());
+        bundle.putInt(TaskCreator.INTENT_EXTRA_SELECTED_DATE_MONTH, date.getMonthValue());
+        bundle.putInt(TaskCreator.INTENT_EXTRA_SELECTED_DATE_DAY, date.getDayOfMonth());
 
         Intent intent = new Intent(source, Activity.class);
         intent.putExtras(bundle);
@@ -290,7 +301,15 @@ public class TaskCreator extends GiickosFragment {
         View view = inflater.inflate(R.layout.fragment_task_creator, container, false);
 
         if (!isCreating()) {
-            viewModel.setTaskID(getIntentString(INTENT_EXTRA_TASK_ID).get());
+            TaskDate selectedDate;
+            if (getIntentBoolean(INTENT_EXTRA_TASK_SETSELECTEDDATE)) {
+                selectedDate = new TaskDate(getIntentInteger(INTENT_EXTRA_SELECTED_DATE_DAY).get().intValue(), getIntentInteger(INTENT_EXTRA_SELECTED_DATE_MONTH).get().intValue(), getIntentInteger(INTENT_EXTRA_SELECTED_DATE_YEAR).get().intValue());
+            }
+            else {
+                selectedDate = new TaskDate(LocalDateTime.now());
+            }
+
+            viewModel.setTaskID(getIntentString(INTENT_EXTRA_TASK_ID).get(), selectedDate);
         }
 
         setupProjectSpinner();
@@ -377,7 +396,7 @@ public class TaskCreator extends GiickosFragment {
             });
 
             // "Mark as complete" button
-            addSwitchField(R.drawable.folder_task_completed, getString(R.string.taskcreator_label_complete), getResources().getColor(R.color.positive_action), viewModel.isCompleted(), new CompoundButton.OnCheckedChangeListener() {
+            addSwitchField(R.drawable.folder_task_completed, String.format(getString(R.string.taskcreator_label_complete), viewModel.getSelectedDate()), getResources().getColor(R.color.positive_action), viewModel.isCompleted(), new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                     viewModel.setCompleted(b);

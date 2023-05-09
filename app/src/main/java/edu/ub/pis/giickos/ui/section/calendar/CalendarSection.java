@@ -192,7 +192,7 @@ public class CalendarSection extends Section {
             @Override
             public void onClick(View view) {
                 // Open the task creator for that task
-                TaskCreator.openEditActivity(getActivity(), task.projectID, task.id);
+                TaskCreator.openEditActivity(getActivity(), task.projectID, task.id, viewModel.getSelectedDate().getValue());
             }
         });
 

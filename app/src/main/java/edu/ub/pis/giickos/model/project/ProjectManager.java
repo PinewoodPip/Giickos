@@ -146,8 +146,9 @@ public class ProjectManager extends Observable<ProjectManager.Events> {
             // Check if date matches
             if (taskTime.getDayOfYear() == day.getDayOfYear() && taskTime.getYear() == day.getYear()) {
                 // Check predicate, if any
-                if (predicate == null || predicate.isValid(task))
-                tasks.add(task);
+                if (predicate == null || predicate.isValid(task)) {
+                    tasks.add(task);
+                }
             }
         }
 

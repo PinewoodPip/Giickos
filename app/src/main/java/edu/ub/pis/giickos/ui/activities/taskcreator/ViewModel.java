@@ -2,6 +2,7 @@ package edu.ub.pis.giickos.ui.activities.taskcreator;
 
 import android.util.Log;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -66,6 +67,8 @@ public class ViewModel extends androidx.lifecycle.ViewModel {
     private TaskTime startTime = null;
     private int durationInMinutes = -1;
 
+    private TaskDate selectedDate; // The date the task editor has been opened for. Relevant for edit mode only.
+
     private boolean taskEditInitialized = false; // Used to only load data for task editing the first time the view renders
 
     public ViewModel() {
@@ -85,7 +88,6 @@ public class ViewModel extends androidx.lifecycle.ViewModel {
             task.setPriority(priority);
             task.setDescription(taskDescription);
             task.setRepeatMode(Task.REPEAT_MODE.values()[repeatMode.ordinal()]);
-            task.setCompleted(completed);
 
             updateTaskTime(task);
 
@@ -117,7 +119,7 @@ public class ViewModel extends androidx.lifecycle.ViewModel {
             task.setDescription(taskDescription);
             task.setPriority(priority);
             task.setRepeatMode(Task.REPEAT_MODE.values()[repeatMode.ordinal()]);
-            task.setCompleted(completed);
+            task.setCompletedOnDay(LocalDate.of(selectedDate.year, selectedDate.month, selectedDate.day), completed);
             // TODO repeat mode should error if start time of the task is unset
 
             updateTaskTime(task);
@@ -151,7 +153,7 @@ public class ViewModel extends androidx.lifecycle.ViewModel {
         return taskID;
     }
 
-    public void setTaskID(String taskID) {
+    public void setTaskID(String taskID, TaskDate date) {
         this.taskID = taskID;
 
         if (!taskEditInitialized) {
@@ -172,7 +174,9 @@ public class ViewModel extends androidx.lifecycle.ViewModel {
                     startTime = new TaskTime(localTime.getHour(), localTime.getMinute());
                 }
 
-                completed = task.getCompleted();
+                selectedDate = date;
+
+                completed = task.isCompletedOnDay(LocalDate.of(date.year, date.month, date.day));
 
                 taskEditInitialized = true;
             }
@@ -250,6 +254,10 @@ public class ViewModel extends androidx.lifecycle.ViewModel {
 
     public void setCompleted(boolean completed) {
         this.completed = completed;
+    }
+
+    public TaskDate getSelectedDate() {
+        return selectedDate;
     }
 
     private void updateTaskTime(Task task) {

@@ -1,6 +1,8 @@
 package edu.ub.pis.giickos.ui;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -100,6 +102,17 @@ public class ViewModelHelpers {
             this.day = day;
             this.month = month;
             this.year = year;
+        }
+
+        public TaskDate(LocalDateTime time) {
+            this.day = time.getDayOfMonth();
+            this.month = time.getMonthValue();
+            this.year = time.getYear();
+        }
+
+        @Override
+        public String toString() {
+            return LocalDate.of(year, month, day).format(DateTimeFormatter.ISO_DATE);
         }
     }
 
