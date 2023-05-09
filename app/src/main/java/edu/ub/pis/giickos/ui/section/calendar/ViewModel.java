@@ -85,18 +85,17 @@ public class ViewModel extends androidx.lifecycle.ViewModel {
     // Updates the tasks livedata based on the selected day in VM.
     private void updateTasks() {
         Set<ViewModelHelpers.TaskData> tasks = new HashSet<>();
-        ProjectManager.TaskPredicate predicate = new ProjectManager.TaskPredicate() {
-            @Override
-            public boolean isValid(Task task) {
-                // Do not show completed tasks.
-                return !task.isCompletedOnDay(selectedDate.getValue());
-            }
-        };
 
-        for (Task task : model.getTasksForDay(getSelectedDate().getValue().atStartOfDay(), predicate)) {
+        for (Task task : model.getTasksForDay(getSelectedDate().getValue().atStartOfDay())) {
             tasks.add(new ViewModelHelpers.TaskData(task));
         }
 
         this.tasks.setValue(tasks);
+    }
+
+    public boolean isTaskCompleted(String id) {
+        Task task = model.getTask(id);
+
+        return task != null && task.isCompletedOnDay(selectedDate.getValue());
     }
 }

@@ -175,6 +175,8 @@ public class CalendarSection extends Section {
 
         View taskView = inflater.inflate(R.layout.item_calendar_task, container, false);
         TextView nameLabel = taskView.findViewById(R.id.label_name);
+        ImageView completedIcon = taskView.findViewById(R.id.image_completed);
+        completedIcon.setVisibility(viewModel.isTaskCompleted(task.id) ? View.VISIBLE : View.INVISIBLE); // Show checkmark icon for completed tasks
         nameLabel.setText(task.name);
         container.addView(taskView);
 
