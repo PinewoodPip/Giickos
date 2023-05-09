@@ -2,6 +2,8 @@ package edu.ub.pis.giickos.model.project;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
+import java.time.temporal.IsoFields;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
@@ -118,8 +120,35 @@ public class Task {
         this.takesAllDay = takesAllDay;
     }
 
-    public boolean isCompletedOnDay(LocalDate day) {
-        return completionDates.contains(getDateID(day));
+    public boolean isCompletedOnDay(LocalDate date) {
+        boolean completed = false;
+
+        switch (repeatMode) {
+            case WEEKLY: {
+                LocalDateTime dateWithTime = LocalDateTime.of(date.getYear(), date.getMonthValue(), date.getDayOfMonth(), 0, 0);
+                int dateYear = date.getYear();
+                int dateWeek = Utils.localDateToUTC(dateWithTime).get(IsoFields.WEEK_OF_WEEK_BASED_YEAR);
+                for (String dateID : getCompletedDates()) {
+                    // This sucks. Oh well.
+                    String[] values = dateID.split("/");
+                    LocalDateTime completionDate = LocalDateTime.of(Integer.parseInt(values[2]), Integer.parseInt(values[1]), Integer.parseInt(values[0]), 0, 0);
+                    ZonedDateTime zonedDate = Utils.localDateToUTC(completionDate);
+                    int week = zonedDate.get(IsoFields.WEEK_OF_WEEK_BASED_YEAR);
+
+                    if (completionDate.getYear() == dateYear && week == dateWeek) {
+                        completed = true;
+                        break;
+                    }
+                }
+                break;
+            }
+            case DAILY:
+            default: {
+                completed = completionDates.contains(getDateID(date));
+            }
+        }
+
+        return completed;
     }
 
     public void setCompletedOnDay(String dateID, boolean completed) {

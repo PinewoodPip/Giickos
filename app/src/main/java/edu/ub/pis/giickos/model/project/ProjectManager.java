@@ -184,6 +184,13 @@ public class ProjectManager extends Observable<ProjectManager.Events> {
         return isValid;
     }
 
+    public boolean isTaskCompleted(String taskID, LocalDate day) {
+        Task task = getTask(taskID);
+        boolean completed = task != null && task.isCompletedOnDay(day);
+
+        return completed;
+    }
+
     public Set<Task> getTasksForDay(LocalDateTime day) {
         return getTasksForDay(day, null);
     }

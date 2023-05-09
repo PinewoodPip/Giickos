@@ -63,7 +63,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="gone"
-                tools:layout="@layout/fragment_task"
+                tools:layout="@layout/fragment_section_taskexplorer_task"
                 tools:visibility="visible" />
 
             <androidx.fragment.app.FragmentContainerView
@@ -72,7 +72,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="gone"
-                tools:layout="@layout/fragment_task"
+                tools:layout="@layout/fragment_section_taskexplorer_task"
                 tools:visibility="visible" />
         </LinearLayout>
     </LinearLayout>

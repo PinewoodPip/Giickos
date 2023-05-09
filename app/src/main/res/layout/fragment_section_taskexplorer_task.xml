@@ -18,12 +18,27 @@
         android:orientation="horizontal"
         android:padding="5dp">
 
-        <ImageView
-            android:id="@+id/icon_task"
+        <FrameLayout
             android:layout_width="60dp"
-            android:layout_height="match_parent"
-            android:scaleType="fitCenter"
-            android:src="@drawable/placeholder_notebook" />
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/icon_task"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitCenter"
+                android:src="@drawable/placeholder_notebook" />
+
+            <ImageView
+                android:id="@+id/icon_completed"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="bottom|right"
+                android:scaleType="fitEnd"
+                android:translationX="10dp"
+                android:translationY="10dp"
+                app:srcCompat="@drawable/folder_task_completed" />
+        </FrameLayout>
 
         <TextView
             android:id="@+id/label_task_name"

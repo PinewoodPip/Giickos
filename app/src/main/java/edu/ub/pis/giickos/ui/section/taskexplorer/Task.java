@@ -3,6 +3,7 @@ package edu.ub.pis.giickos.ui.section.taskexplorer;
 import android.os.Bundle;
 
 import androidx.cardview.widget.CardView;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +12,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 import edu.ub.pis.giickos.GiickosFragment;
 import edu.ub.pis.giickos.R;
@@ -26,7 +26,9 @@ public class Task extends GiickosFragment {
 
     private int iconID;
     private String label;
-    // TODO identifier field for task
+    private String taskID;
+
+    private ViewModel viewModel;
 
     public Task() {} // Required empty public constructor
 
@@ -59,13 +61,16 @@ public class Task extends GiickosFragment {
         if (arguments != null) {
             iconID = arguments.getInt(ARG_ICON);
             label = arguments.getString(ARG_LABEL);
+            taskID = arguments.getString(ARG_TASK_ID);
         }
+
+        viewModel = new ViewModelProvider(getActivity()).get(ViewModel.class);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_task, container, false);
+        View view = inflater.inflate(R.layout.fragment_section_taskexplorer_task, container, false);
 
         return view;
     }
@@ -75,9 +80,11 @@ public class Task extends GiickosFragment {
         ImageView iconView = view.findViewById(R.id.icon_task);
         TextView labelView = view.findViewById(R.id.label_task_name);
         CardView card = view.findViewById(R.id.card_main);
+        ImageView completedIcon = view.findViewById(R.id.icon_completed);
 
         iconView.setImageResource(iconID);
         labelView.setText(label);
+        completedIcon.setVisibility(viewModel.isTaskCompleted(taskID) ? View.VISIBLE : View.INVISIBLE); // Show checkmark icon for completed tasks
 
         // Transition to task creator on click
         card.setOnClickListener(new View.OnClickListener() {

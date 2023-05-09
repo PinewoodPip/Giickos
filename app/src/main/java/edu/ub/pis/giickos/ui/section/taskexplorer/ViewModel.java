@@ -3,6 +3,7 @@ package edu.ub.pis.giickos.ui.section.taskexplorer;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -106,5 +107,9 @@ public class ViewModel extends androidx.lifecycle.ViewModel {
 
     public boolean deleteProject(String projectID) {
         return model.deleteProject(projectID);
+    }
+
+    public boolean isTaskCompleted(String taskID) {
+        return model.isTaskCompleted(taskID, LocalDate.now());
     }
 }

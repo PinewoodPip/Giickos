@@ -94,8 +94,6 @@ public class ViewModel extends androidx.lifecycle.ViewModel {
     }
 
     public boolean isTaskCompleted(String id) {
-        Task task = model.getTask(id);
-
-        return task != null && task.isCompletedOnDay(selectedDate.getValue());
+        return model.isTaskCompleted(id, selectedDate.getValue());
     }
 }
