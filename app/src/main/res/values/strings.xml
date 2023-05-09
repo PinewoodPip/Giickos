@@ -73,7 +73,7 @@
 
     <string name="taskcreator_label_project">Project:</string>
     <string name="taskcreator_label_title">Title:</string>
-    <string name="taskcreator_label_date">Date:</string>
+    <string name="taskcreator_label_date">Start Date:</string>
     <string name="taskcreator_label_priority">Priority:</string>
     <string name="taskcreator_label_time_start">Start Time:</string>
     <string name="taskcreator_label_time_end">End Time:</string>

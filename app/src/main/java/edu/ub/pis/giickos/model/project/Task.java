@@ -98,6 +98,10 @@ public class Task {
         this.startTime = startTime;
     }
 
+    public boolean hasStartDateSet() {
+        return this.startTime != -1;
+    }
+
     public int getDuration() {
         return durationInMinutes;
     }

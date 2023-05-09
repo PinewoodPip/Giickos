@@ -8,6 +8,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
+import edu.ub.pis.giickos.Utils;
 import edu.ub.pis.giickos.model.observer.EmptyEvent;
 import edu.ub.pis.giickos.model.observer.Observable;
 import edu.ub.pis.giickos.model.observer.ObservableEvent;
@@ -141,10 +142,8 @@ public class ProjectManager extends Observable<ProjectManager.Events> {
         Set<Task> tasks = new HashSet<>();
 
         for (Task task : allTasks) {
-            LocalDateTime taskTime = task.getStartTime();
-
             // Check if date matches
-            if (taskTime.getDayOfYear() == day.getDayOfYear() && taskTime.getYear() == day.getYear()) {
+            if (isTaskValidForDay(task, day)) {
                 // Check predicate, if any
                 if (predicate == null || predicate.isValid(task)) {
                     tasks.add(task);
@@ -153,6 +152,36 @@ public class ProjectManager extends Observable<ProjectManager.Events> {
         }
 
         return tasks;
+    }
+
+    // Returns whether a task occurs on a given day. Considers recurring tasks.
+    private boolean isTaskValidForDay(Task task, LocalDateTime day) {
+        LocalDateTime taskTime = task.getStartTime();
+        boolean isValid;
+
+        switch (task.getRepeatMode()) {
+            case DAILY: { // Daily tasks always pass this check
+                isValid = true;
+                break;
+            }
+            case WEEKLY: { // Day of week must match
+                isValid = taskTime.getDayOfWeek() == day.getDayOfWeek();
+                break;
+            }
+            default: { // Day of year and year must match
+                isValid = taskTime.getDayOfYear() == day.getDayOfYear() && taskTime.getYear() == day.getYear();
+                break;
+            }
+        }
+
+        // Tasks are only valid after their start date (if they have one set)
+        if (task.hasStartDateSet()) {
+            LocalDateTime startTime = task.getStartTime();
+            
+            isValid = isValid && startTime.getYear() <= day.getYear() && startTime.getDayOfYear() <= day.getDayOfYear();
+        }
+
+        return isValid;
     }
 
     public Set<Task> getTasksForDay(LocalDateTime day) {
