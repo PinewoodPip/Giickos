@@ -15,4 +15,7 @@
     <color name="task_priority_low">#82DCCA</color>
     <color name="task_priority_medium">#DFB161</color>
     <color name="task_priority_high">#FA7590</color>
+
+    <!-- Background color for floating elements -->
+    <color name="float_background">#B2CCA6</color>
 </resources>

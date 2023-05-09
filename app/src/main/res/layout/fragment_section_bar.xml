@@ -14,7 +14,7 @@
         android:id="@+id/list_buttons"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:background="#B2CCA6"
+        android:background="@color/float_background"
         android:gravity="center_horizontal"
         android:orientation="horizontal"></LinearLayout>
 

@@ -54,7 +54,7 @@ public class TaskExplorer extends Section {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_task_explorer, container, false);
+        View view = inflater.inflate(R.layout.fragment_section_taskexplorer, container, false);
 
         return view;
     }

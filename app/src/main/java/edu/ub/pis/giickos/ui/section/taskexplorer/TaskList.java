@@ -74,7 +74,7 @@ public class TaskList extends GiickosFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_task_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_section_taskexplorer_tasklist, container, false);
 
         return view;
     }
