@@ -33,6 +33,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
@@ -42,6 +43,8 @@ import edu.ub.pis.giickos.ui.activities.main.MainViewModel;
 import edu.ub.pis.giickos.ui.activities.taskcreator.TaskCreator;
 import edu.ub.pis.giickos.ui.dialogs.Alert;
 import edu.ub.pis.giickos.ui.section.Section;
+import kotlin.Unit;
+import kotlin.jvm.functions.Function1;
 
 // Fragment for the calendar section.
 public class CalendarSection extends Section {
@@ -265,6 +268,20 @@ public class CalendarSection extends Section {
                 WeekHeaderHolder holder = (WeekHeaderHolder) container;
 
                 holder.bind(getContext(), container, week);
+            }
+        });
+
+        // Listen for the week changing to store the new week in the viewmodel.
+        // The selected day is also changed to be the same week-day in the new week
+        // (ex. if the selected day was monday, monday will be selected in the new week)
+        calendar.setWeekScrollListener(new Function1<Week, Unit>() {
+            @Override
+            public Unit invoke(Week week) {
+                List<WeekDay> weekDays = week.getDays();
+                viewModel.setCurrentWeekDate(weekDays.get(0).getDate());
+                viewModel.setSelectedDate(weekDays.get(viewModel.getSelectedDate().getValue().getDayOfWeek().getValue()).getDate());
+                calendar.notifyCalendarChanged();
+                return null;
             }
         });
 
