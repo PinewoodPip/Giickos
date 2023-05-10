@@ -5,6 +5,8 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +29,8 @@ public class FormCardGarden extends Fragment {
     private static final String ARG_ANSWER = "answerText";
 
     // TODO: Rename and change types of parameters
+    private EditText answer;
+    private EditTextListener answerListener;
     private String questionText;
     private String description;
 
@@ -69,19 +73,61 @@ public class FormCardGarden extends Fragment {
     {
         TextView question = view.findViewById(R.id.garden_question_label);
         question.setText(questionText);
-        EditText answer = view.findViewById(R.id.garden_answer);
+        answer = view.findViewById(R.id.garden_answer);
+        answer.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (answerListener != null) {
+                    answerListener.onTextChanged(s.toString());
+                }
+            }
+        });
+
+
+
         if (description != null)
         {
             answer.setText(description);
             answer.setKeyListener(null);
         }
-
     }
 
-    public void updateDescription(String description)
+
+    public void setDescription(String description)
     {
+        //Sets the description and disables the EditText,  view mode
         this.description = description;
         EditText answer = getView().findViewById(R.id.garden_answer);
+        answer.setKeyListener(null);
         answer.setText(description);
     }
+    public void cleanDescription()
+    {
+        //Cleans the description after planting a bamboo for a clean menu for the next bamboo
+        this.description = null;
+        EditText answer = getView().findViewById(R.id.garden_answer);
+        answer.setText("");
+    }
+
+
+    public interface EditTextListener {
+        void onTextChanged(String newText);
+    }
+    public void setEditTextListener(EditTextListener listener) {
+        answerListener = listener;
+    }
+
+
+
+
 }

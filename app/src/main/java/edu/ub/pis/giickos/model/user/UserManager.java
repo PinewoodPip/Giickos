@@ -69,5 +69,10 @@ public class UserManager extends Observable<UserManager.Events> {
         user.delete();
     }
 
+    public void checkEmail()
+    {
+        //firebaseAuth.email
+    }
+
 
 }

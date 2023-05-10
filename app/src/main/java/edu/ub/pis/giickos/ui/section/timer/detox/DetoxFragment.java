@@ -79,7 +79,7 @@ public class DetoxFragment extends GiickosFragment {
                 if (!notificationManager.isNotificationPolicyAccessGranted()) {
                     // Ask the user to grant permission to use the Notification Policy
                     Intent intent = new Intent(Settings.ACTION_NOTIFICATION_POLICY_ACCESS_SETTINGS);
-                    
+
                     startActivity(intent);
                 }
                 controlNotification();

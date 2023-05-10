@@ -6,25 +6,23 @@ import java.util.Map;
 public class Bamboo
 {
     //public String id;
+    private int slot;
     private String title;
     private String label;
     private Map<String, String> questionsAnswers;
     private int growth;
     private int totalGrowth;
 
-    public Bamboo(String title, String label, Map<String, String> questionsAnswers, int growth, int totalGrowth)
+    private final int TOTAL_PHASES = 5; // 5 phases of growth the initial one does not count
+
+    public Bamboo(int slot, String title, String label, Map<String, String> questionsAnswers, int growth, int totalGrowth)
     {
+        this.slot = slot;
         this.title = title;
         this.label = label;
         this.questionsAnswers = questionsAnswers;
         this.growth = growth;
         this.totalGrowth = totalGrowth;
-    }
-    {
-        this.title = title;
-        this.label = label;
-        this.questionsAnswers = questionsAnswers;
-        this.growth = growth;
     }
 
     public void addAnswer(String question, String answer)
@@ -84,13 +82,9 @@ public class Bamboo
         return this.questionsAnswers.get(question);
     }
 
-
-
-
-
-
-
-
-
+    public int getCurrentPhase()
+    {
+        return (int) Math.floor((this.growth / this.totalGrowth) * (this.TOTAL_PHASES ));
+    }
 
 }

@@ -148,11 +148,11 @@ public class StorageFragment extends GiickosFragment {
                 grow.updateLabel("Total growth time: " + bamboo.getTotalGrowth() + "days");
 
 
-                firstQ.updateDescription(bamboo.getAnswer("1"));
-                secondQ.updateDescription(bamboo.getAnswer("2"));
-                thirdQ.updateDescription(bamboo.getAnswer("3"));
-                fourthQ.updateDescription(bamboo.getAnswer("4"));
-                letter.updateDescription(bamboo.getAnswer("letter"));
+                firstQ.setDescription(bamboo.getAnswer("1"));
+                secondQ.setDescription(bamboo.getAnswer("2"));
+                thirdQ.setDescription(bamboo.getAnswer("3"));
+                fourthQ.setDescription(bamboo.getAnswer("4"));
+                letter.setDescription(bamboo.getAnswer("letter"));
 
                 view.findViewById(R.id.storage_bamboo_info_menu).setVisibility(View.VISIBLE);
             }
