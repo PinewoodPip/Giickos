@@ -18,7 +18,6 @@
         android:layout_gravity="top"
         android:layout_marginTop="0dp"
         android:fadingEdge="none"
-        android:solidColor="#0000FF00"
         app:mnpEditable="true" />
 
 </FrameLayout>
