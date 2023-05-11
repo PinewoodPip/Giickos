@@ -144,7 +144,6 @@ public class StorageFragment extends GiickosFragment {
             @Override
             public void onItemClick(Bamboo bamboo) {
                 title.updateLabel("Title: " + bamboo.getTitle());
-                label.updateLabel("Label: " + bamboo.getLabel());
                 grow.updateLabel("Total growth time: " + bamboo.getTotalGrowth() + "days");
 
 

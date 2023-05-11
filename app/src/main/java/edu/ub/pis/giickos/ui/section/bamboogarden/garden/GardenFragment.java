@@ -125,6 +125,7 @@ public class GardenFragment extends GiickosFragment {
             if(integerBambooMap.containsKey(i)) //Si en slot i, hi ha un bamboo plantat
             {
                 int growthPhase = integerBambooMap.get(i).getCurrentPhase();
+                System.out.println("Growth phase: " + growthPhase);
                 int imageID = 0;
 
                 switch (growthPhase)
@@ -151,6 +152,11 @@ public class GardenFragment extends GiickosFragment {
                 }
                 bambooSlots[i].setImageResource(imageID);
             }
+            else
+            {
+                //If there is no bamboo in the slot, we set the image to the empty slot
+                bambooSlots[i].setImageResource(R.drawable.bamboo_phase_0);
+            }
         }
     }
 
@@ -170,19 +176,6 @@ public class GardenFragment extends GiickosFragment {
                 System.out.println("Title: " + editable.toString());
             }
         });
-        TextField cardLabel = addTextField(R.drawable.label, "Label: ", "", InputType.TYPE_TEXT_VARIATION_NORMAL, new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                viewModel.setBambooLabel(editable.toString());
-                System.out.println("Label: " + editable.toString());
-            }
-        });
         FormCard growTime = addField(R.drawable.timer_white, "Grow time: ");
         //Probably get from viewmodel
         ArrayList<String> time = new ArrayList<>();
@@ -194,16 +187,15 @@ public class GardenFragment extends GiickosFragment {
 
         //Pack of FormCardGarden for controlling them in batch
         FormCardGarden[] questions = new FormCardGarden[5];
-        questions[0] = addQuestions(getResources().getString(R.string.bamboo_question_1), ViewModel.bambooQuestions.QUESTION_ONE);
-        questions[1] = addQuestions(getResources().getString(R.string.bamboo_question_2), ViewModel.bambooQuestions.QUESTION_TWO);
-        questions[2] = addQuestions(getResources().getString(R.string.bamboo_question_3), ViewModel.bambooQuestions.QUESTION_THREE);
-        questions[3] = addQuestions(getResources().getString(R.string.bamboo_question_4), ViewModel.bambooQuestions.QUESTION_FOUR);
-        questions[4] = addQuestions(getResources().getString(R.string.bamboo_question_letter), ViewModel.bambooQuestions.QUESTION_LETTER);
+        questions[0] = addQuestions(getResources().getString(R.string.bamboo_question_1), ViewModel.BAMBOO_QUESTIONS.QUESTION_ONE);
+        questions[1] = addQuestions(getResources().getString(R.string.bamboo_question_2), ViewModel.BAMBOO_QUESTIONS.QUESTION_TWO);
+        questions[2] = addQuestions(getResources().getString(R.string.bamboo_question_3), ViewModel.BAMBOO_QUESTIONS.QUESTION_THREE);
+        questions[3] = addQuestions(getResources().getString(R.string.bamboo_question_4), ViewModel.BAMBOO_QUESTIONS.QUESTION_FOUR);
+        questions[4] = addQuestions(getResources().getString(R.string.bamboo_question_letter), ViewModel.BAMBOO_QUESTIONS.QUESTION_LETTER);
 
         //Images related to the menu
         ImageView plantBamboo = view.findViewById(R.id.garden_plant_action);
         ImageView back = view.findViewById(R.id.garden_cancel);
-        ImageView remove = view.findViewById(R.id.garden_remove);
         ImageView plantMenu = view.findViewById(R.id.garden_plant);
 
         //Blocker of clicks for the menu
@@ -222,15 +214,6 @@ public class GardenFragment extends GiickosFragment {
             @Override
             public void onClick(View v) {
                 closeWindows(view);
-            }
-        });
-
-        //Removes the selected bamboo. TODO: probably, remove, harvest, water are going to be converted into buttons inside the bamboo
-        remove.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //TODO remove plant mode, if touch on bamboo, pop up to confirm and then remove
-                System.out.println("Remove plant");
             }
         });
 
@@ -321,7 +304,6 @@ public class GardenFragment extends GiickosFragment {
                     //Cleans the bambooForm before opening the menu while setting the scroll to the top
                     cleanFormCardGarden(questions);
                     cardTitle.setText("");
-                    cardLabel.setText("");
                     spinner.setSelection(0);
                     ScrollView scrollView = view.findViewById(R.id.garden_menu_scroll_view);
                     scrollView.scrollTo(0,0);
@@ -348,7 +330,7 @@ public class GardenFragment extends GiickosFragment {
     }
 
 
-    private FormCardGarden addQuestions(String question, ViewModel.bambooQuestions questionKey)
+    private FormCardGarden addQuestions(String question, ViewModel.BAMBOO_QUESTIONS questionKey)
     {
         FormCardGarden formCardGarden = FormCardGarden.newInstance(question);
         addChildFragment(formCardGarden, R.id.garden_plant_questions, true);
@@ -399,25 +381,28 @@ public class GardenFragment extends GiickosFragment {
         ImageView block = view.findViewById(R.id.garden_blocker_info);
         ImageView close = view.findViewById(R.id.garden_back_info_menu);
         ImageView harvest = view.findViewById(R.id.garden_harvest_action);
+        ImageView remove = view.findViewById(R.id.garden_remove_action);
+        ImageView water = view.findViewById(R.id.garden_water_action);
 
-        FormCardStatisticsSettings title = addCardWithTint(R.drawable.title, "Title: Water habit",
-                Color.rgb(126,105,0), //left frame
-                Color.rgb(163,136,0), //right frame
-                Color.rgb(160,32,240)); //text color);
-        FormCardStatisticsSettings label = addCardWithTint(R.drawable.label, "Label: WaterH",
-                Color.rgb(126,105,0), //left frame
-                Color.rgb(163,136,0), //right frame
-                Color.rgb(160,32,240)); //text color);
-        FormCardStatisticsSettings grow = addCardWithTint(R.drawable.timer_white, "Growth: 1/7 days",
+        FormCardStatisticsSettings[] cards = new FormCardStatisticsSettings[2];
+
+        cards[0] = addCardWithTint(R.drawable.title, "Title: Water habit",
                 Color.rgb(126,105,0), //left frame
                 Color.rgb(163,136,0), //right frame
                 Color.rgb(160,32,240)); //text color);
 
-        String bambooName = "Bamboo"; //TODO get the information from the viewmodel
-        FormCardGarden firstQ = addFragmentToInfoMenu(getResources().getString(R.string.bamboo_question_1), bambooName);
-        FormCardGarden secondQ = addFragmentToInfoMenu(getResources().getString(R.string.bamboo_question_2), bambooName);
-        FormCardGarden thirdQ = addFragmentToInfoMenu(getResources().getString(R.string.bamboo_question_3), bambooName);
-        FormCardGarden fourthQ = addFragmentToInfoMenu(getResources().getString(R.string.bamboo_question_4), bambooName);
+        cards[1] = addCardWithTint(R.drawable.timer_white, "Growth: 1/7 days",
+                Color.rgb(126,105,0), //left frame
+                Color.rgb(163,136,0), //right frame
+                Color.rgb(160,32,240)); //text color);
+
+        String bambooName = "Bamboo"; //Place holder, touching on the bamboo will update the info menu
+
+        FormCardGarden[] questions = new FormCardGarden[4];
+        questions[0] = addFragmentToInfoMenu(getResources().getString(R.string.bamboo_question_1), bambooName);
+        questions[1] = addFragmentToInfoMenu(getResources().getString(R.string.bamboo_question_2), bambooName);
+        questions[2] = addFragmentToInfoMenu(getResources().getString(R.string.bamboo_question_3), bambooName);
+        questions[3] = addFragmentToInfoMenu(getResources().getString(R.string.bamboo_question_4), bambooName);
 
 
         //TODO update the bamboo grow phase from the viewmodel and set the image
@@ -427,72 +412,42 @@ public class GardenFragment extends GiickosFragment {
             @Override
             public void onClick(View v) {
                 int slot = 0;
-                if(viewModel.isBambooPlanted(slot))
-                {
-                    updateBambooMenuInfo(title, label, grow, firstQ, secondQ, thirdQ, fourthQ, slot, view);
-                    openView(view.findViewById(R.id.garden_bamboo_info_menu));
-                    System.out.println("Select bamboo slot 0");
-                }
+                tryOpenBambooInfoMenu(cards, questions, slot, view);
             }
         });
         bamboo_s1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int slot = 1;
-                if(viewModel.isBambooPlanted(slot))
-                {
-                    updateBambooMenuInfo(title, label, grow, firstQ, secondQ, thirdQ, fourthQ, slot, view);
-                    openView(view.findViewById(R.id.garden_bamboo_info_menu));
-                    System.out.println("Select bamboo slot 1");
-                }
+                tryOpenBambooInfoMenu(cards, questions, slot, view);
             }
         });
         bamboo_s2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int slot = 2;
-                if(viewModel.isBambooPlanted(slot))
-                {
-                    updateBambooMenuInfo(title, label, grow, firstQ, secondQ, thirdQ, fourthQ, slot, view);
-                    openView(view.findViewById(R.id.garden_bamboo_info_menu));
-                    System.out.println("Select bamboo slot 2");
-                }
+                tryOpenBambooInfoMenu(cards, questions, slot, view);
             }
         });
         bamboo_s3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int slot = 3;
-                if(viewModel.isBambooPlanted(slot))
-                {
-                    updateBambooMenuInfo(title, label, grow, firstQ, secondQ, thirdQ, fourthQ, slot, view);
-                    openView(view.findViewById(R.id.garden_bamboo_info_menu));
-                    System.out.println("Select bamboo slot 3");
-                }
+                tryOpenBambooInfoMenu(cards, questions, slot, view);
             }
         });
         bamboo_s4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int slot = 4;
-                if(viewModel.isBambooPlanted(slot))
-                {
-                    updateBambooMenuInfo(title, label, grow, firstQ, secondQ, thirdQ, fourthQ, slot, view);
-                    openView(view.findViewById(R.id.garden_bamboo_info_menu));
-                    System.out.println("Select bamboo slot 4");
-                }
+                tryOpenBambooInfoMenu(cards, questions, slot, view);
             }
         });
         bamboo_s5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int slot = 5;
-                if(viewModel.isBambooPlanted(slot))
-                {
-                    updateBambooMenuInfo(title, label, grow, firstQ, secondQ, thirdQ, fourthQ, slot, view);
-                    openView(view.findViewById(R.id.garden_bamboo_info_menu));
-                    System.out.println("Select bamboo slot 5");
-                }
+                tryOpenBambooInfoMenu(cards, questions, slot, view);
             }
         });
 
@@ -521,24 +476,98 @@ public class GardenFragment extends GiickosFragment {
                 closeWindows(view);
             }
         });
+
+        //Removes the selected bamboo.
+        remove.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Alert alert = new Alert(getActivity(), "Dangerous Operation!", "Are you sure you want to remove this bamboo? If the objectives that you proposed are too hard, consider lowering them! Start by little and then increase the difficulty!");
+                alert.setPositiveButton("I want to remove it!", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        viewModel.removeBamboo(viewModel.getSelectedSlot());
+                        closeWindows(view);
+                    }
+                });
+                alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+                alert.show();
+
+
+
+                System.out.println("Remove plant");
+            }
+        });
+
+        water.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO you can only water once a day, if you water, you can't water again until the next day
+                Bamboo bamboo = viewModel.getSlotBamboo(viewModel.getSelectedSlot());
+                if(bamboo.getGrowth() != bamboo.getTotalGrowth())
+                {
+                    viewModel.waterBamboo(viewModel.getSelectedSlot());
+                    tryOpenBambooInfoMenu(cards, questions, viewModel.getSelectedSlot(), view);
+                    closeWindows(view);
+                    System.out.println("Water the bamboo");
+                }
+                else
+                {
+                    Alert alert = new Alert(getActivity(), "Fully growth!", "Please, consider harvesting the bamboo or removing it. By harvesting it, you can store it in to the storage.");
+                    alert.setPositiveButton("Got it!", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    });
+                    alert.setNegativeButton("", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    });
+
+                    alert.show();
+                    System.out.println("Bamboo is fully grown");
+                }
+
+            }
+        });
+
+
+
     }
-    private void updateBambooMenuInfo(FormCardStatisticsSettings title, FormCardStatisticsSettings label, FormCardStatisticsSettings grow,
-                                      FormCardGarden firstQ, FormCardGarden secondQ, FormCardGarden thirdQ, FormCardGarden fourthQ ,int slot, View view)
+
+    private void tryOpenBambooInfoMenu(FormCardStatisticsSettings[] cards, FormCardGarden[] questions, int slot, View view) {
+        if(viewModel.isBambooPlanted(slot))
+        {
+            viewModel.setSelectedSlot(slot);
+            updateBambooMenuInfo(cards, questions, slot, view);
+            openView(view.findViewById(R.id.garden_bamboo_info_menu));
+            System.out.println("Select bamboo slot 5");
+        }
+
+    }
+
+    private void updateBambooMenuInfo(FormCardStatisticsSettings[] cards, FormCardGarden[] questions, int slot, View view)
     {
         //Puts the list menu at the top
         ScrollView scrollView = view.findViewById(R.id.garden_view_menu_scroller);
         scrollView.scrollTo(0,0);
 
-        //Gets the selected bamboo and loads the info to the menu
+        //Gets the selected bamboo and loads the info to the menu (could be prettier...ik)
         Bamboo bamboo = viewModel.getSlotBamboo(slot);
-        title.updateLabel("Title: " + bamboo.getTitle());
-        label.updateLabel("Label: " + bamboo.getLabel());
-        grow.updateLabel("Growth: " + bamboo.getGrowth() + "/" + bamboo.getTotalGrowth() + " days");
+        cards[0].updateLabel("Title: " + bamboo.getTitle());
+        cards[1].updateLabel("Growth: " + bamboo.getGrowth() + "/" + bamboo.getTotalGrowth() + " days");
 
-        firstQ.setDescription(bamboo.getAnswer(ViewModel.bambooQuestions.QUESTION_ONE.getKey()));
-        secondQ.setDescription(bamboo.getAnswer(ViewModel.bambooQuestions.QUESTION_TWO.getKey()));
-        thirdQ.setDescription(bamboo.getAnswer(ViewModel.bambooQuestions.QUESTION_THREE.getKey()));
-        fourthQ.setDescription(bamboo.getAnswer(ViewModel.bambooQuestions.QUESTION_FOUR.getKey()));
+        questions[0].setDescription(bamboo.getAnswer(ViewModel.BAMBOO_QUESTIONS.QUESTION_ONE.getKey()));
+        questions[1].setDescription(bamboo.getAnswer(ViewModel.BAMBOO_QUESTIONS.QUESTION_TWO.getKey()));
+        questions[2].setDescription(bamboo.getAnswer(ViewModel.BAMBOO_QUESTIONS.QUESTION_THREE.getKey()));
+        questions[3].setDescription(bamboo.getAnswer(ViewModel.BAMBOO_QUESTIONS.QUESTION_FOUR.getKey()));
     }
 
 

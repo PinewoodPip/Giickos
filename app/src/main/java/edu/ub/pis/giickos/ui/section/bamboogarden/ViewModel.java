@@ -45,7 +45,7 @@ public class ViewModel  extends androidx.lifecycle.ViewModel
     }
 
     //An enumerator that holds the different questions for the bamboo and what key they have for the hashmap
-    public enum bambooQuestions
+    public enum BAMBOO_QUESTIONS
     {
         QUESTION_ONE("1"),
         QUESTION_TWO("2"),
@@ -54,7 +54,7 @@ public class ViewModel  extends androidx.lifecycle.ViewModel
         QUESTION_LETTER("letter");
 
         private final String key;
-        bambooQuestions(String key) {
+        BAMBOO_QUESTIONS(String key) {
             this.key = key;
         }
 
@@ -72,9 +72,11 @@ public class ViewModel  extends androidx.lifecycle.ViewModel
     //A bamboo form that holds the information of the bamboo that is being planted
     BambooForm bambooForm = new BambooForm();
 
+    //When  touching a bamboo in the garden, this variable holds the position of the bamboo
+    private int selectedSlot = -1;
+
     private class BambooForm{
         public String title = "";
-        public String label = "";
         public Map<String, String> questionsAnswers;
         public int totalGrowth = 0;
 
@@ -85,7 +87,7 @@ public class ViewModel  extends androidx.lifecycle.ViewModel
 
         public boolean isComplete()
         {
-            if (!this.title.equals("") && !this.label.equals("") && this.questionsAnswers.size() == bambooQuestions.values().length && this.totalGrowth != 0)
+            if (!this.title.equals("") && this.questionsAnswers.size() == BAMBOO_QUESTIONS.values().length && this.totalGrowth != 0)
             {
                 return true;
             }
@@ -125,8 +127,8 @@ public class ViewModel  extends androidx.lifecycle.ViewModel
 
 
 
-        bamboos.add(new Bamboo(0,"Drink water", "HWater", questionsAnswers, 1, 7));
-        bamboos.add(new Bamboo(1,"Use Giickos", "xGiickos", thisIsTheAnswer, 3,21));
+        bamboos.add(new Bamboo(0,"Drink water",  questionsAnswers, 1, 7));
+        bamboos.add(new Bamboo(1,"Use Giickos",  thisIsTheAnswer, 3,21));
         return bamboos;
     }
     //--------------------------------------------------------------
@@ -164,8 +166,8 @@ public class ViewModel  extends androidx.lifecycle.ViewModel
         }
 
         //Retrieves the data from the form that the user has inputed from the menu  to generate a bamboo
-        Bamboo bamboo = new Bamboo(slot, bambooForm.title, bambooForm.label,
-                bambooForm.questionsAnswers, 0, bambooForm.totalGrowth);
+        Bamboo bamboo = new Bamboo(slot, bambooForm.title, bambooForm.questionsAnswers,
+                0, bambooForm.totalGrowth);
 
         //Gets the current bamboos that are planted, and add the new one
         Map <Integer, Bamboo> newBamboo = bamboos.getValue();
@@ -183,9 +185,6 @@ public class ViewModel  extends androidx.lifecycle.ViewModel
     //This part is for the bambooForm, it sets the different values of the bambooForm
     public void setBambooTitle(String title) {
         bambooForm.title = title;
-    }
-    public void setBambooLabel(String label) {
-        bambooForm.label = label;
     }
     public void setBambooGrowTime(BAMBOO_GROWTH_TIME growthTime) {
         bambooForm.totalGrowth = growthTime.getDays();
@@ -212,7 +211,26 @@ public class ViewModel  extends androidx.lifecycle.ViewModel
         return bamboos.getValue().get(slot);
     }
 
+    //Methods that sets the selected slot
+    public void setSelectedSlot(int slot) {
+        selectedSlot = slot;
+    }
+    //Method that returns the selected slot
+    public int getSelectedSlot() {
+        return selectedSlot;
+    }
 
+    public void waterBamboo(int selectedSlot) {
+        Bamboo currentBamboo = bamboos.getValue().get(selectedSlot);
+        currentBamboo.water();
+        bamboos.getValue().put(selectedSlot, currentBamboo);
+        bamboos.setValue(bamboos.getValue());
+    }
+
+    public void removeBamboo(int selectedSlot) {
+        bamboos.getValue().remove(selectedSlot);
+        bamboos.setValue(bamboos.getValue());
+    }
 
 
 

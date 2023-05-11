@@ -23,12 +23,6 @@
             android:layout_alignParentBottom="false"
             android:src="@drawable/plant_2" />
 
-        <ImageView
-            android:id="@+id/garden_remove"
-            android:layout_width="120dp"
-            android:layout_height="match_parent"
-            android:src="@drawable/shovel_1" />
-
     </RelativeLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -278,26 +272,69 @@
 
         <ScrollView
             android:id="@+id/garden_view_menu_scroller"
-            android:layout_width="287dp"
-            android:layout_height="378dp"
+            android:layout_width="285dp"
+            android:layout_height="360dp"
             android:contentDescription=".."
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.496"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.435">
+            app:layout_constraintVertical_bias="0.369">
 
             <LinearLayout
                 android:id="@+id/garden_bambo_goals"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"></LinearLayout>
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:clipToPadding="false"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:paddingBottom="5dp">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/blank"
+                        app:tint="#649862" />
+
+                    <ImageView
+                        android:id="@+id/garden_remove_action"
+                        android:layout_width="55dp"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentStart="true"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/shovel_1" />
+
+                    <ImageView
+                        android:id="@+id/garden_water_action"
+                        android:layout_width="55dp"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/profile_colored" />
+
+                    <ImageView
+                        android:id="@+id/garden_harvest_action"
+                        android:layout_width="55dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/shovel_2" />
+
+                </RelativeLayout>
+            </LinearLayout>
         </ScrollView>
 
         <RelativeLayout
+            android:id="@+id/relativeLayout2"
             android:layout_width="286dp"
             android:layout_height="45dp"
+            android:gravity="center"
             android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="@+id/imageView20"
             app:layout_constraintEnd_toEndOf="parent"
@@ -305,34 +342,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/garden_view_menu_scroller"
             app:layout_constraintVertical_bias="1.0">
-
-            <RelativeLayout
-                android:layout_width="137dp"
-                android:layout_height="match_parent"
-                android:layout_alignParentRight="true"
-                android:gravity="center">
-
-                <ImageView
-                    android:id="@+id/garden_harvest_action"
-                    android:layout_width="122dp"
-                    android:layout_height="45dp"
-                    android:src="@drawable/green_button" />
-
-                <TextView
-                    android:layout_width="60dp"
-                    android:layout_height="18dp"
-                    android:layout_alignStart="@+id/garden_harvest_action"
-                    android:layout_alignEnd="@+id/garden_harvest_action"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginStart="31dp"
-                    android:layout_marginTop="13dp"
-                    android:layout_marginEnd="31dp"
-                    android:layout_marginBottom="13dp"
-                    android:gravity="center"
-                    android:text="Harvest"
-                    android:textColor="#FFFFFF" />
-            </RelativeLayout>
 
             <RelativeLayout
                 android:layout_width="137dp"
@@ -359,7 +368,9 @@
                     android:gravity="center"
                     android:text="@string/return_label"
                     android:textColor="#FFFFFF" />
+
             </RelativeLayout>
+
         </RelativeLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -8,18 +8,16 @@ public class Bamboo
     //public String id;
     private int slot;
     private String title;
-    private String label;
     private Map<String, String> questionsAnswers;
     private int growth;
     private int totalGrowth;
 
     private final int TOTAL_PHASES = 5; // 5 phases of growth the initial one does not count
 
-    public Bamboo(int slot, String title, String label, Map<String, String> questionsAnswers, int growth, int totalGrowth)
+    public Bamboo(int slot, String title, Map<String, String> questionsAnswers, int growth, int totalGrowth)
     {
         this.slot = slot;
         this.title = title;
-        this.label = label;
         this.questionsAnswers = questionsAnswers;
         this.growth = growth;
         this.totalGrowth = totalGrowth;
@@ -37,10 +35,6 @@ public class Bamboo
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public void setLabel(String label) {
-        this.label = label;
     }
 
     public Map<String, String> getQuestionsAnswers() {
@@ -67,11 +61,6 @@ public class Bamboo
         this.totalGrowth = totalGrowth;
     }
 
-    public String getLabel()
-    {
-        return this.label;
-    }
-
     public String getTotalGrowthTime()
     {
         return "Total growth time: " + this.totalGrowth;
@@ -84,7 +73,17 @@ public class Bamboo
 
     public int getCurrentPhase()
     {
-        return (int) Math.floor((this.growth / this.totalGrowth) * (this.TOTAL_PHASES ));
+        float phase = (float) this.growth / (float) this.totalGrowth;
+        return (int) Math.floor((phase) * (this.TOTAL_PHASES ));
+    }
+
+    public void water()
+    {
+        this.growth++;
+        if(this.growth > this.totalGrowth)
+        {
+            this.growth = this.totalGrowth;
+        }
     }
 
 }
