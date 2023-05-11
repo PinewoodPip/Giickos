@@ -160,6 +160,15 @@
     <string name="bamboo_question_4">What are the benefits of achieving your objectives?</string>
     <string name="bamboo_question_letter">Write a letter for yourself for the future you, talking about the benefits or consequences of achieving this goal:</string>
 
+    <string name="bamboo_growthtime_3days">3 Days</string>
+    <string name="bamboo_growthtime_1week">1 Week</string>
+    <string name="bamboo_growthtime_2weeks">2 Weeks</string>
+    <string name="bamboo_growthtime_1month">1 Month</string>
+    <string name="bamboo_growthtime_2months">2 Months</string>
+    <string name="bamboo_growthtime_3months">3 Months</string>
+    <string name="bamboo_growthtime_6months">6 Months</string>
+    <string name="bamboo_growthtime_1year">3 Months</string>
+
     <!-- General button actions -->
     <string name="decline_label">Decline</string>
     <string name="return_label">Back</string>
