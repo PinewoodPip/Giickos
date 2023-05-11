@@ -210,7 +210,10 @@ public class ViewModel  extends androidx.lifecycle.ViewModel
     }
     //----------------------------------- End of bamboo form methods ----------------------------------------
 
-
+    //Method that returns the bamboo that is planted in the given slot
+    public Bamboo getSlotBamboo(int slot) {
+        return bamboos.getValue().get(slot);
+    }
 
 
 
