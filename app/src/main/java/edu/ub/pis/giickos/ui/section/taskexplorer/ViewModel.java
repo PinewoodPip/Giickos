@@ -112,4 +112,15 @@ public class ViewModel extends androidx.lifecycle.ViewModel {
     public boolean isTaskCompleted(String taskID) {
         return model.isTaskCompleted(taskID, LocalDate.now());
     }
+
+    public TASK_PRIORITY getTaskPriority(String taskID) {
+        Task task = model.getTask(taskID);
+        TASK_PRIORITY priority = TASK_PRIORITY.NONE;
+
+        if (task != null) {
+            priority = TASK_PRIORITY.values()[task.getPriority().ordinal()];
+        }
+
+        return priority;
+    }
 }

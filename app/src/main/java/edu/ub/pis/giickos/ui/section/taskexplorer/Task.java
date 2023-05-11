@@ -1,5 +1,6 @@
 package edu.ub.pis.giickos.ui.section.taskexplorer;
 
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 
 import androidx.cardview.widget.CardView;
@@ -15,6 +16,7 @@ import java.time.LocalDate;
 
 import edu.ub.pis.giickos.GiickosFragment;
 import edu.ub.pis.giickos.R;
+import edu.ub.pis.giickos.ui.ViewModelHelpers;
 import edu.ub.pis.giickos.ui.activities.taskcreator.TaskCreator;
 
 // Displays a task within the task explorer.
@@ -80,11 +82,24 @@ public class Task extends GiickosFragment {
         ImageView iconView = view.findViewById(R.id.icon_task);
         TextView labelView = view.findViewById(R.id.label_task_name);
         CardView card = view.findViewById(R.id.card_main);
+        CardView priorityCard = view.findViewById(R.id.card_priority);
         ImageView completedIcon = view.findViewById(R.id.icon_completed);
+        TextView priorityLabel = view.findViewById(R.id.label_priority);
+        ViewModelHelpers.TASK_PRIORITY taskPriority = viewModel.getTaskPriority(taskID);
 
         iconView.setImageResource(iconID);
         labelView.setText(label);
         completedIcon.setVisibility(viewModel.isTaskCompleted(taskID) ? View.VISIBLE : View.INVISIBLE); // Show checkmark icon for completed tasks
+
+        // Set priority badge color and label
+        if (taskPriority != ViewModelHelpers.TASK_PRIORITY.NONE) {
+            priorityCard.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(taskPriority.colorResource)));
+            priorityLabel.setText(getString(taskPriority.stringResource));
+            priorityCard.setVisibility(View.VISIBLE);
+        }
+        else {
+            priorityCard.setVisibility(View.INVISIBLE);
+        }
 
         // Transition to task creator on click
         card.setOnClickListener(new View.OnClickListener() {

@@ -31,6 +31,7 @@ import java.util.Optional;
 
 import edu.ub.pis.giickos.GiickosFragment;
 import edu.ub.pis.giickos.R;
+import edu.ub.pis.giickos.ui.ViewModelHelpers;
 import edu.ub.pis.giickos.ui.ViewModelHelpers.ProjectData;
 import edu.ub.pis.giickos.ui.ViewModelHelpers.TaskDate;
 import edu.ub.pis.giickos.ui.ViewModelHelpers.TaskTime;
@@ -126,7 +127,7 @@ public class TaskCreator extends GiickosFragment {
         return !getIntentString(INTENT_EXTRA_TASK_ID).isPresent();
     }
 
-    private String getPriorityName(ViewModel.TASK_PRIORITY priority) {
+    private String getPriorityName(ViewModelHelpers.TASK_PRIORITY priority) {
         return getString(priority.stringResource);
     }
 
@@ -262,8 +263,8 @@ public class TaskCreator extends GiickosFragment {
         List options = new ArrayList<>();
         FormSpinner spinner;
 
-        for (int x = 0; x < ViewModel.TASK_PRIORITY.values().length; x++) {
-            options.add(getPriorityName(ViewModel.TASK_PRIORITY.values()[x]));
+        for (int x = 0; x < ViewModelHelpers.TASK_PRIORITY.values().length; x++) {
+            options.add(getPriorityName(ViewModelHelpers.TASK_PRIORITY.values()[x]));
         }
 
         spinner = addSpinnerField(R.drawable.priority, getString(R.string.taskcreator_label_priority), options, viewModel.getPriority());

@@ -8,11 +8,28 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 
+import edu.ub.pis.giickos.R;
 import edu.ub.pis.giickos.model.project.Project;
 import edu.ub.pis.giickos.model.project.Task;
 import edu.ub.pis.giickos.ui.activities.taskcreator.ViewModel;
 
 public class ViewModelHelpers {
+    public enum TASK_PRIORITY {
+        NONE(R.string.task_priority_none, R.color.task_priority_none),
+        LOW(R.string.task_priority_low, R.color.task_priority_low),
+        MEDIUM(R.string.task_priority_medium, R.color.task_priority_medium),
+        HIGH(R.string.task_priority_high, R.color.task_priority_high),
+        ;
+
+        public final int stringResource;
+        public final int colorResource;
+
+        TASK_PRIORITY(int stringResource, int colorResource) {
+            this.stringResource = stringResource;
+            this.colorResource = colorResource;
+        }
+    }
+
     public static List<ProjectData> sortProjects(Set<Project> projects) {
         List<ProjectData> orderedProjects = new ArrayList<>();
 
@@ -77,7 +94,7 @@ public class ViewModelHelpers {
         public final LocalDateTime startTime;
         public final int durationInMinutes;
         public final boolean takesAllDay;
-        public final ViewModel.TASK_PRIORITY priority; // TODO move enum here?
+        public final TASK_PRIORITY priority;
 
         public TaskData(Task task) {
             this.id = task.getID();
@@ -86,7 +103,7 @@ public class ViewModelHelpers {
             this.startTime = task.getStartTime();
             this.durationInMinutes = task.getDuration();
             this.takesAllDay = task.takesAllDay();
-            this.priority = ViewModel.TASK_PRIORITY.values()[task.getPriority().ordinal()];
+            this.priority = TASK_PRIORITY.values()[task.getPriority().ordinal()];
         }
 
         @Override
