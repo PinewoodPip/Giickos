@@ -1,7 +1,6 @@
 package edu.ub.pis.giickos.ui.section.bamboogarden;
 
-import android.graphics.drawable.Drawable;
-import android.view.View;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -11,32 +10,35 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import edu.ub.pis.giickos.R;
 import edu.ub.pis.giickos.model.garden.Bamboo;
 
 public class ViewModel  extends androidx.lifecycle.ViewModel
 {
     //An enumerator that holds the different growth times for the bamboo
-    public enum bambooGrowthTime
+    public enum BAMBOO_GROWTH_TIME
     {
-        THREE_DAYS("3 days", 3),
-        ONE_WEEK("1 week", 7),
-        TWO_WEEKS("2 weeks", 14),
-        ONE_MONTH("1 month", 30),
-        TWO_MONTHS("2 months", 60),
-        THREE_MONTHS("3 months", 90),
-        SIX_MONTHS("6 months", 180),
-        ONE_YEAR("1 year", 365);
+        THREE_DAYS(R.string.bamboo_growthtime_3days, 3),
+        ONE_WEEK(R.string.bamboo_growthtime_1week, 7),
+        TWO_WEEKS(R.string.bamboo_growthtime_2weeks, 14),
+        ONE_MONTH(R.string.bamboo_growthtime_1month, 30),
+        TWO_MONTHS(R.string.bamboo_growthtime_2months, 60),
+        THREE_MONTHS(R.string.bamboo_growthtime_3months, 90),
+        SIX_MONTHS(R.string.bamboo_growthtime_6months, 180),
+        ONE_YEAR(R.string.bamboo_growthtime_1year, 365);
 
-        private final String name;
+        private final int nameStringResource;
         private final int days;
-        bambooGrowthTime(String name, int days) {
-            this.name = name;
+
+        BAMBOO_GROWTH_TIME(int nameResource, int days) {
+            this.nameStringResource = nameResource;
             this.days = days;
         }
 
-        public String getName() {
-            return name;
+        public int getNameResource() {
+            return nameStringResource;
         }
+
         public int getDays() {
             return days;
         }
@@ -185,15 +187,10 @@ public class ViewModel  extends androidx.lifecycle.ViewModel
     public void setBambooLabel(String label) {
         bambooForm.label = label;
     }
-    public void setBambooGrowTime(String growthTime) {
-        //Looks for the growth time in the enumerator and sets the total growth time
-        for (bambooGrowthTime time : bambooGrowthTime.values()) {
-            if (time.getName().equals(growthTime)) {
-                bambooForm.totalGrowth = time.getDays();
-                System.out.println("Setted the growth time: " + time.getDays());
-                return;
-            }
-        }
+    public void setBambooGrowTime(BAMBOO_GROWTH_TIME growthTime) {
+        bambooForm.totalGrowth = growthTime.getDays();
+
+        Log.d("VM", "Set growth time: " + growthTime.getDays());
     }
     public void addBambooQuestionAnswer(String question, String answer)
     {

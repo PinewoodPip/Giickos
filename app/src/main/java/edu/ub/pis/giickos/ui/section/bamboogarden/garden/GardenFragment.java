@@ -2,14 +2,10 @@ package edu.ub.pis.giickos.ui.section.bamboogarden.garden;
 
 import android.content.DialogInterface;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
-import android.media.Image;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -20,22 +16,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 
 import edu.ub.pis.giickos.GiickosFragment;
 import edu.ub.pis.giickos.R;
-import edu.ub.pis.giickos.databinding.FragmentCardFormStatisticsBinding;
 import edu.ub.pis.giickos.model.garden.Bamboo;
-import edu.ub.pis.giickos.ui.activities.main.MainActivity;
 import edu.ub.pis.giickos.ui.dialogs.Alert;
 import edu.ub.pis.giickos.ui.generic.form.FormCard;
 import edu.ub.pis.giickos.ui.generic.form.FormCardGarden;
@@ -138,8 +128,8 @@ public class GardenFragment extends GiickosFragment {
         //Probably get from viewmodel
         ArrayList<String> time = new ArrayList<>();
         //From the ViewModel, we get the enum values and add them to the arraylist for the spinner
-        for (ViewModel.bambooGrowthTime i : ViewModel.bambooGrowthTime.values()) {
-            time.add(i.getName());
+        for (ViewModel.BAMBOO_GROWTH_TIME i : ViewModel.BAMBOO_GROWTH_TIME.values()) {
+            time.add(getString(i.getNameResource()));
         }
         FormSpinner spinner = growTime.addSpinner(time,0);
 
@@ -189,7 +179,7 @@ public class GardenFragment extends GiickosFragment {
         spinner.setListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                viewModel.setBambooGrowTime(parent.getSelectedItem().toString());
+                viewModel.setBambooGrowTime(ViewModel.BAMBOO_GROWTH_TIME.values()[position]);
                 System.out.println("Grow time: " + parent.getSelectedItem());
             }
 
