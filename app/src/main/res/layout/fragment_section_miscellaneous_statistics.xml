@@ -14,9 +14,53 @@
         android:background="#D1D1D1"
         android:orientation="vertical">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/statistics_today_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/statistics_text_button_today" />
+
+            <EditText
+                android:id="@+id/statistics_start_range_date"
+                android:layout_width="104dp"
+                android:layout_height="56dp"
+                android:ems="10"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:inputType="date"
+                android:text="@string/statistics_date_start" />
+
+            <EditText
+                android:id="@+id/statistics_end_range_date"
+                android:layout_width="104dp"
+                android:layout_height="56dp"
+                android:ems="10"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:inputType="date"
+                android:text="@string/statistics_date_end" />
+
+        </LinearLayout>
+
+        <androidx.gridlayout.widget.GridLayout
+            android:id="@+id/grid_stats"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:columnCount="3">
+
+        </androidx.gridlayout.widget.GridLayout>
+
         <TableLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            tools:visibility="gone">
 
             <TableRow
                 android:id="@+id/Top_Line"
@@ -26,31 +70,6 @@
                 android:paddingStart="10dp"
                 android:paddingTop="10dp">
 
-                <Button
-                    android:id="@+id/statistics_today_button"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/statistics_text_button_today" />
-
-                <EditText
-                    android:id="@+id/statistics_start_range_date"
-                    android:layout_width="104dp"
-                    android:layout_height="56dp"
-                    android:ems="10"
-                    android:focusable="false"
-                    android:focusableInTouchMode="false"
-                    android:inputType="date"
-                    android:text="@string/statistics_date_start" />
-
-                <EditText
-                    android:id="@+id/statistics_end_range_date"
-                    android:layout_width="104dp"
-                    android:layout_height="56dp"
-                    android:ems="10"
-                    android:focusable="false"
-                    android:focusableInTouchMode="false"
-                    android:inputType="date"
-                    android:text="@string/statistics_date_end" />
             </TableRow>
 
             <TableRow

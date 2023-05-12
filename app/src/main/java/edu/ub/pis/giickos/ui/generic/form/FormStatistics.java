@@ -28,7 +28,6 @@ public class FormStatistics extends GiickosFragment
     private String label;
     private String value;
 
-    private View thisView;
     public FormStatistics() {} // Required empty public constructor
 
     public static FormStatistics newInstance(int iconID, String label, String value) {

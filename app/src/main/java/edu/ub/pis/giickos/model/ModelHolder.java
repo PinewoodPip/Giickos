@@ -3,6 +3,7 @@ package edu.ub.pis.giickos.model;
 import edu.ub.pis.giickos.model.factories.AbstractManagerFactory;
 import edu.ub.pis.giickos.model.factories.ManagerFactory;
 import edu.ub.pis.giickos.model.project.ProjectManager;
+import edu.ub.pis.giickos.model.statistics.StatisticsManager;
 import edu.ub.pis.giickos.model.user.UserManager;
 import edu.ub.pis.giickos.resources.dao.firebase.FirebaseDAOFactory;
 
@@ -36,5 +37,9 @@ public enum ModelHolder {
 
     public UserManager getUserManager() {
         return model.getUserManager();
+    }
+
+    public StatisticsManager getStatisticsManager() {
+        return model.getStatisticsManager();
     }
 }

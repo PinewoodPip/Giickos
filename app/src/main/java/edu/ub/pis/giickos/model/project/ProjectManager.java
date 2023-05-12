@@ -13,10 +13,16 @@ import edu.ub.pis.giickos.model.observer.EmptyEvent;
 import edu.ub.pis.giickos.model.observer.Observable;
 import edu.ub.pis.giickos.model.observer.ObservableEvent;
 import edu.ub.pis.giickos.model.observer.Observer;
+import edu.ub.pis.giickos.model.statistics.Statistic;
+import edu.ub.pis.giickos.model.statistics.StatisticsProvider;
 import edu.ub.pis.giickos.model.user.UserManager;
 import edu.ub.pis.giickos.resources.dao.ProjectDAO;
 
-public class ProjectManager extends Observable<ProjectManager.Events> {
+public class ProjectManager extends Observable<ProjectManager.Events> implements StatisticsProvider {
+
+    // Stat IDs for StatisticsProvider
+    public static final String STAT_TASKS_CREATED = "PROJECTMANAGER_TASKS_CREATED";
+    public static final String STAT_TASKS_COMPLETED = "PROJECTMANAGER_TASKS_COMPLETED";
 
     public enum Events {
         PROJECTS_UPDATED,
@@ -59,6 +65,17 @@ public class ProjectManager extends Observable<ProjectManager.Events> {
 
     public Set<Task> getTasks(String projectGUID) {
         return daoProject.getTasks(projectGUID);
+    }
+
+    // Returns all tasks across all projects.
+    public Set<Task> getTasks() {
+        Set<Task> tasks = new HashSet<>();
+
+        for (Project project : getProjects()) {
+            tasks.addAll(getTasks(project.getId()));
+        }
+
+        return tasks;
     }
 
     public Task getTask(String taskGUID) {
@@ -195,6 +212,22 @@ public class ProjectManager extends Observable<ProjectManager.Events> {
         return getTasksForDay(day, null);
     }
 
+    @Override
+    public Set<Statistic> getStatistics(LocalDate startDate, LocalDate endDate) {
+        Set<Statistic> stats = new HashSet<>();
+
+        // "Tasks completed" stat
+        int tasksCompleted = 0;
+        for (Task task : getTasks()) {
+            tasksCompleted += task.getCompletedDates(startDate, endDate).size();
+        }
+        stats.add(new Statistic(STAT_TASKS_COMPLETED, tasksCompleted));
+
+        // TODO tasks created stat
+
+        return stats;
+    }
+
     // TODO move elsewhere
     public LocalDate getCurrentTime() {
         return LocalDate.now();
@@ -208,6 +241,7 @@ public class ProjectManager extends Observable<ProjectManager.Events> {
         notifyObservers(Events.TASKS_UPDATED, new EmptyEvent(this, Events.TASKS_UPDATED));
     }
 
+    // Predicate class for methods that allow filtering task lists.
     public static abstract class TaskPredicate {
         public abstract boolean isValid(Task task);
     }

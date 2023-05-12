@@ -9,22 +9,26 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import java.text.SimpleDateFormat;
+import androidx.gridlayout.widget.GridLayout;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
-import java.util.Date;
+import java.util.Map;
 
 import edu.ub.pis.giickos.GiickosFragment;
 import edu.ub.pis.giickos.R;
+import edu.ub.pis.giickos.Utils;
 import edu.ub.pis.giickos.ui.generic.form.FormStatistics;
 
 // Displays the user's statistics. TODO
 public class StatisticsFragment extends GiickosFragment {
 
-    Calendar startDate = Calendar.getInstance();
-    Calendar endDate = Calendar.getInstance();
-    Calendar picker = Calendar.getInstance();;
+    private ViewModel viewModel;
+
     public StatisticsFragment() {
         // Required empty public constructor
     }
@@ -41,6 +45,8 @@ public class StatisticsFragment extends GiickosFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        viewModel = new ViewModelProvider(getActivity()).get(ViewModel.class);
     }
 
     @Override
@@ -52,45 +58,46 @@ public class StatisticsFragment extends GiickosFragment {
 
     public void onViewCreated(View view, Bundle savedInstanceState)
     {
-        //TODO change value to a livedata array of strings
         addOnClickListeners(view);
-        addFragments();
-
-
+        setupStats();
     }
-    private void addFragments()
+
+    private void setupStats()
     {
-        //Create the fragments
-        FormStatistics tasksCreated = FormStatistics.newInstance(R.drawable.projects, "Tasks created:", "0");
-        FormStatistics bambooPlanted = FormStatistics.newInstance(R.drawable.bamboo, "Bamboo planted:", "0");
-        FormStatistics pomodoroTime = FormStatistics.newInstance(R.drawable.timer, "Pomodoro time:", "0");
+        Map<ViewModel.STATISTIC, String> statValues = viewModel.getStatistics();
+        GridLayout grid = getView().findViewById(R.id.grid_stats);
 
-        FormStatistics tasksCompleted = FormStatistics.newInstance(R.drawable.projects, "Tasks completed:", "0");
-        FormStatistics tasksCollected = FormStatistics.newInstance(R.drawable.bamboo, "Bamboo collected:", "0");
-        FormStatistics screenDetoxTime = FormStatistics.newInstance(R.drawable.timer, "Screen detox time:", "0");
+        grid.removeAllViews();
 
-        //Add the fragments to the layout
-        addChildFragment(tasksCreated, R.id.First_Line);
-        addChildFragment(bambooPlanted, R.id.First_Line);
-        addChildFragment(pomodoroTime, R.id.First_Line);
-
-        addChildFragment(tasksCompleted, R.id.Second_Line);
-        addChildFragment(tasksCollected, R.id.Second_Line);
-        addChildFragment(screenDetoxTime, R.id.Second_Line);
+        for (ViewModel.STATISTIC stat : ViewModel.STATISTIC.values()) {
+            FormStatistics tasksCreated = FormStatistics.newInstance(stat.iconDrawableResource, getString(stat.nameStringResource), statValues.containsKey(stat) ? statValues.get(stat) : getString(R.string.generic_label_notavailable));
+            addChildFragment(tasksCreated, R.id.grid_stats, true);
+        }
     }
 
     private void addOnClickListeners(View view)
     {
-        //Date things
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        //Add the listeners
         TextView startDateText = (TextView) view.findViewById(R.id.statistics_start_range_date);
         TextView endDateText = (TextView) view.findViewById(R.id.statistics_end_range_date);
         Button todayButton = (Button) view.findViewById(R.id.statistics_today_button);
 
-        //In default, we start and end in the same day
-        startDateText.setText(sdf.format(startDate.getTime()));
-        endDateText.setText(sdf.format(startDate.getTime()));
+        // Update date button labels when the date changes,
+        // and re-render stats
+        viewModel.getStartDate().observe(getViewLifecycleOwner(), new Observer<LocalDate>() {
+            @Override
+            public void onChanged(LocalDate localDate) {
+                startDateText.setText(localDate.format(DateTimeFormatter.ISO_DATE));
+                setupStats();
+            }
+        });
+        viewModel.getEndDate().observe(getViewLifecycleOwner(), new Observer<LocalDate>() {
+            @Override
+            public void onChanged(LocalDate localDate) {
+                endDateText.setText(localDate.format(DateTimeFormatter.ISO_DATE));
+                setupStats();
+            }
+        });
+
         //Not pretty btw
         startDateText.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,87 +113,66 @@ public class StatisticsFragment extends GiickosFragment {
                                 calendar.set(Calendar.MONTH, monthOfYear);
                                 calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
-                                // Get the current time in milliseconds
-                                long currentTimeMillis = System.currentTimeMillis();
-
                                 // Set the selected date in the Calendar instance
                                 calendar.set(Calendar.HOUR_OF_DAY, 0);
                                 calendar.set(Calendar.MINUTE, 0);
                                 calendar.set(Calendar.SECOND, 0);
                                 calendar.set(Calendar.MILLISECOND, 0);
 
-                                // Calculate the selected date and time in milliseconds from epoch
-                                long selectedTimeMillis = calendar.getTimeInMillis() + currentTimeMillis % 86400000;
-
-                                startDate.setTimeInMillis(selectedTimeMillis);
-                                startDateText.setText(sdf.format(startDate.getTime()));
+                                viewModel.setStartDate(LocalDate.of(year, monthOfYear + 1, dayOfMonth));
                             }
                         },
                         Calendar.getInstance().get(Calendar.YEAR),
                         Calendar.getInstance().get(Calendar.MONTH),
                         Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
-
                 );
                 datePickerDialog.show();
-                //Set the max date to the end date, start date can't be after end date
-                datePickerDialog.getDatePicker().setMaxDate(endDate.getTimeInMillis());
+
+                // Set the max date to the end date, start date can't be after end date
+                datePickerDialog.getDatePicker().setMaxDate(Utils.localDateToUTC(viewModel.getEndDate().getValue()).toInstant().toEpochMilli());
             }
         });
 
         endDateText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DatePickerDialog datePickerDialog = new DatePickerDialog(
-                        getContext(),
-                        new DatePickerDialog.OnDateSetListener() {
-                            @Override
-                            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                                //Create calendar and set picked date
-                                Calendar calendar = Calendar.getInstance();
-                                calendar.set(Calendar.YEAR, year);
-                                calendar.set(Calendar.MONTH, monthOfYear);
-                                calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                DatePickerDialog datePickerDialog = new DatePickerDialog( getContext(),
+                    new DatePickerDialog.OnDateSetListener() {
+                        @Override
+                        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                            // Create calendar and set picked date
+                            Calendar calendar = Calendar.getInstance();
+                            calendar.set(Calendar.YEAR, year);
+                            calendar.set(Calendar.MONTH, monthOfYear);
+                            calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
-                                // Get the current time in milliseconds
-                                long currentTimeMillis = System.currentTimeMillis();
+                            // Set the selected date in the Calendar instance
+                            calendar.set(Calendar.HOUR_OF_DAY, 0);
+                            calendar.set(Calendar.MINUTE, 0);
+                            calendar.set(Calendar.SECOND, 0);
+                            calendar.set(Calendar.MILLISECOND, 0);
 
-                                // Set the selected date in the Calendar instance
-                                calendar.set(Calendar.HOUR_OF_DAY, 0);
-                                calendar.set(Calendar.MINUTE, 0);
-                                calendar.set(Calendar.SECOND, 0);
-                                calendar.set(Calendar.MILLISECOND, 0);
-
-                                // Calculate the selected date and time in milliseconds from epoch
-                                long selectedTimeMillis = calendar.getTimeInMillis() + currentTimeMillis % 86400000;
-
-                                endDate.setTimeInMillis(selectedTimeMillis);
-                                endDateText.setText(sdf.format(endDate.getTime()));
-
-                            }
-                        },
-                        Calendar.getInstance().get(Calendar.YEAR),
-                        Calendar.getInstance().get(Calendar.MONTH),
-                        Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
-
+                            viewModel.setEndDate(LocalDate.of(year, monthOfYear + 1, dayOfMonth));
+                        }
+                    },
+                    Calendar.getInstance().get(Calendar.YEAR),
+                    Calendar.getInstance().get(Calendar.MONTH),
+                    Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
                 );
                 datePickerDialog.show();
-                //Limit the date to the start date, end date can't be before start date
-                datePickerDialog.getDatePicker().setMinDate(startDate.getTimeInMillis());
+
+                // Limit the date to the start date, end date can't be before start date
+                datePickerDialog.getDatePicker().setMinDate(Utils.localDateToUTC(viewModel.getStartDate().getValue()).toInstant().toEpochMilli());
             }
         });
+
+        // Listen for the "today" button being clicked
         todayButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Set the start and end date to today
-                startDate.setTimeInMillis(System.currentTimeMillis());
-                endDate.setTimeInMillis(System.currentTimeMillis());
-                startDateText.setText(sdf.format(startDate.getTime()));
-                endDateText.setText(sdf.format(endDate.getTime()));
+                // Set the start and end date to today
+                viewModel.setToToday();
             }
         });
-
-
-
     }
-
 }

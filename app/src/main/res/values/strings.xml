@@ -24,6 +24,7 @@
     <string name="generic_label_close">Close</string>
     <string name="generic_label_go">Go</string>
     <string name="generic_label_confirm">Confirm</string>
+    <string name="generic_label_notavailable">N/A</string>
 
     <!-- Months of the year -->
     <string name="month_january">January</string>
@@ -119,7 +120,6 @@
     <string name="miscellaneous_tab_settings_msg_no_browser_app">No browser app found</string>
     <string name="miscellaneous_tab_settings_feedback_subject">Feedback of Giickos application</string>
 
-
     <string name="miscellaneous_tab_teams">Teams</string>
 
     <string name="miscellaneous_tab_statistics">Statistics</string>
@@ -129,6 +129,13 @@
     <string name="statistics_text_button_today">Today</string>
     <string name="statistics_date_start">Start date</string>
     <string name="statistics_date_end">End date</string>
+    <string name="statistics_tasks_created">Tasks Created</string>
+    <string name="statistics_tasks_completed">Tasks Completed</string>
+    <string name="statistics_timer_time">Pomodoro Time</string>
+    <string name="statistics_timer_detoxtime">Screen Detox Time</string>
+    <string name="statistics_bamboo_planted">Bamboo Planted</string>
+    <string name="statistics_bamboo_collected">Bamboo Collected</string>
+
     <string name="giickos_settings_offer">By purchasing Giickos plus you unlock:\n\n-Teams: Create a team, and share tasks with your team members.\n\n-Other features coming soon!\n
     </string>
     <string name="giickos_plus_purchasable">Purchase for 5.00€/month</string>:

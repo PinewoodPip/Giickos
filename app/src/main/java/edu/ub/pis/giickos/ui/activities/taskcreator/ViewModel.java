@@ -4,7 +4,6 @@ import android.util.Log;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -262,7 +261,7 @@ public class ViewModel extends androidx.lifecycle.ViewModel {
 
             LocalDateTime startTimeObj = LocalDateTime.of(startDate.year, startDate.month, startDate.day, hour, minute);
 
-            task.setStartTime(Utils.localDateToUTC(startTimeObj).toInstant().toEpochMilli());
+            task.setStartTime(Utils.localDateTimeToUTC(startTimeObj).toInstant().toEpochMilli());
         }
         else {
             task.setStartTime(-1);

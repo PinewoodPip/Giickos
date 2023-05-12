@@ -27,9 +27,9 @@ public class MockProjectDAO extends CachedProjectDAO {
 
         // Set dummy tasks to begin today
         LocalDateTime now = LocalDateTime.now();
-        task1.setStartTime(Utils.localDateToUTC(LocalDateTime.of(now.getYear(), now.getMonthValue(), now.getDayOfMonth(), 1, 0)).toInstant().toEpochMilli());
-        task2.setStartTime(Utils.localDateToUTC(LocalDateTime.of(now.getYear(), now.getMonthValue(), now.getDayOfMonth(), 21, 0)).toInstant().toEpochMilli());
-        task3.setStartTime(Utils.localDateToUTC(LocalDateTime.now()).toInstant().toEpochMilli());
+        task1.setStartTime(Utils.localDateTimeToUTC(LocalDateTime.of(now.getYear(), now.getMonthValue(), now.getDayOfMonth(), 1, 0)).toInstant().toEpochMilli());
+        task2.setStartTime(Utils.localDateTimeToUTC(LocalDateTime.of(now.getYear(), now.getMonthValue(), now.getDayOfMonth(), 21, 0)).toInstant().toEpochMilli());
+        task3.setStartTime(Utils.localDateTimeToUTC(LocalDateTime.now()).toInstant().toEpochMilli());
 
         task1.setDuration(60);
         task2.setDuration(30);

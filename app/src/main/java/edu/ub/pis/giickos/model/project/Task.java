@@ -2,7 +2,6 @@ package edu.ub.pis.giickos.model.project;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
 import java.time.temporal.IsoFields;
 import java.util.HashSet;
 import java.util.Locale;
@@ -127,15 +126,12 @@ public class Task {
             case WEEKLY: {
                 LocalDateTime dateWithTime = LocalDateTime.of(date.getYear(), date.getMonthValue(), date.getDayOfMonth(), 0, 0);
                 int dateYear = date.getYear();
-                int dateWeek = Utils.localDateToUTC(dateWithTime).get(IsoFields.WEEK_OF_WEEK_BASED_YEAR);
+                int dateWeek = Utils.localDateTimeToUTC(dateWithTime).get(IsoFields.WEEK_OF_WEEK_BASED_YEAR);
                 for (String dateID : getCompletedDates()) {
-                    // This sucks. Oh well.
-                    String[] values = dateID.split("/");
-                    LocalDateTime completionDate = LocalDateTime.of(Integer.parseInt(values[2]), Integer.parseInt(values[1]), Integer.parseInt(values[0]), 0, 0);
-                    ZonedDateTime zonedDate = Utils.localDateToUTC(completionDate);
-                    int week = zonedDate.get(IsoFields.WEEK_OF_WEEK_BASED_YEAR);
+                    LocalDate completionLocalDate = getCompletionDate(dateID);
+                    int week = completionLocalDate.get(IsoFields.WEEK_OF_WEEK_BASED_YEAR);
 
-                    if (completionDate.getYear() == dateYear && week == dateWeek) {
+                    if (completionLocalDate.getYear() == dateYear && week == dateWeek) {
                         completed = true;
                         break;
                     }
@@ -170,9 +166,31 @@ public class Task {
         return completionDates;
     }
 
+    public Set<LocalDate> getCompletedDates(LocalDate startDate, LocalDate endDate) {
+        Set<LocalDate> dates = new HashSet<>();
+
+        for (String dateID : getCompletedDates()) {
+            LocalDate date = getCompletionDate(dateID);
+
+            // Range is inclusive
+            if ((date.isAfter(startDate) || date.isEqual(startDate)) && (date.isBefore(endDate) || date.isEqual(endDate))) {
+                dates.add(date);
+            }
+        }
+
+        return dates;
+    }
+
     private String getDateID(LocalDate day) {
         String dateID = String.format(Locale.getDefault(), "%d/%d/%d", day.getDayOfMonth(), day.getMonthValue(), day.getYear());
 
         return dateID;
+    }
+
+    // tech debt be hitting hard here
+    private LocalDate getCompletionDate(String dateID) {
+        String[] values = dateID.split("/");
+
+        return LocalDate.of(Integer.parseInt(values[2]), Integer.parseInt(values[1]), Integer.parseInt(values[0]));
     }
 }
