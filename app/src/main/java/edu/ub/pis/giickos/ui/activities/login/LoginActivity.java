@@ -160,14 +160,17 @@ public class LoginActivity extends AppCompatActivity {
                             Toast.makeText(LoginActivity.this, getString(R.string.auth_login_success), Toast.LENGTH_SHORT).show();
 
                             // If the login was successful and "remember me" was ticked, save to preferences
+                            SharedPreferences.Editor editor = sharedPref.edit();
                             if (viewModel.getRememberLogin()) {
-                                SharedPreferences.Editor editor = sharedPref.edit();
-
                                 editor.putString(PREF_REMEMBERLOGIN_EMAIL, viewModel.getEmail());
                                 editor.putString(PREF_REMEMBERLOGIN_PASSWORD, viewModel.getPassword());
-
-                                editor.apply();
                             }
+                            else {
+                                // Remove previous saved login if "remember me" was ticked off
+                                editor.remove(PREF_REMEMBERLOGIN_EMAIL);
+                                editor.remove(PREF_REMEMBERLOGIN_PASSWORD);
+                            }
+                            editor.apply();
 
                             MainActivity.transitionToSection(LoginActivity.this, MainViewModel.SECTION_TYPE.CALENDAR, null, true);
                         }
