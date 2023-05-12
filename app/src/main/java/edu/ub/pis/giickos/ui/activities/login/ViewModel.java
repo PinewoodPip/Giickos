@@ -1,6 +1,7 @@
 package edu.ub.pis.giickos.ui.activities.login;
 
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 
 import edu.ub.pis.giickos.model.ModelHolder;
 import edu.ub.pis.giickos.model.user.UserManager;
@@ -47,5 +48,11 @@ public class ViewModel extends androidx.lifecycle.ViewModel {
 
     public void setRememberLogin(boolean rememberLogin) {
         this.rememberLogin = rememberLogin;
+    }
+
+    public void sendRecoveryEmail(String email) {
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+
+        auth.sendPasswordResetEmail(email);
     }
 }

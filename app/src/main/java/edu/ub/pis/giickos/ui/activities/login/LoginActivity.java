@@ -1,14 +1,20 @@
 package edu.ub.pis.giickos.ui.activities.login;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -24,6 +30,7 @@ import edu.ub.pis.giickos.R;
 import edu.ub.pis.giickos.ui.activities.register.RegisterActivity;
 import edu.ub.pis.giickos.ui.activities.main.MainActivity;
 import edu.ub.pis.giickos.ui.activities.main.MainViewModel;
+import edu.ub.pis.giickos.ui.dialogs.Alert;
 import edu.ub.pis.giickos.ui.generic.form.FormCard;
 import edu.ub.pis.giickos.ui.login.CheckboxLoginFragment;
 
@@ -112,6 +119,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        TextView recoverPasswordLink = findViewById(R.id.label_recoverpasswordlink);
         SharedPreferences sharedPref = getSharedPreferences("GIICKOS_LOGIN", Context.MODE_PRIVATE);
         viewModel = new ViewModelProvider(this).get(ViewModel.class);
 
@@ -171,6 +179,41 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     });
                 }
+            }
+        });
+
+        // Listen for clicks on the "recover password" link
+        recoverPasswordLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+                builder.setTitle(getString(R.string.auth_msg_recoverpassword_title));
+
+                View viewInflated = LayoutInflater.from(LoginActivity.this).inflate(R.layout.dialog_createproject, (ViewGroup) LoginActivity.this.findViewById(android.R.id.content), false);
+                EditText textField = viewInflated.findViewById(R.id.textfield_name);
+                textField.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+                builder.setView(viewInflated);
+
+                builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String email = textField.getText().toString();
+                        viewModel.sendRecoveryEmail(email);
+
+                        dialog.dismiss();
+                        Alert alert = new Alert(LoginActivity.this, getString(R.string.auth_msg_recoverpassword_success), getString(R.string.auth_msg_recoverpassword_body));
+                        alert.setNegativeButton(R.string.generic_label_ok, null);
+                        alert.show();
+                    }
+                });
+                builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+                builder.show();
             }
         });
     }

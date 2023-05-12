@@ -42,6 +42,9 @@
     <!-- Authentication -->
     <string name="auth_login_success">Successfully logged in</string>
     <string name="auth_login_failure">Failed to log in</string>
+    <string name="auth_msg_recoverpassword_title">Enter your e-mail</string>
+    <string name="auth_msg_recoverpassword_success">Recovery e-mail sent</string>
+    <string name="auth_msg_recoverpassword_body">An e-mail with account recovery instructions has been sent to the address.</string>
 
     <!-- Task priority -->
     <string name="task_priority_none">@string/generic_label_none</string>
