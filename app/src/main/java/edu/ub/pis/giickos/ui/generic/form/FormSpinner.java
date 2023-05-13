@@ -104,4 +104,8 @@ public class FormSpinner extends Fragment {
         bundle.putStringArrayList(INSTANCE_ITEMS, (ArrayList<String>) items);
         bundle.putInt(INSTANCE_SELECTED_INDEX, selectedIndex);
     }
+
+    public int getSelectedIndex() {
+        return selectedIndex;
+    }
 }

@@ -220,11 +220,17 @@ public class ViewModel  extends androidx.lifecycle.ViewModel
         return selectedSlot;
     }
 
-    public void waterBamboo(int selectedSlot) {
+    public boolean waterBamboo(int selectedSlot) {
         Bamboo currentBamboo = bamboos.getValue().get(selectedSlot);
-        currentBamboo.water();
-        bamboos.getValue().put(selectedSlot, currentBamboo);
-        bamboos.setValue(bamboos.getValue());
+        //Tries to water the bamboo, if it is watered, it updates the value of the bamboo
+        if(currentBamboo.water())
+        {
+            bamboos.getValue().put(selectedSlot, currentBamboo);
+            bamboos.setValue(bamboos.getValue());
+            return true;
+        }
+        //Otherwise, it returns false as the info is not updated
+        return false;
     }
 
     public void removeBamboo(int selectedSlot) {

@@ -235,9 +235,8 @@ public class GardenFragment extends GiickosFragment {
         plantBamboo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO get all the info from the fragments and send it to the viewmodel
-                System.out.println("Plant bamboo");
 
+                System.out.println("Plant bamboo");
                 //Plants the bamboo in the garden in a free space or selected space
                 view.findViewById(R.id.garden_menu);
                 int freeSlot = viewModel.getFreeSlot();
@@ -305,6 +304,7 @@ public class GardenFragment extends GiickosFragment {
                     cleanFormCardGarden(questions);
                     cardTitle.setText("");
                     spinner.setSelection(0);
+                    viewModel.setBambooGrowTime(ViewModel.BAMBOO_GROWTH_TIME.values()[0]);
                     ScrollView scrollView = view.findViewById(R.id.garden_menu_scroll_view);
                     scrollView.scrollTo(0,0);
 
@@ -496,9 +496,6 @@ public class GardenFragment extends GiickosFragment {
                     }
                 });
                 alert.show();
-
-
-
                 System.out.println("Remove plant");
             }
         });
@@ -506,14 +503,41 @@ public class GardenFragment extends GiickosFragment {
         water.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO you can only water once a day, if you water, you can't water again until the next day
                 Bamboo bamboo = viewModel.getSlotBamboo(viewModel.getSelectedSlot());
+
+                //If the bamboo is already watered, we can't water it again
+                if(!bamboo.canBeWatered())
+                {
+                    String message = "Already watered! You can only water once a day! Come back tomorrow!";
+                    Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                //If the bamboo is already grown, we can't water it
                 if(bamboo.getGrowth() != bamboo.getTotalGrowth())
                 {
-                    viewModel.waterBamboo(viewModel.getSelectedSlot());
-                    tryOpenBambooInfoMenu(cards, questions, viewModel.getSelectedSlot(), view);
-                    closeWindows(view);
-                    System.out.println("Water the bamboo");
+
+                    Alert objectiveAlert = new Alert(getActivity(), "Objective completed?", "Are you sure you have completed the objective? Please, be sincere to yourself, if you didn't complete the objective, you are only cheating yourself!");
+                    objectiveAlert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            if(viewModel.waterBamboo(viewModel.getSelectedSlot())) {
+                                tryOpenBambooInfoMenu(cards, questions, viewModel.getSelectedSlot(), view);
+                                closeWindows(view);
+                                Bamboo grownBamboo = viewModel.getSlotBamboo(viewModel.getSelectedSlot());
+                                String message = "You have watered the bamboo! It has grown " + grownBamboo.getGrowth() + " out of " + grownBamboo.getTotalGrowth() + " days!";
+
+                                Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
+
+                            }
+                        }
+                    });
+                    objectiveAlert.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                        }
+                    });
+                    objectiveAlert.show();
                 }
                 else
                 {
@@ -546,21 +570,20 @@ public class GardenFragment extends GiickosFragment {
         if(viewModel.isBambooPlanted(slot))
         {
             viewModel.setSelectedSlot(slot);
-            updateBambooMenuInfo(cards, questions, slot, view);
+            updateBambooMenuInfo(cards, questions, view);
             openView(view.findViewById(R.id.garden_bamboo_info_menu));
-            System.out.println("Select bamboo slot 5");
         }
 
     }
 
-    private void updateBambooMenuInfo(FormCardStatisticsSettings[] cards, FormCardGarden[] questions, int slot, View view)
+    private void updateBambooMenuInfo(FormCardStatisticsSettings[] cards, FormCardGarden[] questions, View view)
     {
         //Puts the list menu at the top
         ScrollView scrollView = view.findViewById(R.id.garden_view_menu_scroller);
         scrollView.scrollTo(0,0);
 
         //Gets the selected bamboo and loads the info to the menu (could be prettier...ik)
-        Bamboo bamboo = viewModel.getSlotBamboo(slot);
+        Bamboo bamboo = viewModel.getSlotBamboo(viewModel.getSelectedSlot());
         cards[0].updateLabel("Title: " + bamboo.getTitle());
         cards[1].updateLabel("Growth: " + bamboo.getGrowth() + "/" + bamboo.getTotalGrowth() + " days");
 

@@ -316,7 +316,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
                         android:scaleType="fitXY"
-                        android:src="@drawable/profile_colored" />
+                        android:src="@drawable/watering_can" />
 
                     <ImageView
                         android:id="@+id/garden_harvest_action"
@@ -324,7 +324,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:scaleType="fitXY"
-                        android:src="@drawable/shovel_2" />
+                        android:src="@drawable/collector_gloves" />
 
                 </RelativeLayout>
             </LinearLayout>

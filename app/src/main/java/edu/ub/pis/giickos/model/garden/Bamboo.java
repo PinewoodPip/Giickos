@@ -1,6 +1,6 @@
 package edu.ub.pis.giickos.model.garden;
 
-import java.util.List;
+import java.time.LocalDate;
 import java.util.Map;
 
 public class Bamboo
@@ -11,6 +11,8 @@ public class Bamboo
     private Map<String, String> questionsAnswers;
     private int growth;
     private int totalGrowth;
+
+    private LocalDate lastWatered;
 
     private final int TOTAL_PHASES = 5; // 5 phases of growth the initial one does not count
 
@@ -77,13 +79,39 @@ public class Bamboo
         return (int) Math.floor((phase) * (this.TOTAL_PHASES ));
     }
 
-    public void water()
+    public boolean water()
     {
+        //Checks if the bamboo can be watered
+        if(!canBeWatered())
+            return false;
+
+        //If it can be watered, update the attributes
         this.growth++;
         if(this.growth > this.totalGrowth)
         {
             this.growth = this.totalGrowth;
         }
+        this.lastWatered = LocalDate.now();
+
+        return true;
     }
+    public boolean canBeWatered()
+    {
+        //First time watering, so ofc it can be watered
+        if(lastWatered == null)
+            return true;
+
+        //Checks if the bamboo can be watered, the condition is once per day
+        LocalDate currentDate = LocalDate.now();
+
+        //If the current is equal or greater than the last watered date plus one day, it can be watered
+        if(currentDate.isEqual(this.lastWatered.plusDays(1))
+        || currentDate.isAfter(this.lastWatered.plusDays(1)))
+            return true;
+
+        return false;
+    }
+
+
 
 }
