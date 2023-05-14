@@ -1,6 +1,7 @@
 package edu.ub.pis.giickos.ui.section.bamboogarden;
 
 import androidx.fragment.app.Fragment;
+import androidx.viewpager2.widget.ViewPager2;
 
 import java.util.ArrayList;
 import java.util.List;

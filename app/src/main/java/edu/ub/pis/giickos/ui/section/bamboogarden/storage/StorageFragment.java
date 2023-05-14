@@ -1,10 +1,12 @@
 package edu.ub.pis.giickos.ui.section.bamboogarden.storage;
 
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.media.Image;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,11 +15,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ScrollView;
+
+import java.util.List;
+import java.util.Map;
 
 import edu.ub.pis.giickos.GiickosFragment;
 import edu.ub.pis.giickos.R;
 import edu.ub.pis.giickos.model.garden.Bamboo;
 import edu.ub.pis.giickos.model.team.Team;
+import edu.ub.pis.giickos.ui.dialogs.Alert;
 import edu.ub.pis.giickos.ui.generic.form.FormCardGarden;
 import edu.ub.pis.giickos.ui.generic.form.FormCardStatisticsSettings;
 import edu.ub.pis.giickos.ui.section.bamboogarden.ViewModel;
@@ -92,15 +99,13 @@ public class StorageFragment extends GiickosFragment {
 
         ImageView blocker = view.findViewById(R.id.storage_blocker_info);
         ImageView back = view.findViewById(R.id.storage_back_info_menu);
+        ImageView remove = view.findViewById(R.id.storage_remove_bamboo);
 
         FormCardStatisticsSettings title = addCardWithTint(R.drawable.title, "",
                 Color.rgb(126,105,0), //left frame
                 Color.rgb(163,136,0), //right frame
                 Color.rgb(160,32,240)); //text color);
-        FormCardStatisticsSettings label = addCardWithTint(R.drawable.label, "",
-                Color.rgb(126,105,0), //left frame
-                Color.rgb(163,136,0), //right frame
-                Color.rgb(160,32,240)); //text color);
+
         FormCardStatisticsSettings grow = addCardWithTint(R.drawable.timer_white, "",
                 Color.rgb(126,105,0), //left frame
                 Color.rgb(163,136,0), //right frame
@@ -130,6 +135,7 @@ public class StorageFragment extends GiickosFragment {
 
 
 
+
         //Bamboo buttons
         RecyclerView recyclerView = view.findViewById(R.id.bamboo_recycler_view);
         //Li assignem un layout manager
@@ -137,12 +143,15 @@ public class StorageFragment extends GiickosFragment {
         recyclerView.setLayoutManager(manager);
 
         //Init adapter + set adapter to recycler view
-        BambooScrollListAdapter bambooListAdapter = new BambooScrollListAdapter(getContext(), viewModel.getBamboos());
+        BambooScrollListAdapter bambooListAdapter = new BambooScrollListAdapter(getContext(), viewModel.getHarvestedBamboos());
         recyclerView.setAdapter(bambooListAdapter);
 
         bambooListAdapter.setOnItemClickListener(new BambooScrollListAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(Bamboo bamboo) {
+                ScrollView scrollView = view.findViewById(R.id.scrollView3);
+                scrollView.scrollTo(0,0);
+
                 title.updateLabel("Title: " + bamboo.getTitle());
                 grow.updateLabel("Total growth time: " + bamboo.getTotalGrowth() + "days");
 
@@ -154,6 +163,44 @@ public class StorageFragment extends GiickosFragment {
                 letter.setDescription(bamboo.getAnswer("letter"));
 
                 view.findViewById(R.id.storage_bamboo_info_menu).setVisibility(View.VISIBLE);
+
+                viewModel.setCurrentHarvestedBamboo(bamboo);
+            }
+        });
+
+
+        //Observer for the planted bamboo in order to update the view using updateBambooView
+        final Observer<List<Bamboo>> lookerOfBamboo = new Observer<List<Bamboo>>() {
+            @Override
+            public void onChanged(List<Bamboo> integerBambooMap) {
+                //Update the bamboo phase
+                bambooListAdapter.notifyDataSetChanged();
+                System.out.println("Bamboo observer");
+            }
+
+        };
+
+        viewModel.getBamboos().observe(getViewLifecycleOwner(),lookerOfBamboo);
+
+        remove.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Alert alert = new Alert(getActivity(), "Dangerous operation!", "Are you really sure you want to remove this bamboo FORVER? This action cannot be undone!");
+                alert.setPositiveButton("Yes!", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        viewModel.removeHarvestedBamboo();
+                        view.findViewById(R.id.storage_bamboo_info_menu).setVisibility(View.GONE);
+                    }
+                });
+                alert.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+                alert.show();
             }
         });
 

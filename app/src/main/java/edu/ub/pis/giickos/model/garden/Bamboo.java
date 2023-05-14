@@ -97,6 +97,8 @@ public class Bamboo
     }
     public boolean canBeWatered()
     {
+        //For TESTING purposes, make this method always return true in order to infinite watering
+
         //First time watering, so ofc it can be watered
         if(lastWatered == null)
             return true;
@@ -112,6 +114,10 @@ public class Bamboo
         return false;
     }
 
+    public boolean harvest()
+    {
+        return this.growth == this.totalGrowth;
+    }
 
 
 }

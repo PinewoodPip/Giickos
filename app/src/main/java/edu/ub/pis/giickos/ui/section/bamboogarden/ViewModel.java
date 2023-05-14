@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -69,11 +70,17 @@ public class ViewModel  extends androidx.lifecycle.ViewModel
     //Map that holds the bamboos planted, the key is the position in the garden and the value is the bamboo
     MutableLiveData<Map <Integer, Bamboo>> bamboos = new MutableLiveData<>();
 
+
+    //List that holds the harvested bamboos
+    MutableLiveData<List<Bamboo>> harvestedBamboos = new MutableLiveData<>();
+
+
     //A bamboo form that holds the information of the bamboo that is being planted
     BambooForm bambooForm = new BambooForm();
 
     //When  touching a bamboo in the garden, this variable holds the position of the bamboo
     private int selectedSlot = -1;
+    private Bamboo selectedHarvestedBamboo = null;
 
     private class BambooForm{
         public String title = "";
@@ -98,6 +105,7 @@ public class ViewModel  extends androidx.lifecycle.ViewModel
     public ViewModel()
     {
         this.bamboos.setValue(new HashMap<>());
+        this.harvestedBamboos.setValue(new LinkedList<>());
     }
     public LiveData<Map<Integer, Bamboo>> getPlantedBamboo()
     {
@@ -105,31 +113,14 @@ public class ViewModel  extends androidx.lifecycle.ViewModel
     }
 
     //Provisional --------------------------------------------------------------
-    public List<Bamboo> getBamboos()
+    public LiveData<List<Bamboo>> getBamboos()
     {
-        //TODO: Get the bamboos from the map
-        //TODO: Get the bamboos from database
-        List<Bamboo> bamboos = new ArrayList<>();
+        return harvestedBamboos;
+    }
 
-        Map<String, String> questionsAnswers = new HashMap<>();
-        questionsAnswers.put("1", "This is an answer");
-        questionsAnswers.put("2", "This is an answer");
-        questionsAnswers.put("3", "This is an answer");
-        questionsAnswers.put("4", "This is an answer");
-        questionsAnswers.put("letter", "This is an answer");
-
-        Map<String, String> thisIsTheAnswer = new HashMap<>();
-        thisIsTheAnswer.put("1", "rewsmar na si sihT");
-        thisIsTheAnswer.put("2", "rewsmar na si sihT");
-        thisIsTheAnswer.put("3", "rewsmar na si sihT");
-        thisIsTheAnswer.put("4", "rewsmar na si sihT");
-        thisIsTheAnswer.put("letter", "rewsmar na si sihT");
-
-
-
-        bamboos.add(new Bamboo(0,"Drink water",  questionsAnswers, 1, 7));
-        bamboos.add(new Bamboo(1,"Use Giickos",  thisIsTheAnswer, 3,21));
-        return bamboos;
+    public List<Bamboo> getHarvestedBamboos()
+    {
+        return harvestedBamboos.getValue();
     }
     //--------------------------------------------------------------
 
@@ -220,6 +211,7 @@ public class ViewModel  extends androidx.lifecycle.ViewModel
         return selectedSlot;
     }
 
+    //Method that waters the bamboo in the selected slot
     public boolean waterBamboo(int selectedSlot) {
         Bamboo currentBamboo = bamboos.getValue().get(selectedSlot);
         //Tries to water the bamboo, if it is watered, it updates the value of the bamboo
@@ -233,10 +225,39 @@ public class ViewModel  extends androidx.lifecycle.ViewModel
         return false;
     }
 
+    //Method that removes the bamboo in the selected slot
     public void removeBamboo(int selectedSlot) {
         bamboos.getValue().remove(selectedSlot);
         bamboos.setValue(bamboos.getValue());
     }
+
+    //Method that harvests the bamboo in the selected slot
+    public boolean harvestBamboo(int selectedSlot) {
+
+        Bamboo currentBamboo = bamboos.getValue().get(selectedSlot);
+        //Tries to harvest the bamboo, if it is not ready, it returns false
+        if(!currentBamboo.harvest())
+            return false;
+
+        //Otherwise, it adds the bamboo to the harvested bamboos and removes it from the planted bamboos
+        harvestedBamboos.getValue().add(currentBamboo);
+        harvestedBamboos.setValue(harvestedBamboos.getValue());
+
+        bamboos.getValue().remove(selectedSlot);
+        bamboos.setValue(bamboos.getValue());
+
+        return true;
+    }
+
+    public void setCurrentHarvestedBamboo(Bamboo bamboo) {
+        selectedHarvestedBamboo = bamboo;
+    }
+
+    public void removeHarvestedBamboo() {
+        harvestedBamboos.getValue().remove(selectedHarvestedBamboo);
+        harvestedBamboos.setValue(harvestedBamboos.getValue());
+    }
+
 
 
 

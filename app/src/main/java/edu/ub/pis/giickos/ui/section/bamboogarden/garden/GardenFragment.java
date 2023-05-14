@@ -21,6 +21,7 @@ import android.widget.ScrollView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import edu.ub.pis.giickos.GiickosFragment;
@@ -32,6 +33,7 @@ import edu.ub.pis.giickos.ui.generic.form.FormCardGarden;
 import edu.ub.pis.giickos.ui.generic.form.FormCardStatisticsSettings;
 import edu.ub.pis.giickos.ui.generic.form.FormSpinner;
 import edu.ub.pis.giickos.ui.generic.form.TextField;
+import edu.ub.pis.giickos.ui.section.bamboogarden.TabbedView;
 import edu.ub.pis.giickos.ui.section.bamboogarden.ViewModel;
 
 /**
@@ -404,9 +406,6 @@ public class GardenFragment extends GiickosFragment {
         questions[2] = addFragmentToInfoMenu(getResources().getString(R.string.bamboo_question_3), bambooName);
         questions[3] = addFragmentToInfoMenu(getResources().getString(R.string.bamboo_question_4), bambooName);
 
-
-        //TODO update the bamboo grow phase from the viewmodel and set the image
-        //TODO, if the shovel is selected, and then we select a bamboo slot, we remove the bamboo from that slot
         //The following listener gets the information from the viewmodel and updates the view using the slot.
         bamboo_s0.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -470,12 +469,42 @@ public class GardenFragment extends GiickosFragment {
         //Harvests the bamboo
         harvest.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                //TODO harvest the bamboo, add to the storage
-                System.out.println("Harvest the bamboo");
-                closeWindows(view);
-            }
-        });
+            public void onClick(View v)
+            {
+
+                Bamboo bamboo = viewModel.getSlotBamboo(viewModel.getSelectedSlot());
+                if(!bamboo.harvest())
+                {
+                    Toast.makeText(getActivity(), "The bamboo is not ready to be harvested!", Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                Alert alert = new Alert(getActivity(), "Harvest", "Are you sure you want to harvest the bamboo?");
+                alert.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (viewModel.harvestBamboo(viewModel.getSelectedSlot()))
+                        {
+                            System.out.println("Harvest the bamboo");
+                            closeWindows(view);
+                            Alert alert = new Alert(getActivity(), "Congratulations!", "You harvested the bamboo! Go to the storage tab to view the collected bamboo.");
+                            alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                }
+                            });
+                            alert.setNegativeButton("", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                }
+                            });
+
+
+                        }
+                    }
+                }).show();
+            }});
 
         //Removes the selected bamboo.
         remove.setOnClickListener(new View.OnClickListener() {
