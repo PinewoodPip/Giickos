@@ -1,6 +1,7 @@
 package edu.ub.pis.giickos.resources.dao.mock;
 
 import edu.ub.pis.giickos.resources.dao.DAOFactory;
+import edu.ub.pis.giickos.resources.dao.GardenDAO;
 import edu.ub.pis.giickos.resources.dao.ProjectDAO;
 
 public class MockDAOFactory implements DAOFactory {
@@ -9,4 +10,11 @@ public class MockDAOFactory implements DAOFactory {
     public ProjectDAO getProjectDAO() {
         return new MockProjectDAO();
     }
+
+    @Override
+    public GardenDAO getGardenDAO() {
+        return new MockGardenDAO();
+    }
+
+
 }

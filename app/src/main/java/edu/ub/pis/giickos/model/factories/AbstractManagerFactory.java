@@ -1,5 +1,6 @@
 package edu.ub.pis.giickos.model.factories;
 
+import edu.ub.pis.giickos.model.garden.GardenManager;
 import edu.ub.pis.giickos.model.project.ProjectManager;
 import edu.ub.pis.giickos.model.statistics.StatisticsManager;
 import edu.ub.pis.giickos.model.user.UserManager;
@@ -18,4 +19,7 @@ public abstract class AbstractManagerFactory {
     public abstract UserManager createUserManager();
 
     public abstract StatisticsManager createStatisticsManager();
+
+    public abstract GardenManager createGardenManager(UserManager userManager);
+
 }
