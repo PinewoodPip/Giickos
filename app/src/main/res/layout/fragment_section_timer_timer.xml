@@ -51,6 +51,13 @@
         </TableRow>
 
         <TextView
+            android:id="@+id/textView_timer_mode"
+            android:layout_width="match_parent"
+            android:layout_height="34dp"
+            android:gravity="center"
+            android:text="Pomodoro" />
+
+        <TextView
             android:id="@+id/textView_timer"
             android:layout_width="match_parent"
             android:layout_height="103dp"

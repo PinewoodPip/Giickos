@@ -3,6 +3,8 @@ package edu.ub.pis.giickos.ui.section.timer;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.os.CountDownTimer;
 import android.view.LayoutInflater;
@@ -28,7 +30,7 @@ public class TimerFragment extends Fragment {
     private Button selectTaskButton;
 
     private Button resetButton;
-    private Button setMinuteButton;
+    private Button setPomodoroButton;
 
     private Button setBreakButton;
 
@@ -38,15 +40,11 @@ public class TimerFragment extends Fragment {
     private EditText editBreakMinuteEdittext;
     private TextView timerView;
 
-    private CountDownTimer countDownTimer;
+    private TextView timerMode;
 
-    private boolean istimerRunning;
+    private ViewModel viewModel;
 
-    private long startTimeInMillis;
-    private long timeLeftInMillis;
-    private long endTime;
 
-    private long breakTime;
 
     public TimerFragment() {
         // Required empty public constructor
@@ -64,13 +62,14 @@ public class TimerFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        viewModel = new ViewModelProvider(getActivity()).get(ViewModel.class);
     }
+
     public void onViewCreated(View view, Bundle bundle){
 
         startPauseButton = view.findViewById(R.id.button_start_timer);
         selectTaskButton = view.findViewById(R.id.button_select_task);
-        setMinuteButton = view.findViewById(R.id.button_set_minutes);
+        setPomodoroButton = view.findViewById(R.id.button_set_minutes);
         resetButton = view.findViewById(R.id.button_reset_timer);
         setBreakButton = view.findViewById(R.id.button_set_break);
 
@@ -78,13 +77,16 @@ public class TimerFragment extends Fragment {
         editMinuteEdittext = view.findViewById(R.id.edit_text_minutes);
         editBreakMinuteEdittext = view.findViewById(R.id.edit_text_minutes_break);
         timerView = view.findViewById(R.id.textView_timer);
+        timerMode = view.findViewById(R.id.textView_timer_mode);
+
+        timerMode.setText("Pomodoro");
+        viewModel.setTime(viewModel.pomodoroTimeInMillis);
+        viewModel.isPomodoro = true;
 
 
-
-        setMinuteButton.setOnClickListener(new View.OnClickListener() {
+        setPomodoroButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
 
                 String input = editMinuteEdittext.getText().toString();
 
@@ -93,10 +95,13 @@ public class TimerFragment extends Fragment {
 
                 if (input.length() >= 0 && millisInput >= 0){
                     System.out.println("set metode correcte");
-                    setTime(millisInput);
+                    viewModel.pomodoroTimeInMillis = millisInput;
+                    if(viewModel.getIsPomodoro()){
+                        viewModel.setTime(millisInput);
+                    }
+
                     editMinuteEdittext.setText("");
                 }
-
 
             }
         });
@@ -108,7 +113,10 @@ public class TimerFragment extends Fragment {
                 long millisInput = Long.parseLong(input) * 60000;
                 if (input.length() >= 0 && millisInput >= 0){
                     System.out.println("set metode correcte");
-                    breakTime = millisInput;
+                    viewModel.breakTimeInMillis = millisInput;
+                    if(!viewModel.getIsPomodoro()){
+                        viewModel.setTime(millisInput);
+                    }
                     editBreakMinuteEdittext.setText("");
                 }
 
@@ -122,10 +130,13 @@ public class TimerFragment extends Fragment {
 
                 //System.out.println("startButton clicked");
 
-                if (istimerRunning) {
-                    pauseTimer();
+                if (viewModel.getIsIstimerRunning()) {
+                    viewModel.pauseTimer();
+                    //startPauseButton.setVisibility(View.VISIBLE);
                 } else {
-                    startTimer();
+                    viewModel.startTimer();
+                    //startPauseButton.setVisibility(View.VISIBLE);
+
                 }
             }
         });
@@ -133,7 +144,7 @@ public class TimerFragment extends Fragment {
         resetButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                resetTimer();
+                viewModel.resetTimer();
             }
         });
 
@@ -150,104 +161,108 @@ public class TimerFragment extends Fragment {
             public void onClick(View view) {
                 //TODO;
                 System.out.println("detoxCheckbox clicked");
+
             }
         });
-
-    }
-    private void setTime(long milliseconds) {
-        startTimeInMillis = milliseconds;
-        resetTimer();
-    }
-
-    private void startTimer() {
-        endTime = System.currentTimeMillis() + timeLeftInMillis;
-
-        countDownTimer = new CountDownTimer(timeLeftInMillis, 1000) {
+        /*
+        final Observer<Long> observerPomodoroTimeInMillis = new Observer<Long>() {
             @Override
-            public void onTick(long millisUntilFinished) {
-                timeLeftInMillis = millisUntilFinished;
-                updateCountDownText();
-            }
+            public void onChanged(Long time) { viewModel.pomodoroTimeInMillis.setValue(time);}
+        };
 
+        viewModel.getPomodoroTimeInMillis().observe(this.getViewLifecycleOwner(), observerPomodoroTimeInMillis);
+
+        final Observer<Long> observerBreakTimeInMillis = new Observer<Long>() {
             @Override
-            public void onFinish() {
-                istimerRunning = false;
-                //updateWatchInterface();
+            public void onChanged(Long time) { viewModel.breakTimeInMillis.setValue(time);}
+        };
 
+        viewModel.getBreakTimeInMillis().observe(this.getViewLifecycleOwner(), observerBreakTimeInMillis);
+         */
 
-                timeLeftInMillis = breakTime;
-                setTime(timeLeftInMillis);
-                updateCountDownText();
-                //updateWatchInterface();
-
-                //TODO: notification
+        final Observer<String> observerTimer = new Observer<String>() {
+            @Override
+            public void onChanged(String timer) {
+                timerView.setText(timer);
             }
-        }.start();
+        };
 
-        istimerRunning = true;
-        updateWatchInterface();
-    }
+        viewModel.getTimer().observe(this.getViewLifecycleOwner(), observerTimer);
 
-    private void pauseTimer() {
-        countDownTimer.cancel();
-        istimerRunning = false;
-        updateWatchInterface();
-    }
 
-    private void resetTimer() {
-        timeLeftInMillis = startTimeInMillis;
-        updateCountDownText();
-        updateWatchInterface();
-    }
-
-    private void updateCountDownText() {
-        int hours = (int) (timeLeftInMillis / 1000) / 3600;
-        int minutes = (int) ((timeLeftInMillis / 1000) % 3600) / 60;
-        int seconds = (int) (timeLeftInMillis / 1000) % 60;
-
-        String timeLeftFormatted;
-        if (hours > 0) {
-            timeLeftFormatted = String.format(Locale.getDefault(),
-                    "%d:%02d:%02d", hours, minutes, seconds);
-        } else {
-            timeLeftFormatted = String.format(Locale.getDefault(),
-                    "%02d:%02d", minutes, seconds);
-        }
-
-        timerView.setText(timeLeftFormatted);
-
-    }
-
-    private void updateWatchInterface() {
-        if (istimerRunning) {
-            editMinuteEdittext.setVisibility(View.INVISIBLE);
-            editBreakMinuteEdittext.setVisibility(View.INVISIBLE);
-            setMinuteButton.setVisibility(View.INVISIBLE);
-            setBreakButton.setVisibility(View.INVISIBLE);
-            resetButton.setVisibility(View.INVISIBLE);
-            startPauseButton.setText("Pause");
-        } else {
-            editMinuteEdittext.setVisibility(View.VISIBLE);
-            editBreakMinuteEdittext.setVisibility(View.VISIBLE);
-            setMinuteButton.setVisibility(View.VISIBLE);
-            setBreakButton.setVisibility(View.VISIBLE);
-            startPauseButton.setText("Start");
-
-            if (timeLeftInMillis < 1000) {
-                startPauseButton.setVisibility(View.INVISIBLE);
-            } else {
-                startPauseButton.setVisibility(View.VISIBLE);
+        final Observer<String> observerTextStartPauseButton = new Observer<String>() {
+            @Override
+            public void onChanged(String textStartPauseButton) {
+                startPauseButton.setText(textStartPauseButton);
             }
+        };
+        viewModel.getTextStartPauseButton().observe(this.getViewLifecycleOwner(), observerTextStartPauseButton);
 
-            if (timeLeftInMillis < startTimeInMillis) {
-                resetButton.setVisibility(View.VISIBLE);
-            } else {
-                resetButton.setVisibility(View.INVISIBLE);
+        final Observer<String> observerTextTimerMode = new Observer<String>() {
+            @Override
+            public void onChanged(String textTimerMode) {
+                timerMode.setText(textTimerMode);
             }
-        }
+        };
+
+        viewModel.getTextTimerMode().observe(this.getViewLifecycleOwner(), observerTextTimerMode);
+
+
+        final Observer<Boolean> observerVisibilityEditMinuteEdittext = new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean visibilityEditMinuteEdittext) {
+                editMinuteEdittext.setVisibility(visibilityEditMinuteEdittext? View.VISIBLE : View.INVISIBLE);
+            }
+        };
+        viewModel.getVisibilityEditMinuteEdittext().observe(this.getViewLifecycleOwner(), observerVisibilityEditMinuteEdittext);
+
+        final Observer<Boolean> observerVisibilityEditBreakMinuteEdittext = new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean visibilityEditBreakMinuteEdittext) {
+                editBreakMinuteEdittext.setVisibility(visibilityEditBreakMinuteEdittext ? View.VISIBLE : View.INVISIBLE);
+            }
+        };
+        viewModel.getVisibilityEditBreakMinuteEdittext().observe(this.getViewLifecycleOwner(), observerVisibilityEditBreakMinuteEdittext);
+
+
+        final Observer<Boolean> observerVisibilitySetPomodoroButton = new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean visibilitySetPomodoroButton) {
+                setPomodoroButton.setVisibility(visibilitySetPomodoroButton? View.VISIBLE : View.INVISIBLE);
+            }
+        };
+        viewModel.getVisibilitySetPomodoroButton().observe(this.getViewLifecycleOwner(), observerVisibilitySetPomodoroButton);
+
+        final Observer<Boolean> observerVisibilitySetBreakButton = new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean visibilitySetBreakButton) {
+                setBreakButton.setVisibility(visibilitySetBreakButton? View.VISIBLE : View.INVISIBLE);
+            }
+        };
+        viewModel.getVisibilitySetBreakButton().observe(this.getViewLifecycleOwner(), observerVisibilitySetBreakButton);
+
+
+        final Observer<Boolean> observerVisibilityResetButton = new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean visibilityResetButton) {
+                resetButton.setVisibility(visibilityResetButton? View.VISIBLE : View.INVISIBLE);
+            }
+        };
+        viewModel.getVisibilityResetButton().observe(this.getViewLifecycleOwner(), observerVisibilityResetButton);
+
+
+        final Observer<Boolean> observerVisibilityStartPauseButton = new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean visibilityStartPauseButton) {
+                startPauseButton.setVisibility(visibilityStartPauseButton? View.VISIBLE : View.INVISIBLE);
+            }
+        };
+        viewModel.getVisibilityStartPauseButton().observe(this.getViewLifecycleOwner(), observerVisibilityStartPauseButton);
+
+
+
+
     }
-
-
 
 
     @Override
@@ -256,4 +271,5 @@ public class TimerFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_section_timer_timer, container, false);
     }
+
 }

@@ -5,6 +5,10 @@
     <!--- Permis per bloquejar les notificacions -->
     <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
 
+    <!--- Permis per bloquejar altres aplicacions -->
+    <uses-permission android:name="android.permission.PACKAGE_USAGE_STATS" tools:ignore="ProtectedPermissions" />
+
+
 
     <application
         android:allowBackup="true"
