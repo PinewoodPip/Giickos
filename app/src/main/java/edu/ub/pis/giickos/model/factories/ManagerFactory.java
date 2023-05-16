@@ -1,7 +1,9 @@
 package edu.ub.pis.giickos.model.factories;
 
+import edu.ub.pis.giickos.model.garden.GardenManager;
 import edu.ub.pis.giickos.model.project.ProjectManager;
 import edu.ub.pis.giickos.model.statistics.StatisticsManager;
+import edu.ub.pis.giickos.model.user.User;
 import edu.ub.pis.giickos.model.user.UserManager;
 import edu.ub.pis.giickos.resources.dao.DAOFactory;
 
@@ -25,4 +27,7 @@ public class ManagerFactory extends AbstractManagerFactory {
     public StatisticsManager createStatisticsManager() {
         return new StatisticsManager();
     }
+
+    @Override
+    public GardenManager createGardenManager(UserManager userManager) { return new GardenManager(daoFactory.getGardenDAO(), userManager); }
 }

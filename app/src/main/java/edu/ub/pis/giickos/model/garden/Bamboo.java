@@ -120,4 +120,13 @@ public class Bamboo
     }
 
 
+    public int getSlot() {
+        return slot;
+    }
+
+    public void setSlot(int slot) {
+        this.slot = slot;
+    }
+
+
 }

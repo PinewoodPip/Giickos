@@ -12,7 +12,9 @@ import java.util.List;
 import java.util.Map;
 
 import edu.ub.pis.giickos.R;
+import edu.ub.pis.giickos.model.ModelHolder;
 import edu.ub.pis.giickos.model.garden.Bamboo;
+import edu.ub.pis.giickos.model.garden.GardenManager;
 
 public class ViewModel  extends androidx.lifecycle.ViewModel
 {
@@ -102,27 +104,44 @@ public class ViewModel  extends androidx.lifecycle.ViewModel
         }
 
     }
+
+    private GardenManager gardenManager;
+
     public ViewModel()
     {
+        this.gardenManager = ModelHolder.INSTANCE.getGardenManager();
         this.bamboos.setValue(new HashMap<>());
         this.harvestedBamboos.setValue(new LinkedList<>());
+        loadFromManager();
     }
+
+    private void loadFromManager()
+    {
+        harvestedBamboos.getValue().clear();
+        harvestedBamboos.setValue(gardenManager.getStoredBamboos());
+
+        bamboos.getValue().clear();
+        bamboos.setValue(gardenManager.getPlantedBamboos());
+    }
+
+    //LiveData---------------------------------
     public LiveData<Map<Integer, Bamboo>> getPlantedBamboo()
     {
         return bamboos;
     }
 
-    //Provisional --------------------------------------------------------------
     public LiveData<List<Bamboo>> getBamboos()
     {
         return harvestedBamboos;
     }
+    //--------------------------------------------------------------
 
+    //Loads the recycler view by using the list of harvested Bamboos
     public List<Bamboo> getHarvestedBamboos()
     {
         return harvestedBamboos.getValue();
     }
-    //--------------------------------------------------------------
+
 
 
     //Checks if there is a bamboo planted in the given slot
@@ -146,6 +165,8 @@ public class ViewModel  extends androidx.lifecycle.ViewModel
         return -1;
     }
 
+    //[TODO] probably when using firebase, handle when is not successful, maybe change boolean to int in order to return error codes
+
     //If the bamboo form is complete, it creates a bamboo and adds it to the map of bamboos
     //---------------------------------- Start of bamboo form methods ----------------------------------
     public boolean plantBamboo(int slot)
@@ -161,11 +182,15 @@ public class ViewModel  extends androidx.lifecycle.ViewModel
                 0, bambooForm.totalGrowth);
 
         //Gets the current bamboos that are planted, and add the new one
-        Map <Integer, Bamboo> newBamboo = bamboos.getValue();
-        newBamboo.put(slot, bamboo);
-        bamboos.setValue(newBamboo); //Making it this way, we update and call the observer
 
-        //TODO add the info the the database by calling the model
+        if(gardenManager.plantBamboo(bamboo))
+        {
+            System.out.println("Bamboo planted in garden manager");
+        }
+
+        //bamboos.getValue().put(slot, bamboo);
+        bamboos.setValue(bamboos.getValue()); //Making it this way, we update and call the observer
+
 
         //Clear the form for the next bamboo by setting a new empty BambooForm
         bambooForm = new BambooForm();
@@ -217,8 +242,14 @@ public class ViewModel  extends androidx.lifecycle.ViewModel
         //Tries to water the bamboo, if it is watered, it updates the value of the bamboo
         if(currentBamboo.water())
         {
-            bamboos.getValue().put(selectedSlot, currentBamboo);
+            if(gardenManager.updatePlantedBamboo(currentBamboo))
+            {
+                System.out.println("Bamboo updated in garden manager");
+            }
+
+            //bamboos.getValue().put(selectedSlot, currentBamboo);
             bamboos.setValue(bamboos.getValue());
+
             return true;
         }
         //Otherwise, it returns false as the info is not updated
@@ -227,8 +258,16 @@ public class ViewModel  extends androidx.lifecycle.ViewModel
 
     //Method that removes the bamboo in the selected slot
     public void removeBamboo(int selectedSlot) {
-        bamboos.getValue().remove(selectedSlot);
+
+        if(gardenManager.deletePlantedBamboo(selectedSlot))
+        {
+            System.out.println("Bamboo removed in garden manager");
+        }
+
+        //bamboos.getValue().remove(selectedSlot);
         bamboos.setValue(bamboos.getValue());
+
+
     }
 
     //Method that harvests the bamboo in the selected slot
@@ -240,11 +279,17 @@ public class ViewModel  extends androidx.lifecycle.ViewModel
             return false;
 
         //Otherwise, it adds the bamboo to the harvested bamboos and removes it from the planted bamboos
-        harvestedBamboos.getValue().add(currentBamboo);
+        if(gardenManager.saveBambooToStorage(currentBamboo))
+        {
+            System.out.println("Bamboo harvested in garden manager");
+        }
+        //harvestedBamboos.getValue().add(currentBamboo);
         harvestedBamboos.setValue(harvestedBamboos.getValue());
 
-        bamboos.getValue().remove(selectedSlot);
+        //bamboos.getValue().remove(selectedSlot);
         bamboos.setValue(bamboos.getValue());
+
+
 
         return true;
     }
@@ -254,7 +299,13 @@ public class ViewModel  extends androidx.lifecycle.ViewModel
     }
 
     public void removeHarvestedBamboo() {
-        harvestedBamboos.getValue().remove(selectedHarvestedBamboo);
+
+        if(gardenManager.deleteStoredBamboo(selectedHarvestedBamboo))
+        {
+            System.out.println("Bamboo deleted in garden manager");
+        }
+
+        //harvestedBamboos.getValue().remove(selectedHarvestedBamboo);
         harvestedBamboos.setValue(harvestedBamboos.getValue());
     }
 
