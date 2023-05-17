@@ -5,7 +5,7 @@ import java.util.Map;
 
 public class Bamboo
 {
-    //public String id;
+    private String uniqueID;
     private int slot;
     private String title;
     private Map<String, String> questionsAnswers;
@@ -16,13 +16,14 @@ public class Bamboo
 
     private final int TOTAL_PHASES = 5; // 5 phases of growth the initial one does not count
 
-    public Bamboo(int slot, String title, Map<String, String> questionsAnswers, int growth, int totalGrowth)
+    public Bamboo(int slot, String title, Map<String, String> questionsAnswers, int growth, int totalGrowth, String uniqueID)
     {
         this.slot = slot;
         this.title = title;
         this.questionsAnswers = questionsAnswers;
         this.growth = growth;
         this.totalGrowth = totalGrowth;
+        this.uniqueID = uniqueID;
     }
 
     public void addAnswer(String question, String answer)
@@ -45,6 +46,10 @@ public class Bamboo
 
     public void setQuestionsAnswers(Map<String, String> questionsAnswers) {
         this.questionsAnswers = questionsAnswers;
+    }
+
+    public Map<String, String> getAnswers() {
+        return questionsAnswers;
     }
 
     public int getGrowth() {
@@ -127,6 +132,24 @@ public class Bamboo
     public void setSlot(int slot) {
         this.slot = slot;
     }
+
+    public void setUniqueID(String uniqueID) {
+        this.uniqueID = uniqueID;
+    }
+
+    public String getUniqueID() {
+        return uniqueID;
+    }
+
+    public long getLastTimeWatered() {
+        if(lastWatered == null)
+            return 0;
+        return lastWatered.toEpochDay();
+    }
+    public void setLastWatered(long lastWatered) {
+        this.lastWatered = LocalDate.ofEpochDay(lastWatered);
+    }
+
 
 
 }

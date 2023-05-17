@@ -144,12 +144,22 @@ public abstract class CachedGardenDAO implements GardenDAO {
     }
 
     /**
+     * This method returns the bamboo in the garden using the slot as the key.
      * @param slotID
      * @return
      */
     @Override
     public Bamboo getPlantedBamboo(int slotID) {
         return plantedBamboos.get(slotID);
+    }
+
+    /**
+     * This method clears the data of the garden.
+     */
+    @Override
+    public void clearData() {
+        plantedBamboos.clear();
+        storedBamboos.clear();
     }
 
 }

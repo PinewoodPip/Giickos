@@ -2,6 +2,7 @@ package edu.ub.pis.giickos.resources.dao.mock;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 import edu.ub.pis.giickos.model.garden.Bamboo;
 import edu.ub.pis.giickos.model.user.User;
@@ -38,11 +39,11 @@ public class MockGardenDAO extends CachedGardenDAO{
         answers.put("4", "Fourth");
         answers.put("letter", "This is the letter");
 
-        Bamboo bamboo1 = new Bamboo(0, "Drink water", answers, 1, 3);
-        Bamboo bamboo2 = new Bamboo(1, "Sleep well", answers, 2, 7);
-        Bamboo bamboo3 = new Bamboo(2, "Clean the dishes", answers, 3, 3);
-        Bamboo bamboo5 = new Bamboo(4, "Exercise", answers, 15, 30);
-        Bamboo bamboo6 = new Bamboo(5, "Water the plants", answers, 28, 30);
+        Bamboo bamboo1 = new Bamboo(0, "Drink water", answers, 1, 3, UUID.randomUUID().toString());
+        Bamboo bamboo2 = new Bamboo(1, "Sleep well", answers, 2, 7, UUID.randomUUID().toString());
+        Bamboo bamboo3 = new Bamboo(2, "Clean the dishes", answers, 3, 3, UUID.randomUUID().toString());
+        Bamboo bamboo5 = new Bamboo(4, "Exercise", answers, 15, 30, UUID.randomUUID().toString());
+        Bamboo bamboo6 = new Bamboo(5, "Water the plants", answers, 28, 30, UUID.randomUUID().toString());
 
 
         plantedBamboos.put(0, bamboo1);
@@ -58,7 +59,7 @@ public class MockGardenDAO extends CachedGardenDAO{
         doneAnswers.put("4", "P4");
         doneAnswers.put("letter", "L1");
 
-        Bamboo bamboo4 = new Bamboo(3, "Work in the project", doneAnswers, 60, 60);
+        Bamboo bamboo4 = new Bamboo(3, "Work in the project", doneAnswers, 60, 60, UUID.randomUUID().toString());
 
         storedBamboos.add(bamboo4);
     }

@@ -5,11 +5,11 @@ import android.util.Log;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import edu.ub.pis.giickos.R;
 import edu.ub.pis.giickos.model.ModelHolder;
@@ -179,7 +179,7 @@ public class ViewModel  extends androidx.lifecycle.ViewModel
 
         //Retrieves the data from the form that the user has inputed from the menu  to generate a bamboo
         Bamboo bamboo = new Bamboo(slot, bambooForm.title, bambooForm.questionsAnswers,
-                0, bambooForm.totalGrowth);
+                0, bambooForm.totalGrowth , UUID.randomUUID().toString());
 
         //Gets the current bamboos that are planted, and add the new one
 

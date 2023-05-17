@@ -23,9 +23,11 @@ public interface GardenDAO {
     boolean saveBambooToStorage(Bamboo bamboo);
     boolean deleteStoredBamboo(Bamboo bamboo);
 
+    // General methods
     void loadDataForUser(User user, GardenDAO.DataLoadedListener listener);
     public static abstract class DataLoadedListener {
         public abstract void onLoad(boolean success);
     }
 
+    void clearData();
 }

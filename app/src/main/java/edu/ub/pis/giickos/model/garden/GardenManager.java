@@ -3,6 +3,8 @@ package edu.ub.pis.giickos.model.garden;
 import java.util.List;
 import java.util.Map;
 
+import edu.ub.pis.giickos.model.observer.ObservableEvent;
+import edu.ub.pis.giickos.model.observer.Observer;
 import edu.ub.pis.giickos.model.user.UserManager;
 import edu.ub.pis.giickos.resources.dao.GardenDAO;
 
@@ -11,12 +13,18 @@ public class GardenManager
     private GardenDAO daoGarden;
     public GardenManager(GardenDAO daoGarden, UserManager userManager) {
         this.daoGarden = daoGarden;
-        daoGarden.loadDataForUser(userManager.getLoggedInUser(), new GardenDAO.DataLoadedListener() {
+        userManager.subscribe(UserManager.Events.LOGGED_IN, new Observer() {
             @Override
-            public void onLoad(boolean success) {
-                //Use userManager to load data
+            public void update(ObservableEvent eventData) {
+                daoGarden.loadDataForUser(userManager.getLoggedInUser(), new GardenDAO.DataLoadedListener() {
+                    @Override
+                    public void onLoad(boolean success) {
+                    System.out.println("GardenManager updated: " + success);
+                    }
+                });
             }
         });
+
     }
 
     public Map <Integer, Bamboo> getPlantedBamboos()
@@ -42,10 +50,6 @@ public class GardenManager
     {
         return daoGarden.getStoredBamboos();
     }
-    public boolean addStoredBamboo(Bamboo bamboo)
-    {
-        return daoGarden.addStoredBamboo(bamboo);
-    }
     public boolean saveBambooToStorage(Bamboo bamboo)
     {
         return daoGarden.saveBambooToStorage(bamboo);
@@ -54,5 +58,8 @@ public class GardenManager
     {
         return daoGarden.deleteStoredBamboo(bamboo);
     }
+
+
+
 
 }
