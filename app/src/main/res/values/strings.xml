@@ -208,9 +208,13 @@
     <string name="register_password_confirm">Confirm Password</string>
     <string name="username">Username</string>
     <string name="msg_username">Enter your username</string>
-
     <string name="register_msg_createaccount_error_passwordmismatch">Password fields do not match.</string>
     <string name="register_msg_createaccount_error_missingfgields">All fields must be filled out.</string>
     <string name="register_msg_createaccount_error_fallback">Error while creating account. Check your connection, the fields or contact support.</string>
+
+    <!-- Strings related to notification -->
+    <string name="channel_name">Giickos</string>
+    <string name="channel_description">Giickos description</string>
+
 
 </resources>
