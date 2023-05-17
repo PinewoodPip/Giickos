@@ -39,7 +39,7 @@ import edu.ub.pis.giickos.ui.dialogs.Alert;
 import edu.ub.pis.giickos.ui.generic.DatePickerListener;
 import edu.ub.pis.giickos.ui.generic.Switch;
 import edu.ub.pis.giickos.ui.generic.TimePickerListener;
-import edu.ub.pis.giickos.ui.generic.form.FormCard;
+import edu.ub.pis.giickos.ui.generic.form.FancyFormCard;
 import edu.ub.pis.giickos.ui.generic.form.FormSpinner;
 import edu.ub.pis.giickos.ui.generic.form.TextField;
 
@@ -131,8 +131,8 @@ public class TaskCreator extends GiickosFragment {
         return getString(priority.stringResource);
     }
 
-    private FormCard addField(int iconID, String label, int backgroundColor) {
-        FormCard field = FormCard.newInstance(iconID, label, backgroundColor);
+    private FancyFormCard addField(int iconID, String label, int backgroundColor) {
+        FancyFormCard field = FancyFormCard.newInstance(iconID, label, backgroundColor);
 
         addChildFragment(field, R.id.list_main, true);
 
@@ -140,25 +140,25 @@ public class TaskCreator extends GiickosFragment {
     }
 
     // Overload with no background color override.
-    private FormCard addField(int iconID, String label) {
+    private FancyFormCard addField(int iconID, String label) {
         return addField(iconID, label, -1);
     }
 
     private void addTextField(int iconID, String label, String inputLabel, int inputType, @Nullable TextWatcher listener) {
-        FormCard field = addField(iconID, label);
+        FancyFormCard field = addField(iconID, label);
 
         field.addTextField(inputType, inputLabel, listener);
     }
 
     // Adds a field with a click listener.
     private void addClickableField(int iconID, String label, int backgroundColor, View.OnClickListener listener) {
-        FormCard field = addField(iconID, label, backgroundColor);
+        FancyFormCard field = addField(iconID, label, backgroundColor);
 
         field.setClickListener(listener);
     }
 
     private void addSwitchField(int iconID, String label, int backgroundColor, boolean checked, CompoundButton.OnCheckedChangeListener listener) {
-        FormCard card = addField(iconID, label, backgroundColor);
+        FancyFormCard card = addField(iconID, label, backgroundColor);
         edu.ub.pis.giickos.ui.generic.Switch switchFragment = Switch.newInstance(true);
         switchFragment.setListener(listener);
         switchFragment.setChecked(checked);
@@ -168,26 +168,26 @@ public class TaskCreator extends GiickosFragment {
     }
 
     private void addTimeField(String id, int iconID, String label, String timeLabel, TimePickerListener listener) {
-        FormCard field = addField(iconID, label);
+        FancyFormCard field = addField(iconID, label);
 
         field.addTimeField(id, timeLabel, listener);
     }
 
     private void addDateField(String id, int iconID, String label, String dateLabel, DatePickerListener listener) {
-        FormCard field = addField(iconID, label);
+        FancyFormCard field = addField(iconID, label);
 
         field.addDateField(id, dateLabel, listener);
     }
 
-    private FormCard addNumberField(int value, int minValue, int maxValue, int iconID, String label, NumberPicker.OnValueChangeListener listener, NumberPicker.Formatter formatter) {
-        FormCard card = addField(iconID, label);
+    private FancyFormCard addNumberField(int value, int minValue, int maxValue, int iconID, String label, NumberPicker.OnValueChangeListener listener, NumberPicker.Formatter formatter) {
+        FancyFormCard card = addField(iconID, label);
         card.addNumberField(value, minValue, maxValue, listener, formatter);
 
         return card;
     }
 
     private FormSpinner addSpinnerField(int iconID, String label, List<Object> items, int selectedIndex) {
-        FormCard field = addField(iconID, label);
+        FancyFormCard field = addField(iconID, label);
         List<String> itemStrings = new ArrayList<>();
         for (Object item : items) {
             itemStrings.add(item.toString());
@@ -355,7 +355,7 @@ public class TaskCreator extends GiickosFragment {
 
         addTimeField("StartTime", R.drawable.timer, getString(R.string.taskcreator_label_time_start), formatTime(viewModel.getStartTime()), timePickerListener);
 
-        FormCard durationCard = addNumberField(viewModel.getDurationInMinutes(), ViewModel.MIN_DURATION, ViewModel.MAX_DURATION, R.drawable.timer, getString(R.string.taskcreator_label_duration), new NumberPicker.OnValueChangeListener() {
+        FancyFormCard durationCard = addNumberField(viewModel.getDurationInMinutes(), ViewModel.MIN_DURATION, ViewModel.MAX_DURATION, R.drawable.timer, getString(R.string.taskcreator_label_duration), new NumberPicker.OnValueChangeListener() {
             @Override
             public void onValueChange(NumberPicker numberPicker, int oldValue, int minutes) {
                 viewModel.setDurationInMinutes(minutes);

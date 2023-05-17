@@ -21,7 +21,6 @@ import android.widget.ScrollView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 import edu.ub.pis.giickos.GiickosFragment;
@@ -30,10 +29,9 @@ import edu.ub.pis.giickos.model.garden.Bamboo;
 import edu.ub.pis.giickos.ui.dialogs.Alert;
 import edu.ub.pis.giickos.ui.generic.form.FormCard;
 import edu.ub.pis.giickos.ui.generic.form.FormCardGarden;
-import edu.ub.pis.giickos.ui.generic.form.FormCardStatisticsSettings;
+import edu.ub.pis.giickos.ui.generic.form.FancyFormCard;
 import edu.ub.pis.giickos.ui.generic.form.FormSpinner;
 import edu.ub.pis.giickos.ui.generic.form.TextField;
-import edu.ub.pis.giickos.ui.section.bamboogarden.TabbedView;
 import edu.ub.pis.giickos.ui.section.bamboogarden.ViewModel;
 
 /**
@@ -386,7 +384,7 @@ public class GardenFragment extends GiickosFragment {
         ImageView remove = view.findViewById(R.id.garden_remove_action);
         ImageView water = view.findViewById(R.id.garden_water_action);
 
-        FormCardStatisticsSettings[] cards = new FormCardStatisticsSettings[2];
+        FancyFormCard[] cards = new FancyFormCard[2];
 
         cards[0] = addCardWithTint(R.drawable.title, "Title: Water habit",
                 Color.rgb(126,105,0), //left frame
@@ -595,7 +593,7 @@ public class GardenFragment extends GiickosFragment {
 
     }
 
-    private void tryOpenBambooInfoMenu(FormCardStatisticsSettings[] cards, FormCardGarden[] questions, int slot, View view) {
+    private void tryOpenBambooInfoMenu(FancyFormCard[] cards, FormCardGarden[] questions, int slot, View view) {
         if(viewModel.isBambooPlanted(slot))
         {
             viewModel.setSelectedSlot(slot);
@@ -605,7 +603,7 @@ public class GardenFragment extends GiickosFragment {
 
     }
 
-    private void updateBambooMenuInfo(FormCardStatisticsSettings[] cards, FormCardGarden[] questions, View view)
+    private void updateBambooMenuInfo(FancyFormCard[] cards, FormCardGarden[] questions, View view)
     {
         //Puts the list menu at the top
         ScrollView scrollView = view.findViewById(R.id.garden_view_menu_scroller);
@@ -629,8 +627,8 @@ public class GardenFragment extends GiickosFragment {
         addChildFragment(formCardGarden, R.id.garden_bambo_goals, true);
         return formCardGarden;
     }
-    private FormCardStatisticsSettings addCardWithTint(int iconID, String label, int colorLeft, int colorRight, int colorText) {
-        FormCardStatisticsSettings card = FormCardStatisticsSettings.newInstance(iconID, label, colorLeft, colorRight, colorText);
+    private FancyFormCard addCardWithTint(int iconID, String label, int colorLeft, int colorRight, int colorText) {
+        FancyFormCard card = FancyFormCard.newInstance(iconID, label, colorLeft, colorRight, colorText);
         addChildFragment(card, R.id.garden_bambo_goals, true);
 
         return card;

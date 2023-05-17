@@ -1,5 +1,6 @@
 package edu.ub.pis.giickos.ui.generic.form;
 
+import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -8,12 +9,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.fragment.app.Fragment;
-
-import edu.ub.pis.giickos.GiickosFragment;
 import edu.ub.pis.giickos.R;
 
-public class FormCardStatisticsSettings extends GiickosFragment
+public class FancyFormCard extends ContainerCard
 {
     public static final String ARG_ICON = "Icon";
     public static final String ARG_LABEL = "Label";
@@ -31,10 +29,10 @@ public class FormCardStatisticsSettings extends GiickosFragment
 
     private View.OnClickListener clickListener;
 
-    public FormCardStatisticsSettings() {} // Required empty public constructor
+    public FancyFormCard() {} // Required empty public constructor
 
-    public static FormCardStatisticsSettings newInstance(int iconID, String label, int colorLeft, int colorRight, int colorText) {
-        FormCardStatisticsSettings fragment = new FormCardStatisticsSettings();
+    public static FancyFormCard newInstance(int iconID, String label, int colorLeft, int colorRight, int colorText) {
+        FancyFormCard fragment = new FancyFormCard();
         Bundle args = new Bundle();
 
         args.putInt(ARG_ICON, iconID);
@@ -47,7 +45,11 @@ public class FormCardStatisticsSettings extends GiickosFragment
         return fragment;
     }
 
-    public static FormCardStatisticsSettings newInstance(int iconID, String label) {
+    public static FancyFormCard newInstance(int iconID, String label, int color) {
+        return newInstance(iconID, label, color, color, Color.rgb(160,32,240)); // TODO unhardcode text color
+    }
+
+    public static FancyFormCard newInstance(int iconID, String label) {
         return newInstance(iconID, label, -1, -1 , -1);
     }
 
@@ -63,6 +65,12 @@ public class FormCardStatisticsSettings extends GiickosFragment
         if (view != null) {
             view.setOnClickListener(clickListener);
         }
+    }
+
+    public void updateLabel(String label)
+    {
+        TextView text = getView().findViewById(R.id.statistics_settings_label);
+        text.setText(label);
     }
 
     @Override
@@ -83,13 +91,8 @@ public class FormCardStatisticsSettings extends GiickosFragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_card_form_statistics, container, false);
+        return inflater.inflate(R.layout.fragment_card_form_fancy, container, false);
     }
-
-    public void addElement(Fragment fragment) {
-        addChildFragment(fragment, R.id.statistics_settings, true);
-    }
-
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState)
@@ -111,12 +114,11 @@ public class FormCardStatisticsSettings extends GiickosFragment
         }
 
         updateClickListener(view);
+        setListDirection(listDirection);
     }
 
-    public void updateLabel(String label)
-    {
-        TextView text = getView().findViewById(R.id.statistics_settings_label);
-        text.setText(label);
+    @Override
+    protected int getContainerID() {
+        return R.id.statistics_settings;
     }
-
 }

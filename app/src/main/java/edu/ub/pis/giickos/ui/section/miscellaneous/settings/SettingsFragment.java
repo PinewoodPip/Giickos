@@ -1,8 +1,5 @@
 package edu.ub.pis.giickos.ui.section.miscellaneous.settings;
 
-import static androidx.core.content.ContextCompat.startActivity;
-
-import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -16,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import edu.ub.pis.giickos.GiickosFragment;
@@ -24,7 +22,7 @@ import edu.ub.pis.giickos.ui.activities.login.LoginActivity;
 import edu.ub.pis.giickos.ui.activities.main.MainActivity;
 import edu.ub.pis.giickos.ui.dialogs.Alert;
 import edu.ub.pis.giickos.ui.generic.Switch;
-import edu.ub.pis.giickos.ui.generic.form.FormCardStatisticsSettings;
+import edu.ub.pis.giickos.ui.generic.form.FancyFormCard;
 import edu.ub.pis.giickos.ui.generic.form.TextField;
 
 // Displays the settings of the app. TODO
@@ -59,15 +57,15 @@ public class SettingsFragment extends GiickosFragment {
         return inflater.inflate(R.layout.fragment_section_miscellaneous_settings, container, false);
     }
 
-    private FormCardStatisticsSettings addCard(int iconID, String label) {
-        FormCardStatisticsSettings card = FormCardStatisticsSettings.newInstance(iconID, label);
+    private FancyFormCard addCard(int iconID, String label) {
+        FancyFormCard card = FancyFormCard.newInstance(iconID, label);
         addChildFragment(card, R.id.settings_list, true);
 
         return card;
     }
 
-    private FormCardStatisticsSettings addCardWithTint(int iconID, String label, int colorLeft, int colorRight, int colorText) {
-        FormCardStatisticsSettings card = FormCardStatisticsSettings.newInstance(iconID, label, colorLeft, colorRight, colorText);
+    private FancyFormCard addCardWithTint(int iconID, String label, int colorLeft, int colorRight, int colorText) {
+        FancyFormCard card = FancyFormCard.newInstance(iconID, label, colorLeft, colorRight, colorText);
         addChildFragment(card, R.id.settings_list, true);
 
         return card;
@@ -109,7 +107,8 @@ public class SettingsFragment extends GiickosFragment {
             }
         });
 
-        FormCardStatisticsSettings notificationsCard = addCard(R.drawable.notification, getString(R.string.miscellaneous_tab_settings_notifications));
+        FancyFormCard notificationsCard = addCard(R.drawable.notification, getString(R.string.miscellaneous_tab_settings_notifications));
+        notificationsCard.setListDirection(LinearLayout.LAYOUT_DIRECTION_RTL);
         Switch notificationsSwitch = Switch.newInstance(true);
         notificationsSwitch.setListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -119,15 +118,15 @@ public class SettingsFragment extends GiickosFragment {
         });
         notificationsCard.addElement(notificationsSwitch);
 
-        FormCardStatisticsSettings feedbackCard = addCard(R.drawable.feed_back, getString(R.string.miscellaneous_tab_settings_feedback));
-        FormCardStatisticsSettings aboutUsCard = addCard(R.drawable.info, getString(R.string.miscellaneous_tab_settings_about));
+        FancyFormCard feedbackCard = addCard(R.drawable.feed_back, getString(R.string.miscellaneous_tab_settings_feedback));
+        FancyFormCard aboutUsCard = addCard(R.drawable.info, getString(R.string.miscellaneous_tab_settings_about));
 
 
 
         //If the user is a guest
         if(viewModel.isGuest())
         {
-            FormCardStatisticsSettings loginCard = addCardWithTint(R.drawable.profile_white, getString(R.string.miscellaneous_tab_settings_login),
+            FancyFormCard loginCard = addCardWithTint(R.drawable.profile_white, getString(R.string.miscellaneous_tab_settings_login),
                     Color.rgb(0,80,0), //left frame
                     Color.rgb(0,100,0), //right frame
                     Color.WHITE); //text color
@@ -141,25 +140,25 @@ public class SettingsFragment extends GiickosFragment {
         }
         else
         {
-            FormCardStatisticsSettings usernameCard = addCard(R.drawable.profile_white, getString(R.string.generic_label_username));
+            FancyFormCard usernameCard = addCard(R.drawable.profile_white, getString(R.string.generic_label_username));
             TextField usernameTextField = TextField.newInstance(getDisplayedUserName(), InputType.TYPE_TEXT_VARIATION_PERSON_NAME, false, Color.WHITE);
             usernameCard.addElement(usernameTextField);
 
-            FormCardStatisticsSettings emailCard = addCard(R.drawable.user, getString(R.string.generic_label_email));
+            FancyFormCard emailCard = addCard(R.drawable.user, getString(R.string.generic_label_email));
             TextField emailTextField = TextField.newInstance(getDisplayedEmail(), InputType.TYPE_CLASS_TEXT, false, Color.WHITE);
             emailCard.addElement(emailTextField);
 
-            FormCardStatisticsSettings giickosPlusCard = addCardWithTint(R.drawable.giickos_plus, getString(R.string.miscellaneous_tab_settings_giickos_plus),
+            FancyFormCard giickosPlusCard = addCardWithTint(R.drawable.giickos_plus, getString(R.string.miscellaneous_tab_settings_giickos_plus),
                     Color.rgb(126,105,0), //left frame
                     Color.rgb(163,136,0), //right frame
                     Color.rgb(160,32,240)); //text color);
 
-            FormCardStatisticsSettings logoutCard = addCardWithTint(R.drawable.exit, getString(R.string.miscellaneous_tab_settings_logout),
+            FancyFormCard logoutCard = addCardWithTint(R.drawable.exit, getString(R.string.miscellaneous_tab_settings_logout),
                     Color.rgb(113,48,12), //left frame
                     Color.rgb(158,66,16), //right frame
                     Color.WHITE); //text color
 
-            FormCardStatisticsSettings removeAccountCard = addCardWithTint(R.drawable.delete_account, getString(R.string.miscellaneous_tab_settings_delete_account),
+            FancyFormCard removeAccountCard = addCardWithTint(R.drawable.delete_account, getString(R.string.miscellaneous_tab_settings_delete_account),
                     Color.rgb(80,0,0), //left frame
                     Color.rgb(100,0,0), //right frame
                     Color.WHITE); //text color

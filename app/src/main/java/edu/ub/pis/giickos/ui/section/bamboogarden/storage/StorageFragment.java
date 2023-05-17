@@ -2,7 +2,6 @@ package edu.ub.pis.giickos.ui.section.bamboogarden.storage;
 
 import android.content.DialogInterface;
 import android.graphics.Color;
-import android.media.Image;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -18,19 +17,14 @@ import android.widget.ImageView;
 import android.widget.ScrollView;
 
 import java.util.List;
-import java.util.Map;
 
 import edu.ub.pis.giickos.GiickosFragment;
 import edu.ub.pis.giickos.R;
 import edu.ub.pis.giickos.model.garden.Bamboo;
-import edu.ub.pis.giickos.model.team.Team;
 import edu.ub.pis.giickos.ui.dialogs.Alert;
 import edu.ub.pis.giickos.ui.generic.form.FormCardGarden;
-import edu.ub.pis.giickos.ui.generic.form.FormCardStatisticsSettings;
+import edu.ub.pis.giickos.ui.generic.form.FancyFormCard;
 import edu.ub.pis.giickos.ui.section.bamboogarden.ViewModel;
-import edu.ub.pis.giickos.ui.section.bamboogarden.garden.GardenFragment;
-import edu.ub.pis.giickos.ui.section.miscellaneous.team.TeamListAdapter;
-import edu.ub.pis.giickos.ui.section.miscellaneous.team.TeamMembersListAdapter;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -101,12 +95,12 @@ public class StorageFragment extends GiickosFragment {
         ImageView back = view.findViewById(R.id.storage_back_info_menu);
         ImageView remove = view.findViewById(R.id.storage_remove_bamboo);
 
-        FormCardStatisticsSettings title = addCardWithTint(R.drawable.title, "",
+        FancyFormCard title = addCardWithTint(R.drawable.title, "",
                 Color.rgb(126,105,0), //left frame
                 Color.rgb(163,136,0), //right frame
                 Color.rgb(160,32,240)); //text color);
 
-        FormCardStatisticsSettings grow = addCardWithTint(R.drawable.timer_white, "",
+        FancyFormCard grow = addCardWithTint(R.drawable.timer_white, "",
                 Color.rgb(126,105,0), //left frame
                 Color.rgb(163,136,0), //right frame
                 Color.rgb(160,32,240)); //text color);
@@ -211,8 +205,8 @@ public class StorageFragment extends GiickosFragment {
         addChildFragment(formCardGarden, R.id.storage_bambo_goals, true);
         return formCardGarden;
     }
-    private FormCardStatisticsSettings addCardWithTint(int iconID, String label, int colorLeft, int colorRight, int colorText) {
-        FormCardStatisticsSettings card = FormCardStatisticsSettings.newInstance(iconID, label, colorLeft, colorRight, colorText);
+    private FancyFormCard addCardWithTint(int iconID, String label, int colorLeft, int colorRight, int colorText) {
+        FancyFormCard card = FancyFormCard.newInstance(iconID, label, colorLeft, colorRight, colorText);
         addChildFragment(card, R.id.storage_bambo_goals, true);
 
         return card;

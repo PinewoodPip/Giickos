@@ -23,7 +23,7 @@ import edu.ub.pis.giickos.ui.generic.DatePickerListener;
 import edu.ub.pis.giickos.ui.generic.TimePickerListener;
 
 // Card fragment with an icon, label, and a horizontal list of custom elements.
-public class FormCard extends GiickosFragment {
+public class FormCard extends ContainerCard {
     public static final String ARG_ICON = "Icon";
     public static final String ARG_LABEL = "Label";
     public static final String ARG_BG_COLOR = "BackgroundColor";
@@ -31,7 +31,6 @@ public class FormCard extends GiickosFragment {
     private int iconID;
     private String label;
     private int backgroundColorOverride; // Set to -1 to use default background color
-    private int listDirection;
 
     private View.OnClickListener clickListener;
 
@@ -54,71 +53,6 @@ public class FormCard extends GiickosFragment {
 
     public static FormCard newInstance(int iconID, String label) {
         return newInstance(iconID, label, -1);
-    }
-
-    public void addElement(Fragment fragment) {
-        addChildFragment(fragment, R.id.list_main, true);
-    }
-
-    public TextField addTextField(int inputType, String label, TextWatcher listener, String hintLabel) {
-        TextField textField = TextField.newInstance(label, inputType, true, hintLabel);
-        addElement(textField);
-
-        textField.setListener(listener);
-
-        return textField;
-    }
-
-    public TextField addTextField(int inputType, String label, TextWatcher listener) {
-        return addTextField(inputType, label, listener, "");
-    }
-
-    public TimeField addTimeField(String id, String label, TimePickerListener listener) {
-        TimeField timeField = TimeField.newInstance(id, label);
-        addElement(timeField);
-
-        timeField.setListener(listener);
-
-        return timeField;
-    }
-
-    public DateField addDateField(String id, String label, DatePickerListener listener) {
-        DateField dateField = DateField.newInstance(id, label);
-        addElement(dateField);
-
-        dateField.setListener(listener);
-
-        return dateField;
-    }
-
-    public NumberField addNumberField(int value, int minValue, int maxValue, NumberPicker.OnValueChangeListener listener, NumberPicker.Formatter formatter) {
-        NumberField field = NumberField.newInstance(value, minValue, maxValue);
-        addElement(field);
-
-        field.setListener(listener);
-        field.setFormatter(formatter);
-
-        return field;
-    }
-
-    public FormSpinner addSpinner(List<String> items, int selectedIndex) {
-        FormSpinner spinner = FormSpinner.newInstance(items, selectedIndex);
-        addElement(spinner);
-
-        return spinner;
-    }
-
-    // Sets the direction of the list of child elements added via addElement().
-    public void setListDirection(int direction) {
-        View view = getView();
-
-        this.listDirection = direction;
-
-        if (view != null) {
-            LinearLayout listView = view.findViewById(R.id.list_main);
-
-            listView.setLayoutDirection(listDirection);
-        }
     }
 
     public void setClickListener(View.OnClickListener listener) {
@@ -171,5 +105,10 @@ public class FormCard extends GiickosFragment {
     @Override
     public void onViewCreated(View view, Bundle bundle) {
         setListDirection(listDirection);
+    }
+
+    @Override
+    protected int getContainerID() {
+        return R.id.list_main;
     }
 }
