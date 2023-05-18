@@ -11,6 +11,8 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.cardview.widget.CardView;
+
 import edu.ub.pis.giickos.R;
 
 public class FancyFormCard extends ContainerCard
@@ -65,7 +67,13 @@ public class FancyFormCard extends ContainerCard
     // Updates the click listener on the view.
     private void updateClickListener(View view) {
         if (view != null) {
+            // The subcards need to also have this set; click events from them do not bubble
+            CardView leftCard = view.findViewById(R.id.statistics_frame_left);
+            CardView rightCard = view.findViewById(R.id.statistics_frame_right);
+
             view.setOnClickListener(clickListener);
+            leftCard.setOnClickListener(clickListener);
+            rightCard.setOnClickListener(clickListener);
         }
     }
 
@@ -100,8 +108,8 @@ public class FancyFormCard extends ContainerCard
     public void onViewCreated(View view, Bundle savedInstanceState)
     {
         ImageView icon = view.findViewById(R.id.statistics_settings_icon);
-        ImageView leftFrame = getView().findViewById(R.id.statistics_frame_left);
-        ImageView rightFrame = getView().findViewById(R.id.statistics_frame_right);
+        FrameLayout leftFrame = getView().findViewById(R.id.statistics_frame_left);
+        FrameLayout rightFrame = getView().findViewById(R.id.statistics_frame_right);
         TextView text = view.findViewById(R.id.statistics_settings_label);
 
         // Set icon and label
@@ -109,10 +117,10 @@ public class FancyFormCard extends ContainerCard
         text.setText(label);
 
         if (colorLeft != -1) {
-            leftFrame.setColorFilter(getResources().getColor(colorLeft), PorterDuff.Mode.ADD);
+            leftFrame.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(colorLeft)));
         }
         if (colorRight != -1) {
-            rightFrame.setColorFilter(getResources().getColor(colorRight), PorterDuff.Mode.ADD);
+            rightFrame.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(colorRight)));
         }
         if (colorText != -1) {
             text.setTextColor(colorText);
