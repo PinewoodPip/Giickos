@@ -98,12 +98,12 @@ public class StorageFragment extends GiickosFragment {
         FancyFormCard title = addCardWithTint(R.drawable.title, "",
                 R.color.garden_1, // left frame
                 R.color.garden_2, // right frame
-                R.color.garden_3); // text color
+                R.color.white); // text color
 
         FancyFormCard grow = addCardWithTint(R.drawable.timer_white, "",
                 R.color.garden_1, // left frame
                 R.color.garden_2, // right frame
-                R.color.garden_3); // text color
+                R.color.white); // text color
 
         String answer = "Place holder";
         FormCardGarden firstQ = addFragmentToInfoMenu(getResources().getString(R.string.bamboo_question_1), answer);

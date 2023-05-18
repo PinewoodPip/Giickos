@@ -392,12 +392,12 @@ public class GardenFragment extends GiickosFragment {
         cards[0] = addCardWithTint(R.drawable.title, "Title: Water habit",
                 R.color.garden_1, // left frame
                 R.color.garden_2, // right frame
-                R.color.garden_3); // text color
+                R.color.white); // text color
 
         cards[1] = addCardWithTint(R.drawable.timer_white, "Growth: 1/7 days",
                 R.color.garden_1, // left frame
                 R.color.garden_2, // right frame
-                R.color.garden_3); // text color
+                R.color.white); // text color
 
         String bambooName = "Bamboo"; //Place holder, touching on the bamboo will update the info menu
 

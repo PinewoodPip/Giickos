@@ -123,7 +123,7 @@ public class FancyFormCard extends ContainerCard
             rightFrame.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(colorRight)));
         }
         if (colorText != -1) {
-            text.setTextColor(colorText);
+            text.setTextColor(getResources().getColor(colorText));
         }
 
         updateClickListener(view);
