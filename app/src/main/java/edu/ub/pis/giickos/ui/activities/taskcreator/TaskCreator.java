@@ -382,7 +382,7 @@ public class TaskCreator extends GiickosFragment {
         // Only add delete and complete buttons while editing
         if (!isCreating()) {
             // Save button
-            addClickableField(R.drawable.description_white, getString(R.string.generic_label_save), getResources().getColor(R.color.positive_action), new View.OnClickListener() {
+            addClickableField(R.drawable.description_white, getString(R.string.generic_label_save), R.color.positive_action, new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     boolean success = viewModel.updateTask();
@@ -397,7 +397,7 @@ public class TaskCreator extends GiickosFragment {
             });
 
             // "Mark as complete" button
-            addSwitchField(R.drawable.folder_task_completed, String.format(getString(R.string.taskcreator_label_complete), viewModel.getSelectedDate()), getResources().getColor(R.color.positive_action), viewModel.isCompleted(), new CompoundButton.OnCheckedChangeListener() {
+            addSwitchField(R.drawable.folder_task_completed, String.format(getString(R.string.taskcreator_label_complete), viewModel.getSelectedDate()), R.color.positive_action, viewModel.isCompleted(), new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                     viewModel.setCompleted(b);
@@ -405,7 +405,7 @@ public class TaskCreator extends GiickosFragment {
             });
 
             // Delete button
-            addClickableField(R.drawable.delete_account, getString(R.string.generic_label_delete), getResources().getColor(R.color.destructive_action), new View.OnClickListener() {
+            addClickableField(R.drawable.delete_account, getString(R.string.generic_label_delete), R.color.destructive_action, new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Alert alert = new Alert(getActivity(), getString(R.string.taskcreator_msg_delete_title), getString(R.string.taskcreator_msg_delete_body));
@@ -431,7 +431,7 @@ public class TaskCreator extends GiickosFragment {
         }
         else {
             // Otherwise add button to create the task
-            addClickableField(R.drawable.placeholder, getString(R.string.generic_label_create), getResources().getColor(R.color.positive_action), new View.OnClickListener() {
+            addClickableField(R.drawable.placeholder, getString(R.string.generic_label_create), R.color.positive_action, new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     boolean success = viewModel.createTask();

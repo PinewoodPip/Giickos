@@ -165,8 +165,6 @@ public class ViewModel  extends androidx.lifecycle.ViewModel
         return -1;
     }
 
-    //[TODO] probably when using firebase, handle when is not successful, maybe change boolean to int in order to return error codes
-
     //If the bamboo form is complete, it creates a bamboo and adds it to the map of bamboos
     //---------------------------------- Start of bamboo form methods ----------------------------------
     public boolean plantBamboo(int slot)

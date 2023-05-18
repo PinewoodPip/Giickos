@@ -96,14 +96,14 @@ public class StorageFragment extends GiickosFragment {
         ImageView remove = view.findViewById(R.id.storage_remove_bamboo);
 
         FancyFormCard title = addCardWithTint(R.drawable.title, "",
-                Color.rgb(126,105,0), //left frame
-                Color.rgb(163,136,0), //right frame
-                Color.rgb(160,32,240)); //text color);
+                R.color.garden_1, // left frame
+                R.color.garden_2, // right frame
+                R.color.white); // text color
 
         FancyFormCard grow = addCardWithTint(R.drawable.timer_white, "",
-                Color.rgb(126,105,0), //left frame
-                Color.rgb(163,136,0), //right frame
-                Color.rgb(160,32,240)); //text color);
+                R.color.garden_1, // left frame
+                R.color.garden_2, // right frame
+                R.color.white); // text color
 
         String answer = "Place holder";
         FormCardGarden firstQ = addFragmentToInfoMenu(getResources().getString(R.string.bamboo_question_1), answer);

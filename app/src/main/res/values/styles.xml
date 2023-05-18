@@ -8,6 +8,13 @@
         <item name="android:backgroundTint">#6BE170</item>\
     </style>
 
+    <style name="GiickosFancyCard" xmlns:app="http://schemas.android.com/apk/res-auto">
+        <item name="android:clickable">true</item>
+        <item name="android:foreground">?attr/selectableItemBackground</item>
+        <item name="android:focusable">true</item>
+        <item name="android:backgroundTint">#87837E</item>\
+    </style>
+
     <style name="GiickosBackground">
         <item name="android:backgroundTint">#51A354</item>
     </style>
@@ -26,5 +33,12 @@
         <item name="android:layout_width">137dp</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:gravity">center</item>
+    </style>
+
+    <style name="BottomBorder">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">5dp</item>
+        <item name="android:layout_gravity">bottom</item>
+        <item name="android:background">#46000000</item>
     </style>
 </resources>

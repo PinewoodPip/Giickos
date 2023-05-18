@@ -1,13 +1,17 @@
 package edu.ub.pis.giickos.ui.generic.form;
 
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.cardview.widget.CardView;
 
 import edu.ub.pis.giickos.R;
 
@@ -46,11 +50,11 @@ public class FancyFormCard extends ContainerCard
     }
 
     public static FancyFormCard newInstance(int iconID, String label, int color) {
-        return newInstance(iconID, label, color, color, Color.rgb(160,32,240)); // TODO unhardcode text color
+        return newInstance(iconID, label, color, color, -1);
     }
 
     public static FancyFormCard newInstance(int iconID, String label) {
-        return newInstance(iconID, label, -1, -1 , -1);
+        return newInstance(iconID, label, -1, -1, -1);
     }
 
     public void setClickListener(View.OnClickListener listener) {
@@ -63,7 +67,13 @@ public class FancyFormCard extends ContainerCard
     // Updates the click listener on the view.
     private void updateClickListener(View view) {
         if (view != null) {
+            // The subcards need to also have this set; click events from them do not bubble
+            CardView leftCard = view.findViewById(R.id.statistics_frame_left);
+            CardView rightCard = view.findViewById(R.id.statistics_frame_right);
+
             view.setOnClickListener(clickListener);
+            leftCard.setOnClickListener(clickListener);
+            rightCard.setOnClickListener(clickListener);
         }
     }
 
@@ -98,19 +108,22 @@ public class FancyFormCard extends ContainerCard
     public void onViewCreated(View view, Bundle savedInstanceState)
     {
         ImageView icon = view.findViewById(R.id.statistics_settings_icon);
-        ImageView leftFrame = getView().findViewById(R.id.statistics_frame_left);
-        ImageView rightFrame = getView().findViewById(R.id.statistics_frame_right);
+        FrameLayout leftFrame = getView().findViewById(R.id.statistics_frame_left);
+        FrameLayout rightFrame = getView().findViewById(R.id.statistics_frame_right);
         TextView text = view.findViewById(R.id.statistics_settings_label);
 
         // Set icon and label
         icon.setImageResource(iconID);
         text.setText(label);
 
-        if (colorLeft != -1 && colorRight != -1)
-        {
-            leftFrame.setColorFilter(colorLeft, PorterDuff.Mode.ADD);
-            rightFrame.setColorFilter(colorRight, PorterDuff.Mode.ADD);
-            text.setTextColor(colorText);
+        if (colorLeft != -1) {
+            leftFrame.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(colorLeft)));
+        }
+        if (colorRight != -1) {
+            rightFrame.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(colorRight)));
+        }
+        if (colorText != -1) {
+            text.setTextColor(getResources().getColor(colorText));
         }
 
         updateClickListener(view);
