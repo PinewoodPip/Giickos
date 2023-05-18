@@ -73,7 +73,7 @@
 
                 <TextView
                     android:id="@+id/statistics_settings_label"
-                    android:layout_width="120dp"
+                    android:layout_width="84dp"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="10dp"
                     android:gravity="center_vertical"

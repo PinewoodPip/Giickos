@@ -163,7 +163,13 @@ public class GardenFragment extends GiickosFragment {
     private void plantingBambooMenu(View view)
     {
         //Title, label, growtime cards for the bamboo form
-        TextField cardTitle = addTextField(R.drawable.title, "Title: ", "", InputType.TYPE_TEXT_VARIATION_NORMAL, new TextWatcher() {
+        int[] colors = {
+                R.color.neutral_garden_1, //left frame
+                R.color.neutral_garden_2, //right frame
+                R.color.white, //text color
+        };
+
+        TextField cardTitle = addTextField(R.drawable.title, "Title: ", colors,"" , InputType.TYPE_TEXT_VARIATION_NORMAL, new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
 
@@ -176,7 +182,7 @@ public class GardenFragment extends GiickosFragment {
                 System.out.println("Title: " + editable.toString());
             }
         });
-        FormCard growTime = addField(R.drawable.timer_white, "Grow time: ");
+        FancyFormCard growTime = addField(R.drawable.timer_white, "Grow time: ", colors);
         //Probably get from viewmodel
         ArrayList<String> time = new ArrayList<>();
         //From the ViewModel, we get the enum values and add them to the arraylist for the spinner
@@ -342,15 +348,12 @@ public class GardenFragment extends GiickosFragment {
         });
         return formCardGarden;
     }
-    private TextField addTextField(int iconID, String label, String inputLabel, int inputType, @Nullable TextWatcher listener) {
-        FormCard field = addField(iconID, label);
+    private TextField addTextField(int iconID, String label, int[] colors, String inputLabel, int inputType, @Nullable TextWatcher listener) {
+        FancyFormCard field = addField(iconID, label, colors);
         return field.addTextField(inputType, inputLabel, listener);
     }
-    private FormCard addField(int iconID, String label) {
-        return addField(iconID, label, -1);
-    }
-    private FormCard addField(int iconID, String label, int backgroundColor) {
-        FormCard field = FormCard.newInstance(iconID, label, backgroundColor);
+    private FancyFormCard addField(int iconID, String label, int[] colors) {
+        FancyFormCard field = FancyFormCard.newInstance(iconID, label,colors[0] ,colors[1], colors[2]);
 
         addChildFragment(field, R.id.garden_plant_questions, true);
 

@@ -18,6 +18,10 @@
     <color name="garden_2">#A38800</color>
     <color name="garden_3">#A320F0</color>
 
+    <color name="neutral_garden_1">#004501</color>
+    <color name="neutral_garden_2">#006E02</color>
+
+
     <color name="link">#03A9F4</color>
 
     <color name="task_priority_none">#84DD9C</color>
