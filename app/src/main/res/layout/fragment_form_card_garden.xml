@@ -11,11 +11,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#00FFFFFF"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingTop="5dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="100dp">
+            android:layout_height="59dp">
 
             <ImageView
                 android:layout_width="match_parent"
@@ -26,11 +27,14 @@
                 android:id="@+id/garden_question_label"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
+                android:autoSizeMaxTextSize="24dp"
                 android:autoSizeTextType="uniform"
+                android:autoText="true"
                 android:paddingHorizontal="10dp"
                 android:paddingVertical="10dp"
                 android:text="Here we put the question or something"
-                android:textColor="#FFFFFF" />
+                android:textColor="#FFFFFF"
+                android:textSize="12sp" />
 
         </RelativeLayout>
 
