@@ -387,14 +387,14 @@ public class GardenFragment extends GiickosFragment {
         FancyFormCard[] cards = new FancyFormCard[2];
 
         cards[0] = addCardWithTint(R.drawable.title, "Title: Water habit",
-                Color.rgb(126,105,0), //left frame
-                Color.rgb(163,136,0), //right frame
-                Color.rgb(160,32,240)); //text color);
+                R.color.garden_1, // left frame
+                R.color.garden_2, // right frame
+                R.color.garden_3); // text color
 
         cards[1] = addCardWithTint(R.drawable.timer_white, "Growth: 1/7 days",
-                Color.rgb(126,105,0), //left frame
-                Color.rgb(163,136,0), //right frame
-                Color.rgb(160,32,240)); //text color);
+                R.color.garden_1, // left frame
+                R.color.garden_2, // right frame
+                R.color.garden_3); // text color
 
         String bambooName = "Bamboo"; //Place holder, touching on the bamboo will update the info menu
 

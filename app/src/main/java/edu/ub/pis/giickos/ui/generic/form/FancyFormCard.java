@@ -1,11 +1,13 @@
 package edu.ub.pis.giickos.ui.generic.form;
 
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -46,11 +48,11 @@ public class FancyFormCard extends ContainerCard
     }
 
     public static FancyFormCard newInstance(int iconID, String label, int color) {
-        return newInstance(iconID, label, color, color, Color.rgb(160,32,240)); // TODO unhardcode text color
+        return newInstance(iconID, label, color, color, -1);
     }
 
     public static FancyFormCard newInstance(int iconID, String label) {
-        return newInstance(iconID, label, -1, -1 , -1);
+        return newInstance(iconID, label, -1, -1, -1);
     }
 
     public void setClickListener(View.OnClickListener listener) {
@@ -106,10 +108,13 @@ public class FancyFormCard extends ContainerCard
         icon.setImageResource(iconID);
         text.setText(label);
 
-        if (colorLeft != -1 && colorRight != -1)
-        {
-            leftFrame.setColorFilter(colorLeft, PorterDuff.Mode.ADD);
-            rightFrame.setColorFilter(colorRight, PorterDuff.Mode.ADD);
+        if (colorLeft != -1) {
+            leftFrame.setColorFilter(getResources().getColor(colorLeft), PorterDuff.Mode.ADD);
+        }
+        if (colorRight != -1) {
+            rightFrame.setColorFilter(getResources().getColor(colorRight), PorterDuff.Mode.ADD);
+        }
+        if (colorText != -1) {
             text.setTextColor(colorText);
         }
 

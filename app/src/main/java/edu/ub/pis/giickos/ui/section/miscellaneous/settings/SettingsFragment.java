@@ -127,9 +127,9 @@ public class SettingsFragment extends GiickosFragment {
         if(viewModel.isGuest())
         {
             FancyFormCard loginCard = addCardWithTint(R.drawable.profile_white, getString(R.string.miscellaneous_tab_settings_login),
-                    Color.rgb(0,80,0), //left frame
-                    Color.rgb(0,100,0), //right frame
-                    Color.WHITE); //text color
+                    R.color.positive_action, //left frame
+                    R.color.positive_action, //right frame
+                    R.color.white); //text color
             loginCard.setClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -149,19 +149,19 @@ public class SettingsFragment extends GiickosFragment {
             emailCard.addElement(emailTextField);
 
             FancyFormCard giickosPlusCard = addCardWithTint(R.drawable.giickos_plus, getString(R.string.miscellaneous_tab_settings_giickos_plus),
-                    Color.rgb(126,105,0), //left frame
-                    Color.rgb(163,136,0), //right frame
-                    Color.rgb(160,32,240)); //text color);
+                    R.color.yellow, // left frame
+                    R.color.yellow, // right frame
+                    R.color.black); // text color
 
             FancyFormCard logoutCard = addCardWithTint(R.drawable.exit, getString(R.string.miscellaneous_tab_settings_logout),
-                    Color.rgb(113,48,12), //left frame
-                    Color.rgb(158,66,16), //right frame
-                    Color.WHITE); //text color
+                    R.color.destructive_action, // left frame
+                    R.color.destructive_action, // right frame
+                    R.color.black); // text color
 
             FancyFormCard removeAccountCard = addCardWithTint(R.drawable.delete_account, getString(R.string.miscellaneous_tab_settings_delete_account),
-                    Color.rgb(80,0,0), //left frame
-                    Color.rgb(100,0,0), //right frame
-                    Color.WHITE); //text color
+                    R.color.destructive_action, // left frame
+                    R.color.destructive_action, // right frame
+                    R.color.black); // text color
             giickosPlusCard.setClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

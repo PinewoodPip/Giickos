@@ -7,9 +7,16 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="orange">#FFA96E</color>
+    <color name="yellow">#FFEF5E</color>
+    <color name="gray">#65675E</color>
 
     <color name="destructive_action">#C23E6E</color>
     <color name="positive_action">#55C272</color>
+
+    <color name="garden_1">#7E6900</color>
+    <color name="garden_2">#A38800</color>
+    <color name="garden_3">#A320F0</color>
 
     <color name="link">#03A9F4</color>
 
