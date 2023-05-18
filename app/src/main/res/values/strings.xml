@@ -145,6 +145,7 @@
     <string name="timer_help">Here you can set a timer to track the amount of time spent working on a task. You may also configure it to work as a pomodoro timer, and enable various \'detox\' options to reduce distractions from your phone.</string>
     <string name="timer_tab_detox">Detox</string>
     <string name="timer_tab_timer">Pomodoro</string>
+    <string name="select_task_prompt">Select a task</string>
 
 
     <!-- Calendar -->

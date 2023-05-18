@@ -13,25 +13,24 @@ import android.widget.TextView;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 import edu.ub.pis.giickos.R;
+import edu.ub.pis.giickos.model.ModelHolder;
+import edu.ub.pis.giickos.model.observer.ObservableEvent;
+import edu.ub.pis.giickos.model.observer.Observer;
+import edu.ub.pis.giickos.model.project.Project;
+import edu.ub.pis.giickos.model.project.ProjectManager;
+import edu.ub.pis.giickos.model.project.Task;
+import edu.ub.pis.giickos.ui.ViewModelHelpers;
+import edu.ub.pis.giickos.ui.activities.taskcreator.TaskCreator;
 
 public class ViewModel extends androidx.lifecycle.ViewModel{
 
-    public Button startPauseButton;
-    public Button selectTaskButton;
-
-    public Button resetButton;
-    public Button setPomodoroButton;
-
-    public Button setBreakButton;
-
-    public CheckBox detoxCheckbox;
-    public EditText editMinuteEdittext;
-    public EditText editBreakMinuteEdittext;
-    public TextView timerView;
-    public TextView timerMode;
     public CountDownTimer countDownTimer;
     public boolean istimerRunning;
     public boolean isPomodoro;
@@ -49,8 +48,12 @@ public class ViewModel extends androidx.lifecycle.ViewModel{
             visibilitySetBreakButton,visibilityResetButton, visibilityStartPauseButton;
 
 
+    private ProjectManager model;
+
+    private MutableLiveData<List<ViewModelHelpers.TaskData>> tasks;
 
 
+    private Observer modelTasksObserver;
 
     public ViewModel() {
         timer = new MutableLiveData<String>();
@@ -67,6 +70,22 @@ public class ViewModel extends androidx.lifecycle.ViewModel{
         visibilityResetButton = new MutableLiveData<>(true);
         visibilityStartPauseButton = new MutableLiveData<>(true);
 
+        this.model = ModelHolder.INSTANCE.getProjectManager();
+
+        this.tasks = new MutableLiveData<>(new ArrayList<>());
+        updateTask();
+
+
+
+        // Listen for tasks being updated in the model
+        this.modelTasksObserver = new Observer() {
+            @Override
+            public void update(ObservableEvent eventData) {
+                updateTask();
+            }
+        };
+        model.subscribe(ProjectManager.Events.TASKS_UPDATED, this.modelTasksObserver);
+
     }
 
     public LiveData<String> getTimer() {return timer;}
@@ -79,8 +98,7 @@ public class ViewModel extends androidx.lifecycle.ViewModel{
     public LiveData<Boolean> getVisibilityResetButton() {return visibilityResetButton;}
     public LiveData<Boolean> getVisibilityStartPauseButton() {return visibilityStartPauseButton;}
 
-    //public LiveData<Long> getPomodoroTimeInMillis(){return pomodoroTimeInMillis;}
-    //public LiveData<Long> getBreakTimeInMillis(){return breakTimeInMillis;}
+
 
 
 
@@ -100,7 +118,6 @@ public class ViewModel extends androidx.lifecycle.ViewModel{
                 istimerRunning = false;
                 if (isPomodoro){
                     timeLeftInMillis = breakTimeInMillis;
-
                     setTime(timeLeftInMillis);
                     updateCountDownText();
                     textTimerMode.setValue("Break");
@@ -159,14 +176,6 @@ public class ViewModel extends androidx.lifecycle.ViewModel{
 
     public void updateWatchInterface() {
         if (istimerRunning) {
-            /*
-            editMinuteEdittext.setVisibility(View.INVISIBLE);
-            editBreakMinuteEdittext.setVisibility(View.INVISIBLE);
-            setPomodoroButton.setVisibility(View.INVISIBLE);
-            setBreakButton.setVisibility(View.INVISIBLE);
-            resetButton.setVisibility(View.INVISIBLE);
-            startPauseButton.setText("Pause");
-            */
 
             visibilityEditMinuteEdittext.setValue(false);
             visibilityEditBreakMinuteEdittext.setValue(false);
@@ -178,13 +187,6 @@ public class ViewModel extends androidx.lifecycle.ViewModel{
 
 
         } else {
-            /*
-            editMinuteEdittext.setVisibility(View.VISIBLE);
-            editBreakMinuteEdittext.setVisibility(View.VISIBLE);
-            setPomodoroButton.setVisibility(View.VISIBLE);
-            setBreakButton.setVisibility(View.VISIBLE);
-            startPauseButton.setText("Start");
-            */
 
             visibilityEditMinuteEdittext.setValue(true);
             visibilityEditBreakMinuteEdittext.setValue(true);
@@ -194,19 +196,15 @@ public class ViewModel extends androidx.lifecycle.ViewModel{
             textStartPauseButton.setValue("Start");
 
             if (timeLeftInMillis < 1000) {
-                //startPauseButton.setVisibility(View.INVISIBLE);
                 visibilityStartPauseButton.setValue(false);
 
             } else {
-                //startPauseButton.setVisibility(View.VISIBLE);
                 visibilityStartPauseButton.setValue(true);
             }
 
             if (timeLeftInMillis < pomodoroTimeInMillis || timeLeftInMillis < breakTimeInMillis) {
-                //resetButton.setVisibility(View.VISIBLE);
                 visibilityResetButton.setValue(true);
             } else {
-                //resetButton.setVisibility(View.INVISIBLE);
                 visibilityResetButton.setValue(false);
             }
         }
@@ -218,6 +216,24 @@ public class ViewModel extends androidx.lifecycle.ViewModel{
 
     public boolean getIsIstimerRunning(){
         return istimerRunning;
+    }
+
+
+    public void updateTask() {
+        Set<Task> tasks = model.getTasks();
+        List<ViewModelHelpers.TaskData> taskData = ViewModelHelpers.sortTasks(tasks);
+
+        this.tasks.setValue(taskData);
+    }
+
+    public LiveData<List<ViewModelHelpers.TaskData>> getTasks() {
+        return tasks;
+    }
+
+    public List<ViewModelHelpers.TaskData> getTasksById(String projectGUID) {
+        Set<Task> tasks = model.getTasks(projectGUID);
+
+        return ViewModelHelpers.sortTasks(tasks);
     }
 
 }

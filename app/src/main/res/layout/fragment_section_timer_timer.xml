@@ -72,6 +72,12 @@
             android:text="Select Task" />
 
 
+        <Spinner
+            android:id="@+id/spinner_select_task"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:prompt="@string/select_task_prompt" />
+
         <Button
             android:id="@+id/button_start_timer"
             android:layout_width="match_parent"
@@ -93,6 +99,12 @@
             android:text="Detox" />
 
     </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </FrameLayout>
 
     <!--
     <LinearLayout

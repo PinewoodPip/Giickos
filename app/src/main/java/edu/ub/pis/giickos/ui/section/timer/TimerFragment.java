@@ -6,18 +6,22 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.os.CountDownTimer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 
-import java.util.Locale;
+import java.util.ArrayList;
+import java.util.List;
 
 import edu.ub.pis.giickos.R;
+import edu.ub.pis.giickos.ui.ViewModelHelpers;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -40,7 +44,9 @@ public class TimerFragment extends Fragment {
     private EditText editBreakMinuteEdittext;
     private TextView timerView;
 
-    private TextView timerMode;
+    private TextView timerModeTextView;
+
+    private Spinner selectTaskSpinner;
 
     private ViewModel viewModel;
 
@@ -77,12 +83,45 @@ public class TimerFragment extends Fragment {
         editMinuteEdittext = view.findViewById(R.id.edit_text_minutes);
         editBreakMinuteEdittext = view.findViewById(R.id.edit_text_minutes_break);
         timerView = view.findViewById(R.id.textView_timer);
-        timerMode = view.findViewById(R.id.textView_timer_mode);
+        timerModeTextView = view.findViewById(R.id.textView_timer_mode);
 
-        timerMode.setText("Pomodoro");
+        selectTaskSpinner = view.findViewById(R.id.spinner_select_task);
+
+
+        List<ViewModelHelpers.TaskData> tasks = viewModel.getTasks().getValue();
+        List<Object> taskObjects = new ArrayList<>();
+        taskObjects.add("None");
+        taskObjects.addAll(tasks);
+
+        ArrayAdapter<Object> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, taskObjects);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        selectTaskSpinner.setAdapter(adapter);
+
+
+        timerModeTextView.setText("Pomodoro");
         viewModel.setTime(viewModel.pomodoroTimeInMillis);
         viewModel.isPomodoro = true;
 
+
+        selectTaskSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+                if (i != 0){
+                    long millisInput = tasks.get(i-1).durationInMinutes * 60000;
+                    viewModel.setTime(millisInput);
+                }
+
+
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
 
         setPomodoroButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -128,14 +167,10 @@ public class TimerFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                //System.out.println("startButton clicked");
-
                 if (viewModel.getIsIstimerRunning()) {
                     viewModel.pauseTimer();
-                    //startPauseButton.setVisibility(View.VISIBLE);
                 } else {
                     viewModel.startTimer();
-                    //startPauseButton.setVisibility(View.VISIBLE);
 
                 }
             }
@@ -164,22 +199,17 @@ public class TimerFragment extends Fragment {
 
             }
         });
+
         /*
-        final Observer<Long> observerPomodoroTimeInMillis = new Observer<Long>() {
+        final Observer<List<ViewModelHelpers.TaskData>> observerTask = new Observer<List<ViewModelHelpers.TaskData>>() {
             @Override
-            public void onChanged(Long time) { viewModel.pomodoroTimeInMillis.setValue(time);}
+            public void onChanged(List<ViewModelHelpers.TaskData> task) {
+                adapter.clear();
+                adapter.addAll(taskObjects);
+            }
         };
-
-        viewModel.getPomodoroTimeInMillis().observe(this.getViewLifecycleOwner(), observerPomodoroTimeInMillis);
-
-        final Observer<Long> observerBreakTimeInMillis = new Observer<Long>() {
-            @Override
-            public void onChanged(Long time) { viewModel.breakTimeInMillis.setValue(time);}
-        };
-
-        viewModel.getBreakTimeInMillis().observe(this.getViewLifecycleOwner(), observerBreakTimeInMillis);
+        viewModel.getTasks().observe(this.getViewLifecycleOwner(), observerTask);
          */
-
         final Observer<String> observerTimer = new Observer<String>() {
             @Override
             public void onChanged(String timer) {
@@ -201,7 +231,7 @@ public class TimerFragment extends Fragment {
         final Observer<String> observerTextTimerMode = new Observer<String>() {
             @Override
             public void onChanged(String textTimerMode) {
-                timerMode.setText(textTimerMode);
+                timerModeTextView.setText(textTimerMode);
             }
         };
 
@@ -258,9 +288,6 @@ public class TimerFragment extends Fragment {
             }
         };
         viewModel.getVisibilityStartPauseButton().observe(this.getViewLifecycleOwner(), observerVisibilityStartPauseButton);
-
-
-
 
     }
 
