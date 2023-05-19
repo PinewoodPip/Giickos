@@ -53,4 +53,5 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth'
     implementation 'com.google.firebase:firebase-firestore'
     implementation "com.github.StephenVinouze:MaterialNumberPicker:1.0.5"
+    implementation 'com.gu.android:toolargetool:0.3.0'
 }

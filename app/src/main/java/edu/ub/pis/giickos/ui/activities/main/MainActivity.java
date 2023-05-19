@@ -15,6 +15,8 @@ import androidx.lifecycle.ViewModelProvider;
 import android.Manifest;
 import android.util.Log;
 
+import com.gu.toolargetool.TooLargeTool;
+
 import edu.ub.pis.giickos.R;
 import edu.ub.pis.giickos.model.notification.Notification;
 import edu.ub.pis.giickos.ui.activities.GiickosActivity;
@@ -40,6 +42,10 @@ public class MainActivity extends GiickosActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Use for debugging any occurrences of TransactionTooLargeException
+        //TooLargeTool.startLogging(getApplication());
+
         setContentView(R.layout.activity_main);
         setCustomSupportActionBar();
         viewModel = new ViewModelProvider(this).get(MainViewModel.class);
@@ -115,5 +121,10 @@ public class MainActivity extends GiickosActivity {
     @Override
     public String getHelpMessage() {
         return getString(viewModel.getCurrentSection().getValue().getHelpStringResource());
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        // Method intentionally left blank to fix TransactionTooLargeException.
     }
 }
