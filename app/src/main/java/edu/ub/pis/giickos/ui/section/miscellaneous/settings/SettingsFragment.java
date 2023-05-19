@@ -29,6 +29,7 @@ import edu.ub.pis.giickos.ui.generic.form.TextField;
 public class SettingsFragment extends GiickosFragment {
 
     private ViewModel viewModel;
+    private boolean initialized = false;
 
     public SettingsFragment() {
         // Required empty public constructor
@@ -110,6 +111,10 @@ public class SettingsFragment extends GiickosFragment {
     @Override
     public void onViewCreated(View view, Bundle bundle)
     {
+        if (initialized) {
+            return;
+        }
+
         View giickosPlusMenu = view.findViewById(R.id.show_giickos_plus);
         giickosPlusMenu.setVisibility(View.GONE);
 
@@ -274,5 +279,7 @@ public class SettingsFragment extends GiickosFragment {
                 notificationsSwitch.setChecked(!notificationsSwitch.isChecked());
             }
         });
+
+        initialized = true;
     }
 }
