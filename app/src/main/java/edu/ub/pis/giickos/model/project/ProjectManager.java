@@ -4,11 +4,11 @@ import androidx.annotation.Nullable;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.chrono.ChronoLocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
-import edu.ub.pis.giickos.Utils;
 import edu.ub.pis.giickos.model.observer.EmptyEvent;
 import edu.ub.pis.giickos.model.observer.Observable;
 import edu.ub.pis.giickos.model.observer.ObservableEvent;
@@ -223,9 +223,29 @@ public class ProjectManager extends Observable<ProjectManager.Events> implements
         }
         stats.add(new Statistic(STAT_TASKS_COMPLETED, tasksCompleted));
 
-        // TODO tasks created stat
+        // "Tasks created" stat
+        stats.add(new Statistic(STAT_TASKS_CREATED, getTasksCreatedCount(startDate, endDate)));
 
         return stats;
+    }
+
+    public int getTasksCreatedCount(LocalDate startDate, LocalDate endDate) {
+        int count = 0;
+        LocalDateTime startDateTime = LocalDateTime.of(startDate.getYear(), startDate.getMonthValue(), startDate.getDayOfMonth(), 0, 0);
+        LocalDateTime endDateTime = LocalDateTime.of(endDate.getYear(), endDate.getMonthValue(), endDate.getDayOfMonth(), 0, 0);
+
+        // Makes the "before or on the same day" comparison easier
+        startDateTime = startDateTime.minusDays(1);
+        endDateTime = endDateTime.plusDays(1);
+
+        for (Task task : getTasks()) {
+            LocalDateTime creationTime = task.getCreationTime();
+            if (creationTime.isBefore(endDateTime) && creationTime.isAfter(startDateTime)) {
+                count++;
+            }
+        }
+
+        return count;
     }
 
     // TODO move elsewhere

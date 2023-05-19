@@ -32,6 +32,7 @@ public class Task {
     private Set<String> completionDates; // Dates this task was completed on. Recurring tasks may be completed on multiple different days.
     private String projectID;
 
+    private long creationTime;
     private long startTime; // In millis since epoch
     private int durationInMinutes;
     private boolean takesAllDay; // If true, startTime indicates the day of the task only and its hour+minute should be disregarded
@@ -97,6 +98,18 @@ public class Task {
 
     public void setStartTime(long startTime) {
         this.startTime = startTime;
+    }
+
+    public LocalDateTime getCreationTime() {
+        return Utils.instantToLocalDateTime(creationTime);
+    }
+
+    public long getCreationTimeMillis() {
+        return creationTime;
+    }
+
+    public void setCreationTime(long creationTime) {
+        this.creationTime = creationTime;
     }
 
     public boolean hasStartDateSet() {

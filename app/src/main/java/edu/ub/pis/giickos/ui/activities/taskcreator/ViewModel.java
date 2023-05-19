@@ -71,6 +71,7 @@ public class ViewModel extends androidx.lifecycle.ViewModel {
             task.setPriority(priority);
             task.setDescription(taskDescription);
             task.setRepeatMode(Task.REPEAT_MODE.values()[repeatMode.ordinal()]);
+            task.setCreationTime(Utils.localDateTimeToUTC(LocalDateTime.now()).toInstant().toEpochMilli());
 
             updateTaskTime(task);
 
