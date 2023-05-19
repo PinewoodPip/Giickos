@@ -70,10 +70,14 @@ public class FancyFormCard extends ContainerCard
             // The subcards need to also have this set; click events from them do not bubble
             CardView leftCard = view.findViewById(R.id.statistics_frame_left);
             CardView rightCard = view.findViewById(R.id.statistics_frame_right);
+            FrameLayout clickOverlay = view.findViewById(R.id.click_dummy);
 
             view.setOnClickListener(clickListener);
             leftCard.setOnClickListener(clickListener);
             rightCard.setOnClickListener(clickListener);
+
+            clickOverlay.setOnClickListener(clickListener);
+            clickOverlay.setVisibility(clickListener == null ? View.GONE : View.VISIBLE);
         }
     }
 

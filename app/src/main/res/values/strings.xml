@@ -47,6 +47,11 @@
     <string name="auth_msg_recoverpassword_success">Recovery e-mail sent</string>
     <string name="auth_msg_recoverpassword_body">An e-mail with account recovery instructions has been sent to the address.</string>
 
+    <!-- Subscription-related -->
+    <string name="subscription_inactive">Not subscribed</string>
+    <string name="subscription_active">Subscribed</string>
+    <string name="subscription_inapplicable">Please log in first.</string>
+
     <!-- Task priority -->
     <string name="task_priority_none">@string/generic_label_none</string>
     <string name="task_priority_low">Low</string>

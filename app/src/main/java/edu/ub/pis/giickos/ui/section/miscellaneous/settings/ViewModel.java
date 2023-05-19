@@ -15,6 +15,7 @@ import edu.ub.pis.giickos.model.observer.ObservableEvent;
 import edu.ub.pis.giickos.model.observer.Observer;
 import edu.ub.pis.giickos.model.user.User;
 import edu.ub.pis.giickos.model.user.UserManager;
+import edu.ub.pis.giickos.ui.ViewModelHelpers;
 
 public class ViewModel extends androidx.lifecycle.ViewModel {
 
@@ -58,13 +59,17 @@ public class ViewModel extends androidx.lifecycle.ViewModel {
         return loggedInUser;
     }
 
+    private ViewModelHelpers.SUBSCRIPTION_STATUS convertSubscriptionEnum(User.SUBSCRIPTION_STATUS status) {
+        return ViewModelHelpers.SUBSCRIPTION_STATUS.values()[status.ordinal()];
+    }
+
     // Updates the UserData of the logged in user from the model.
     private void updateLoggedInUser() {
         User user = userManager.getLoggedInUser();
         UserData userData = null;
 
         if (user != null) {
-            userData = new UserData(user.getEmail(), user.getUsername());
+            userData = new UserData(user.getEmail(), user.getUsername(), convertSubscriptionEnum(user.getSubscriptionStatus()));
         }
 
         loggedInUser.setValue(userData);
@@ -81,10 +86,12 @@ public class ViewModel extends androidx.lifecycle.ViewModel {
     public static class UserData {
         public final String email;
         public final String username;
+        public final ViewModelHelpers.SUBSCRIPTION_STATUS subscriptionStatus;
 
-        public UserData(String email, String username) {
+        public UserData(String email, String username, ViewModelHelpers.SUBSCRIPTION_STATUS subscriptionStatus) {
             this.email = email;
             this.username = username;
+            this.subscriptionStatus = subscriptionStatus;
         }
     }
     public Intent composeEmail(String[] emails, String subject)

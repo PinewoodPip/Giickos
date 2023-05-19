@@ -8,6 +8,7 @@
     android:layout_marginTop="5dp"
     android:background="#00FFFFFF"
     android:backgroundTint="#00B62929"
+    android:foreground="?attr/selectableItemBackground"
     app:cardCornerRadius="0dp"
     app:cardElevation="0dp"
     tools:context=".ui.generic.form.FormCard">
@@ -73,7 +74,7 @@
 
                 <TextView
                     android:id="@+id/statistics_settings_label"
-                    android:layout_width="84dp"
+                    android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="10dp"
                     android:gravity="center_vertical"
@@ -85,6 +86,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:clickable="true"
                     android:layoutDirection="ltr"
                     android:orientation="horizontal">
 
@@ -99,6 +101,14 @@
                 </LinearLayout>
 
             </LinearLayout>
+
+            <FrameLayout
+                android:id="@+id/click_dummy"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:foreground="?attr/selectableItemBackground">
+
+            </FrameLayout>
 
             <FrameLayout style="@style/BottomBorder">
 

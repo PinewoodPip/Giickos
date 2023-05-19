@@ -46,7 +46,8 @@ public class UserManager extends Observable<UserManager.Events> {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
                     FirebaseUser firebaseUser = task.getResult().getUser();
-                    loggedInUser = new User(email, firebaseUser.getDisplayName()); // TODO username
+                    loggedInUser = new User(email, firebaseUser.getDisplayName(), User.SUBSCRIPTION_STATUS.NOT_SUBSCRIBED); // TODO username
+                    // Subscription status is also TODO - though won't be implemented in deliverable 3
 
                     notifyObservers(Events.LOGGED_IN, new EmptyEvent(UserManager.this, Events.LOGGED_IN));
                 }

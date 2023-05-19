@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -22,6 +23,7 @@ public class TextField extends GiickosFragment {
     private static final String ARG_TEXT_COLOR = "TextColor";
 
     private TextWatcher listener = null;
+    private View.OnClickListener clickListener = null;
 
     public TextField() {} // Required empty public constructor
 
@@ -72,6 +74,16 @@ public class TextField extends GiickosFragment {
         this.listener = listener;
     }
 
+    public void setClickListener(View.OnClickListener listener) {
+        View view = getView();
+
+        if (view != null) {
+            view.setOnClickListener(listener);
+        }
+
+        this.clickListener = listener;
+    }
+
     // Sets the text of the field.
     public void setText(String text) {
         View view = getView();
@@ -111,8 +123,9 @@ public class TextField extends GiickosFragment {
         if (!args.getBoolean(ARG_EDITABLE)) {
             // TODO extract method
             textField.setEnabled(false);
-            textField.setFocusable(false);
+            textField.setFocusable(clickListener != null);
             textField.setBackgroundColor(Color.TRANSPARENT);
+            textField.setClickable(clickListener != null);
         }
         textField.setTextColor(args.getInt(ARG_TEXT_COLOR));
 
@@ -121,5 +134,6 @@ public class TextField extends GiickosFragment {
 
     public void onViewCreated(View view, Bundle savedInstance) {
         setListener(listener);
+        setClickListener(clickListener);
     }
 }

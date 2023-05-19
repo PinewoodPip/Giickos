@@ -30,6 +30,18 @@ public class ViewModelHelpers {
         }
     }
 
+    public enum SUBSCRIPTION_STATUS {
+        NOT_SUBSCRIBED(R.string.subscription_inactive),
+        SUBSCRIBED(R.string.subscription_active),
+        ;
+
+        public final int stringResource;
+
+        SUBSCRIPTION_STATUS(int stringResource) {
+            this.stringResource = stringResource;
+        }
+    }
+
     public static List<ProjectData> sortProjects(Set<Project> projects) {
         List<ProjectData> orderedProjects = new ArrayList<>();
 

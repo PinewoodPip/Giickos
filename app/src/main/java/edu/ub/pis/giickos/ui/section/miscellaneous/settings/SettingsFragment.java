@@ -93,6 +93,20 @@ public class SettingsFragment extends GiickosFragment {
         return username;
     }
 
+    private String getGiickosPlusStatusLabel() {
+        String label;
+        ViewModel.UserData user = viewModel.getLoggedInUser().getValue();
+
+        if (user != null) {
+            label = getString(user.subscriptionStatus.stringResource);
+        }
+        else {
+            label = getString(R.string.subscription_inapplicable);
+        }
+
+        return label;
+    }
+
     @Override
     public void onViewCreated(View view, Bundle bundle)
     {
@@ -152,6 +166,8 @@ public class SettingsFragment extends GiickosFragment {
                     R.color.yellow, // left frame
                     R.color.yellow, // right frame
                     R.color.black); // text color
+            TextField giickosPlusLabel = TextField.newInstance(getGiickosPlusStatusLabel(), InputType.TYPE_CLASS_TEXT, false, Color.BLACK);
+            giickosPlusCard.addElement(giickosPlusLabel);
 
             FancyFormCard logoutCard = addCardWithTint(R.drawable.exit, getString(R.string.miscellaneous_tab_settings_logout),
                     R.color.destructive_action, // left frame
@@ -162,12 +178,14 @@ public class SettingsFragment extends GiickosFragment {
                     R.color.destructive_action, // left frame
                     R.color.destructive_action, // right frame
                     R.color.black); // text color
-            giickosPlusCard.setClickListener(new View.OnClickListener() {
+            View.OnClickListener giickosPlusCardListener = new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     giickosPlusMenu.setVisibility(View.VISIBLE);
                 }
-            });
+            };
+            giickosPlusCard.setClickListener(giickosPlusCardListener);
+            giickosPlusLabel.setClickListener(giickosPlusCardListener);
 
             logoutCard.setClickListener(new View.OnClickListener() {
                 @Override
@@ -256,7 +274,5 @@ public class SettingsFragment extends GiickosFragment {
                 notificationsSwitch.setChecked(!notificationsSwitch.isChecked());
             }
         });
-
-
     }
 }
