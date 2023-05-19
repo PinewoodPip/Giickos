@@ -67,11 +67,6 @@ public class MainActivity extends GiickosActivity {
             requestPermissionLauncher.launch(
                     Manifest.permission.POST_NOTIFICATIONS);
         }
-        //exemple enviar notification
-        Notification.sendNotification(this, "notification titile", "notification content",
-                LoginActivity.class );
-        Notification.sendNotification(this, "notification titile", "notification content",
-                LoginActivity.class );
     }
 
 
