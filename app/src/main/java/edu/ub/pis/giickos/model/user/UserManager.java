@@ -69,11 +69,4 @@ public class UserManager extends Observable<UserManager.Events> {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         user.delete();
     }
-
-    public void checkEmail()
-    {
-        //firebaseAuth.email
-    }
-
-
 }
