@@ -15,10 +15,8 @@ import androidx.lifecycle.ViewModelProvider;
 import android.Manifest;
 import android.util.Log;
 
-import com.gu.toolargetool.TooLargeTool;
-
 import edu.ub.pis.giickos.R;
-import edu.ub.pis.giickos.model.notification.Notification;
+import edu.ub.pis.giickos.ui.utils.notification.Notification;
 import edu.ub.pis.giickos.ui.activities.GiickosActivity;
 import edu.ub.pis.giickos.ui.activities.login.LoginActivity;
 

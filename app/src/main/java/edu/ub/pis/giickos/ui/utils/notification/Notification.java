@@ -1,4 +1,4 @@
-package edu.ub.pis.giickos.model.notification;
+package edu.ub.pis.giickos.ui.utils.notification;
 
 import android.Manifest;
 import android.app.NotificationChannel;
@@ -38,8 +38,6 @@ public class Notification {
         // Create the NotificationChannel, but only on API 26+ because
         // the NotificationChannel class is new and not in the support library
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            //CharSequence name = getString(R.string.channel_name);
-            //String description = getString(R.string.channel_description);
             CharSequence name = context.getString(R.string.channel_name);
             String description = context.getString(R.string.channel_description);
             int importance = NotificationManager.IMPORTANCE_DEFAULT; //it's not guaranteed
