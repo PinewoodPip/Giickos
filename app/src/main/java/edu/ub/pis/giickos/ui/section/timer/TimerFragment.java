@@ -64,6 +64,52 @@ public class TimerFragment extends Fragment {
         viewModel = new ViewModelProvider(getActivity()).get(ViewModel.class);
     }
 
+    private void setupTasksSpinner() {
+        View view = getView();
+        selectTaskSpinner = view.findViewById(R.id.spinner_select_task);
+
+        List<ViewModelHelpers.TaskData> tasks = viewModel.getTasks().getValue();
+        List<Object> taskObjects = new ArrayList<>();
+        taskObjects.add(getString(R.string.generic_label_none));
+        taskObjects.addAll(tasks);
+
+        ArrayAdapter<Object> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, taskObjects);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        int selectedIndex = 0;
+
+        // Restore spinner selection
+        ViewModelHelpers.TaskData selectedTask = viewModel.getSelectedTask().getValue();
+        if (selectedTask != null) {
+            for (int i = 0; i < tasks.size() && selectedIndex == 0; ++i) {
+                ViewModelHelpers.TaskData task = tasks.get(i);
+                if (task.id.equals(selectedTask.id)) {
+                    selectedIndex = i + 1; // +1 to account for "None" option
+                }
+            }
+        }
+
+        selectTaskSpinner.setAdapter(adapter);
+        selectTaskSpinner.setSelection(selectedIndex);
+
+        selectTaskSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if (i != 0) {
+                    ViewModelHelpers.TaskData task = tasks.get(i-1);
+
+                    viewModel.selectTask(task);
+                }
+                else {
+                    viewModel.selectTask(null);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {}
+        });
+    }
+
     public void onViewCreated(View view, Bundle bundle) {
         startPauseButton = view.findViewById(R.id.button_start_timer);
         selectTaskButton = view.findViewById(R.id.button_select_task);
@@ -77,34 +123,11 @@ public class TimerFragment extends Fragment {
         timerView = view.findViewById(R.id.textView_timer);
         timerModeTextView = view.findViewById(R.id.textView_timer_mode);
 
-        selectTaskSpinner = view.findViewById(R.id.spinner_select_task);
-
-        List<ViewModelHelpers.TaskData> tasks = viewModel.getTasks().getValue();
-        List<Object> taskObjects = new ArrayList<>();
-        taskObjects.add("None");
-        taskObjects.addAll(tasks);
-
-        ArrayAdapter<Object> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, taskObjects);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        selectTaskSpinner.setAdapter(adapter);
-
         timerModeTextView.setText("Pomodoro");
         viewModel.setTime(viewModel.pomodoroTimeInMillis);
         viewModel.isPomodoro = true;
 
-        selectTaskSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if (i != 0) {
-                    long millisInput = tasks.get(i-1).durationInMinutes * 60000;
-                    viewModel.setTime(millisInput);
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {}
-        });
+        setupTasksSpinner();
 
         setPomodoroButton.setOnClickListener(new View.OnClickListener() {
             @Override

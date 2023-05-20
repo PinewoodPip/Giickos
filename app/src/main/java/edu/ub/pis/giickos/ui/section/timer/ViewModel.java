@@ -51,6 +51,7 @@ public class ViewModel extends androidx.lifecycle.ViewModel{
     private ProjectManager model;
 
     private MutableLiveData<List<ViewModelHelpers.TaskData>> tasks;
+    private MutableLiveData<ViewModelHelpers.TaskData> selectedTask;
 
     private Observer modelTasksObserver;
 
@@ -73,8 +74,7 @@ public class ViewModel extends androidx.lifecycle.ViewModel{
 
         this.tasks = new MutableLiveData<>(new ArrayList<>());
         updateTask();
-
-
+        this.selectedTask = new MutableLiveData<>(null);
 
         // Listen for tasks being updated in the model
         this.modelTasksObserver = new Observer() {
@@ -84,7 +84,6 @@ public class ViewModel extends androidx.lifecycle.ViewModel{
             }
         };
         model.subscribe(ProjectManager.Events.TASKS_UPDATED, this.modelTasksObserver);
-
     }
 
     public LiveData<String> getTimer() {return timer;}
@@ -225,5 +224,20 @@ public class ViewModel extends androidx.lifecycle.ViewModel{
         Set<Task> tasks = model.getTasks(projectGUID);
 
         return ViewModelHelpers.sortTasks(tasks);
+    }
+
+    public LiveData<ViewModelHelpers.TaskData> getSelectedTask() {
+        return selectedTask;
+    }
+
+    public void selectTask(ViewModelHelpers.TaskData task) {
+        this.selectedTask.setValue(task);
+
+        // Set timer duration from task duration
+        if (task.durationInMinutes > 0) {
+            long millis = task.durationInMinutes * 60000L;
+
+            setTime(millis);
+        }
     }
 }
