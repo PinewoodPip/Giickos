@@ -254,9 +254,11 @@ public class ViewModel extends androidx.lifecycle.ViewModel{
             // Set timer duration from task duration
             if (task.durationInMinutes > 0) {
                 long millis = task.durationInMinutes * 60000L;
-
                 setTime(millis);
+            }/*else if (task.durationInMinutes < 0){
+                setTime(0);
             }
+            */
         }
     }
 }

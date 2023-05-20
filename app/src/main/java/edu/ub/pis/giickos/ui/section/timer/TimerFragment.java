@@ -73,8 +73,9 @@ public class TimerFragment extends Fragment {
         taskObjects.add(getString(R.string.generic_label_none));
         taskObjects.addAll(tasks);
 
-        ArrayAdapter<Object> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, taskObjects);
+        ArrayAdapter<Object> adapter = new ArrayAdapter<Object>(getContext(), android.R.layout.simple_spinner_item, taskObjects);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
 
         int selectedIndex = 0;
 
