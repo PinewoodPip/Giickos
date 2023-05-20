@@ -10,6 +10,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
@@ -104,6 +105,11 @@ public class ViewModel extends androidx.lifecycle.ViewModel{
             public void onTick(long millisUntilFinished) {
                 timeLeftInMillis = millisUntilFinished;
                 updateCountDownText();
+
+                ViewModelHelpers.TaskData task = selectedTask.getValue();
+                if (task != null) {
+                    model.addTimeSpentToTask(task.id, 1);
+                }
             }
 
             @Override
@@ -123,6 +129,8 @@ public class ViewModel extends androidx.lifecycle.ViewModel{
                     isPomodoro = true;
                 }
 
+                syncTask();
+
                 //TODO: notification
             }
         }.start();
@@ -140,6 +148,8 @@ public class ViewModel extends androidx.lifecycle.ViewModel{
         countDownTimer.cancel();
         istimerRunning = false;
         updateWatchInterface();
+
+        syncTask();
     }
 
     public void resetTimer() {
@@ -230,14 +240,25 @@ public class ViewModel extends androidx.lifecycle.ViewModel{
         return selectedTask;
     }
 
-    public void selectTask(ViewModelHelpers.TaskData task) {
-        this.selectedTask.setValue(task);
+    // Syncs selected task to DB
+    public void syncTask() {
+        ViewModelHelpers.TaskData selectedTask = this.selectedTask.getValue();
+        if (selectedTask != null) {
+            model.markTaskAsDirty(selectedTask.id);
+        }
+    }
 
-        // Set timer duration from task duration
-        if (task.durationInMinutes > 0) {
-            long millis = task.durationInMinutes * 60000L;
+    public void selectTask(@Nullable ViewModelHelpers.TaskData task) {
+        syncTask();
+        selectedTask.setValue(task);
 
-            setTime(millis);
+        if (task != null) {
+            // Set timer duration from task duration
+            if (task.durationInMinutes > 0) {
+                long millis = task.durationInMinutes * 60000L;
+
+                setTime(millis);
+            }
         }
     }
 }

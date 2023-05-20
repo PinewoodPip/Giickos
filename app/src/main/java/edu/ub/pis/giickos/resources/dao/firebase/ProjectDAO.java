@@ -138,6 +138,7 @@ public class ProjectDAO extends CachedProjectDAO {
         entry.put("takes_all_day", task.takesAllDay());
         entry.put("completion_dates", new ArrayList<>(task.getCompletedDates()));
         entry.put("creation_time", task.getCreationTimeMillis());
+        entry.put("time_spent", task.getTimeSpent());
 
         // TODO decide how to handle failure - need an event system
         ref.set(entry);
@@ -199,6 +200,14 @@ public class ProjectDAO extends CachedProjectDAO {
 
                             if (task.containsKey("creation_time")) { // This field was added on 19/5/23
                                 taskInstance.setCreationTime(((Long) task.get("creation_time")));
+                            }
+
+                            if (task.containsKey("time_spent")) { // This field was added on 20/5/23
+                                Map<String, Long> timeSpent = (Map<String, Long>) task.get("time_spent");
+
+                                for (String key : timeSpent.keySet()) {
+                                    taskInstance.setTimeSpent(key, timeSpent.get(key).longValue());
+                                }
                             }
 
                             addTask(taskInstance.getProjectID(), taskInstance);

@@ -17,6 +17,7 @@ import edu.ub.pis.giickos.model.statistics.Statistic;
 import edu.ub.pis.giickos.model.statistics.StatisticsProvider;
 import edu.ub.pis.giickos.model.user.UserManager;
 import edu.ub.pis.giickos.resources.dao.ProjectDAO;
+import edu.ub.pis.giickos.ui.ViewModelHelpers;
 
 public class ProjectManager extends Observable<ProjectManager.Events> implements StatisticsProvider {
 
@@ -100,6 +101,14 @@ public class ProjectManager extends Observable<ProjectManager.Events> implements
         }
 
         return success;
+    }
+
+    public void markTaskAsDirty(String id) {
+        Task task = getTask(id);
+
+        if (task != null) {
+            updateTask(task);
+        }
     }
 
     public Project getTaskProject(String taskID) {
@@ -206,6 +215,14 @@ public class ProjectManager extends Observable<ProjectManager.Events> implements
         boolean completed = task != null && task.isCompletedOnDay(day);
 
         return completed;
+    }
+
+    public void addTimeSpentToTask(String id, int seconds) {
+        Task task = getTask(id);
+
+        if (task != null) {
+            task.addTimeSpent(LocalDate.now(), seconds);
+        }
     }
 
     public Set<Task> getTasksForDay(LocalDateTime day) {

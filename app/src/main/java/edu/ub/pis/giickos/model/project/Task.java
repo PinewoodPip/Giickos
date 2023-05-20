@@ -3,8 +3,10 @@ package edu.ub.pis.giickos.model.project;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.IsoFields;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Set;
 
 import edu.ub.pis.giickos.Utils;
@@ -30,6 +32,7 @@ public class Task {
     private REPEAT_MODE repeatMode = REPEAT_MODE.NONE;
     private String description = "";
     private Set<String> completionDates; // Dates this task was completed on. Recurring tasks may be completed on multiple different days.
+    private Map<String, Long> timeSpent; // Time spent working on the task on a given day (as string key), in seconds.
     private String projectID;
 
     private long creationTime;
@@ -42,6 +45,7 @@ public class Task {
         this.id = id;
         this.name = name;
         this.completionDates = new HashSet<>();
+        this.timeSpent = new HashMap<>();
     }
 
     public String getID() {
@@ -192,6 +196,24 @@ public class Task {
         }
 
         return dates;
+    }
+
+    public Map<String, Long> getTimeSpent() {
+        return timeSpent;
+    }
+
+    public void setTimeSpent(LocalDate day, long time) {
+        setTimeSpent(getDateID(day), time);
+    }
+
+    public void setTimeSpent(String day, long time) {
+        timeSpent.put(day, time);
+    }
+
+    public void addTimeSpent(LocalDate day, long time) {
+        long existingTime = timeSpent.getOrDefault(getDateID(day), 0L);
+
+        setTimeSpent(day, existingTime + time);
     }
 
     private String getDateID(LocalDate day) {
