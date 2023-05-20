@@ -21,8 +21,7 @@ public class ViewModel extends androidx.lifecycle.ViewModel {
         TASKS_CREATED(R.string.statistics_tasks_created, R.drawable.projects, ProjectManager.STAT_TASKS_CREATED),
         TASKS_COMPLETED(R.string.statistics_tasks_completed, R.drawable.projects, ProjectManager.STAT_TASKS_COMPLETED),
 
-        // Not implemented yet. TODO
-//        TIMER_TIME(R.string.statistics_timer_time, R.drawable.timer),
+        TIMER_TIME(R.string.statistics_timer_time, R.drawable.timer, ProjectManager.STAT_TIMER_TIMESPENT),
 //        TIMER_DETOXTIME(R.string.statistics_timer_detoxtime, R.drawable.timer),
 //
 //        BAMBOO_PLANTED(R.string.statistics_bamboo_planted, R.drawable.bamboo),

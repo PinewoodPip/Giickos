@@ -24,6 +24,7 @@ public class ProjectManager extends Observable<ProjectManager.Events> implements
     // Stat IDs for StatisticsProvider
     public static final String STAT_TASKS_CREATED = "PROJECTMANAGER_TASKS_CREATED";
     public static final String STAT_TASKS_COMPLETED = "PROJECTMANAGER_TASKS_COMPLETED";
+    public static final String STAT_TIMER_TIMESPENT = "PROJECTMANAGER_TIMER_TIMESPENT";
 
     public enum Events {
         PROJECTS_UPDATED,
@@ -242,6 +243,13 @@ public class ProjectManager extends Observable<ProjectManager.Events> implements
 
         // "Tasks created" stat
         stats.add(new Statistic(STAT_TASKS_CREATED, getTasksCreatedCount(startDate, endDate)));
+
+        // "Timer time spent" stat
+        long timeSpent = 0;
+        for (Task task : getTasks()) {
+            timeSpent += task.getTimeSpent(startDate, endDate);
+        }
+        stats.add(new Statistic(STAT_TIMER_TIMESPENT, timeSpent));
 
         return stats;
     }

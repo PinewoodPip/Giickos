@@ -198,6 +198,22 @@ public class Task {
         return dates;
     }
 
+    public long getTimeSpent(LocalDate startDate, LocalDate endDate) {
+        Map<String, Long> times = getTimeSpent();
+        long timeSpent = 0;
+
+        for (String dateID : times.keySet()) {
+            LocalDate date = getCompletionDate(dateID);
+
+            // Range is inclusive
+            if ((date.isAfter(startDate) || date.isEqual(startDate)) && (date.isBefore(endDate) || date.isEqual(endDate))) {
+                timeSpent += times.get(dateID);
+            }
+        }
+
+        return timeSpent;
+    }
+
     public Map<String, Long> getTimeSpent() {
         return timeSpent;
     }
