@@ -23,11 +23,7 @@ import java.util.List;
 import edu.ub.pis.giickos.R;
 import edu.ub.pis.giickos.ui.ViewModelHelpers;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link TimerFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+// Fragment for the timer tab.
 public class TimerFragment extends Fragment {
 
     private Button startPauseButton;
@@ -50,12 +46,9 @@ public class TimerFragment extends Fragment {
 
     private ViewModel viewModel;
 
-
-
     public TimerFragment() {
         // Required empty public constructor
     }
-
 
     public static TimerFragment newInstance() {
         TimerFragment fragment = new TimerFragment();
@@ -71,8 +64,7 @@ public class TimerFragment extends Fragment {
         viewModel = new ViewModelProvider(getActivity()).get(ViewModel.class);
     }
 
-    public void onViewCreated(View view, Bundle bundle){
-
+    public void onViewCreated(View view, Bundle bundle) {
         startPauseButton = view.findViewById(R.id.button_start_timer);
         selectTaskButton = view.findViewById(R.id.button_select_task);
         setPomodoroButton = view.findViewById(R.id.button_set_minutes);
@@ -87,7 +79,6 @@ public class TimerFragment extends Fragment {
 
         selectTaskSpinner = view.findViewById(R.id.spinner_select_task);
 
-
         List<ViewModelHelpers.TaskData> tasks = viewModel.getTasks().getValue();
         List<Object> taskObjects = new ArrayList<>();
         taskObjects.add("None");
@@ -98,35 +89,26 @@ public class TimerFragment extends Fragment {
 
         selectTaskSpinner.setAdapter(adapter);
 
-
         timerModeTextView.setText("Pomodoro");
         viewModel.setTime(viewModel.pomodoroTimeInMillis);
         viewModel.isPomodoro = true;
 
-
         selectTaskSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-
-                if (i != 0){
+                if (i != 0) {
                     long millisInput = tasks.get(i-1).durationInMinutes * 60000;
                     viewModel.setTime(millisInput);
                 }
-
-
-
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
+            public void onNothingSelected(AdapterView<?> adapterView) {}
         });
 
         setPomodoroButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 String input = editMinuteEdittext.getText().toString();
 
                 //change minutes to milisecons
@@ -141,7 +123,6 @@ public class TimerFragment extends Fragment {
 
                     editMinuteEdittext.setText("");
                 }
-
             }
         });
 
@@ -158,20 +139,17 @@ public class TimerFragment extends Fragment {
                     }
                     editBreakMinuteEdittext.setText("");
                 }
-
-
             }
         });
 
         startPauseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 if (viewModel.getIsIstimerRunning()) {
                     viewModel.pauseTimer();
-                } else {
+                }
+                else {
                     viewModel.startTimer();
-
                 }
             }
         });
@@ -219,7 +197,6 @@ public class TimerFragment extends Fragment {
 
         viewModel.getTimer().observe(this.getViewLifecycleOwner(), observerTimer);
 
-
         final Observer<String> observerTextStartPauseButton = new Observer<String>() {
             @Override
             public void onChanged(String textStartPauseButton) {
@@ -237,7 +214,6 @@ public class TimerFragment extends Fragment {
 
         viewModel.getTextTimerMode().observe(this.getViewLifecycleOwner(), observerTextTimerMode);
 
-
         final Observer<Boolean> observerVisibilityEditMinuteEdittext = new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean visibilityEditMinuteEdittext) {
@@ -253,7 +229,6 @@ public class TimerFragment extends Fragment {
             }
         };
         viewModel.getVisibilityEditBreakMinuteEdittext().observe(this.getViewLifecycleOwner(), observerVisibilityEditBreakMinuteEdittext);
-
 
         final Observer<Boolean> observerVisibilitySetPomodoroButton = new Observer<Boolean>() {
             @Override
@@ -271,7 +246,6 @@ public class TimerFragment extends Fragment {
         };
         viewModel.getVisibilitySetBreakButton().observe(this.getViewLifecycleOwner(), observerVisibilitySetBreakButton);
 
-
         final Observer<Boolean> observerVisibilityResetButton = new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean visibilityResetButton) {
@@ -288,9 +262,7 @@ public class TimerFragment extends Fragment {
             }
         };
         viewModel.getVisibilityStartPauseButton().observe(this.getViewLifecycleOwner(), observerVisibilityStartPauseButton);
-
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -298,5 +270,4 @@ public class TimerFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_section_timer_timer, container, false);
     }
-
 }

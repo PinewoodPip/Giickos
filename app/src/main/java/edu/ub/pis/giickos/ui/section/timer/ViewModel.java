@@ -52,7 +52,6 @@ public class ViewModel extends androidx.lifecycle.ViewModel{
 
     private MutableLiveData<List<ViewModelHelpers.TaskData>> tasks;
 
-
     private Observer modelTasksObserver;
 
     public ViewModel() {
@@ -97,11 +96,6 @@ public class ViewModel extends androidx.lifecycle.ViewModel{
     public LiveData<Boolean> getVisibilitySetBreakButton() {return visibilitySetBreakButton;}
     public LiveData<Boolean> getVisibilityResetButton() {return visibilityResetButton;}
     public LiveData<Boolean> getVisibilityStartPauseButton() {return visibilityStartPauseButton;}
-
-
-
-
-
 
     public void startTimer() {
         endTime = System.currentTimeMillis() + timeLeftInMillis;
@@ -184,10 +178,8 @@ public class ViewModel extends androidx.lifecycle.ViewModel{
             visibilityResetButton.setValue(false);
 
             textStartPauseButton.setValue("Pause");
-
-
-        } else {
-
+        }
+        else {
             visibilityEditMinuteEdittext.setValue(true);
             visibilityEditBreakMinuteEdittext.setValue(true);
             visibilitySetPomodoroButton.setValue(true);
@@ -218,7 +210,6 @@ public class ViewModel extends androidx.lifecycle.ViewModel{
         return istimerRunning;
     }
 
-
     public void updateTask() {
         Set<Task> tasks = model.getTasks();
         List<ViewModelHelpers.TaskData> taskData = ViewModelHelpers.sortTasks(tasks);
@@ -235,5 +226,4 @@ public class ViewModel extends androidx.lifecycle.ViewModel{
 
         return ViewModelHelpers.sortTasks(tasks);
     }
-
 }
