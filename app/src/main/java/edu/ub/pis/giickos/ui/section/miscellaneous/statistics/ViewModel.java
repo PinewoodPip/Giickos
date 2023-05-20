@@ -1,10 +1,13 @@
 package edu.ub.pis.giickos.ui.section.miscellaneous.statistics;
 
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -59,7 +62,30 @@ public class ViewModel extends androidx.lifecycle.ViewModel {
         for (Statistic stat : stats) {
             for (STATISTIC statID : STATISTIC.values()) {
                 if (statID.stringID.equals(stat.getId())) {
-                    statValues.put(statID, Double.toString(stat.getValue()));
+                    String label = null;
+
+                    switch (statID) {
+                        case TASKS_CREATED:
+                        case TASKS_COMPLETED: {
+                            label = String.format("%.0f", stat.getValue());
+                            break;
+                        }
+                        case TIMER_TIME: {
+                            Date date = new Date();
+                            date.setMinutes((int) (stat.getValue() / 60));
+                            date.setSeconds((int) (stat.getValue() % 60));
+                            label = new SimpleDateFormat("mm:ss").format(date);
+                            break;
+                        }
+                        default: {
+                            Log.w("TODO", "Stat label formatting not implemented: " + statID);
+                        }
+                    }
+
+                    if (label != null) {
+                        statValues.put(statID, label);
+                    }
+
                     break;
                 }
             }
