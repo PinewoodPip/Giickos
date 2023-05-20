@@ -273,7 +273,7 @@ public class ViewModel  extends androidx.lifecycle.ViewModel
 
         Bamboo currentBamboo = bamboos.getValue().get(selectedSlot);
         //Tries to harvest the bamboo, if it is not ready, it returns false
-        if(!currentBamboo.harvest())
+        if(!currentBamboo.canHarvest())
             return false;
 
         //Otherwise, it adds the bamboo to the harvested bamboos and removes it from the planted bamboos

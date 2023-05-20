@@ -1,7 +1,6 @@
 package edu.ub.pis.giickos.ui.section.bamboogarden.garden;
 
 import android.content.DialogInterface;
-import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -27,7 +26,6 @@ import edu.ub.pis.giickos.GiickosFragment;
 import edu.ub.pis.giickos.R;
 import edu.ub.pis.giickos.model.garden.Bamboo;
 import edu.ub.pis.giickos.ui.dialogs.Alert;
-import edu.ub.pis.giickos.ui.generic.form.FormCard;
 import edu.ub.pis.giickos.ui.generic.form.FormCardGarden;
 import edu.ub.pis.giickos.ui.generic.form.FancyFormCard;
 import edu.ub.pis.giickos.ui.generic.form.FormSpinner;
@@ -474,7 +472,7 @@ public class GardenFragment extends GiickosFragment {
             {
 
                 Bamboo bamboo = viewModel.getSlotBamboo(viewModel.getSelectedSlot());
-                if(!bamboo.harvest())
+                if(!bamboo.canHarvest())
                 {
                     Toast.makeText(getActivity(), "The bamboo is not ready to be harvested!", Toast.LENGTH_LONG).show();
                     return;

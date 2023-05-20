@@ -119,9 +119,9 @@ public class Bamboo
         return false;
     }
 
-    public boolean harvest()
+    public boolean canHarvest()
     {
-        return this.growth == this.totalGrowth;
+        return this.growth >= this.totalGrowth;
     }
 
 
