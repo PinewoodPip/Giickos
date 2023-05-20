@@ -112,7 +112,6 @@ public class TimerFragment extends Fragment {
 
     public void onViewCreated(View view, Bundle bundle) {
         startPauseButton = view.findViewById(R.id.button_start_timer);
-        selectTaskButton = view.findViewById(R.id.button_select_task);
         setPomodoroButton = view.findViewById(R.id.button_set_minutes);
         resetButton = view.findViewById(R.id.button_reset_timer);
         setBreakButton = view.findViewById(R.id.button_set_break);
@@ -184,13 +183,6 @@ public class TimerFragment extends Fragment {
             }
         });
 
-        selectTaskButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //TODO;
-                System.out.println("selectTaskButton clicked");
-            }
-        });
 
         detoxCheckbox.setOnClickListener(new View.OnClickListener() {
             @Override

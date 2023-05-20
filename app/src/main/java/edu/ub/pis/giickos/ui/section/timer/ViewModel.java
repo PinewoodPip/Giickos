@@ -1,34 +1,30 @@
 package edu.ub.pis.giickos.ui.section.timer;
 
-import android.os.Bundle;
+
 import android.os.CountDownTimer;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.EditText;
-import android.widget.TextView;
+
 
 import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import java.util.ArrayList;
-import java.util.HashSet;
+
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
-import edu.ub.pis.giickos.R;
+
 import edu.ub.pis.giickos.model.ModelHolder;
+
 import edu.ub.pis.giickos.model.observer.ObservableEvent;
 import edu.ub.pis.giickos.model.observer.Observer;
-import edu.ub.pis.giickos.model.project.Project;
+
 import edu.ub.pis.giickos.model.project.ProjectManager;
 import edu.ub.pis.giickos.model.project.Task;
 import edu.ub.pis.giickos.ui.ViewModelHelpers;
-import edu.ub.pis.giickos.ui.activities.taskcreator.TaskCreator;
+import edu.ub.pis.giickos.ui.utils.notification.Notification;
+
 
 public class ViewModel extends androidx.lifecycle.ViewModel{
 
@@ -56,13 +52,14 @@ public class ViewModel extends androidx.lifecycle.ViewModel{
 
     private Observer modelTasksObserver;
 
+
+
+
     public ViewModel() {
         timer = new MutableLiveData<String>();
         textStartPauseButton = new MutableLiveData<String>();
         textTimerMode = new MutableLiveData<String>();
 
-        //pomodoroTimeInMillis = new MutableLiveData<Long>();
-        //breakTimeInMillis = new MutableLiveData<Long>();
 
         visibilityEditMinuteEdittext = new MutableLiveData<Boolean>(true);
         visibilityEditBreakMinuteEdittext = new MutableLiveData<>(true);
@@ -193,7 +190,6 @@ public class ViewModel extends androidx.lifecycle.ViewModel{
             visibilityEditBreakMinuteEdittext.setValue(true);
             visibilitySetPomodoroButton.setValue(true);
             visibilitySetBreakButton.setValue(true);
-
             textStartPauseButton.setValue("Start");
 
             if (timeLeftInMillis < 1000) {
@@ -230,11 +226,13 @@ public class ViewModel extends androidx.lifecycle.ViewModel{
         return tasks;
     }
 
+    /*
     public List<ViewModelHelpers.TaskData> getTasksById(String projectGUID) {
         Set<Task> tasks = model.getTasks(projectGUID);
 
         return ViewModelHelpers.sortTasks(tasks);
     }
+     */
 
     public LiveData<ViewModelHelpers.TaskData> getSelectedTask() {
         return selectedTask;
