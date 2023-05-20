@@ -412,7 +412,7 @@ public class TaskCreator extends GiickosFragment {
 
                     alert.setPositiveButton(new DialogInterface.OnClickListener() {
                         @Override
-                        public void onClick(DialogInterface dialog, int _) {
+                        public void onClick(DialogInterface dialog, int button) {
                             boolean success = viewModel.deleteTask();
 
                             showOperationResultToast(success, getString(R.string.taskcreator_msg_deleted_success), getString(R.string.taskcreator_msg_deleted_error));
