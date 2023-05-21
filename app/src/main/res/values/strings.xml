@@ -154,7 +154,7 @@
 
 
     <!-- Calendar -->
-    <string name="calendar_name">Timer &amp; Detox</string>
+    <string name="calendar_name">Calendar</string>
     <string name="calendar_help">The calendar shows you the tasks you have planned for each day. You may tap a task to view it and edit it, or tap an empty space to create a new task on the chosen date and time.</string>
 
     <string name="detox_all_apps_locked">All apps locked</string>
