@@ -328,7 +328,7 @@ public class TaskCreator extends GiickosFragment {
             }
         });
 
-        addDateField("Date", R.drawable.timer, getString(R.string.taskcreator_label_date), formatDate(viewModel.getStartDate()), new DatePickerListener() {
+        addDateField("Date", R.drawable.timer_white, getString(R.string.taskcreator_label_date), formatDate(viewModel.getStartDate()), new DatePickerListener() {
             @Override
             public void dateSet(String id, int year, int month, int day) {
                 Log.d("View", "Date set");
@@ -353,9 +353,9 @@ public class TaskCreator extends GiickosFragment {
             }
         };
 
-        addTimeField("StartTime", R.drawable.timer, getString(R.string.taskcreator_label_time_start), formatTime(viewModel.getStartTime()), timePickerListener);
+        addTimeField("StartTime", R.drawable.timer_white, getString(R.string.taskcreator_label_time_start), formatTime(viewModel.getStartTime()), timePickerListener);
 
-        FancyFormCard durationCard = addNumberField(viewModel.getDurationInMinutes(), ViewModel.MIN_DURATION, ViewModel.MAX_DURATION, R.drawable.timer, getString(R.string.taskcreator_label_duration), new NumberPicker.OnValueChangeListener() {
+        FancyFormCard durationCard = addNumberField(viewModel.getDurationInMinutes(), ViewModel.MIN_DURATION, ViewModel.MAX_DURATION, R.drawable.timer_white, getString(R.string.taskcreator_label_duration), new NumberPicker.OnValueChangeListener() {
             @Override
             public void onValueChange(NumberPicker numberPicker, int oldValue, int minutes) {
                 viewModel.setDurationInMinutes(minutes);
@@ -397,7 +397,7 @@ public class TaskCreator extends GiickosFragment {
             });
 
             // "Mark as complete" button
-            addSwitchField(R.drawable.folder_task_completed, String.format(getString(R.string.taskcreator_label_complete), viewModel.getSelectedDate()), R.color.positive_action, viewModel.isCompleted(), new CompoundButton.OnCheckedChangeListener() {
+            addSwitchField(R.drawable.checkmark_circled_white, String.format(getString(R.string.taskcreator_label_complete), viewModel.getSelectedDate()), R.color.positive_action, viewModel.isCompleted(), new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                     viewModel.setCompleted(b);
