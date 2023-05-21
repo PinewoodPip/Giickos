@@ -12,6 +12,8 @@
     android:paddingHorizontal="5dp"
     tools:context=".ui.activities.register.RegisterActivity">
 
+    <include layout="@layout/logo"/>
+
     <TextView
         android:id="@+id/title_login"
         android:layout_width="400dp"
@@ -20,7 +22,9 @@
         android:text="Giickos"
         android:textColor="#1D5300"
         android:textSize="60sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:visibility="gone"
+        tools:visibility="gone" />
 
     <LinearLayout
         android:id="@+id/register_layout"
