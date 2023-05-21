@@ -169,7 +169,7 @@ public class StorageFragment extends GiickosFragment {
             public void onChanged(List<Bamboo> integerBambooMap) {
                 //Update the bamboo phase
                 bambooListAdapter.notifyDataSetChanged();
-                noHarvestedBamboo(view, viewModel.getHarvestedBamboos());
+                noHarevestedBamboo(view, viewModel.getHarvestedBamboos());
                 System.out.println("Bamboo observer");
             }
 
@@ -201,7 +201,7 @@ public class StorageFragment extends GiickosFragment {
 
     }
 
-    private void noHarvestedBamboo(View view, List<Bamboo> harvestedBamboos) {
+    private void noHarevestedBamboo(View view, List<Bamboo> harvestedBamboos) {
         view.findViewById(R.id.bamboo_garden_warning).setVisibility(harvestedBamboos.size() == 0 ? View.VISIBLE : View.GONE);
     }
 

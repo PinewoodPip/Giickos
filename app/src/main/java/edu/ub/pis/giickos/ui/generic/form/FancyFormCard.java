@@ -121,13 +121,13 @@ public class FancyFormCard extends ContainerCard
         text.setText(label);
 
         if (colorLeft != -1) {
-            leftFrame.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(colorLeft)));
+            leftFrame.setBackgroundTintList(ColorStateList.valueOf(requireContext().getResources().getColor(colorLeft, null)));
         }
         if (colorRight != -1) {
-            rightFrame.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(colorRight)));
+            rightFrame.setBackgroundTintList(ColorStateList.valueOf(requireContext().getResources().getColor(colorRight, null)));
         }
         if (colorText != -1) {
-            text.setTextColor(getResources().getColor(colorText));
+            text.setTextColor(requireContext().getResources().getColor(colorText, null));
         }
 
         updateClickListener(view);

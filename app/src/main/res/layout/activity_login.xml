@@ -3,81 +3,63 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/login"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center|left"
+    android:background="#BDC6BA"
+    android:gravity="top|left"
     android:orientation="vertical"
     android:paddingHorizontal="5dp"
-    tools:context=".ui.activities.login.LoginActivity"
-    android:id="@+id/login">
+    tools:context=".ui.activities.login.LoginActivity">
 
     <TextView
         android:id="@+id/title_login"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="400dp"
+        android:layout_height="180dp"
         android:gravity="center"
         android:text="@string/app_name"
-        android:textColor="#356003"
-        android:textSize="60sp" />
+        android:textColor="#1D5300"
+        android:textSize="60sp"
+        android:textStyle="bold" />
 
     <LinearLayout
+        android:id="@+id/login_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:background="#00434C39"
+        android:orientation="vertical"
+        android:paddingHorizontal="20dp"/>
 
-        <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/card_email"
-            android:name="edu.ub.pis.giickos.ui.generic.form.FormCard"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:layout="@layout/fragment_card_form" />
-
-        <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/card_password"
-            android:name="edu.ub.pis.giickos.ui.generic.form.FormCard"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:layout="@layout/fragment_card_form" />
-    </LinearLayout>
-
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/checkbox_login"
-        android:name="edu.ub.pis.giickos.ui.login.CheckboxLoginFragment"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="91dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:paddingHorizontal="20dp">
 
-        tools:layout="@layout/fragment_checkbox_label_login">
-    </androidx.fragment.app.FragmentContainerView>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="91dp"
-        android:orientation="horizontal"
-        android:gravity="center"
-        >
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/sign_in_login"
-            android:text="@string/action_sign_in_short"
-            android:layout_marginRight="20dp"
-            >
-        </Button>
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/register_login"
+            android:layout_width="170dp"
+            android:layout_height="55dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="15dp"
+            android:background="@drawable/custom_button_animated"
             android:text="@string/register"
-            android:layout_marginLeft="20dp"
+            android:textColor="#F8FFB9"></androidx.appcompat.widget.AppCompatButton>
 
-            >
-        </Button>
-    </LinearLayout>
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/sign_in_login"
+            android:layout_width="170dp"
+            android:layout_height="55dp"
+            android:layout_alignParentLeft="true"
+            android:background="@drawable/custom_button_animated"
+            android:text="@string/action_sign_in_short"
+            android:textColor="#C8FFB9"></androidx.appcompat.widget.AppCompatButton>
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:gravity="center"
         android:orientation="horizontal">
 
@@ -94,7 +76,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="0"
             android:text="@string/click_here"
-            android:textColor="@color/link" />
+            android:textColor="@color/purple_700" />
     </LinearLayout>
 
     <Button
