@@ -166,7 +166,11 @@
 
     <!-- Bamboo -->
     <string name="bamboo_name">Bamboo garden</string>
-    <string name="bamboo_help">The bamboo garden is a place where you can track your progress by growing bamboo. Each bamboo has a unique label. By completing tasks with the associated label, a bamboo can grow once a day. The bamboo contains your goal, and a letter that you write for the future you. The letter can be collected after the bamboo is mature and it will be stored in the storage. </string>
+    <string name="bamboo_help">
+        Plant a bamboo with a growth time, goals, steps, obstacles, benefits and a letter for the future you. Once the bamboo is planted, you can
+        view the info by tapping on it, but you can\'t see the letter. The letter is only visible when the bamboo is fully grown and harvested to the storage.
+        In order to make it grow, you can water it once a day. Watering represents you have achieved your goals for the day.
+    </string>
     <string name="bamboo_garden_tab">Garden</string>
     <string name="bamboo_storage_tab">Storage</string>
     <string name="bamboo_question_1">Objectives, new habits, remove bad habits. (No more than 3 tasks; they must be measurable)</string>
@@ -174,6 +178,8 @@
     <string name="bamboo_question_3">Obstacles that you will face and how will you react?</string>
     <string name="bamboo_question_4">Benefits of achieving your objectives?</string>
     <string name="bamboo_question_letter">Letter for the future you:</string>
+
+    <string name="bamboo_garden_warning"> You haven\'t collected any bamboo yet</string>
 
     <string name="bamboo_growthtime_3days">3 Days</string>
     <string name="bamboo_growthtime_1week">1 Week</string>
