@@ -278,9 +278,23 @@ public class CalendarSection extends Section {
             @Override
             public Unit invoke(Week week) {
                 List<WeekDay> weekDays = week.getDays();
+                LocalDate selectedDate = viewModel.getSelectedDate().getValue();
+
+                // Find the date within weekDays that corresponds to +/- 1 Week
+                // We can't know from this event if we moved back of forwards in time
+                LocalDate previousWeekDate = selectedDate.minusWeeks(1);
+                LocalDate nextWeekDate = selectedDate.plusWeeks(1);
+                for (int i = 0; i < weekDays.size(); ++i) {
+                    WeekDay day = weekDays.get(i);
+
+                    if (day.getDate().isEqual(previousWeekDate) || day.getDate().isEqual(nextWeekDate)) {
+                        viewModel.setSelectedDate(day.getDate());
+                        calendar.notifyCalendarChanged();
+                        break;
+                    }
+                }
+
                 viewModel.setCurrentWeekDate(weekDays.get(0).getDate());
-                viewModel.setSelectedDate(weekDays.get(viewModel.getSelectedDate().getValue().getDayOfWeek().getValue()).getDate());
-                calendar.notifyCalendarChanged();
                 return null;
             }
         });
