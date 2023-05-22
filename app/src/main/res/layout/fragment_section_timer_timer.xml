@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -12,43 +13,50 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <TableRow
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="110dp"
+            android:orientation="horizontal">
 
-            <EditText
-                android:id="@+id/edit_text_minutes"
-                android:layout_width="82dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:hint="minutes"
-                android:inputType="number"
-                android:maxLength="3" />
-
-            <Button
-                android:id="@+id/button_set_minutes"
+            <com.github.stephenvinouze.materialnumberpickercore.MaterialNumberPicker
+                android:id="@+id/pomodoroTimePicker"
                 android:layout_width="wrap_content"
-                android:layout_height="40sp"
-                android:gravity="center"
-                android:text="Set time" />
+                android:layout_height="match_parent"
+                android:layout_gravity="top"
+                android:layout_marginTop="0dp"
+                android:fadingEdge="none"
+                app:mnpEditable="true"
+                app:mnpMaxValue="120" />
 
-            <EditText
-                android:id="@+id/edit_text_minutes_break"
-                android:layout_width="82dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:hint="minutes"
-                android:inputType="number"
-                android:maxLength="3" />
-
-            <Button
-                android:id="@+id/button_set_break"
+            <TextView
+                android:id="@+id/textView_pomodoro"
                 android:layout_width="wrap_content"
-                android:layout_height="40sp"
-                android:gravity="center"
-                android:text="Set break" />
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center|left"
+                android:text="Pomodoro"
+                android:textStyle="bold" />
 
-        </TableRow>
+            <com.github.stephenvinouze.materialnumberpickercore.MaterialNumberPicker
+                android:id="@+id/breakTimePicker"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="top"
+                android:layout_marginTop="0dp"
+                android:fadingEdge="none"
+                app:mnpEditable="true"
+                app:mnpMaxValue="30" />
+
+            <TextView
+                android:id="@+id/textView_break"
+                android:layout_width="81dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center|left"
+                android:text="Break"
+                android:textStyle="bold" />
+
+        </LinearLayout>
 
         <TextView
             android:id="@+id/textView_timer_mode"

@@ -23,26 +23,23 @@ import edu.ub.pis.giickos.model.observer.Observer;
 import edu.ub.pis.giickos.model.project.ProjectManager;
 import edu.ub.pis.giickos.model.project.Task;
 import edu.ub.pis.giickos.ui.ViewModelHelpers;
-import edu.ub.pis.giickos.ui.utils.notification.Notification;
 
 
 public class ViewModel extends androidx.lifecycle.ViewModel{
 
     public CountDownTimer countDownTimer;
     public boolean istimerRunning;
-    public boolean isPomodoro;
-    public long pomodoroTimeInMillis = 25 * 60000;
-    public long breakTimeInMillis = 5 * 60000;
-    public long timerInMillis;
-    public long timeLeftInMillis;
-    public long endTime;
+    public boolean isPomodoro = true;
+    public long pomodoroTimeInMillis, breakTimeInMillis, timerInMillis, timeLeftInMillis, endTime;
+
 
     //public MutableLiveData<Long> pomodoroTimeInMillis, breakTimeInMillis;
     public MutableLiveData<String> timer,textStartPauseButton, textTimerMode;
-
-    private MutableLiveData<Boolean> visibilityEditMinuteEdittext,
-            visibilityEditBreakMinuteEdittext,visibilitySetPomodoroButton,
-            visibilitySetBreakButton,visibilityResetButton, visibilityStartPauseButton;
+    public MutableLiveData<Long> textPomodoroPicker, textBreakPicker;
+    public MutableLiveData<Boolean> visibilityPomodoroTextView,
+            visibilityBreakTextView, visibilityPomodoroPicker,
+            visibilityBreakPicker,visibilityResetButton, visibilityStartPauseButton,
+            visibilitySelectTaskSpinner, visibilityDetoxCheckBox, isTaskSelected;
 
 
     private ProjectManager model;
@@ -59,14 +56,19 @@ public class ViewModel extends androidx.lifecycle.ViewModel{
         timer = new MutableLiveData<String>();
         textStartPauseButton = new MutableLiveData<String>();
         textTimerMode = new MutableLiveData<String>();
+        textPomodoroPicker = new MutableLiveData<Long>();
+        textBreakPicker = new MutableLiveData<Long>();
 
 
-        visibilityEditMinuteEdittext = new MutableLiveData<Boolean>(true);
-        visibilityEditBreakMinuteEdittext = new MutableLiveData<>(true);
-        visibilitySetPomodoroButton = new MutableLiveData<>(true);
-        visibilitySetBreakButton = new MutableLiveData<>(true);
+        visibilityPomodoroTextView = new MutableLiveData<Boolean>(true);
+        visibilityBreakTextView = new MutableLiveData<>(true);
+        visibilityPomodoroPicker = new MutableLiveData<>(true);
+        visibilityBreakPicker = new MutableLiveData<>(true);
         visibilityResetButton = new MutableLiveData<>(true);
         visibilityStartPauseButton = new MutableLiveData<>(true);
+        visibilitySelectTaskSpinner = new MutableLiveData<>(true);
+        visibilityDetoxCheckBox = new MutableLiveData<>(true);
+        isTaskSelected = new MutableLiveData<>(false);
 
         this.model = ModelHolder.INSTANCE.getProjectManager();
 
@@ -87,12 +89,21 @@ public class ViewModel extends androidx.lifecycle.ViewModel{
     public LiveData<String> getTimer() {return timer;}
     public LiveData<String> getTextTimerMode() {return textTimerMode;}
     public LiveData<String> getTextStartPauseButton() {return textStartPauseButton;}
-    public LiveData<Boolean> getVisibilityEditMinuteEdittext() {return visibilityEditMinuteEdittext;}
-    public LiveData<Boolean> getVisibilityEditBreakMinuteEdittext() {return visibilityEditBreakMinuteEdittext;}
-    public LiveData<Boolean> getVisibilitySetPomodoroButton() {return visibilitySetPomodoroButton;}
-    public LiveData<Boolean> getVisibilitySetBreakButton() {return visibilitySetBreakButton;}
+
+    public LiveData<Long> getTextPomodoroPicker() {return textPomodoroPicker;}
+    public LiveData<Long> getTextBreakPicker() {return textBreakPicker;}
+    public LiveData<Boolean> getVisibilityPomodoroTextView() {return visibilityPomodoroTextView;}
+    public LiveData<Boolean> getVisibilityBreakTextView() {return visibilityBreakTextView;}
+    public LiveData<Boolean> getVisibilityPomodoroPicker() {return visibilityPomodoroPicker;}
+    public LiveData<Boolean> getVisibilityBreakPicker() {return visibilityBreakPicker;}
     public LiveData<Boolean> getVisibilityResetButton() {return visibilityResetButton;}
     public LiveData<Boolean> getVisibilityStartPauseButton() {return visibilityStartPauseButton;}
+
+    public LiveData<Boolean> getVisibilitySelectTaskSpinner() {return visibilitySelectTaskSpinner;}
+
+    public LiveData<Boolean> getVisibilityDetoxCheckBox() {return visibilityDetoxCheckBox;}
+
+    public LiveData<Boolean> getIsTaskSelected() {return isTaskSelected;}
 
     public void startTimer() {
         endTime = System.currentTimeMillis() + timeLeftInMillis;
@@ -138,6 +149,13 @@ public class ViewModel extends androidx.lifecycle.ViewModel{
 
     public void setTime(long milliseconds) {
         timerInMillis = milliseconds;
+        if (getIsPomodoro()){
+            pomodoroTimeInMillis = timerInMillis;
+            textPomodoroPicker.setValue((timeLeftInMillis / 60000));
+        }else{
+            breakTimeInMillis = timerInMillis;
+            textBreakPicker.setValue((timeLeftInMillis / 60000));
+        }
         resetTimer();
     }
 
@@ -177,19 +195,25 @@ public class ViewModel extends androidx.lifecycle.ViewModel{
     public void updateWatchInterface() {
         if (istimerRunning) {
 
-            visibilityEditMinuteEdittext.setValue(false);
-            visibilityEditBreakMinuteEdittext.setValue(false);
-            visibilitySetPomodoroButton.setValue(false);
-            visibilitySetBreakButton.setValue(false);
+            visibilityPomodoroTextView.setValue(false);
+            visibilityBreakTextView.setValue(false);
+            visibilityPomodoroPicker.setValue(false);
+            visibilityBreakPicker.setValue(false);
+            visibilityResetButton.setValue(false);
+            visibilitySelectTaskSpinner.setValue(false);
+            visibilityDetoxCheckBox.setValue(false);
             visibilityResetButton.setValue(false);
 
             textStartPauseButton.setValue("Pause");
         }
         else {
-            visibilityEditMinuteEdittext.setValue(true);
-            visibilityEditBreakMinuteEdittext.setValue(true);
-            visibilitySetPomodoroButton.setValue(true);
-            visibilitySetBreakButton.setValue(true);
+            visibilityPomodoroTextView.setValue(true);
+            visibilityBreakTextView.setValue(true);
+            visibilityPomodoroPicker.setValue(true);
+            visibilityBreakPicker.setValue(true);
+            visibilitySelectTaskSpinner.setValue(true);
+            visibilityDetoxCheckBox.setValue(true);
+            visibilityResetButton.setValue(true);
             textStartPauseButton.setValue("Start");
 
             if (timeLeftInMillis < 1000) {
@@ -199,11 +223,7 @@ public class ViewModel extends androidx.lifecycle.ViewModel{
                 visibilityStartPauseButton.setValue(true);
             }
 
-            if (timeLeftInMillis < pomodoroTimeInMillis || timeLeftInMillis < breakTimeInMillis) {
-                visibilityResetButton.setValue(true);
-            } else {
-                visibilityResetButton.setValue(false);
-            }
+
         }
     }
 
@@ -255,10 +275,10 @@ public class ViewModel extends androidx.lifecycle.ViewModel{
             if (task.durationInMinutes > 0) {
                 long millis = task.durationInMinutes * 60000L;
                 setTime(millis);
-            }/*else if (task.durationInMinutes < 0){
-                setTime(0);
+                isTaskSelected.setValue(true);
             }
-            */
+        }else{
+            isTaskSelected.setValue(false);
         }
     }
 }
