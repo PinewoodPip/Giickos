@@ -22,7 +22,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="center"
         android:visibility="gone"
-        tools:visibility="visible">
+        tools:visibility="gone">
 
         <ImageView
             android:id="@+id/storage_blocker_info"
@@ -133,5 +133,14 @@
         </RelativeLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/bamboo_garden_warning"
+        android:layout_width="match_parent"
+        android:layout_height="125dp"
+        android:autoText="true"
+        android:gravity="center"
+        android:text="@string/bamboo_garden_warning"
+        android:visibility="invisible" />
 
 </FrameLayout>

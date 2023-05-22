@@ -9,6 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 import edu.ub.pis.giickos.R;
 import edu.ub.pis.giickos.ui.generic.TimePicker;
 import edu.ub.pis.giickos.ui.generic.TimePickerListener;
@@ -63,7 +67,7 @@ public class TimeField extends Fragment {
                 dialog.setListener(new TimePickerListener() {
                     @Override
                     public void timeSet(String pickerID, int hour, int minute) {
-                        setText(String.format("%d:%d", hour, minute)); // TODO display nicely
+                        setText(new SimpleDateFormat("HH:mm", Locale.getDefault()).format(new Date(2000, 1, 1, hour, minute)));
 
                         // Forward event
                         if (listener != null) {

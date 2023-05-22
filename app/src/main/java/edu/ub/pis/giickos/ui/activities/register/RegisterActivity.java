@@ -21,22 +21,83 @@ import com.google.android.gms.tasks.Task;
 import edu.ub.pis.giickos.R;
 import edu.ub.pis.giickos.ui.activities.main.MainActivity;
 import edu.ub.pis.giickos.ui.activities.main.MainViewModel;
+import edu.ub.pis.giickos.ui.generic.form.FancyFormCard;
 import edu.ub.pis.giickos.ui.generic.form.FormCard;
+import edu.ub.pis.giickos.ui.login.CheckboxLoginFragment;
 
 public class RegisterActivity extends AppCompatActivity {
 
     private ViewModel viewModel;
 
+    private void addFields() {
+        FancyFormCard emailCard = FancyFormCard.newInstance( R.drawable.user, getString(R.string.prompt_email));
+        FancyFormCard usernameCard = FancyFormCard.newInstance(R.drawable.profile_white, getString(R.string.generic_label_username));
+        FancyFormCard passwordCard = FancyFormCard.newInstance(R.drawable.bloqued, getString(R.string.prompt_password));
+        FancyFormCard passwordConfirmationCard = FancyFormCard.newInstance(R.drawable.reuse, getString(R.string.register_password_confirm));
+
+        // Add email and password cards
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.register_layout, emailCard)
+                .add(R.id.register_layout, usernameCard)
+                .add(R.id.register_layout, passwordCard)
+                .add(R.id.register_layout, passwordConfirmationCard)
+                .commitNow();
+
+        emailCard.addTextField(InputType.TYPE_TEXT_VARIATION_PERSON_NAME, viewModel.getEmail(), new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                viewModel.setEmail(charSequence.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {}
+        }, getString(R.string.msg_email));
+        usernameCard.addTextField(InputType.TYPE_TEXT_VARIATION_PERSON_NAME, viewModel.getUsername(), new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                viewModel.setUsername(charSequence.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {}
+        }, getString(R.string.msg_username));
+        passwordCard.addTextField(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD, viewModel.getPassword(), new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                viewModel.setPassword(charSequence.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {}
+        });
+        passwordConfirmationCard.addTextField(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD, viewModel.getPasswordConfirmation(), new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                viewModel.setPasswordConfirmation(charSequence.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {}
+        });
+
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         Button registerButton = findViewById(R.id.register_reg);
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FormCard emailCard = (FormCard) fragmentManager.findFragmentById(R.id.card_email);
-        FormCard usernameCard = (FormCard) fragmentManager.findFragmentById(R.id.card_username);
-        FormCard passwordCard = (FormCard) fragmentManager.findFragmentById(R.id.card_password);
-        FormCard passwordConfirmationCard = (FormCard) fragmentManager.findFragmentById(R.id.card_confirmpassword);
 
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,101 +142,8 @@ public class RegisterActivity extends AppCompatActivity {
         viewModel = new ViewModelProvider(this).get(ViewModel.class);
 
         if (!viewModel.isInitialized()) {
-            emailCard.addTextField(InputType.TYPE_TEXT_VARIATION_PERSON_NAME, viewModel.getEmail(), new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
-
-                @Override
-                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                    viewModel.setEmail(charSequence.toString());
-                }
-
-                @Override
-                public void afterTextChanged(Editable editable) {}
-            }, getString(R.string.msg_email));
-            usernameCard.addTextField(InputType.TYPE_TEXT_VARIATION_PERSON_NAME, viewModel.getUsername(), new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
-
-                @Override
-                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                    viewModel.setUsername(charSequence.toString());
-                }
-
-                @Override
-                public void afterTextChanged(Editable editable) {}
-            }, getString(R.string.msg_username));
-            passwordCard.addTextField(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD, viewModel.getPassword(), new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
-
-                @Override
-                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                    viewModel.setPassword(charSequence.toString());
-                }
-
-                @Override
-                public void afterTextChanged(Editable editable) {}
-            });
-            passwordConfirmationCard.addTextField(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD, viewModel.getPasswordConfirmation(), new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
-
-                @Override
-                public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                    viewModel.setPasswordConfirmation(charSequence.toString());
-                }
-
-                @Override
-                public void afterTextChanged(Editable editable) {}
-            });
-
+            addFields();
             viewModel.setInitialized(true);
-        }
-    }
-
-    @Override
-    public void onAttachFragment(Fragment frag) {
-        int id = frag.getId();
-        if (id == R.id.card_email) {
-            FormCard emailCard = (FormCard) frag;
-
-            // Initialize email card
-            Bundle emailCardArgs = new Bundle();
-            emailCardArgs.putString(FormCard.ARG_LABEL, getString(R.string.prompt_email));
-            emailCardArgs.putInt(FormCard.ARG_ICON, R.drawable.user);
-            emailCardArgs.putInt(FormCard.ARG_BG_COLOR, getResources().getColor(R.color.positive_action));
-            emailCard.setArguments(emailCardArgs);
-        }
-        else if (id == R.id.card_username) {
-            FormCard emailCard = (FormCard) frag;
-
-            // Initialize email card
-            Bundle emailCardArgs = new Bundle();
-            emailCardArgs.putString(FormCard.ARG_LABEL, getString(R.string.generic_label_username));
-            emailCardArgs.putInt(FormCard.ARG_ICON, R.drawable.profile_white);
-            emailCardArgs.putInt(FormCard.ARG_BG_COLOR, getResources().getColor(R.color.positive_action));
-            emailCard.setArguments(emailCardArgs);
-        }
-        else if (id == R.id.card_password) {
-            FormCard passwordCard = (FormCard) frag;
-
-            // Initialize password card
-            Bundle passwordCardArgs = new Bundle();
-            passwordCardArgs.putString(FormCard.ARG_LABEL, getString(R.string.prompt_password));
-            passwordCardArgs.putInt(FormCard.ARG_ICON, R.drawable.password);
-            passwordCardArgs.putInt(FormCard.ARG_BG_COLOR, getResources().getColor(R.color.positive_action));
-            passwordCard.setArguments(passwordCardArgs);
-        }
-        else if (id == R.id.card_confirmpassword) {
-            FormCard passwordCard = (FormCard) frag;
-
-            // Initialize password card
-            Bundle passwordCardArgs = new Bundle();
-            passwordCardArgs.putString(FormCard.ARG_LABEL, getString(R.string.register_password_confirm));
-            passwordCardArgs.putInt(FormCard.ARG_ICON, R.drawable.reuse);
-            passwordCardArgs.putInt(FormCard.ARG_BG_COLOR, getResources().getColor(R.color.positive_action));
-            passwordCard.setArguments(passwordCardArgs);
         }
     }
 }
