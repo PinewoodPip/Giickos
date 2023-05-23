@@ -39,9 +39,10 @@ public class ViewModel extends androidx.lifecycle.ViewModel{
 
     public MutableLiveData<String> timer,textStartPauseButton, textTimerMode;
     public MutableLiveData<Long> textPomodoroPicker, textBreakPicker;
-    public MutableLiveData<Boolean> visibilityPomodoroTextView,
+    public MutableLiveData<Integer> oldTaskIndex, newTaskIndex;
+    public MutableLiveData<Boolean> visibilityPomodoroTimePicker, visibilityBreakTimePicker, visibilityPomodoroTextView,
             visibilityBreakTextView, visibilityResetButton, visibilityStartPauseButton,
-            visibilitySelectTaskSpinner, visibilityDetoxCheckBox;
+            visibilitySelectTaskSpinner, visibilityDetoxCheckBox, isTaskSelected;
 
     private ProjectManager model;
 
@@ -57,6 +58,8 @@ public class ViewModel extends androidx.lifecycle.ViewModel{
         textTimerMode = new MutableLiveData<String>();
         textPomodoroPicker = new MutableLiveData<Long>();
         textBreakPicker = new MutableLiveData<Long>();
+        oldTaskIndex = new MutableLiveData<>();
+        newTaskIndex = new MutableLiveData<>();
 
         visibilityPomodoroTextView = new MutableLiveData<Boolean>(true);
         visibilityBreakTextView = new MutableLiveData<>(true);
@@ -64,6 +67,9 @@ public class ViewModel extends androidx.lifecycle.ViewModel{
         visibilityStartPauseButton = new MutableLiveData<>(true);
         visibilitySelectTaskSpinner = new MutableLiveData<>(true);
         visibilityDetoxCheckBox = new MutableLiveData<>(true);
+        visibilityBreakTimePicker = new MutableLiveData<>(true);
+        visibilityPomodoroTimePicker = new MutableLiveData<>(true);
+        isTaskSelected = new MutableLiveData<>(false);
         editMode = new MutableLiveData<>(false);
 
         this.model = ModelHolder.INSTANCE.getProjectManager();
@@ -95,6 +101,8 @@ public class ViewModel extends androidx.lifecycle.ViewModel{
     public LiveData<Boolean> getVisibilityStartPauseButton() {return visibilityStartPauseButton;}
     public LiveData<Boolean> getVisibilitySelectTaskSpinner() {return visibilitySelectTaskSpinner;}
     public LiveData<Boolean> getVisibilityDetoxCheckBox() {return visibilityDetoxCheckBox;}
+    public LiveData<Boolean> getVisibilityPomodoroTimePicker() {return visibilityPomodoroTimePicker;}
+    public LiveData<Boolean> getVisibilityBreakTimePicker() {return visibilityBreakTimePicker;}
 
     public LiveData<Boolean> getEditMode() {return editMode;}
 
@@ -213,6 +221,8 @@ public class ViewModel extends androidx.lifecycle.ViewModel{
             visibilitySelectTaskSpinner.setValue(false);
             visibilityDetoxCheckBox.setValue(false);
             visibilityResetButton.setValue(false);
+            visibilityPomodoroTimePicker.setValue(false);
+            visibilityBreakTimePicker.setValue(false);
 
             textStartPauseButton.setValue("Pause");
         }
@@ -222,6 +232,8 @@ public class ViewModel extends androidx.lifecycle.ViewModel{
             visibilitySelectTaskSpinner.setValue(true);
             visibilityDetoxCheckBox.setValue(true);
             visibilityResetButton.setValue(true);
+            visibilityPomodoroTimePicker.setValue(true);
+            visibilityBreakTimePicker.setValue(true);
             textStartPauseButton.setValue("Start");
 
             if (timeLeftInMillis < 1000) {
@@ -252,13 +264,7 @@ public class ViewModel extends androidx.lifecycle.ViewModel{
         return tasks;
     }
 
-    /*
-    public List<ViewModelHelpers.TaskData> getTasksById(String projectGUID) {
-        Set<Task> tasks = model.getTasks(projectGUID);
 
-        return ViewModelHelpers.sortTasks(tasks);
-    }
-     */
 
     public LiveData<ViewModelHelpers.TaskData> getSelectedTask() {
         return selectedTask;
@@ -281,7 +287,10 @@ public class ViewModel extends androidx.lifecycle.ViewModel{
             if (task.durationInMinutes > 0) {
                 long millis = task.durationInMinutes * 60000L;
                 setTime(millis);
+                isTaskSelected.setValue(true);
             }
+        }else{
+            isTaskSelected.setValue(false);
         }
     }
 

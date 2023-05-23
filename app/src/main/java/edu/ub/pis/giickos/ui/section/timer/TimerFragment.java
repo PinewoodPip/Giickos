@@ -31,11 +31,11 @@ import edu.ub.pis.giickos.ui.ViewModelHelpers;
 // Fragment for the timer tab.
 public class TimerFragment extends Fragment {
 
-    private Button startPauseButton, resetButton, setPomodoroButton, setBreakButton;
+    private Button startPauseButton, resetButton;
 
     private CheckBox detoxCheckbox;
 
-    private TextView timerView;
+    private TextView timerView, pomodoroTextView, breakTextView;
 
     private TextView timerModeTextView;
 
@@ -44,6 +44,8 @@ public class TimerFragment extends Fragment {
     private MaterialNumberPicker pomodoroTimePicker, breakTimePicker;
 
     private ViewModel viewModel;
+
+
 
     public TimerFragment() {
         // Required empty public constructor
@@ -66,6 +68,7 @@ public class TimerFragment extends Fragment {
     private void setupTasksSpinner() {
         View view = getView();
         selectTaskSpinner = view.findViewById(R.id.spinner_select_task);
+
 
         List<ViewModelHelpers.TaskData> tasks = viewModel.getTasks().getValue();
         List<Object> taskObjects = new ArrayList<>();
@@ -99,9 +102,11 @@ public class TimerFragment extends Fragment {
         selectTaskSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if (i != 0) {
+                viewModel.newTaskIndex.setValue(i);
+                if (i != 0 && viewModel.newTaskIndex.getValue() != viewModel.oldTaskIndex.getValue()) {
                     ViewModelHelpers.TaskData task = tasks.get(i-1);
                     viewModel.selectTask(task);
+                    viewModel.oldTaskIndex.setValue(viewModel.newTaskIndex.getValue());
                 }
                 else {
                     viewModel.selectTask(null);
@@ -138,6 +143,9 @@ public class TimerFragment extends Fragment {
 
         pomodoroTimePicker = view.findViewById(R.id.pomodoroTimePicker);
         breakTimePicker = view.findViewById(R.id.breakTimePicker);
+
+        pomodoroTextView = view.findViewById(R.id.textView_pomodoro);
+        breakTextView = view.findViewById(R.id.textView_break);
 
         // Toggle edit mode when the timer is clicked.
         timerFrame.setOnClickListener(new View.OnClickListener() {
@@ -176,6 +184,8 @@ public class TimerFragment extends Fragment {
                 }
             }
         });
+
+
 
         breakTimePicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
@@ -287,6 +297,45 @@ public class TimerFragment extends Fragment {
             }
         };
         viewModel.getVisibilityDetoxCheckBox().observe(this.getViewLifecycleOwner(), observerVisibilityDetoxCheckBox);
+
+
+
+        final Observer<Boolean> observerVisibilityPomodoroTextView = new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean visibilityPomodoroTextViewr) {
+                pomodoroTextView.setVisibility(visibilityPomodoroTextViewr && !viewModel.isTaskSelected.getValue()? View.VISIBLE : View.INVISIBLE);
+            }
+        };
+        viewModel.getVisibilityPomodoroTextView().observe(this.getViewLifecycleOwner(), observerVisibilityPomodoroTextView);
+
+        final Observer<Boolean> observerVisibilityBreakTextView = new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean visibilityBreakTextView) {
+                breakTextView.setVisibility(visibilityBreakTextView? View.VISIBLE : View.INVISIBLE);
+            }
+        };
+        viewModel.getVisibilityBreakTextView().observe(this.getViewLifecycleOwner(), observerVisibilityBreakTextView);
+
+
+        final Observer<Boolean> observerVisibilityPomodoroTimePicker = new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean visibilityPomodoroTimePicker) {
+
+                    pomodoroTimePicker.setVisibility(visibilityPomodoroTimePicker && !viewModel.isTaskSelected.getValue()? View.VISIBLE : View.INVISIBLE);
+
+            }
+        };
+        viewModel.getVisibilityPomodoroTimePicker().observe(this.getViewLifecycleOwner(), observerVisibilityPomodoroTimePicker);
+
+        final Observer<Boolean> observerVisibilityBreakTimePicker = new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean visibilityBreakTimePicker) {
+                breakTimePicker.setVisibility(visibilityBreakTimePicker? View.VISIBLE : View.INVISIBLE);
+            }
+        };
+        viewModel.getVisibilityBreakTimePicker().observe(this.getViewLifecycleOwner(), observerVisibilityBreakTimePicker);
+
+
     }
 
     @Override
