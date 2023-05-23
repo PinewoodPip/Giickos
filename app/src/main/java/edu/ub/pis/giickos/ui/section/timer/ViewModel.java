@@ -30,10 +30,13 @@ public class ViewModel extends androidx.lifecycle.ViewModel{
     public CountDownTimer countDownTimer;
     public boolean istimerRunning;
     public boolean isPomodoro = true;
-    public long pomodoroTimeInMillis, breakTimeInMillis, timerInMillis, timeLeftInMillis, endTime;
 
+    // Defaults to 1 minute
+    public long pomodoroTimeInMillis = 60000;
+    public long breakTimeInMillis = 60000;
+    public long timerInMillis = 60000;
+    public long timeLeftInMillis = 60000;
 
-    //public MutableLiveData<Long> pomodoroTimeInMillis, breakTimeInMillis;
     public MutableLiveData<String> timer,textStartPauseButton, textTimerMode;
     public MutableLiveData<Long> textPomodoroPicker, textBreakPicker;
     public MutableLiveData<Boolean> visibilityPomodoroTextView,
@@ -102,8 +105,6 @@ public class ViewModel extends androidx.lifecycle.ViewModel{
     public LiveData<Boolean> getEditMode() {return editMode;}
 
     public void startTimer() {
-        endTime = System.currentTimeMillis() + timeLeftInMillis;
-
         countDownTimer = new CountDownTimer(timeLeftInMillis, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
@@ -186,24 +187,27 @@ public class ViewModel extends androidx.lifecycle.ViewModel{
         updateCountDownText();
         updateWatchInterface();
     }
+
     public void updateCountDownText() {
+        timer.setValue(getTimerLabel());
+    }
+
+    public String getTimerLabel() {
         int hours = (int) (timeLeftInMillis / 1000) / 3600;
         int minutes = (int) ((timeLeftInMillis / 1000) % 3600) / 60;
         int seconds = (int) (timeLeftInMillis / 1000) % 60;
-
         String timeLeftFormatted;
+
         if (hours > 0) {
             timeLeftFormatted = String.format(Locale.getDefault(),
                     "%d:%02d:%02d", hours, minutes, seconds);
-        } else {
+        }
+        else {
             timeLeftFormatted = String.format(Locale.getDefault(),
                     "%02d:%02d", minutes, seconds);
         }
 
-        //timerView.setText(timeLeftFormatted);
-        timer.setValue(timeLeftFormatted);
-
-
+        return timeLeftFormatted;
     }
 
     public void updateWatchInterface() {

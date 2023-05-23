@@ -224,9 +224,10 @@ public class TimerFragment extends Fragment {
         final Observer<String> observerTimer = new Observer<String>() {
             @Override
             public void onChanged(String timer) {
-                timerView.setText(timer);
+                timerView.setText(viewModel.getTimerLabel());
             }
         };
+        timerView.setText(viewModel.getTimerLabel());
 
         // Update the progress bar
         viewModel.getTimer().observe(getViewLifecycleOwner(), new Observer<String>() {
