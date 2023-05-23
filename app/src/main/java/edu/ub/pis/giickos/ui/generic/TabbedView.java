@@ -2,6 +2,8 @@ package edu.ub.pis.giickos.ui.generic;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -41,7 +43,19 @@ public abstract class TabbedView extends Fragment {
                 (tab, position) -> tab.setText(adapter.getTabHeader(position))
         ).attach();
     }
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        // Find the TabLayout view
+        TabLayout tabLayout = view.findViewById(this.getResources().getIdentifier("tab_layout", "id", requireContext().getPackageName()));
 
+        // Customize the color of the TabLayout
+        tabLayout.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.float_background));
+
+        // Customize the color of the TabLayout's text
+        tabLayout.setTabTextColors(ContextCompat.getColor(requireContext(), R.color.float_background_text_2), ContextCompat.getColor(requireContext(), R.color.float_background_text));
+
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

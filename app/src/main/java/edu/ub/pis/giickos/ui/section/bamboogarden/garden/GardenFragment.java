@@ -1,6 +1,7 @@
 package edu.ub.pis.giickos.ui.section.bamboogarden.garden;
 
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -15,8 +16,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ScrollView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -179,7 +184,8 @@ public class GardenFragment extends GiickosFragment {
                 viewModel.setBambooTitle(editable.toString());
                 System.out.println("Title: " + editable.toString());
             }
-        });
+        }, Color.WHITE);
+
         FancyFormCard growTime = addField(R.drawable.timer_white, "Grow time: ", colors);
         //Probably get from viewmodel
         ArrayList<String> time = new ArrayList<>();
@@ -187,7 +193,7 @@ public class GardenFragment extends GiickosFragment {
         for (ViewModel.BAMBOO_GROWTH_TIME i : ViewModel.BAMBOO_GROWTH_TIME.values()) {
             time.add(getString(i.getNameResource()));
         }
-        FormSpinner spinner = growTime.addSpinner(time,0);
+        FormSpinner spinner = growTime.addSpinnerColor(time,0, Color.WHITE);
 
         //Pack of FormCardGarden for controlling them in batch
         FormCardGarden[] questions = new FormCardGarden[5];
@@ -198,9 +204,9 @@ public class GardenFragment extends GiickosFragment {
         questions[4] = addQuestions(getResources().getString(R.string.bamboo_question_letter), ViewModel.BAMBOO_QUESTIONS.QUESTION_LETTER);
 
         //Images related to the menu
-        ImageView plantBamboo = view.findViewById(R.id.garden_plant_action);
-        ImageView back = view.findViewById(R.id.garden_cancel);
-        ImageView plantMenu = view.findViewById(R.id.garden_plant);
+        Button plantBamboo = view.findViewById(R.id.garden_plant_action);
+        Button back = view.findViewById(R.id.garden_cancel);
+        Button plantMenu = view.findViewById(R.id.garden_plant);
 
         //Blocker of clicks for the menu
         View blocker = view.findViewById(R.id.garden_blocker);
@@ -346,9 +352,9 @@ public class GardenFragment extends GiickosFragment {
         });
         return formCardGarden;
     }
-    private TextField addTextField(int iconID, String label, int[] colors, String inputLabel, int inputType, @Nullable TextWatcher listener) {
+    private TextField addTextField(int iconID, String label, int[] colors, String inputLabel, int inputType, @Nullable TextWatcher listener, int color) {
         FancyFormCard field = addField(iconID, label, colors);
-        return field.addTextField(inputType, inputLabel, listener);
+        return field.addTextFieldColor(inputType, inputLabel, listener, "title...", color, true);
     }
     private FancyFormCard addField(int iconID, String label, int[] colors) {
         FancyFormCard field = FancyFormCard.newInstance(iconID, label,colors[0] ,colors[1], colors[2]);
@@ -380,22 +386,27 @@ public class GardenFragment extends GiickosFragment {
 
 
         ImageView block = view.findViewById(R.id.garden_blocker_info);
-        ImageView close = view.findViewById(R.id.garden_back_info_menu);
+        Button close = view.findViewById(R.id.garden_back_info_menu);
         ImageView harvest = view.findViewById(R.id.garden_harvest_action);
         ImageView remove = view.findViewById(R.id.garden_remove_action);
         ImageView water = view.findViewById(R.id.garden_water_action);
 
         FancyFormCard[] cards = new FancyFormCard[2];
 
-        cards[0] = addCardWithTint(R.drawable.title, "Title: Water habit",
+        cards[0] = addCardWithTint(R.drawable.title, "Title: ",
                 R.color.garden_1, // left frame
                 R.color.garden_2, // right frame
                 R.color.white); // text color
 
-        cards[1] = addCardWithTint(R.drawable.timer_white, "Growth: 1/7 days",
+        cards[1] = addCardWithTint(R.drawable.timer_white, "Growth: ",
                 R.color.garden_1, // left frame
                 R.color.garden_2, // right frame
                 R.color.white); // text color
+
+        TextField[] textFields = new TextField[2];
+
+        textFields[0] = cards[0].addTextFieldColor(InputType.TYPE_CLASS_NUMBER, "title...", null, "title...",Color.WHITE, false);
+        textFields[1] = cards[1].addTextFieldColor(InputType.TYPE_CLASS_TEXT, "growth time...", null,"growth...",Color.WHITE, false);
 
         String bambooName = "Bamboo"; //Place holder, touching on the bamboo will update the info menu
 
@@ -410,42 +421,42 @@ public class GardenFragment extends GiickosFragment {
             @Override
             public void onClick(View v) {
                 int slot = 0;
-                tryOpenBambooInfoMenu(cards, questions, slot, view);
+                tryOpenBambooInfoMenu(textFields, questions, slot, view);
             }
         });
         bamboo_s1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int slot = 1;
-                tryOpenBambooInfoMenu(cards, questions, slot, view);
+                tryOpenBambooInfoMenu(textFields, questions, slot, view);
             }
         });
         bamboo_s2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int slot = 2;
-                tryOpenBambooInfoMenu(cards, questions, slot, view);
+                tryOpenBambooInfoMenu(textFields, questions, slot, view);
             }
         });
         bamboo_s3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int slot = 3;
-                tryOpenBambooInfoMenu(cards, questions, slot, view);
+                tryOpenBambooInfoMenu(textFields, questions, slot, view);
             }
         });
         bamboo_s4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int slot = 4;
-                tryOpenBambooInfoMenu(cards, questions, slot, view);
+                tryOpenBambooInfoMenu(textFields, questions, slot, view);
             }
         });
         bamboo_s5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int slot = 5;
-                tryOpenBambooInfoMenu(cards, questions, slot, view);
+                tryOpenBambooInfoMenu(textFields, questions, slot, view);
             }
         });
 
@@ -550,7 +561,7 @@ public class GardenFragment extends GiickosFragment {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             if(viewModel.waterBamboo(viewModel.getSelectedSlot())) {
-                                tryOpenBambooInfoMenu(cards, questions, viewModel.getSelectedSlot(), view);
+                                tryOpenBambooInfoMenu(textFields, questions, viewModel.getSelectedSlot(), view);
                                 closeWindows(view);
                                 Bamboo grownBamboo = viewModel.getSlotBamboo(viewModel.getSelectedSlot());
                                 String message = "You have watered the bamboo! It has grown " + grownBamboo.getGrowth() + " out of " + grownBamboo.getTotalGrowth() + " days!";
@@ -594,17 +605,17 @@ public class GardenFragment extends GiickosFragment {
 
     }
 
-    private void tryOpenBambooInfoMenu(FancyFormCard[] cards, FormCardGarden[] questions, int slot, View view) {
+    private void tryOpenBambooInfoMenu(TextField[] textFields, FormCardGarden[] questions, int slot, View view) {
         if(viewModel.isBambooPlanted(slot))
         {
             viewModel.setSelectedSlot(slot);
-            updateBambooMenuInfo(cards, questions, view);
+            updateBambooMenuInfo(textFields, questions, view);
             openView(view.findViewById(R.id.garden_bamboo_info_menu));
         }
 
     }
 
-    private void updateBambooMenuInfo(FancyFormCard[] cards, FormCardGarden[] questions, View view)
+    private void updateBambooMenuInfo(TextField[] textFields, FormCardGarden[] questions, View view)
     {
         //Puts the list menu at the top
         ScrollView scrollView = view.findViewById(R.id.garden_view_menu_scroller);
@@ -612,8 +623,8 @@ public class GardenFragment extends GiickosFragment {
 
         //Gets the selected bamboo and loads the info to the menu (could be prettier...ik)
         Bamboo bamboo = viewModel.getSlotBamboo(viewModel.getSelectedSlot());
-        cards[0].updateLabel("Title: " + bamboo.getTitle());
-        cards[1].updateLabel("Growth: " + bamboo.getGrowth() + "/" + bamboo.getTotalGrowth() + " days");
+        textFields[0].setText(bamboo.getTitle());
+        textFields[1].setText(bamboo.getGrowth() + "/" + bamboo.getTotalGrowth() + " days");
 
         questions[0].setDescription(bamboo.getAnswer(ViewModel.BAMBOO_QUESTIONS.QUESTION_ONE.getKey()));
         questions[1].setDescription(bamboo.getAnswer(ViewModel.BAMBOO_QUESTIONS.QUESTION_TWO.getKey()));

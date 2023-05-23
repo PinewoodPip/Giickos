@@ -21,8 +21,9 @@
     <color name="garden_2">#A38800</color>
     <color name="garden_3">#A320F0</color>
 
-    <color name="neutral_garden_1">#004501</color>
-    <color name="neutral_garden_2">#006E02</color>
+    <color name="neutral_garden_1">#77824A</color>
+    <color name="neutral_garden_2">#939F5C</color>
+
 
 
     <color name="link">#03A9F4</color>
@@ -34,4 +35,11 @@
 
     <!-- Background color for floating elements -->
     <color name="float_background">#B2CCA6</color>
+    <color name="float_background_shaded">#D8DCC4</color>
+
+    <color name="tab_background_color">#FFD1D1D1</color>
+    <color name="black_shadow">#31000000</color>
+
+    <color name="float_background_text">#0B1B2D</color>
+    <color name="float_background_text_2">#7091B6</color>
 </resources>

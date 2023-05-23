@@ -10,18 +10,23 @@
     <!-- TODO: Update blank fragment layout -->
 
     <RelativeLayout
+        android:id="@+id/bottom_garden"
         android:layout_width="match_parent"
-        android:layout_height="79dp"
-        android:visibility="visible">
+        android:layout_height="60dp"
+        android:layout_gravity="center|top"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="0dp"
+        android:gravity="center">
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/garden_plant"
-            android:layout_width="120dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="false"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="false"
-            android:src="@drawable/plant_2" />
+            android:layout_width="174dp"
+            android:layout_height="40dp"
+            android:background="@drawable/custom_button_animated_green"
+            android:text="PLANT"
+            android:textColor="#FFFFFF" />
 
     </RelativeLayout>
 
@@ -29,13 +34,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#00FFFFFF"
-        android:visibility="visible"
-        tools:visibility="gone">
+        android:visibility="visible">
 
         <ImageView
             android:id="@+id/imageView13"
-            android:layout_width="0dp"
-            android:layout_height="68dp"
+            android:layout_width="417dp"
+            android:layout_height="70dp"
             android:scaleType="fitXY"
             android:src="@drawable/ground"
             android:visibility="visible"
@@ -48,8 +52,8 @@
             tools:visibility="visible" />
 
         <LinearLayout
-            android:layout_width="412dp"
-            android:layout_height="550dp"
+            android:layout_width="413dp"
+            android:layout_height="470dp"
             android:layout_marginBottom="44dp"
             android:gravity="bottom"
             android:orientation="horizontal"
@@ -120,132 +124,12 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/garden_menu"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        tools:visibility="gone">
-
-        <ImageView
-            android:id="@+id/garden_blocker"
-            android:layout_width="474dp"
-            android:layout_height="827dp"
-            android:background="#80000000"
-            android:scaleType="fitXY"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            android:id="@+id/imageView15"
-            android:layout_width="370dp"
-            android:layout_height="457dp"
-            android:paddingHorizontal="20dp"
-            android:scaleType="fitXY"
-            android:src="@drawable/frame_garden"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ScrollView
-            android:id="@+id/garden_menu_scroll_view"
-            android:layout_width="290dp"
-            android:layout_height="386dp"
-            android:contentDescription=".."
-            app:layout_constraintBottom_toBottomOf="@+id/imageView15"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.43"
-            app:layout_constraintStart_toStartOf="@+id/imageView15"
-            app:layout_constraintTop_toTopOf="@+id/imageView15"
-            app:layout_constraintVertical_bias="0.237">
-
-            <LinearLayout
-                android:id="@+id/garden_plant_questions"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"></LinearLayout>
-        </ScrollView>
-
-        <RelativeLayout
-            android:layout_width="282dp"
-            android:layout_height="45dp"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="@+id/imageView15"
-            app:layout_constraintEnd_toEndOf="@+id/imageView15"
-            app:layout_constraintHorizontal_bias="0.488"
-            app:layout_constraintStart_toStartOf="@+id/imageView15"
-            app:layout_constraintTop_toTopOf="@+id/garden_menu_scroll_view"
-            app:layout_constraintVertical_bias="0.977">
-
-            <RelativeLayout
-                android:layout_width="137dp"
-                android:layout_height="match_parent"
-                android:layout_alignParentRight="true"
-                android:gravity="center">
-
-                <ImageView
-                    android:id="@+id/garden_plant_action"
-                    android:layout_width="122dp"
-                    android:layout_height="45dp"
-                    android:src="@drawable/green_button" />
-
-                <TextView
-                    android:id="@+id/textView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignStart="@+id/garden_plant_action"
-                    android:layout_alignTop="@+id/garden_plant_action"
-                    android:layout_alignEnd="@+id/garden_plant_action"
-                    android:layout_alignBottom="@+id/garden_plant_action"
-                    android:layout_marginStart="43dp"
-                    android:layout_marginTop="11dp"
-                    android:layout_marginEnd="47dp"
-                    android:layout_marginBottom="15dp"
-                    android:gravity="center"
-                    android:text="Plant"
-                    android:textColor="#FFFFFF" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="137dp"
-                android:layout_height="match_parent"
-                android:gravity="center">
-
-                <ImageView
-                    android:id="@+id/garden_cancel"
-                    android:layout_width="122dp"
-                    android:layout_height="45dp"
-                    android:src="@drawable/red_button" />
-
-                <TextView
-                    android:id="@+id/textView8"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignStart="@+id/garden_cancel"
-                    android:layout_alignTop="@+id/garden_cancel"
-                    android:layout_alignEnd="@+id/garden_cancel"
-                    android:layout_alignBottom="@+id/garden_cancel"
-                    android:layout_marginStart="42dp"
-                    android:layout_marginTop="12dp"
-                    android:layout_marginEnd="48dp"
-                    android:layout_marginBottom="14dp"
-                    android:gravity="center"
-                    android:text="@string/return_label"
-                    android:textColor="#FFFFFF" />
-            </RelativeLayout>
-        </RelativeLayout>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/garden_bamboo_info_menu"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="center"
+        android:layout_gravity="center|top"
         android:visibility="invisible"
-        tools:visibility="visible">
+        tools:visibility="gone">
 
         <ImageView
             android:id="@+id/garden_blocker_info"
@@ -260,115 +144,195 @@
 
         <ImageView
             android:id="@+id/imageView20"
-            android:layout_width="370dp"
-            android:layout_height="457dp"
-            android:paddingHorizontal="20dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:alpha="0.35"
             android:scaleType="fitXY"
-            android:src="@drawable/frame_garden"
+            android:src="@drawable/blank"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ScrollView
-            android:id="@+id/garden_view_menu_scroller"
-            android:layout_width="285dp"
-            android:layout_height="360dp"
-            android:contentDescription=".."
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.369">
-
-            <LinearLayout
-                android:id="@+id/garden_bambo_goals"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="60dp"
-                    android:clipToPadding="false"
-                    android:gravity="center"
-                    android:orientation="horizontal"
-                    android:paddingBottom="5dp">
-
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:scaleType="fitXY"
-                        android:src="@drawable/blank"
-                        app:tint="#649862" />
-
-                    <ImageView
-                        android:id="@+id/garden_remove_action"
-                        android:layout_width="55dp"
-                        android:layout_height="match_parent"
-                        android:layout_alignParentStart="true"
-                        android:scaleType="fitXY"
-                        android:src="@drawable/shovel_1" />
-
-                    <ImageView
-                        android:id="@+id/garden_water_action"
-                        android:layout_width="55dp"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:scaleType="fitXY"
-                        android:src="@drawable/watering_can" />
-
-                    <ImageView
-                        android:id="@+id/garden_harvest_action"
-                        android:layout_width="55dp"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:scaleType="fitXY"
-                        android:src="@drawable/collector_gloves" />
-
-                </RelativeLayout>
-            </LinearLayout>
-        </ScrollView>
-
         <RelativeLayout
-            android:id="@+id/relativeLayout2"
-            android:layout_width="286dp"
-            android:layout_height="45dp"
-            android:gravity="center"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="@+id/imageView20"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.504"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/garden_view_menu_scroller"
-            app:layout_constraintVertical_bias="1.0">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ScrollView
+                android:id="@+id/garden_view_menu_scroller"
+                android:layout_width="match_parent"
+                android:layout_height="432dp"
+                android:layout_marginBottom="12dp"
+                android:contentDescription=".."
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="10dp">
+
+                <LinearLayout
+                    android:id="@+id/garden_bambo_goals"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:background="@drawable/blank_frame"
+                        android:backgroundTint="#22278C"
+                        android:backgroundTintMode="multiply"
+                        android:clipToPadding="false"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:paddingBottom="5dp">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:backgroundTintMode="add"
+                            android:scaleType="fitXY" />
+
+                        <ImageView
+                            android:id="@+id/garden_remove_action"
+                            android:layout_width="55dp"
+                            android:layout_height="match_parent"
+                            android:layout_alignParentStart="true"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/shovel_1" />
+
+                        <ImageView
+                            android:id="@+id/garden_water_action"
+                            android:layout_width="55dp"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/watering_can" />
+
+                        <ImageView
+                            android:id="@+id/garden_harvest_action"
+                            android:layout_width="55dp"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:scaleType="fitXY"
+                            android:src="@drawable/collector_gloves" />
+
+                    </RelativeLayout>
+                </LinearLayout>
+            </ScrollView>
 
             <RelativeLayout
-                android:layout_width="137dp"
-                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="10dp"
                 android:gravity="center">
 
-                <ImageView
+                <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/garden_back_info_menu"
-                    android:layout_width="122dp"
-                    android:layout_height="45dp"
-                    android:src="@drawable/red_button" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignStart="@+id/garden_back_info_menu"
-                    android:layout_alignEnd="@+id/garden_back_info_menu"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginStart="42dp"
-                    android:layout_marginTop="13dp"
-                    android:layout_marginEnd="49dp"
-                    android:layout_marginBottom="13dp"
-                    android:gravity="center"
+                    android:layout_width="180dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/custom_button_animated_red"
                     android:text="@string/return_label"
                     android:textColor="#FFFFFF" />
 
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/garden_menu"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="visible"
+        tools:visibility="gone">
+
+        <ImageView
+            android:id="@+id/garden_blocker"
+            android:layout_width="474dp"
+            android:layout_height="827dp"
+            android:background="#5E000000"
+            android:scaleType="fitXY"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/imageView15"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:alpha="0"
+            android:scaleType="fitXY"
+            android:src="@drawable/blank"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:gravity="center|top"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView15"
+            app:layout_constraintEnd_toEndOf="@+id/imageView15"
+            app:layout_constraintStart_toStartOf="@+id/imageView15"
+            app:layout_constraintTop_toTopOf="@+id/imageView15">
+
+            <ScrollView
+                android:id="@+id/garden_menu_scroll_view"
+                android:layout_width="match_parent"
+                android:layout_height="431dp"
+                android:layout_alignParentTop="true"
+                android:contentDescription=".."
+                android:paddingHorizontal="10dp"
+                android:paddingTop="10dp">
+
+                <LinearLayout
+                    android:id="@+id/garden_plant_questions"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                </LinearLayout>
+            </ScrollView>
+
+            <RelativeLayout
+                android:id="@+id/relativeLayout3"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="10dp">
+
+                <RelativeLayout
+                    android:layout_width="160dp"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="20dp"
+                    android:gravity="center">
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/garden_plant_action"
+                        android:layout_width="130dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/custom_button_animated_green"
+                        android:text="PLANT"
+                        android:textColor="#FFFFFF" />
+
+                </RelativeLayout>
+
+                <RelativeLayout style="@style/back">
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/garden_cancel"
+                        android:layout_width="130dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/custom_button_animated_red"
+                        android:text="@string/return_label"
+                        android:textColor="#FFFFFF" />
+
+                </RelativeLayout>
             </RelativeLayout>
 
         </RelativeLayout>

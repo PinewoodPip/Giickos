@@ -10,9 +10,11 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 
@@ -24,6 +26,7 @@ import edu.ub.pis.giickos.model.garden.Bamboo;
 import edu.ub.pis.giickos.ui.dialogs.Alert;
 import edu.ub.pis.giickos.ui.generic.form.FormCardGarden;
 import edu.ub.pis.giickos.ui.generic.form.FancyFormCard;
+import edu.ub.pis.giickos.ui.generic.form.TextField;
 import edu.ub.pis.giickos.ui.section.bamboogarden.ViewModel;
 
 /**
@@ -92,18 +95,21 @@ public class StorageFragment extends GiickosFragment {
         view.findViewById(R.id.storage_bamboo_info_menu).setVisibility(View.GONE);
 
         ImageView blocker = view.findViewById(R.id.storage_blocker_info);
-        ImageView back = view.findViewById(R.id.storage_back_info_menu);
-        ImageView remove = view.findViewById(R.id.storage_remove_bamboo);
+        Button back = view.findViewById(R.id.storage_back_info_menu);
+        Button remove = view.findViewById(R.id.storage_remove_bamboo);
 
-        FancyFormCard title = addCardWithTint(R.drawable.title, "",
+        FancyFormCard title = addCardWithTint(R.drawable.title, "Title",
                 R.color.garden_1, // left frame
                 R.color.garden_2, // right frame
                 R.color.white); // text color
 
-        FancyFormCard grow = addCardWithTint(R.drawable.timer_white, "",
+        FancyFormCard grow = addCardWithTint(R.drawable.timer_white, "Growth time: ",
                 R.color.garden_1, // left frame
                 R.color.garden_2, // right frame
                 R.color.white); // text color
+
+        TextField titleField = title.addTextFieldColor(InputType.TYPE_CLASS_NUMBER, "title...", null, "title...",Color.WHITE, false);
+        TextField growField = grow.addTextFieldColor(InputType.TYPE_CLASS_TEXT, "growth time...", null,"growth...",Color.WHITE, false);
 
         String answer = "Place holder";
         FormCardGarden firstQ = addFragmentToInfoMenu(getResources().getString(R.string.bamboo_question_1), answer);
@@ -146,8 +152,10 @@ public class StorageFragment extends GiickosFragment {
                 ScrollView scrollView = view.findViewById(R.id.scrollView3);
                 scrollView.scrollTo(0,0);
 
-                title.updateLabel("Title: " + bamboo.getTitle());
-                grow.updateLabel("Total growth time: " + bamboo.getTotalGrowth() + "days");
+
+
+                titleField.setText(bamboo.getTitle());
+                growField.setText(bamboo.getTotalGrowth() + " days");
 
 
                 firstQ.setDescription(bamboo.getAnswer("1"));
