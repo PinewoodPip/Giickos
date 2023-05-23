@@ -11,6 +11,9 @@
     <color name="yellow">#FFEF5E</color>
     <color name="gray">#65675E</color>
 
+    <color name="activity_background">#BDC6BA</color>
+    <color name="subactivity_background">#D1D1D1</color>
+
     <color name="destructive_action">#CF7272</color>
     <color name="positive_action">#55C272</color>
 

@@ -28,7 +28,6 @@ public class ViewModel extends androidx.lifecycle.ViewModel {
     private String username = "";
     private String password = "";
     private String passwordConfirmation = "";
-    private boolean initialized = false;
 
     public ViewModel() {
         this.userManager = ModelHolder.INSTANCE.getUserManager();
@@ -97,13 +96,5 @@ public class ViewModel extends androidx.lifecycle.ViewModel {
 
     public void setPasswordConfirmation(String passwordConfirmation) {
         this.passwordConfirmation = passwordConfirmation;
-    }
-
-    public boolean isInitialized() {
-        return initialized;
-    }
-
-    public void setInitialized(boolean initialized) {
-        this.initialized = initialized;
     }
 }

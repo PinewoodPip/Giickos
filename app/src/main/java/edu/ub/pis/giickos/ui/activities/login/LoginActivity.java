@@ -19,7 +19,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -27,12 +26,11 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
 import edu.ub.pis.giickos.R;
-import edu.ub.pis.giickos.ui.activities.register.RegisterActivity;
 import edu.ub.pis.giickos.ui.activities.main.MainActivity;
 import edu.ub.pis.giickos.ui.activities.main.MainViewModel;
+import edu.ub.pis.giickos.ui.activities.register.RegisterActivity;
 import edu.ub.pis.giickos.ui.dialogs.Alert;
 import edu.ub.pis.giickos.ui.generic.form.FancyFormCard;
-import edu.ub.pis.giickos.ui.generic.form.FormCard;
 import edu.ub.pis.giickos.ui.login.CheckboxLoginFragment;
 
 public class LoginActivity extends AppCompatActivity {
@@ -47,17 +45,19 @@ public class LoginActivity extends AppCompatActivity {
     private void updateFields(SharedPreferences sharedPref) {
 
         // Set email and password from shared preferences, or default to empty string
-        viewModel.setEmail(sharedPref.getString(PREF_REMEMBERLOGIN_EMAIL, ""));
-        viewModel.setPassword(sharedPref.getString(PREF_REMEMBERLOGIN_PASSWORD, ""));
+        if (viewModel.getEmail().isEmpty()) {
+            viewModel.setEmail(sharedPref.getString(PREF_REMEMBERLOGIN_EMAIL, ""));
+            viewModel.setPassword(sharedPref.getString(PREF_REMEMBERLOGIN_PASSWORD, ""));
 
-        // Toggle "remember me" if any pref was present
-        if (!viewModel.getEmail().isEmpty() || !viewModel.getPassword().isEmpty()) {
-            viewModel.setRememberLogin(true);
+            // Toggle "remember me" if any pref was present
+            if (!viewModel.getEmail().isEmpty() || !viewModel.getPassword().isEmpty()) {
+                viewModel.setRememberLogin(true);
+            }
         }
     }
 
     private void addFields() {
-        FancyFormCard emailCard = FancyFormCard.newInstance( R.drawable.user, getString(R.string.prompt_email));
+        FancyFormCard emailCard = FancyFormCard.newInstance(R.drawable.user, getString(R.string.prompt_email));
         FancyFormCard passwordCard = FancyFormCard.newInstance(R.drawable.bloqued, getString(R.string.prompt_password));
         CheckboxLoginFragment rememberCheckBox = new CheckboxLoginFragment();
 
@@ -98,7 +98,7 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+        super.onCreate(null);
         setContentView(R.layout.activity_login);
         TextView recoverPasswordLink = findViewById(R.id.label_recoverpasswordlink);
         SharedPreferences sharedPref = getSharedPreferences("GIICKOS_LOGIN", Context.MODE_PRIVATE);
@@ -108,7 +108,6 @@ public class LoginActivity extends AppCompatActivity {
         updateFields(sharedPref);
 
         addFields();
-
 
         signInButton = (Button)findViewById(R.id.sign_in_login);
         registerButton = (Button)findViewById(R.id.register_login);

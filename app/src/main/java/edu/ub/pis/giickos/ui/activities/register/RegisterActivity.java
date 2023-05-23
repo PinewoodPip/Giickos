@@ -95,7 +95,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+        super.onCreate(null);
         setContentView(R.layout.activity_register);
         Button registerButton = findViewById(R.id.register_reg);
 
@@ -141,9 +141,6 @@ public class RegisterActivity extends AppCompatActivity {
 
         viewModel = new ViewModelProvider(this).get(ViewModel.class);
 
-        if (!viewModel.isInitialized()) {
-            addFields();
-            viewModel.setInitialized(true);
-        }
+        addFields();
     }
 }

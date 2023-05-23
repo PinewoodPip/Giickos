@@ -1,96 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/login"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#BDC6BA"
-    android:gravity="top|left"
-    android:orientation="vertical"
-    android:paddingHorizontal="5dp"
-    tools:context=".ui.activities.login.LoginActivity">
+    android:background="@color/activity_background">
 
-    <include layout="@layout/logo"/>
-
-    <TextView
-        android:id="@+id/title_login"
-        android:layout_width="400dp"
-        android:layout_height="180dp"
-        android:gravity="center"
-        android:text="@string/app_name"
-        android:textColor="#1D5300"
-        android:textSize="60sp"
-        android:textStyle="bold"
-        android:visibility="gone"
-        tools:visibility="gone" />
-
-    <LinearLayout
-        android:id="@+id/login_layout"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#00434C39"
-        android:orientation="vertical"
-        android:paddingHorizontal="20dp"/>
+        android:layout_height="match_parent">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:paddingHorizontal="20dp">
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/register_login"
-            android:layout_width="170dp"
-            android:layout_height="55dp"
-            android:layout_alignParentRight="true"
-            android:layout_marginLeft="15dp"
-            android:background="@drawable/custom_button_animated"
-            android:text="@string/register"
-            android:textColor="#F8FFB9"></androidx.appcompat.widget.AppCompatButton>
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/sign_in_login"
-            android:layout_width="170dp"
-            android:layout_height="55dp"
-            android:layout_alignParentLeft="true"
-            android:background="@drawable/custom_button_animated"
-            android:text="@string/action_sign_in_short"
-            android:textColor="#C8FFB9"></androidx.appcompat.widget.AppCompatButton>
-    </RelativeLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:gravity="center"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/login"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="5dp"
-            android:layout_weight="0"
-            android:text="@string/text_find_psw" />
+            android:gravity="top|left"
+            android:orientation="vertical"
+            android:paddingHorizontal="5dp"
+            tools:context=".ui.activities.login.LoginActivity">
 
-        <TextView
-            android:id="@+id/label_recoverpasswordlink"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0"
-            android:text="@string/click_here"
-            android:textColor="@color/purple_700" />
-    </LinearLayout>
+            <include layout="@layout/logo" />
 
-    <Button
-        android:id="@+id/guest_login"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="@string/guest"
-        android:visibility="gone"
-        tools:visibility="gone"></Button>
-</LinearLayout>
+            <TextView
+                android:id="@+id/title_login"
+                android:layout_width="400dp"
+                android:layout_height="180dp"
+                android:gravity="center"
+                android:text="@string/app_name"
+                android:textColor="#1D5300"
+                android:textSize="60sp"
+                android:textStyle="bold"
+                android:visibility="gone"
+                tools:visibility="gone" />
+
+            <LinearLayout
+                android:id="@+id/login_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#00434C39"
+                android:orientation="vertical"
+                android:paddingHorizontal="20dp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:paddingHorizontal="20dp">
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/register_login"
+                    android:layout_width="170dp"
+                    android:layout_height="55dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginLeft="15dp"
+                    android:background="@drawable/custom_button_animated"
+                    android:text="@string/register"
+                    android:textColor="#F8FFB9"></androidx.appcompat.widget.AppCompatButton>
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/sign_in_login"
+                    android:layout_width="170dp"
+                    android:layout_height="55dp"
+                    android:layout_alignParentLeft="true"
+                    android:background="@drawable/custom_button_animated"
+                    android:text="@string/action_sign_in_short"
+                    android:textColor="#C8FFB9"></androidx.appcompat.widget.AppCompatButton>
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="5dp"
+                    android:layout_weight="0"
+                    android:text="@string/text_find_psw" />
+
+                <TextView
+                    android:id="@+id/label_recoverpasswordlink"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0"
+                    android:text="@string/click_here"
+                    android:textColor="@color/purple_700" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/guest_login"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/guest"
+                android:visibility="gone"
+                tools:visibility="gone"></Button>
+        </LinearLayout>
+    </ScrollView>
+
+</FrameLayout>
 
 
