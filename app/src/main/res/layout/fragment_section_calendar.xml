@@ -37,7 +37,8 @@
                 android:id="@+id/container_tasks"
                 android:layout_width="300dp"
                 android:layout_height="match_parent"
-                android:layout_gravity="right">
+                android:layout_gravity="right"
+                android:layout_marginRight="10dp">
 
             </FrameLayout>
         </FrameLayout>
