@@ -125,7 +125,7 @@ public class LoginActivity extends AppCompatActivity {
         guestButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                MainActivity.transitionToSection(LoginActivity.this, MainViewModel.SECTION_TYPE.CALENDAR, null);
+                MainActivity.transitionToSection(LoginActivity.this, MainViewModel.SECTION_TYPE.TASK_EXPLORER, null);
                 finish();
             }
         });
@@ -157,7 +157,7 @@ public class LoginActivity extends AppCompatActivity {
                             }
                             editor.apply();
 
-                            MainActivity.transitionToSection(LoginActivity.this, MainViewModel.SECTION_TYPE.CALENDAR, null, true);
+                            MainActivity.transitionToSection(LoginActivity.this, MainViewModel.SECTION_TYPE.TASK_EXPLORER, null, true);
                         }
                     });
                     loginTask.addOnFailureListener(new OnFailureListener() {

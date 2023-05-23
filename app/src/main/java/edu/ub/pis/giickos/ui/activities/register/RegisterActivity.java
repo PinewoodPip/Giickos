@@ -110,7 +110,7 @@ public class RegisterActivity extends AppCompatActivity {
                     accountCreationTask.addOnSuccessListener(new OnSuccessListener() {
                         @Override
                         public void onSuccess(Object o) {
-                            MainActivity.transitionToSection(RegisterActivity.this, MainViewModel.SECTION_TYPE.CALENDAR, null, true);
+                            MainActivity.transitionToSection(RegisterActivity.this, MainViewModel.SECTION_TYPE.TASK_EXPLORER, null, true);
                             finish();
                         }
                     });

@@ -57,7 +57,7 @@ public class MainViewModel extends ViewModel {
     public MainViewModel() {
         userManager = ModelHolder.INSTANCE.getUserManager();
 
-        currentSection = new MutableLiveData<>(SECTION_TYPE.CALENDAR);
+        currentSection = new MutableLiveData<>(SECTION_TYPE.TASK_EXPLORER);
     }
 
     public LiveData<SECTION_TYPE> getCurrentSection() {
