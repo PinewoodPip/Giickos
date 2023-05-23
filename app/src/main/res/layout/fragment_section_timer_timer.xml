@@ -10,53 +10,9 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
         android:orientation="vertical">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="110dp"
-            android:orientation="horizontal">
-
-            <com.github.stephenvinouze.materialnumberpickercore.MaterialNumberPicker
-                android:id="@+id/pomodoroTimePicker"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_gravity="top"
-                android:layout_marginTop="0dp"
-                android:fadingEdge="none"
-                app:mnpEditable="true"
-                app:mnpMaxValue="120" />
-
-            <TextView
-                android:id="@+id/textView_pomodoro"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center|left"
-                android:text="Pomodoro"
-                android:textStyle="bold" />
-
-            <com.github.stephenvinouze.materialnumberpickercore.MaterialNumberPicker
-                android:id="@+id/breakTimePicker"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_gravity="top"
-                android:layout_marginTop="0dp"
-                android:fadingEdge="none"
-                app:mnpEditable="true"
-                app:mnpMaxValue="30" />
-
-            <TextView
-                android:id="@+id/textView_break"
-                android:layout_width="81dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center|left"
-                android:text="Break"
-                android:textStyle="bold" />
-
-        </LinearLayout>
 
         <TextView
             android:id="@+id/textView_timer_mode"
@@ -65,13 +21,30 @@
             android:gravity="center"
             android:text="Pomodoro" />
 
-        <TextView
-            android:id="@+id/textView_timer"
+        <FrameLayout
+            android:id="@+id/frame_timer"
             android:layout_width="match_parent"
-            android:layout_height="103dp"
-            android:gravity="center"
-            android:text="00:00"
-            android:textSize="30sp" />
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.progressindicator.CircularProgressIndicator
+                android:id="@+id/progressbar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:indeterminate="false"
+                android:progress="100"
+                app:indicatorColor="#6200ED"
+                app:indicatorSize="120dp" />
+
+            <TextView
+                android:id="@+id/textView_timer"
+                android:layout_width="match_parent"
+                android:layout_height="103dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="00:00"
+                android:textSize="30sp" />
+        </FrameLayout>
 
 
         <Spinner
@@ -92,13 +65,71 @@
             android:layout_height="wrap_content"
             android:text="RESET"
             android:visibility="invisible"
-            tools:visibility="visible"/>
+            tools:visibility="visible" />
 
         <CheckBox
             android:id="@+id/checkBox_detox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Detox" />
+
+        <LinearLayout
+            android:id="@+id/list_editors"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="110dp"
+                android:orientation="horizontal">
+
+                <com.github.stephenvinouze.materialnumberpickercore.MaterialNumberPicker
+                    android:id="@+id/pomodoroTimePicker"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="top"
+                    android:layout_marginTop="0dp"
+                    android:fadingEdge="none"
+                    app:mnpEditable="true"
+                    app:mnpMaxValue="120" />
+
+                <TextView
+                    android:id="@+id/textView_pomodoro"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center|left"
+                    android:text="Pomodoro"
+                    android:textStyle="bold" />
+
+                <com.github.stephenvinouze.materialnumberpickercore.MaterialNumberPicker
+                    android:id="@+id/breakTimePicker"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="top"
+                    android:layout_marginTop="0dp"
+                    android:fadingEdge="none"
+                    app:mnpEditable="true"
+                    app:mnpMaxValue="30" />
+
+                <TextView
+                    android:id="@+id/textView_break"
+                    android:layout_width="81dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center|left"
+                    android:text="Break"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/button_confirm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/generic_label_confirm" />
+        </LinearLayout>
 
     </LinearLayout>
 

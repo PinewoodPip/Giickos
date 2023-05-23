@@ -14,11 +14,13 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.NumberPicker;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.github.stephenvinouze.materialnumberpickercore.MaterialNumberPicker;
+import com.google.android.material.progressindicator.CircularProgressIndicator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -112,23 +114,60 @@ public class TimerFragment extends Fragment {
         });
     }
 
+    private void updatePickers() {
+        View view = getView();
+
+        if (view != null) {
+            view.findViewById(R.id.list_editors).setVisibility(viewModel.getEditMode().getValue() ? View.VISIBLE : View.INVISIBLE);
+
+            pomodoroTimePicker.setValue(viewModel.getPomodoroTime());
+            breakTimePicker.setValue(viewModel.getBreakTime());
+        }
+    }
+
     public void onViewCreated(View view, Bundle bundle) {
+        FrameLayout timerFrame = view.findViewById(R.id.frame_timer);
+        Button confirmEditButton = view.findViewById(R.id.button_confirm);
+        CircularProgressIndicator progressBar = view.findViewById(R.id.progressbar);
+
         startPauseButton = view.findViewById(R.id.button_start_timer);
-
         resetButton = view.findViewById(R.id.button_reset_timer);
-
-
         detoxCheckbox = view.findViewById(R.id.checkBox_detox);
-
 
         timerView = view.findViewById(R.id.textView_timer);
         timerModeTextView = view.findViewById(R.id.textView_timer_mode);
         pomodoroTextView = view.findViewById(R.id.textView_pomodoro);
         breakTextView = view.findViewById(R.id.textView_break);
 
-
         pomodoroTimePicker = view.findViewById(R.id.pomodoroTimePicker);
         breakTimePicker = view.findViewById(R.id.breakTimePicker);
+
+        // Toggle edit mode when the timer is clicked.
+        timerFrame.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!viewModel.getIsIstimerRunning()) {
+                    viewModel.toggleEditMode();
+                }
+            }
+        });
+
+        // Close edit mode when confirm is clicked.
+        confirmEditButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                viewModel.toggleEditMode();
+            }
+        });
+
+        // Toggle the number pickers based on whether editing is enabled.
+        viewModel.getEditMode().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                updatePickers();
+            }
+        });
+        updatePickers();
 
         pomodoroTimePicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
@@ -138,10 +177,8 @@ public class TimerFragment extends Fragment {
                 if(viewModel.getIsPomodoro()){
                     viewModel.setTime(millis);
                 }
-
             }
         });
-
 
         breakTimePicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
             @Override
@@ -155,9 +192,6 @@ public class TimerFragment extends Fragment {
         });
 
         setupTasksSpinner();
-
-
-
 
         startPauseButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -178,7 +212,6 @@ public class TimerFragment extends Fragment {
             }
         });
 
-
         detoxCheckbox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -188,13 +221,23 @@ public class TimerFragment extends Fragment {
             }
         });
 
-
         final Observer<String> observerTimer = new Observer<String>() {
             @Override
             public void onChanged(String timer) {
                 timerView.setText(timer);
             }
         };
+
+        // Update the progress bar
+        viewModel.getTimer().observe(getViewLifecycleOwner(), new Observer<String>() {
+            // Why is this a string?
+            @Override
+            public void onChanged(String s) {
+                double progress = (double) viewModel.getMillisLeft() / (double) viewModel.getStartingMillis() * 100;
+
+                progressBar.setProgress((int) progress, true);
+            }
+        });
 
         viewModel.getTimer().observe(this.getViewLifecycleOwner(), observerTimer);
 
@@ -215,31 +258,6 @@ public class TimerFragment extends Fragment {
 
         viewModel.getTextTimerMode().observe(this.getViewLifecycleOwner(), observerTextTimerMode);
 
-
-
-        final Observer<Long> observerTextPomodoroPicker = new Observer<Long>() {
-            @Override
-            public void onChanged(Long textPomodoroPicker) {
-                pomodoroTimePicker.setValue(textPomodoroPicker.intValue());
-
-            }
-        };
-
-        viewModel.getTextPomodoroPicker().observe(this.getViewLifecycleOwner(), observerTextPomodoroPicker);
-
-
-        final Observer<Long> observerTextBreakPicker = new Observer<Long>() {
-            @Override
-            public void onChanged(Long textBreakPicker) {
-                breakTimePicker.setValue(textBreakPicker.intValue());
-
-            }
-        };
-
-        viewModel.getTextBreakPicker().observe(this.getViewLifecycleOwner(), observerTextBreakPicker);
-
-
-
         final Observer<Boolean> observerVisibilityEditMinuteEdittext = new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean visibilityEditMinuteEdittext) {
@@ -256,22 +274,6 @@ public class TimerFragment extends Fragment {
         };
         viewModel.getVisibilityBreakTextView().observe(this.getViewLifecycleOwner(), observerVisibilityEditBreakMinuteEdittext);
 
-        final Observer<Boolean> observerVisibilitySetPomodoroButton = new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean visibilitySetPomodoroButton) {
-                pomodoroTimePicker.setVisibility(visibilitySetPomodoroButton? View.VISIBLE : View.INVISIBLE);
-            }
-        };
-        viewModel.getVisibilityPomodoroPicker().observe(this.getViewLifecycleOwner(), observerVisibilitySetPomodoroButton);
-
-        final Observer<Boolean> observerVisibilitySetBreakButton = new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean visibilitySetBreakButton) {
-                breakTimePicker.setVisibility(visibilitySetBreakButton? View.VISIBLE : View.INVISIBLE);
-            }
-        };
-        viewModel.getVisibilityBreakPicker().observe(this.getViewLifecycleOwner(), observerVisibilitySetBreakButton);
-
         final Observer<Boolean> observerVisibilityResetButton = new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean visibilityResetButton) {
@@ -280,7 +282,6 @@ public class TimerFragment extends Fragment {
         };
         viewModel.getVisibilityResetButton().observe(this.getViewLifecycleOwner(), observerVisibilityResetButton);
 
-
         final Observer<Boolean> observerVisibilityStartPauseButton = new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean visibilityStartPauseButton) {
@@ -288,7 +289,6 @@ public class TimerFragment extends Fragment {
             }
         };
         viewModel.getVisibilityStartPauseButton().observe(this.getViewLifecycleOwner(), observerVisibilityStartPauseButton);
-
 
         final Observer<Boolean> observerVisibilitySelectTaskSpinner = new Observer<Boolean>() {
             @Override
@@ -305,7 +305,6 @@ public class TimerFragment extends Fragment {
             }
         };
         viewModel.getVisibilityDetoxCheckBox().observe(this.getViewLifecycleOwner(), observerVisibilityDetoxCheckBox);
-
 
         final Observer<Boolean> observerIsTaskSelected = new Observer<Boolean>() {
             @Override
