@@ -41,8 +41,7 @@ public class ViewModel extends androidx.lifecycle.ViewModel{
     public MutableLiveData<Long> textPomodoroPicker, textBreakPicker;
     public MutableLiveData<Boolean> visibilityPomodoroTextView,
             visibilityBreakTextView, visibilityResetButton, visibilityStartPauseButton,
-            visibilitySelectTaskSpinner, visibilityDetoxCheckBox, isTaskSelected;
-
+            visibilitySelectTaskSpinner, visibilityDetoxCheckBox;
 
     private ProjectManager model;
 
@@ -51,9 +50,6 @@ public class ViewModel extends androidx.lifecycle.ViewModel{
     private MutableLiveData<Boolean> editMode;
 
     private Observer modelTasksObserver;
-
-
-
 
     public ViewModel() {
         timer = new MutableLiveData<String>();
@@ -68,7 +64,6 @@ public class ViewModel extends androidx.lifecycle.ViewModel{
         visibilityStartPauseButton = new MutableLiveData<>(true);
         visibilitySelectTaskSpinner = new MutableLiveData<>(true);
         visibilityDetoxCheckBox = new MutableLiveData<>(true);
-        isTaskSelected = new MutableLiveData<>(false);
         editMode = new MutableLiveData<>(false);
 
         this.model = ModelHolder.INSTANCE.getProjectManager();
@@ -101,7 +96,6 @@ public class ViewModel extends androidx.lifecycle.ViewModel{
     public LiveData<Boolean> getVisibilitySelectTaskSpinner() {return visibilitySelectTaskSpinner;}
     public LiveData<Boolean> getVisibilityDetoxCheckBox() {return visibilityDetoxCheckBox;}
 
-    public LiveData<Boolean> getIsTaskSelected() {return isTaskSelected;}
     public LiveData<Boolean> getEditMode() {return editMode;}
 
     public void startTimer() {
@@ -287,10 +281,7 @@ public class ViewModel extends androidx.lifecycle.ViewModel{
             if (task.durationInMinutes > 0) {
                 long millis = task.durationInMinutes * 60000L;
                 setTime(millis);
-                isTaskSelected.setValue(true);
             }
-        }else{
-            isTaskSelected.setValue(false);
         }
     }
 

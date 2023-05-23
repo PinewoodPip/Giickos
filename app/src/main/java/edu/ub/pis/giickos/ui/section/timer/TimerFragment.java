@@ -43,7 +43,6 @@ public class TimerFragment extends Fragment {
 
     private MaterialNumberPicker pomodoroTimePicker, breakTimePicker;
 
-    private TextView pomodoroTextView, breakTextView;
     private ViewModel viewModel;
 
     public TimerFragment() {
@@ -136,8 +135,6 @@ public class TimerFragment extends Fragment {
 
         timerView = view.findViewById(R.id.textView_timer);
         timerModeTextView = view.findViewById(R.id.textView_timer_mode);
-        pomodoroTextView = view.findViewById(R.id.textView_pomodoro);
-        breakTextView = view.findViewById(R.id.textView_break);
 
         pomodoroTimePicker = view.findViewById(R.id.pomodoroTimePicker);
         breakTimePicker = view.findViewById(R.id.breakTimePicker);
@@ -259,22 +256,6 @@ public class TimerFragment extends Fragment {
 
         viewModel.getTextTimerMode().observe(this.getViewLifecycleOwner(), observerTextTimerMode);
 
-        final Observer<Boolean> observerVisibilityEditMinuteEdittext = new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean visibilityEditMinuteEdittext) {
-                pomodoroTextView.setVisibility(visibilityEditMinuteEdittext? View.VISIBLE : View.INVISIBLE);
-            }
-        };
-        viewModel.getVisibilityPomodoroTextView().observe(this.getViewLifecycleOwner(), observerVisibilityEditMinuteEdittext);
-
-        final Observer<Boolean> observerVisibilityEditBreakMinuteEdittext = new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean visibilityEditBreakMinuteEdittext) {
-                breakTextView.setVisibility(visibilityEditBreakMinuteEdittext ? View.VISIBLE : View.INVISIBLE);
-            }
-        };
-        viewModel.getVisibilityBreakTextView().observe(this.getViewLifecycleOwner(), observerVisibilityEditBreakMinuteEdittext);
-
         final Observer<Boolean> observerVisibilityResetButton = new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean visibilityResetButton) {
@@ -306,15 +287,6 @@ public class TimerFragment extends Fragment {
             }
         };
         viewModel.getVisibilityDetoxCheckBox().observe(this.getViewLifecycleOwner(), observerVisibilityDetoxCheckBox);
-
-        final Observer<Boolean> observerIsTaskSelected = new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean isTaskSelected) {
-                pomodoroTextView.setVisibility(isTaskSelected || viewModel.istimerRunning? View.INVISIBLE : View.VISIBLE);
-                pomodoroTimePicker.setVisibility(isTaskSelected || viewModel.istimerRunning? View.INVISIBLE : View.VISIBLE);
-            }
-        };
-        viewModel.getIsTaskSelected().observe(this.getViewLifecycleOwner(), observerIsTaskSelected);
     }
 
     @Override
