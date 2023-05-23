@@ -18,10 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="59dp">
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:background="#1F4B16" />
+            <ImageView style="@style/frame" />
 
             <TextView
                 android:id="@+id/garden_question_label"
@@ -33,7 +30,7 @@
                 android:paddingHorizontal="10dp"
                 android:paddingVertical="10dp"
                 android:text="Here we put the question or something"
-                android:textColor="#FFFFFF"
+                android:textColor="#FFFBBE"
                 android:textSize="12sp" />
 
         </RelativeLayout>
@@ -41,7 +38,7 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#A5BC80"
+            android:background="#BED39C"
             android:paddingBottom="10dp">
 
             <EditText

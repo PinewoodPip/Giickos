@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/list"
     style="@style/GiickosBackground"
@@ -17,5 +18,13 @@
         android:background="@color/float_background"
         android:gravity="center_horizontal"
         android:orientation="horizontal"></LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:layout_gravity="top"
+        android:scaleType="fitXY"
+        android:src="@drawable/blank"
+        app:tint="#658E52" />
 
 </FrameLayout>

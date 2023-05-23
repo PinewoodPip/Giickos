@@ -32,6 +32,14 @@ public abstract class ContainerCard extends GiickosFragment {
 
         return textField;
     }
+    public TextField addTextFieldColor(int inputType, String label, TextWatcher listener, String hintLabel, int color, boolean editable) {
+        TextField textField = TextField.newInstance(label, inputType, editable, color, hintLabel);
+        addElement(textField);
+
+        textField.setListener(listener);
+
+        return textField;
+    }
 
     public TextField addTextField(int inputType, String label, TextWatcher listener) {
         return addTextField(inputType, label, listener, "");
@@ -70,6 +78,13 @@ public abstract class ContainerCard extends GiickosFragment {
         addElement(spinner);
 
         return spinner;
+    }
+
+    public FormSpinner addSpinnerColor(List<String> items, int selectedIndex, int color) {
+
+        FormSpinner spinner = FormSpinner.newInstance(items, selectedIndex,color);
+        addElement(spinner);
+        return addSpinner(items, 0);
     }
 
     // Sets the direction of the list of child elements added via addElement().

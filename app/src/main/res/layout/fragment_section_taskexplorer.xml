@@ -8,6 +8,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/tab_background_color"
         android:orientation="vertical">
 
         <androidx.fragment.app.FragmentContainerView
@@ -18,23 +19,30 @@
             android:layout_weight="1"
             tools:layout="@layout/fragment_section_taskexplorer_tasklist" />
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:layout_gravity="bottom"
+            android:layout_gravity="center"
             android:layout_margin="0dp"
             android:layout_weight="0"
-            android:background="@color/float_background"
-            android:orientation="horizontal">
+            android:background="@color/tab_background_color"
+            android:gravity="center">
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/button_newproject"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:layout_weight="1"
-                android:text="@string/taskexplorer_label_addproject" />
-        </LinearLayout>
+                android:layout_width="250dp"
+                android:layout_height="43dp"
+                android:layout_alignParentLeft="false"
+                android:layout_alignParentEnd="false"
+                android:layout_alignParentRight="false"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/custom_button_animated_dark_blue"
+                android:text="@string/taskexplorer_label_addproject"
+                android:textColor="#D7FCFF" />
+        </RelativeLayout>
     </LinearLayout>
 
 </FrameLayout>

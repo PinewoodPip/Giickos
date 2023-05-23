@@ -1,5 +1,7 @@
 package edu.ub.pis.giickos.ui.generic.form;
 
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
@@ -23,21 +26,27 @@ public class FormSpinner extends Fragment {
 
     private List<String> items;
     private int selectedIndex = 0;
+
+    private int textColor = Color.BLACK;
     private AdapterView.OnItemSelectedListener listener = null;
 
     public FormSpinner() {
         // Required empty public constructor
     }
 
-    public static FormSpinner newInstance(List<String> items, int selectedIndex) {
+    public static FormSpinner newInstance(List<String> items, int selectedIndex, int textColor) {
         FormSpinner fragment = new FormSpinner();
         Bundle args = new Bundle();
         fragment.setArguments(args);
 
         fragment.items = items;
         fragment.selectedIndex = selectedIndex;
+        fragment.textColor = textColor;
 
         return fragment;
+    }
+    public static FormSpinner newInstance(List<String> items, int selectedIndex) {
+        return newInstance(items, selectedIndex, Color.BLACK);
     }
 
     public void setSelection(int index) {
@@ -93,7 +102,22 @@ public class FormSpinner extends Fragment {
             selectedIndex = bundle.getInt(INSTANCE_SELECTED_INDEX);
         }
 
-        spinner.setAdapter(new ArrayAdapter<>(getContext(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, items));
+
+
+        spinner.setAdapter(new ArrayAdapter<String>(getContext(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, items){
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                View view = super.getView(position, convertView, parent);
+                TextView textView = (TextView) view.findViewById(android.R.id.text1);
+                textView.setTextColor(textColor); // Set the text color when the spinner is closed
+                return view;
+            }
+        });
+
+        // Set the color of the spinner
+         // Replace Color.WHITE with your desired color
+        spinner.getBackground().setColorFilter(textColor, PorterDuff.Mode.SRC_ATOP);
+
 
         setListener(listener);
         setSelection(selectedIndex);
@@ -107,5 +131,17 @@ public class FormSpinner extends Fragment {
 
     public int getSelectedIndex() {
         return selectedIndex;
+    }
+
+    public Object getChildAt(int i) {
+        return items.get(i);
+    }
+
+    public void setAdapter(ArrayAdapter<String> adapter) {
+        Spinner spinner = getSpinnerView();
+
+        if (spinner != null) {
+            spinner.setAdapter(adapter);
+        }
     }
 }
