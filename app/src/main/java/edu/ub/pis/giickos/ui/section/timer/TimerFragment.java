@@ -129,10 +129,16 @@ public class TimerFragment extends Fragment {
         }
     }
 
+    private void updateProgressBar(boolean smooth) {
+        CircularProgressIndicator progressBar = getView().findViewById(R.id.progressbar);
+        double progress = (double) viewModel.getMillisLeft() / (double) viewModel.getStartingMillis() * 100;
+
+        progressBar.setProgress((int) progress, smooth);
+    }
+
     public void onViewCreated(View view, Bundle bundle) {
         FrameLayout timerFrame = view.findViewById(R.id.frame_timer);
         Button confirmEditButton = view.findViewById(R.id.button_confirm);
-        CircularProgressIndicator progressBar = view.findViewById(R.id.progressbar);
 
         startPauseButton = view.findViewById(R.id.button_start_timer);
         resetButton = view.findViewById(R.id.button_reset_timer);
@@ -241,11 +247,10 @@ public class TimerFragment extends Fragment {
             // Why is this a string?
             @Override
             public void onChanged(String s) {
-                double progress = (double) viewModel.getMillisLeft() / (double) viewModel.getStartingMillis() * 100;
-
-                progressBar.setProgress((int) progress, true);
+                updateProgressBar(true);
             }
         });
+        updateProgressBar(false);
 
         viewModel.getTimer().observe(this.getViewLifecycleOwner(), observerTimer);
 
