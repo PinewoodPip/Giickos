@@ -36,7 +36,7 @@ public class WeekHeaderHolder extends ViewContainer {
         calendarData.setMinimalDaysInFirstWeek(1);
 
         TypedArray monthArray = context.getResources().obtainTypedArray(R.array.months);
-        String monthString = monthArray.getString(date.getMonth().getValue() - 1); // month.getValue() is 1-based
+        String monthString = String.format(Locale.getDefault(), "%s %d", monthArray.getString(date.getMonth().getValue() - 1), date.getYear()); // month.getValue() is 1-based
         String weekString = String.format(Locale.getDefault(), "%s %d", context.getString(R.string.generic_label_week), calendarData.get(Calendar.WEEK_OF_MONTH));
 
         monthLabel.setText(monthString);
