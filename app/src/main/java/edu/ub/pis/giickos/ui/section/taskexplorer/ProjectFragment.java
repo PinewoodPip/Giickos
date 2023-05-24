@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import edu.ub.pis.giickos.GiickosFragment;
 import edu.ub.pis.giickos.R;
+import edu.ub.pis.giickos.ui.ViewModelHelpers;
 import edu.ub.pis.giickos.ui.ViewModelHelpers.*;
 import edu.ub.pis.giickos.ui.dialogs.Alert;
 import edu.ub.pis.giickos.ui.activities.taskcreator.Activity;
@@ -71,7 +72,7 @@ public class ProjectFragment extends GiickosFragment {
 
     // Adds a task view to the project's list of tasks.
     public void addTask(TaskData task) {
-        Task fragment = Task.newInstance(getProjectID(), task.id, R.drawable.placeholder_notebook, task.name);
+        Task fragment = Task.newInstance(getProjectID(), task.id, R.drawable.task_icon, task.name);
 
         addChildFragment(fragment, R.id.list_tasks);
     }
