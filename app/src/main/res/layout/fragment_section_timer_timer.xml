@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/tab_background_color"
     tools:context=".ui.section.timer.TimerSection">
 
     <!-- TODO: Update blank fragment layout -->
@@ -12,7 +13,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
-        android:orientation="vertical">
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingHorizontal="20dp">
 
         <TextView
             android:id="@+id/textView_timer_mode"
@@ -44,6 +47,7 @@
                 android:gravity="center"
                 android:text="00:00"
                 android:textSize="30sp" />
+
         </FrameLayout>
 
 
@@ -51,19 +55,32 @@
             android:id="@+id/spinner_select_task"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="20dp"
             android:prompt="@string/select_task_prompt" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/button_start_timer"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="START" />
+            android:layout_height="40dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/custom_button_animated_green"
+            android:text="START"
+            android:textColor="@color/white" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/button_reset_timer"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/custom_button_animated_red"
             android:text="RESET"
+            android:textColor="@color/white"
             android:visibility="invisible"
             tools:visibility="visible" />
 
@@ -71,17 +88,23 @@
             android:id="@+id/checkBox_detox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:buttonTint="#000F71"
             android:text="Detox" />
 
         <LinearLayout
             android:id="@+id/list_editors"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:gravity="center"
             android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="110dp"
+                android:layout_height="85dp"
                 android:orientation="horizontal">
 
                 <com.github.stephenvinouze.materialnumberpickercore.MaterialNumberPicker
@@ -124,20 +147,16 @@
 
             </LinearLayout>
 
-            <Button
+            <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/button_confirm"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/generic_label_confirm" />
+                android:layout_width="280dp"
+                android:layout_height="40dp"
+                android:background="@drawable/custom_button_animated_orange"
+                android:text="@string/generic_label_confirm"
+                android:textColor="#FFFFFF" />
         </LinearLayout>
 
     </LinearLayout>
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-    </FrameLayout>
 
     <!--
     <LinearLayout

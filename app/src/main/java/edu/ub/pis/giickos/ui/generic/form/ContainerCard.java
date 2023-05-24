@@ -2,6 +2,7 @@ package edu.ub.pis.giickos.ui.generic.form;
 
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.NumberPicker;
 
@@ -12,6 +13,7 @@ import java.util.List;
 import edu.ub.pis.giickos.GiickosFragment;
 import edu.ub.pis.giickos.R;
 import edu.ub.pis.giickos.ui.generic.DatePickerListener;
+import edu.ub.pis.giickos.ui.generic.Switch;
 import edu.ub.pis.giickos.ui.generic.TimePickerListener;
 
 public abstract class ContainerCard extends GiickosFragment {
@@ -72,6 +74,18 @@ public abstract class ContainerCard extends GiickosFragment {
 
         return field;
     }
+
+    public Switch addSwitchField(boolean startState, CompoundButton.OnCheckedChangeListener listener)
+    {
+        Switch switchField = Switch.newInstance(startState);
+        addElement(switchField);
+
+        switchField.setListener(listener);
+
+        return switchField;
+    }
+
+
 
     public FormSpinner addSpinner(List<String> items, int selectedIndex) {
         FormSpinner spinner = FormSpinner.newInstance(items, selectedIndex);

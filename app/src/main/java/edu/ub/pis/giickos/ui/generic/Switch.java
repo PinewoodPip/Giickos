@@ -17,6 +17,8 @@ public class Switch extends Fragment {
 
     private CompoundButton.OnCheckedChangeListener listener = null;
 
+    private View.OnClickListener onClickListener = null;
+
     public Switch() {
         // Required empty public constructor
     }

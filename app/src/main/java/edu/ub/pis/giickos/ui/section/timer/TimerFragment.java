@@ -1,7 +1,9 @@
 package edu.ub.pis.giickos.ui.section.timer;
 
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 
+import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -15,6 +17,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.NumberPicker;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -258,6 +261,17 @@ public class TimerFragment extends Fragment {
             @Override
             public void onChanged(String textStartPauseButton) {
                 startPauseButton.setText(textStartPauseButton);
+
+                // the ideal should be using enums from viewmodel...
+                if (textStartPauseButton.equals("Start")) {
+                    startPauseButton.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.custom_button_animated_green, null));
+                }
+                else {
+                    startPauseButton.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.custom_button_animated_red, null));
+                }
+
+
+
             }
         };
         viewModel.getTextStartPauseButton().observe(this.getViewLifecycleOwner(), observerTextStartPauseButton);

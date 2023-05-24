@@ -43,4 +43,12 @@
 
     <color name="float_background_text">#292929</color>
     <color name="float_background_text_2">#454545</color>
+
+    <color name="detox_1">#252525</color>
+    <color name="detox_2">#454545</color>
+    <color name="detox_text">#FFF200</color>
+
+
+
+
 </resources>

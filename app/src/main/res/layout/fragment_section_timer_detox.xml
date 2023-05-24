@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/tab_background_color"
     tools:context=".ui.section.timer.detox.DetoxFragment">
 
     <LinearLayout
@@ -21,9 +22,17 @@
             android:textSize="24sp"
             android:textStyle="bold" />
 
+        <LinearLayout
+            android:id="@+id/detox_settings_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingHorizontal="30dp" />
+
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="324dp">
+            android:layout_height="324dp"
+            tools:visibility="gone">
 
             <LinearLayout
                 android:layout_width="match_parent"
