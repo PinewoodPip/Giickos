@@ -31,26 +31,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
-        android:visibility="gone">
+        android:visibility="gone"
+        tools:visibility="visible">
 
         <ImageView
             android:id="@+id/storage_blocker_info"
             android:layout_width="474dp"
             android:layout_height="827dp"
-            android:background="#80000000"
-            android:scaleType="fitXY"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            android:id="@+id/imageView16"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:alpha="0.35"
-            android:background="@drawable/blank"
-            android:backgroundTint="#000000"
+            android:background="#3E8756"
             android:scaleType="fitXY"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -65,11 +53,12 @@
             <ScrollView
                 android:id="@+id/scrollView3"
                 android:layout_width="match_parent"
-                android:layout_height="426dp"
+                android:layout_height="match_parent"
                 android:layout_alignParentTop="true"
                 android:contentDescription=".."
                 android:paddingHorizontal="10dp"
-                android:paddingVertical="10dp">
+                android:paddingTop="10dp"
+                android:paddingBottom="70dp">
 
                 <LinearLayout
                     android:id="@+id/storage_bambo_goals"
@@ -80,9 +69,9 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
+                android:layout_height="60dp"
                 android:layout_alignParentBottom="true"
-                android:layout_marginBottom="16dp"
+                android:background="#28603A"
                 android:gravity="center"
                 android:orientation="horizontal"
                 android:paddingHorizontal="20dp">
