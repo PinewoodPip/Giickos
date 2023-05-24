@@ -1,6 +1,7 @@
 package edu.ub.pis.giickos.ui.utils.notification;
 
 import android.Manifest;
+import android.app.AlarmManager;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -15,22 +16,77 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
+
+import javax.annotation.Nullable;
+
 import edu.ub.pis.giickos.R;
+import edu.ub.pis.giickos.ui.activities.main.MainActivity;
 
 
 public class Notification {
 
     private static final String CHANNEL_ID = "Giickos_channel_id"; //ha de ser únic
     private static int current_id_nt = 0;
+    private static int current_alarm_id = 0;
 
-    public static int sendNotification(AppCompatActivity context, String textTitile, String textContent,
-                                        Class actToStart){
+    public static int pomodoroNotification(Context context, String textTitle, String textContent,
+                                           Class actToStart, int timeLater){
+
+        Calendar calendar = getCurrentTime();
+        calendar.add(Calendar.MINUTE, timeLater);
+
+        return createAlarm(context, textTitle, textContent, actToStart, calendar);
+
+    }
+    //month january = 1
+    public static int scheduledNotification(Context context, String textTitle, String textContent,
+                                                    Class actToStart, int year, int month, int day, int hour,
+                                            int minute){
+
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.YEAR, year);
+        calendar.set(Calendar.MONTH, month -1);
+        calendar.set(Calendar.DAY_OF_MONTH, day);
+        calendar.set(Calendar.HOUR_OF_DAY, hour);
+        calendar.set(Calendar.MINUTE, minute);
+        calendar.set(Calendar.SECOND, 0);
+
+        return createAlarm(context, textTitle, textContent, actToStart, calendar);
+
+    }
+    public static int sendNotification(Context context, String textTitile, String textContent,
+                                       Class actToStart){
         NotificationCompat.Builder nt = createNotification(context, textTitile, textContent);
         nt = setTapActionExclusive(nt, context, actToStart);
-        current_id_nt++;
-        showNotification(nt, current_id_nt, context);
-        return current_id_nt;
+
+        return showNotification(nt, context);
+
     }
+    public static Calendar getCurrentTime(){
+        // Get the current time in milliseconds
+        long currentTimeMillis = System.currentTimeMillis();
+
+        // Create a Calendar instance and set it to the current time
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(currentTimeMillis);
+
+        /*
+        // Extract the current time components
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH) +1; //January is 0
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        int minute = calendar.get(Calendar.MINUTE);
+        int second = calendar.get(Calendar.SECOND);*/
+
+        return calendar;
+    }
+
+
     //codi per crear el channel per les notificacions
     //Context es superclasse de Activity
     //s'huaria de cridar abans possible
@@ -50,6 +106,54 @@ public class Notification {
             Log.i("Notification", "channel "+CHANNEL_ID+" created");
         }
     }
+    private static int createAlarm(Context context, String textTitle, String textContent,
+                                   Class actToStart, Calendar calendar){
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+
+        // Create an intent to the AlarmReceiver class
+        Intent intent = new Intent(context, AlarmReceiver.class);
+
+        intent.putExtra("title", textTitle);
+        intent.putExtra("content", textContent);
+
+        intent.putExtra("class", actToStart.getName());
+
+        // Set a unique ID for this alarm
+
+        int alarm_id = generateID(calendar);
+
+
+        // Create a PendingIntent to be triggered when the alarm fires
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, alarm_id, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        // Set the alarm to trigger at the specified time
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+        Log.i("Notification", "Alarm: "+alarm_id+ " registred");
+        return alarm_id;
+    }
+    private static int generateID(@Nullable Calendar calendar){
+        int id = 0;
+        if(calendar != null){
+            int month = calendar.get(Calendar.MONTH) +1; //January is 0
+            int day = calendar.get(Calendar.DAY_OF_MONTH);
+            int hour = calendar.get(Calendar.HOUR_OF_DAY);
+            int minute = calendar.get(Calendar.MINUTE);
+            int second = calendar.get(Calendar.SECOND);
+            id = Integer.parseInt(month+""+day+hour+minute+second);
+        }else{
+            Calendar current_time = getCurrentTime();
+            int month = current_time.get(Calendar.MONTH) +1; //January is 0
+            int day = current_time.get(Calendar.DAY_OF_MONTH);
+            int hour = current_time.get(Calendar.HOUR_OF_DAY);
+            int minute = current_time.get(Calendar.MINUTE);
+            int second = current_time.get(Calendar.SECOND);
+            id = Integer.parseInt(month+""+day+hour+minute+second);
+        }
+        return id;
+    }
+
+
+
 
     //crea el contingut de notificació
     //Context es superclasse de Activity
@@ -70,7 +174,7 @@ public class Notification {
 
     //afegir quan notificació es clicat activity que s'obrirá
     private static NotificationCompat.Builder setTapActionExclusive(NotificationCompat.Builder builder,
-                                                                    AppCompatActivity context, Class actToStart) {
+                                                                    Context context, Class actToStart) {
         Intent intent = new Intent(context, actToStart);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_IMMUTABLE);
@@ -82,8 +186,8 @@ public class Notification {
     }
 
 
-    private static void showNotification(NotificationCompat.Builder builder, int notificationId,
-                                        AppCompatActivity context) {
+    private static int showNotification(NotificationCompat.Builder builder,
+                                        Context context) {
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
 
         // notificationId is a unique int for each notification that you must define
@@ -97,10 +201,13 @@ public class Notification {
             // to handle the case where the user grants the permission. See the documentation
             // for ActivityCompat#requestPermissions for more details.
             Log.i("Notification","permission no granted");
-            return;
+            return 0;
         }
+
+        int notificationId = generateID(null);
         notificationManager.notify(notificationId, builder.build());
         Log.i("Notification", "notification id: "+notificationId+" sent");
+        return notificationId;
     }
 
 }

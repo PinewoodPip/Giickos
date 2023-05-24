@@ -1,7 +1,10 @@
 package edu.ub.pis.giickos.ui.activities.main;
 
 import android.app.Activity;
+import android.app.AlarmManager;
 import android.app.FragmentManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -15,7 +18,10 @@ import androidx.lifecycle.ViewModelProvider;
 import android.Manifest;
 import android.util.Log;
 
+import java.util.Calendar;
+
 import edu.ub.pis.giickos.R;
+import edu.ub.pis.giickos.ui.utils.notification.AlarmReceiver;
 import edu.ub.pis.giickos.ui.utils.notification.Notification;
 import edu.ub.pis.giickos.ui.activities.GiickosActivity;
 import edu.ub.pis.giickos.ui.activities.login.LoginActivity;
@@ -71,6 +77,11 @@ public class MainActivity extends GiickosActivity {
             requestPermissionLauncher.launch(
                     Manifest.permission.POST_NOTIFICATIONS);
         }
+        /*exemple programar notificacio (temps emulator = temps real - 2hores)
+        Notification.scheduledNotification(this, "later", "123", MainActivity.class, 2023,
+                5,24, 21, 20);
+        Notification.pomodoroNotification(this, "pomo", "123", MainActivity.class, 5);
+        */
     }
 
 
