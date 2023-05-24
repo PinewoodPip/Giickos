@@ -103,21 +103,19 @@ public class FormSpinner extends Fragment {
         }
 
 
-
-        spinner.setAdapter(new ArrayAdapter<String>(getContext(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, items){
+        spinner.setAdapter(new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_dropdown_item, items){
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
                 View view = super.getView(position, convertView, parent);
                 TextView textView = (TextView) view.findViewById(android.R.id.text1);
-                textView.setTextColor(textColor); // Set the text color when the spinner is closed
+                textView.setTextColor(Color.WHITE); // Set the text color when the spinner is closed
                 return view;
             }
         });
 
         // Set the color of the spinner
-         // Replace Color.WHITE with your desired color
+        // Replace Color.WHITE with your desired color
         spinner.getBackground().setColorFilter(textColor, PorterDuff.Mode.SRC_ATOP);
-
 
         setListener(listener);
         setSelection(selectedIndex);

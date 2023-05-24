@@ -188,7 +188,7 @@
     <string name="bamboo_growthtime_2months">2 Months</string>
     <string name="bamboo_growthtime_3months">3 Months</string>
     <string name="bamboo_growthtime_6months">6 Months</string>
-    <string name="bamboo_growthtime_1year">3 Months</string>
+    <string name="bamboo_growthtime_1year">1 Year</string>
 
     <!-- General button actions -->
     <string name="decline_label">Decline</string>

@@ -84,7 +84,7 @@ public abstract class ContainerCard extends GiickosFragment {
 
         FormSpinner spinner = FormSpinner.newInstance(items, selectedIndex,color);
         addElement(spinner);
-        return addSpinner(items, 0);
+        return spinner;
     }
 
     // Sets the direction of the list of child elements added via addElement().

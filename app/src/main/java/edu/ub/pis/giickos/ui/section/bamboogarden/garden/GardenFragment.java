@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -194,6 +195,20 @@ public class GardenFragment extends GiickosFragment {
             time.add(getString(i.getNameResource()));
         }
         FormSpinner spinner = growTime.addSpinnerColor(time,0, Color.WHITE);
+        //Listener of the spinner, gets the selected value and sends it to the viewmodel
+        spinner.setListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                viewModel.setBambooGrowTime(ViewModel.BAMBOO_GROWTH_TIME.values()[position]);
+                System.out.println("Grow time: " + parent.getSelectedItem());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
+
+
 
         //Pack of FormCardGarden for controlling them in batch
         FormCardGarden[] questions = new FormCardGarden[5];
@@ -227,18 +242,7 @@ public class GardenFragment extends GiickosFragment {
             }
         });
 
-        //Listener of the spinner, gets the selected value and sends it to the viewmodel
-        spinner.setListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                viewModel.setBambooGrowTime(ViewModel.BAMBOO_GROWTH_TIME.values()[position]);
-                System.out.println("Grow time: " + parent.getSelectedItem());
-            }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        });
 
 
         //Listener of the "plant button", plants the bamboo in the garden
