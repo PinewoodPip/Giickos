@@ -215,6 +215,7 @@ public class CalendarSection extends Section {
     @Override
     public void onViewCreated(View view, Bundle savedInstance) {
         WeekCalendarView calendar = getCalendarView();
+        TextView dayLabel = view.findViewById(R.id.label_day);
 
         calendar.setDayBinder(new WeekDayBinder<ViewContainer>() {
             @NonNull
@@ -312,6 +313,14 @@ public class CalendarSection extends Section {
             @Override
             public void onChanged(Set<ViewModelHelpers.TaskData> taskData) {
                 setupTasks();
+            }
+        });
+
+        // Listen for selected day changing to set the day label
+        viewModel.getSelectedDate().observe(getViewLifecycleOwner(), new Observer<LocalDate>() {
+            @Override
+            public void onChanged(LocalDate localDate) {
+                dayLabel.setText(localDate.getDayOfWeek().toString());
             }
         });
     }

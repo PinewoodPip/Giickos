@@ -17,6 +17,20 @@
 
     </com.kizitonwose.calendar.view.WeekCalendarView>
 
+    <TextView
+        android:id="@+id/label_day"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="5dp"
+        android:gravity="center"
+        android:text="@string/placeholder" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:layout_marginHorizontal="5dp"
+        android:background="?android:attr/listDivider" />
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
