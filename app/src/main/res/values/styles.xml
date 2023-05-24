@@ -15,6 +15,10 @@
         <item name="android:backgroundTint">#87837E</item>\
     </style>
 
+    <style name="GiickosSpinner" parent="@android:style/Widget.Holo.DropDownItem.Spinner">
+        <item name="android:textColor">@color/text</item>
+    </style>
+
     <style name="GiickosBackground">
         <item name="android:backgroundTint">#51A354</item>
     </style>

@@ -108,7 +108,7 @@ public class FormSpinner extends Fragment {
             public View getView(int position, View convertView, ViewGroup parent) {
                 View view = super.getView(position, convertView, parent);
                 TextView textView = (TextView) view.findViewById(android.R.id.text1);
-                textView.setTextColor(Color.WHITE); // Set the text color when the spinner is closed
+                textView.setTextColor(getResources().getColor(R.color.text)); // Set the text color when the spinner is closed
                 return view;
             }
         });
