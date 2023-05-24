@@ -36,10 +36,11 @@
     <!-- Background color for floating elements -->
     <color name="float_background">#B2CCA6</color>
     <color name="float_background_shaded">#D8DCC4</color>
+    <color name="float_background_dark">#3B633B</color>
 
     <color name="tab_background_color">#FFD1D1D1</color>
     <color name="black_shadow">#31000000</color>
 
-    <color name="float_background_text">#0B1B2D</color>
-    <color name="float_background_text_2">#7091B6</color>
+    <color name="float_background_text">#292929</color>
+    <color name="float_background_text_2">#454545</color>
 </resources>

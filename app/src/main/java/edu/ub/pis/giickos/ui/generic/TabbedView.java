@@ -54,7 +54,7 @@ public abstract class TabbedView extends Fragment {
 
         // Customize the color of the TabLayout's text
         tabLayout.setTabTextColors(ContextCompat.getColor(requireContext(), R.color.float_background_text_2), ContextCompat.getColor(requireContext(), R.color.float_background_text));
-
+        tabLayout.setSelectedTabIndicatorColor(ContextCompat.getColor(requireContext(), R.color.float_background_dark));
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
