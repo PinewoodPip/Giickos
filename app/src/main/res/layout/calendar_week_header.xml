@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="60dp"
     android:background="#FFFFFF"
-    android:backgroundTint="#62C65E">
+    android:backgroundTint="@color/float_background">
 
     <TextView
         android:id="@+id/label_month"
