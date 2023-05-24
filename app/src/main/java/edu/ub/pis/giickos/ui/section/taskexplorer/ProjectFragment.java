@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -54,8 +55,10 @@ public class ProjectFragment extends GiickosFragment {
 
         if (view != null) {
             LinearLayout list = view.findViewById(R.id.list_tasks);
+            ImageView icon = view.findViewById(R.id.icon_folder);
 
             list.setVisibility(open ? View.VISIBLE : View.GONE);
+            icon.setImageResource(open ? R.drawable.folder_open : R.drawable.folder);
         }
     }
 
