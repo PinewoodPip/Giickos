@@ -382,7 +382,7 @@ public class TaskCreator extends GiickosFragment {
         // Only add delete and complete buttons while editing
         if (!isCreating()) {
             // Save button
-            addClickableField(R.drawable.description_white, getString(R.string.generic_label_save), R.color.positive_action, new View.OnClickListener() {
+            addClickableField(R.drawable.save_icon, getString(R.string.generic_label_save), R.color.positive_action, new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     boolean success = viewModel.updateTask();
