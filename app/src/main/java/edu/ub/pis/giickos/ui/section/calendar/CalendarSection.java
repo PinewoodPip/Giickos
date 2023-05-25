@@ -113,6 +113,8 @@ public class CalendarSection extends Section {
                     public void onGlobalLayout() {
                         timeFrame.getViewTreeObserver().removeOnGlobalLayoutListener(this);
                         timeframeHeight = timeFrame.getHeight();
+
+                        setupTasks();
                     }
                 });
             }
