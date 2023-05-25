@@ -91,7 +91,7 @@
     <string name="taskcreator_label_time_repeat">Repeat Task:</string>
     <string name="taskcreator_label_settime">Tap to set...</string>
     <string name="taskcreator_label_details">Details</string>
-    <string name="taskcreator_label_complete">Mark as complete on %s</string>
+    <string name="taskcreator_label_complete">Complete on %s</string>
     <string name="taskcreator_msg_creation_success">Task created</string>
     <string name="taskcreator_msg_creation_error">Error while creating task</string>
     <string name="taskcreator_msg_update_success">Task updated</string>
