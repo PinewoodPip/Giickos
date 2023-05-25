@@ -14,6 +14,7 @@ import java.util.Set;
 
 import edu.ub.pis.giickos.R;
 import edu.ub.pis.giickos.model.ModelHolder;
+import edu.ub.pis.giickos.model.garden.GardenManager;
 import edu.ub.pis.giickos.model.project.ProjectManager;
 import edu.ub.pis.giickos.model.statistics.Statistic;
 import edu.ub.pis.giickos.model.statistics.StatisticsManager;
@@ -27,8 +28,8 @@ public class ViewModel extends androidx.lifecycle.ViewModel {
         TIMER_TIME(R.string.statistics_timer_time, R.drawable.timer, ProjectManager.STAT_TIMER_TIMESPENT),
 //        TIMER_DETOXTIME(R.string.statistics_timer_detoxtime, R.drawable.timer),
 //
-//        BAMBOO_PLANTED(R.string.statistics_bamboo_planted, R.drawable.bamboo),
-//        BAMBOO_COLLECTED(R.string.statistics_bamboo_collected, R.drawable.bamboo),
+        BAMBOO_WATERED(R.string.statistics_bamboo_planted, R.drawable.bamboo, GardenManager.STAT_TIMES_WATERED),
+        BAMBOO_COLLECTED(R.string.statistics_bamboo_collected, R.drawable.bamboo, GardenManager.STAT_STORED_BAMBOOS),
         ;
 
         public final int nameStringResource;
@@ -46,9 +47,11 @@ public class ViewModel extends androidx.lifecycle.ViewModel {
     private MutableLiveData<LocalDate> endDate;
 
     private StatisticsManager manager;
+    private GardenManager gardenManager;
 
     public ViewModel() {
         this.manager = ModelHolder.INSTANCE.getStatisticsManager();
+        this.gardenManager = ModelHolder.INSTANCE.getGardenManager();
 
         this.startDate = new MutableLiveData<>(LocalDate.now());
         this.endDate = new MutableLiveData<>(LocalDate.now());
@@ -75,6 +78,11 @@ public class ViewModel extends androidx.lifecycle.ViewModel {
                             date.setMinutes((int) (stat.getValue() / 60));
                             date.setSeconds((int) (stat.getValue() % 60));
                             label = new SimpleDateFormat("mm:ss").format(date);
+                            break;
+                        }
+                        case BAMBOO_WATERED:
+                        case BAMBOO_COLLECTED: {
+                            label = String.valueOf((long) stat.getValue());
                             break;
                         }
                         default: {
