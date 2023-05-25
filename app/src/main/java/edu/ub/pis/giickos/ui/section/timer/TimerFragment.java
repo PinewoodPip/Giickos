@@ -1,5 +1,6 @@
 package edu.ub.pis.giickos.ui.section.timer;
 
+import android.content.Context;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 
@@ -30,6 +31,8 @@ import java.util.List;
 
 import edu.ub.pis.giickos.R;
 import edu.ub.pis.giickos.ui.ViewModelHelpers;
+import edu.ub.pis.giickos.ui.activities.main.MainActivity;
+import edu.ub.pis.giickos.ui.utils.notification.Notification;
 
 // Fragment for the timer tab.
 public class TimerFragment extends Fragment {
@@ -47,6 +50,7 @@ public class TimerFragment extends Fragment {
     private MaterialNumberPicker pomodoroTimePicker, breakTimePicker;
 
     private ViewModel viewModel;
+    private TimerFragment timerFragment = this;
 
 
 
@@ -217,6 +221,8 @@ public class TimerFragment extends Fragment {
                 }
                 else {
                     viewModel.startTimer();
+                    Notification.pomodoroNotification( timerFragment.getContext(), "Giickos pomodoro",
+                            "time finished", MainActivity.class, pomodoroTimePicker.getValue());
                 }
             }
         });
