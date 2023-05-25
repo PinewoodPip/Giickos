@@ -1,6 +1,7 @@
 package edu.ub.pis.giickos.model.garden;
 
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.Map;
 
 public class Bamboo
@@ -11,6 +12,10 @@ public class Bamboo
     private Map<String, String> questionsAnswers;
     private int growth;
     private int totalGrowth;
+
+    private LocalDate creationDate = null;
+
+    private LocalDate storedDate = null;
 
     private LocalDate lastWatered;
 
@@ -148,6 +153,44 @@ public class Bamboo
     }
     public void setLastWatered(long lastWatered) {
         this.lastWatered = LocalDate.ofEpochDay(lastWatered);
+    }
+
+    public void setStoredDate()
+    {
+        storedDate = LocalDate.now();
+    }
+
+    public void setCreationDate()
+    {
+        creationDate = LocalDate.now();
+    }
+
+    public void setCreationDate(LocalDate creationDate)
+    {
+        this.creationDate = creationDate;
+    }
+
+    public void setStoredDate(LocalDate storedDate)
+    {
+        this.storedDate = storedDate;
+    }
+
+
+
+
+    public long getStoredDate()
+    {
+        if (storedDate == null)
+            return 0;
+
+        return storedDate.toEpochDay();
+    }
+
+    public long getCreationDate()
+    {
+        if ( creationDate == null)
+            return 0;
+        return creationDate.toEpochDay();
     }
 
 

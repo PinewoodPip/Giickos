@@ -5,6 +5,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -49,6 +50,8 @@ public class GardenDAO extends CachedGardenDAO {
         entry.put("growth", bamboo.getGrowth());
         entry.put("totalGrowth", bamboo.getTotalGrowth());
         entry.put("lastTimeWatered", bamboo.getLastTimeWatered());
+        entry.put("creationDate", bamboo.getCreationDate());
+        entry.put("storedDate", bamboo.getStoredDate());
 
         bamboosDocument.set(entry);
     }
@@ -238,6 +241,18 @@ public class GardenDAO extends CachedGardenDAO {
 
         Bamboo bamboo = new Bamboo((int) slot, title, answers, (int) growth, (int) totalGrowth, bambooUniqueID);
         bamboo.setLastWatered(lastWatered);
+
+        if (bambooData.getData().containsKey("creationDate") && bambooData.getData().containsKey("storedDate"))
+        {
+            long creationDate = (long) bambooData.getData().get("creationDate");
+            long storedDate = (long) bambooData.getData().get("lastTimeWatered");
+
+            // A 0 indicates no date, by default is 0
+            if (creationDate != 0)
+                bamboo.setCreationDate(LocalDate.ofEpochDay(creationDate));
+            if (storedDate != 0)
+                bamboo.setStoredDate(LocalDate.ofEpochDay(storedDate));
+        }
 
         return bamboo;
     }

@@ -5,6 +5,7 @@ import android.util.Log;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -178,6 +179,7 @@ public class ViewModel  extends androidx.lifecycle.ViewModel
         //Retrieves the data from the form that the user has inputed from the menu  to generate a bamboo
         Bamboo bamboo = new Bamboo(slot, bambooForm.title, bambooForm.questionsAnswers,
                 0, bambooForm.totalGrowth , UUID.randomUUID().toString());
+        bamboo.setCreationDate(LocalDate.now());
 
         //Gets the current bamboos that are planted, and add the new one
 
@@ -275,6 +277,8 @@ public class ViewModel  extends androidx.lifecycle.ViewModel
         //Tries to harvest the bamboo, if it is not ready, it returns false
         if(!currentBamboo.canHarvest())
             return false;
+
+        currentBamboo.setStoredDate();
 
         //Otherwise, it adds the bamboo to the harvested bamboos and removes it from the planted bamboos
         if(gardenManager.saveBambooToStorage(currentBamboo))

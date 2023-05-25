@@ -23,6 +23,7 @@ public class Giickos {
             this.gardenManager = factory.createGardenManager(this.userManager);
             this.statisticsManager = factory.createStatisticsManager();
             this.statisticsManager.registerProvider(projectManager);
+            this.statisticsManager.registerProvider(gardenManager);
         }
         catch (Exception e) {
             throw new RuntimeException("Initialization failed");

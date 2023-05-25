@@ -489,7 +489,22 @@ public class GardenFragment extends GiickosFragment {
                 Bamboo bamboo = viewModel.getSlotBamboo(viewModel.getSelectedSlot());
                 if(!bamboo.canHarvest())
                 {
-                    Toast.makeText(getActivity(), "The bamboo is not ready to be harvested!", Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getActivity(), "The bamboo is not ready to be harvested!", Toast.LENGTH_LONG).show();
+                    String message = "The bamboo is not ready to be harvested!";
+                    Alert objectiveAlert = new Alert(getActivity(), "Oops!", message);
+                    objectiveAlert.setPositiveButton("Got it!", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    });
+                    objectiveAlert.setNegativeButton("", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    });
+                    objectiveAlert.show();
                     return;
                 }
 
@@ -552,7 +567,20 @@ public class GardenFragment extends GiickosFragment {
                 if(!bamboo.canBeWatered())
                 {
                     String message = "Already watered! You can only water once a day! Come back tomorrow!";
-                    Toast.makeText(getActivity(), message, Toast.LENGTH_LONG).show();
+                    Alert objectiveAlert = new Alert(getActivity(), "Oops!", message);
+                    objectiveAlert.setPositiveButton("Got it!", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    });
+                    objectiveAlert.setNegativeButton("", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    });
+                    objectiveAlert.show();
                     return;
                 }
 
