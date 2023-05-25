@@ -40,8 +40,7 @@ public class ViewModel extends androidx.lifecycle.ViewModel{
     public MutableLiveData<String> timer,textStartPauseButton, textTimerMode;
     public MutableLiveData<Long> textPomodoroPicker, textBreakPicker;
     public MutableLiveData<Integer> oldTaskIndex, newTaskIndex;
-    public MutableLiveData<Boolean> visibilityPomodoroTimePicker, visibilityBreakTimePicker, visibilityPomodoroTextView,
-            visibilityBreakTextView, visibilityResetButton, visibilityStartPauseButton,
+    public MutableLiveData<Boolean> visibilityResetButton, visibilityStartPauseButton,
             visibilitySelectTaskSpinner, visibilityDetoxCheckBox, isTaskSelected;
 
     private ProjectManager model;
@@ -61,14 +60,10 @@ public class ViewModel extends androidx.lifecycle.ViewModel{
         oldTaskIndex = new MutableLiveData<>();
         newTaskIndex = new MutableLiveData<>();
 
-        visibilityPomodoroTextView = new MutableLiveData<Boolean>(true);
-        visibilityBreakTextView = new MutableLiveData<>(true);
         visibilityResetButton = new MutableLiveData<>(true);
         visibilityStartPauseButton = new MutableLiveData<>(true);
         visibilitySelectTaskSpinner = new MutableLiveData<>(true);
         visibilityDetoxCheckBox = new MutableLiveData<>(true);
-        visibilityBreakTimePicker = new MutableLiveData<>(true);
-        visibilityPomodoroTimePicker = new MutableLiveData<>(true);
         isTaskSelected = new MutableLiveData<>(false);
         editMode = new MutableLiveData<>(false);
 
@@ -92,17 +87,11 @@ public class ViewModel extends androidx.lifecycle.ViewModel{
     public LiveData<String> getTextTimerMode() {return textTimerMode;}
     public LiveData<String> getTextStartPauseButton() {return textStartPauseButton;}
 
-    public LiveData<Long> getTextPomodoroPicker() {return textPomodoroPicker;}
-    public LiveData<Long> getTextBreakPicker() {return textBreakPicker;}
-
-    public LiveData<Boolean> getVisibilityPomodoroTextView() {return visibilityPomodoroTextView;}
-    public LiveData<Boolean> getVisibilityBreakTextView() {return visibilityBreakTextView;}
     public LiveData<Boolean> getVisibilityResetButton() {return visibilityResetButton;}
     public LiveData<Boolean> getVisibilityStartPauseButton() {return visibilityStartPauseButton;}
     public LiveData<Boolean> getVisibilitySelectTaskSpinner() {return visibilitySelectTaskSpinner;}
     public LiveData<Boolean> getVisibilityDetoxCheckBox() {return visibilityDetoxCheckBox;}
-    public LiveData<Boolean> getVisibilityPomodoroTimePicker() {return visibilityPomodoroTimePicker;}
-    public LiveData<Boolean> getVisibilityBreakTimePicker() {return visibilityBreakTimePicker;}
+    public LiveData<Boolean> getIsTaskSelected() {return isTaskSelected;}
 
     public LiveData<Boolean> getEditMode() {return editMode;}
 
@@ -214,26 +203,17 @@ public class ViewModel extends androidx.lifecycle.ViewModel{
 
     public void updateWatchInterface() {
         if (istimerRunning) {
-
-            visibilityPomodoroTextView.setValue(false);
-            visibilityBreakTextView.setValue(false);
             visibilityResetButton.setValue(false);
             visibilitySelectTaskSpinner.setValue(false);
             visibilityDetoxCheckBox.setValue(false);
             visibilityResetButton.setValue(false);
-            visibilityPomodoroTimePicker.setValue(false);
-            visibilityBreakTimePicker.setValue(false);
 
             textStartPauseButton.setValue("Pause");
         }
         else {
-            visibilityPomodoroTextView.setValue(true);
-            visibilityBreakTextView.setValue(true);
             visibilitySelectTaskSpinner.setValue(true);
             visibilityDetoxCheckBox.setValue(true);
             visibilityResetButton.setValue(true);
-            visibilityPomodoroTimePicker.setValue(true);
-            visibilityBreakTimePicker.setValue(true);
             textStartPauseButton.setValue("Start");
 
             if (timeLeftInMillis < 1000) {
@@ -288,9 +268,12 @@ public class ViewModel extends androidx.lifecycle.ViewModel{
                 long millis = task.durationInMinutes * 60000L;
                 setTime(millis);
                 isTaskSelected.setValue(true);
+            }else{
+                setTime(0);
             }
         }else{
             isTaskSelected.setValue(false);
+
         }
     }
 

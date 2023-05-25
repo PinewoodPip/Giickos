@@ -80,11 +80,15 @@ public class TimerFragment extends Fragment {
         List<ViewModelHelpers.TaskData> tasks = viewModel.getTasks().getValue();
         List<Object> taskObjects = new ArrayList<>();
         taskObjects.add(getString(R.string.generic_label_none));
+        taskObjects.addAll(tasks);
+        /*
         for (ViewModelHelpers.TaskData tasca: tasks) {
             if (tasca.durationInMinutes > 0){
                 taskObjects.add(tasca);
             }
         }
+
+         */
 
         ArrayAdapter<Object> adapter = new ArrayAdapter<Object>(getContext(), android.R.layout.simple_spinner_item, taskObjects);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -110,7 +114,8 @@ public class TimerFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 viewModel.newTaskIndex.setValue(i);
-                if (i != 0 && viewModel.newTaskIndex.getValue() != viewModel.oldTaskIndex.getValue()) {
+
+                if (i != 0 && viewModel.newTaskIndex.getValue() != viewModel.oldTaskIndex.getValue() ) {
                     ViewModelHelpers.TaskData task = tasks.get(i-1);
                     viewModel.selectTask(task);
                     viewModel.oldTaskIndex.setValue(viewModel.newTaskIndex.getValue());
@@ -325,40 +330,15 @@ public class TimerFragment extends Fragment {
 
 
 
-        final Observer<Boolean> observerVisibilityPomodoroTextView = new Observer<Boolean>() {
+        final Observer<Boolean> observerIsTaskSelected = new Observer<Boolean>() {
             @Override
-            public void onChanged(Boolean visibilityPomodoroTextViewr) {
-                pomodoroTextView.setVisibility(visibilityPomodoroTextViewr && !viewModel.isTaskSelected.getValue()? View.VISIBLE : View.INVISIBLE);
+            public void onChanged(Boolean visibilityIsTaskSelected) {
+                pomodoroTextView.setVisibility(!visibilityIsTaskSelected? View.VISIBLE : View.INVISIBLE);
+                pomodoroTimePicker.setVisibility(!visibilityIsTaskSelected? View.VISIBLE : View.INVISIBLE);
             }
         };
-        viewModel.getVisibilityPomodoroTextView().observe(this.getViewLifecycleOwner(), observerVisibilityPomodoroTextView);
+        viewModel.getIsTaskSelected().observe(this.getViewLifecycleOwner(), observerIsTaskSelected);
 
-        final Observer<Boolean> observerVisibilityBreakTextView = new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean visibilityBreakTextView) {
-                breakTextView.setVisibility(visibilityBreakTextView? View.VISIBLE : View.INVISIBLE);
-            }
-        };
-        viewModel.getVisibilityBreakTextView().observe(this.getViewLifecycleOwner(), observerVisibilityBreakTextView);
-
-
-        final Observer<Boolean> observerVisibilityPomodoroTimePicker = new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean visibilityPomodoroTimePicker) {
-
-                    pomodoroTimePicker.setVisibility(visibilityPomodoroTimePicker && !viewModel.isTaskSelected.getValue()? View.VISIBLE : View.INVISIBLE);
-
-            }
-        };
-        viewModel.getVisibilityPomodoroTimePicker().observe(this.getViewLifecycleOwner(), observerVisibilityPomodoroTimePicker);
-
-        final Observer<Boolean> observerVisibilityBreakTimePicker = new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean visibilityBreakTimePicker) {
-                breakTimePicker.setVisibility(visibilityBreakTimePicker? View.VISIBLE : View.INVISIBLE);
-            }
-        };
-        viewModel.getVisibilityBreakTimePicker().observe(this.getViewLifecycleOwner(), observerVisibilityBreakTimePicker);
 
 
     }
