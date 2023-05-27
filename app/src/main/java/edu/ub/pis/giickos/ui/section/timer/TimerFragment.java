@@ -1,6 +1,8 @@
 package edu.ub.pis.giickos.ui.section.timer;
 
+import android.app.NotificationManager;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 
@@ -9,6 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +35,7 @@ import java.util.List;
 import edu.ub.pis.giickos.R;
 import edu.ub.pis.giickos.ui.ViewModelHelpers;
 import edu.ub.pis.giickos.ui.activities.main.MainActivity;
+import edu.ub.pis.giickos.ui.section.timer.detox.ViewModelDetox;
 import edu.ub.pis.giickos.ui.utils.notification.Notification;
 
 // Fragment for the timer tab.
@@ -50,6 +54,10 @@ public class TimerFragment extends Fragment {
     private MaterialNumberPicker pomodoroTimePicker, breakTimePicker;
 
     private ViewModel viewModel;
+
+    private ViewModelDetox viewModelDetox;
+
+    private NotificationManager notificationManager;
     private TimerFragment timerFragment = this;
 
 
@@ -70,6 +78,7 @@ public class TimerFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         viewModel = new ViewModelProvider(getActivity()).get(ViewModel.class);
+        viewModelDetox = new ViewModelProvider(getActivity()).get(ViewModelDetox.class);
     }
 
     private void setupTasksSpinner() {
@@ -165,6 +174,9 @@ public class TimerFragment extends Fragment {
         pomodoroTextView = view.findViewById(R.id.textView_pomodoro);
         breakTextView = view.findViewById(R.id.textView_break);
 
+        notificationManager = (NotificationManager) getContext().getSystemService(Context.NOTIFICATION_SERVICE);
+        viewModelDetox.notificationManager = notificationManager;
+
         // Toggle edit mode when the timer is clicked.
         timerFrame.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -242,9 +254,20 @@ public class TimerFragment extends Fragment {
         detoxCheckbox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO;
-                System.out.println("detoxCheckbox clicked");
 
+                if (!notificationManager.isNotificationPolicyAccessGranted()) {
+                    // Ask the user to grant permission to use the Notification Policy
+                    Intent intent = new Intent(Settings.ACTION_NOTIFICATION_POLICY_ACCESS_SETTINGS);
+                    startActivity(intent);
+                }else{
+                    if (detoxCheckbox.isChecked()){
+                        viewModelDetox.isDetoxCheckBoxCheked.setValue(true);
+                    }else {
+                        viewModelDetox.isDetoxCheckBoxCheked.setValue(false);
+                    }
+                    viewModelDetox.controlNotification();
+
+                }
             }
         });
 

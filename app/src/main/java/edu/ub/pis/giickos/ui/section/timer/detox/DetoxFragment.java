@@ -38,8 +38,6 @@ public class DetoxFragment extends GiickosFragment {
     private NotificationManager notificationManager;
 
 
-
-
     public DetoxFragment() {
         // Required empty public constructor
     }
@@ -97,7 +95,6 @@ public class DetoxFragment extends GiickosFragment {
                 } else {
                     System.out.println("emergency calls switched: " + b);
                     viewModelDetox.emergencyCallsSwitchIsChecked.setValue(b);
-                    viewModelDetox.controlNotification();
                 }
 
             }});
@@ -117,7 +114,6 @@ public class DetoxFragment extends GiickosFragment {
                 }else{
                     viewModelDetox.noNotificationSwitchIsChecked.setValue(b);
                     System.out.println("no notification switched: " + b);
-                    viewModelDetox.controlNotification();
                 }
 
             }});

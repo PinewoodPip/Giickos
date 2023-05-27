@@ -127,8 +127,6 @@ public class ViewModel extends androidx.lifecycle.ViewModel{
                 }
 
                 syncTask();
-
-                //TODO: notification
             }
         }.start();
 
