@@ -226,6 +226,9 @@
     <!-- Strings related to notification -->
     <string name="channel_name">Giickos</string>
     <string name="channel_description">Giickos description</string>
+    <string name="remove">REMOVE</string>
+    <string name="add">Add</string>
+    <string name="leave">LEAVE</string>
 
 
 </resources>

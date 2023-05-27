@@ -1,7 +1,6 @@
 package edu.ub.pis.giickos.model.garden;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.Map;
 
 public class Bamboo
@@ -43,10 +42,6 @@ public class Bamboo
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public Map<String, String> getQuestionsAnswers() {
-        return questionsAnswers;
     }
 
     public void setQuestionsAnswers(Map<String, String> questionsAnswers) {

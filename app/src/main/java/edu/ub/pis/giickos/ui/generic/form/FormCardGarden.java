@@ -23,12 +23,10 @@ import edu.ub.pis.giickos.R;
  */
 public class FormCardGarden extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_QUESTION = "questionText";
     private static final String ARG_ANSWER = "answerText";
 
-    // TODO: Rename and change types of parameters
     private EditText answer;
     private EditTextListener answerListener;
     private String questionText;
@@ -37,7 +35,6 @@ public class FormCardGarden extends Fragment {
     public FormCardGarden() {
         // Required empty public constructor
     }
-    // TODO: Rename and change types and number of parameters
 
     public static FormCardGarden newInstance(String questionText, String description) {
         FormCardGarden fragment = new FormCardGarden();

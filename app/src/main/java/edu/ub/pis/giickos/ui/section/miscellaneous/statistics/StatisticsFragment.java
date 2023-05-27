@@ -23,7 +23,7 @@ import edu.ub.pis.giickos.R;
 import edu.ub.pis.giickos.Utils;
 import edu.ub.pis.giickos.ui.generic.form.FormStatistics;
 
-// Displays the user's statistics. TODO
+// Displays the user's statistics.
 public class StatisticsFragment extends GiickosFragment {
 
     private ViewModel viewModel;

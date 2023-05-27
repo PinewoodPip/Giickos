@@ -14,12 +14,14 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import edu.ub.pis.giickos.GiickosFragment;
 import edu.ub.pis.giickos.R;
 import edu.ub.pis.giickos.model.team.Team;
+import edu.ub.pis.giickos.ui.generic.form.FancyFormCard;
 import edu.ub.pis.giickos.ui.generic.form.FormCard;
 import edu.ub.pis.giickos.ui.section.miscellaneous.team.ViewModel;
 
@@ -56,28 +58,27 @@ public class TeamsFragment extends GiickosFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        //TODO, convert back, accept, decline buttons as fragment
 
         closeWindows(view); //Close all windows
 
         //Invitations menu
-        ImageView teamInvitations = view.findViewById(R.id.teams_invitation_button);
-        ImageView teamInvitationsClose = view.findViewById(R.id.exit_invitation_menu);
+        Button teamInvitations = view.findViewById(R.id.teams_invitation_button);
+        Button teamInvitationsClose = view.findViewById(R.id.exit_invitation_menu);
         View blockerMenuInvitation = view.findViewById(R.id.team_blocker_invitation_menu);
 
         //Team Create menu
-        ImageView addTeam = view.findViewById(R.id.teams_add_button);
-        ImageView addTeamClose = view.findViewById(R.id.exit_create_menu);
-        ImageView addTeamCreate = view.findViewById(R.id.create_team);
+        Button addTeam = view.findViewById(R.id.teams_add_button);
+        Button addTeamClose = view.findViewById(R.id.exit_create_menu);
+        Button addTeamCreate = view.findViewById(R.id.create_team);
         View blockerMenuCreate = view.findViewById(R.id.team_blocker_create_menu);
 
         TextView invitationsCount = view.findViewById(R.id.teams_invitations_alert_count);
 
         //Team menu
-        ImageView teamAddMembers = view.findViewById(R.id.team_add_member);
-        ImageView teamRemoveMembers = view.findViewById(R.id.team_remove_member);
-        ImageView teamLeave = view.findViewById(R.id.team_leave_team);
-        ImageView teamBack = view.findViewById(R.id.exit_team_menu);
+        Button teamAddMembers = view.findViewById(R.id.team_add_member);
+        Button teamRemoveMembers = view.findViewById(R.id.team_remove_member);
+        Button teamLeave = view.findViewById(R.id.team_leave_team);
+        Button teamBack = view.findViewById(R.id.exit_team_menu);
         View blockerMenuTeam = view.findViewById(R.id.team_blocker_team_menu);
 
         TextView teamName = view.findViewById(R.id.team_menu_name);
@@ -177,7 +178,7 @@ public class TeamsFragment extends GiickosFragment {
             }
         });
 
-        FormCard field = addField(R.drawable.image_white, "Team Icon: ");
+        FancyFormCard field = addField(R.drawable.image_white, "Team Icon: ");
         field.setClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -281,15 +282,15 @@ public class TeamsFragment extends GiickosFragment {
         view.setVisibility(View.VISIBLE);
     }
     private void addTextField(int iconID, String label, String inputLabel, int inputType, @Nullable TextWatcher listener) {
-        FormCard field = addField(iconID, label);
+        FancyFormCard field = addField(iconID, label);
 
         field.addTextField(inputType, inputLabel, listener);
     }
-    private FormCard addField(int iconID, String label) {
+    private FancyFormCard addField(int iconID, String label) {
         return addField(iconID, label, -1);
     }
-    private FormCard addField(int iconID, String label, int backgroundColor) {
-        FormCard field = FormCard.newInstance(iconID, label, backgroundColor);
+    private FancyFormCard addField(int iconID, String label, int backgroundColor) {
+        FancyFormCard field = FancyFormCard.newInstance(iconID, label, backgroundColor);
 
         addChildFragment(field, R.id.create_team_list, true);
 

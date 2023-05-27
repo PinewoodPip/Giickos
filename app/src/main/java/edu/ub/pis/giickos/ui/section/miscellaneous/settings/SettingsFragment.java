@@ -25,7 +25,7 @@ import edu.ub.pis.giickos.ui.generic.Switch;
 import edu.ub.pis.giickos.ui.generic.form.FancyFormCard;
 import edu.ub.pis.giickos.ui.generic.form.TextField;
 
-// Displays the settings of the app. TODO
+// Displays the settings of the app.
 public class SettingsFragment extends GiickosFragment {
 
     private ViewModel viewModel;

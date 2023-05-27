@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import edu.ub.pis.giickos.R;
+import edu.ub.pis.giickos.model.garden.Bamboo;
 import edu.ub.pis.giickos.model.team.Invitation;
 import edu.ub.pis.giickos.model.team.Team;
 
@@ -46,8 +48,8 @@ public class TeamInvitationListAdapter extends RecyclerView.Adapter<TeamInvitati
                //TODO do something like ampliate the invitation or not
             }
         });
-        ImageView accept = holder.itemView.findViewById(R.id.team_accept_invitation);
-        ImageView decline = holder.itemView.findViewById(R.id.team_decline_invitation);
+        Button accept = holder.itemView.findViewById(R.id.team_accept_invitation);
+        Button decline = holder.itemView.findViewById(R.id.team_decline_invitation);
 
         accept.setOnClickListener(new View.OnClickListener() {
             @Override

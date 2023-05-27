@@ -62,4 +62,12 @@
         <item name="android:backgroundTintMode">multiply</item>
         <item name="android:scaleType">fitXY</item>
     </style>
+
+    <style name="e">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_alignParentTop">false</item>
+        <item name="android:layout_alignParentEnd">false</item>
+        <item name="android:visibility">invisible</item>
+    </style>
 </resources>

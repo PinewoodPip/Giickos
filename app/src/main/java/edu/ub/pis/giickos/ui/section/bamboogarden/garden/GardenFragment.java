@@ -45,12 +45,10 @@ import edu.ub.pis.giickos.ui.section.bamboogarden.ViewModel;
  */
 public class GardenFragment extends GiickosFragment {
 
-    // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
@@ -68,7 +66,6 @@ public class GardenFragment extends GiickosFragment {
      * @param param2 Parameter 2.
      * @return A new instance of fragment GardenFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static GardenFragment newInstance(String param1, String param2) {
         GardenFragment fragment = new GardenFragment();
         Bundle args = new Bundle();
@@ -296,7 +293,6 @@ public class GardenFragment extends GiickosFragment {
                 closeWindows(view);
                 if(viewModel.getFreeSlot() == -1)
                 {
-                    //TODO warning missatges -> add to values/strings -> getResouces().getString(R.string.warning_message)....
                     Alert alert = new Alert(getActivity(), "Not enough space!", "Please remove a bamboo or collect a bamboo to plant a new one.");
                     alert.setPositiveButton("Got it!", new DialogInterface.OnClickListener() {
                         @Override
@@ -391,9 +387,9 @@ public class GardenFragment extends GiickosFragment {
 
         ImageView block = view.findViewById(R.id.garden_blocker_info);
         Button close = view.findViewById(R.id.garden_back_info_menu);
-        ImageView harvest = view.findViewById(R.id.garden_harvest_action);
-        ImageView remove = view.findViewById(R.id.garden_remove_action);
-        ImageView water = view.findViewById(R.id.garden_water_action);
+        Button harvest = view.findViewById(R.id.garden_harvest_action);
+        Button remove = view.findViewById(R.id.garden_remove_action);
+        Button water = view.findViewById(R.id.garden_water_action);
 
         FancyFormCard[] cards = new FancyFormCard[2];
 

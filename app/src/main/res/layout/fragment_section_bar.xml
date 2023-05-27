@@ -10,7 +10,6 @@
     android:background="#FFFFFF"
     tools:context=".ui.activities.main.sectionbar.SectionBar">
 
-    <!-- TODO: Update blank fragment layout -->
     <LinearLayout
         android:id="@+id/list_buttons"
         android:layout_width="match_parent"

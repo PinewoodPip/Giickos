@@ -7,7 +7,6 @@
     android:background="#61ABB5"
     tools:context=".ui.section.bamboogarden.garden.GardenFragment">
 
-    <!-- TODO: Update blank fragment layout -->
 
     <RelativeLayout
         android:id="@+id/bottom_garden"
@@ -125,7 +124,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="center|top"
         android:visibility="invisible"
-        tools:visibility="gone">
+        tools:visibility="visible">
 
         <ImageView
             android:id="@+id/garden_blocker_info"
@@ -175,24 +174,27 @@
                             android:backgroundTintMode="add"
                             android:scaleType="fitXY" />
 
-                        <ImageView
+                        <androidx.appcompat.widget.AppCompatButton
                             android:id="@+id/garden_remove_action"
                             android:layout_width="55dp"
                             android:layout_height="match_parent"
                             android:layout_alignParentStart="true"
                             android:scaleType="fitXY"
+                            android:background="@drawable/custom_icon_animated_shovel"
                             android:src="@drawable/shovel_1" />
 
-                        <ImageView
+                        <androidx.appcompat.widget.AppCompatButton
                             android:id="@+id/garden_water_action"
                             android:layout_width="55dp"
+                            android:background="@drawable/custom_icon_animated_water"
                             android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
                             android:scaleType="fitXY"
                             android:src="@drawable/watering_can" />
 
-                        <ImageView
+                        <androidx.appcompat.widget.AppCompatButton
                             android:id="@+id/garden_harvest_action"
+                            android:background="@drawable/custom_icon_animated_gloves"
                             android:layout_width="55dp"
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
