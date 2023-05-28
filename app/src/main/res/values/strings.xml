@@ -149,6 +149,10 @@
     <string name="timer_name">Timer &amp; Detox</string>
     <string name="timer_help">Here you can set a timer to track the amount of time spent working on a task. You may also configure it to work as a pomodoro timer, and enable various \'detox\' options to reduce distractions from your phone.</string>
     <string name="timer_tab_detox">Detox</string>
+    <string name="timer_tab_detox_subtitle">Disable distractions from your phone to focus on your tasks\nThese options will apply while using the detox option in the timer.</string>
+    <string name="timer_option_blockcalls">Block calls</string>
+    <string name="timer_option_blocknotifications">Block notifications</string>
+    <string name="timer_option_blockapps">Block other apps</string>
     <string name="timer_tab_timer">Pomodoro</string>
     <string name="select_task_prompt">Select a task</string>
 
@@ -173,6 +177,7 @@
     </string>
     <string name="bamboo_garden_tab">Garden</string>
     <string name="bamboo_storage_tab">Storage</string>
+    <string name="bamboo_form_title">Title...</string>
     <string name="bamboo_question_1">Objectives, new habits, remove bad habits. (No more than 3 tasks; they must be measurable)</string>
     <string name="bamboo_question_2">Steps to achieve your objectives? (Be specific)</string>
     <string name="bamboo_question_3">Obstacles that you will face and how will you react?</string>
@@ -229,6 +234,5 @@
     <string name="remove">REMOVE</string>
     <string name="add">Add</string>
     <string name="leave">LEAVE</string>
-
 
 </resources>

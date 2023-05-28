@@ -1,42 +1,29 @@
 package edu.ub.pis.giickos.ui.section.timer.detox;
 
 
-import android.app.AlertDialog;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
-
-
 import android.provider.Settings;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
-import android.widget.Switch;
+import android.widget.LinearLayout;
 
+import androidx.lifecycle.ViewModelProvider;
 
 import edu.ub.pis.giickos.GiickosFragment;
 import edu.ub.pis.giickos.R;
-
-import edu.ub.pis.giickos.ui.activities.main.MainActivity;
 import edu.ub.pis.giickos.ui.generic.form.FancyFormCard;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link DetoxFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+// Fragment for the detox menu.
 public class DetoxFragment extends GiickosFragment {
-
-
 
     private ViewModelDetox viewModelDetox;
     private NotificationManager notificationManager;
-
 
     public DetoxFragment() {
         // Required empty public constructor
@@ -54,7 +41,6 @@ public class DetoxFragment extends GiickosFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         viewModelDetox = new ViewModelProvider(getActivity()).get(ViewModelDetox.class);
-
     }
 
     public void onViewCreated(View view, Bundle bundle){
@@ -64,16 +50,16 @@ public class DetoxFragment extends GiickosFragment {
 
         FancyFormCard[] cards = new FancyFormCard[3];
 
-        cards[0] = addCardWithTint(R.drawable.calls_block, "Incoming calls",
+        cards[0] = addCardWithTint(R.drawable.calls_block, getString(R.string.timer_option_blockcalls),
                 R.color.detox_1, // left frame
                 R.color.detox_2, // right frame
                 R.color.detox_text); // text color
 
-        cards[1] = addCardWithTint(R.drawable.notification_block, "Notifications ",
+        cards[1] = addCardWithTint(R.drawable.notification_block, getString(R.string.timer_option_blocknotifications),
                 R.color.detox_1, // left frame
                 R.color.detox_2, // right frame
                 R.color.detox_text); // text color
-        cards[2] = addCardWithTint(R.drawable.bloqued, "Blocked apps ",
+        cards[2] = addCardWithTint(R.drawable.bloqued, getString(R.string.timer_option_blockapps),
                 R.color.detox_1, // left frame
                 R.color.detox_2, // right frame
                 R.color.detox_text); // text color
@@ -92,8 +78,9 @@ public class DetoxFragment extends GiickosFragment {
                     // The checked should be false, otherwise, just touch again and works flawlessly
                     compoundButton.setChecked(false);
 
-                } else {
-                    System.out.println("emergency calls switched: " + b);
+                }
+                else {
+                    Log.d("UI", "emergency calls switched: " + b);
                     viewModelDetox.emergencyCallsSwitchIsChecked.setValue(b);
                 }
 
@@ -111,96 +98,25 @@ public class DetoxFragment extends GiickosFragment {
                     startActivity(intent);
                     // Same logic as the previous one
                     compoundButton.setChecked(false);
-                }else{
-                    viewModelDetox.noNotificationSwitchIsChecked.setValue(b);
-                    System.out.println("no notification switched: " + b);
                 }
-
+                else {
+                    Log.d("UI", "No notification switched: " + b);
+                    viewModelDetox.noNotificationSwitchIsChecked.setValue(b);
+                }
             }});
 
         // Adds a switch field in order to block or no all the apps.
         cards[2].addSwitchField(false, new CompoundButton.OnCheckedChangeListener() {
-        @Override
-        public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-            if (compoundButton.isChecked()) {
-                System.out.println("all apps locked switched on");
-
-            } else {
-                System.out.println("all apps locked switched off");
-
-            }
-        }
-    });
-
-
-
-
-        /*
-        emergencyCallsSwitch = view.findViewById(R.id.switch_emergency_calls);
-        noNotificationSwitch = view.findViewById(R.id.switch_no_notification);
-        allAppsLockedSwitch = view.findViewById(R.id.switch_all_apps_locked);
-
-
-
-        /*
-        emergencyCallsSwitch.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (compoundButton.isChecked()) {
+                    Log.d("UI", "All apps locked switched on");
 
-                if (!notificationManager.isNotificationPolicyAccessGranted()) {
-                    // Ask the user to grant permission to use the Notification Policy
-                    Intent intent = new Intent(Settings.ACTION_NOTIFICATION_POLICY_ACCESS_SETTINGS);
-                    startActivity(intent);
-
-                }else{
-                    if(emergencyCallsSwitch.isChecked()){
-                        System.out.println("emergency calls switched on");
-                        viewModelDetox.emergencyCallsSwitchIsChecked.setValue(true);
-                    }else{
-                        System.out.println("emergency calls switched off");
-                        viewModelDetox.emergencyCallsSwitchIsChecked.setValue(false);
-                    }
-                    viewModelDetox.controlNotification();
+                } else {
+                    Log.d("UI", "All apps locked switched off");
                 }
             }
         });
-
-        noNotificationSwitch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                if (!notificationManager.isNotificationPolicyAccessGranted()) {
-                    // Ask the user to grant permission to use the Notification Policy
-                    Intent intent = new Intent(Settings.ACTION_NOTIFICATION_POLICY_ACCESS_SETTINGS);
-                    startActivity(intent);
-                }else{
-                    if(noNotificationSwitch.isChecked()){
-                        System.out.println("no notification switched on");
-                        viewModelDetox.noNotificationSwitchIsChecked.setValue(true);
-                    }else{
-                        System.out.println("no notification switched off");
-                        viewModelDetox.noNotificationSwitchIsChecked.setValue(false);
-                    }
-                    viewModelDetox.controlNotification();
-                }
-
-            }
-        });
-
-        allAppsLockedSwitch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(allAppsLockedSwitch.isChecked()){
-                    System.out.println("all apps locked switched on");
-
-                }else{
-                    System.out.println("all apps locked switched off");
-
-                }
-            }
-        });
-        */
-
     }
 
     @Override
@@ -209,13 +125,12 @@ public class DetoxFragment extends GiickosFragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_section_timer_detox, container, false);
     }
+
     private FancyFormCard addCardWithTint(int iconID, String label, int colorLeft, int colorRight, int colorText) {
         FancyFormCard card = FancyFormCard.newInstance(iconID, label, colorLeft, colorRight, colorText);
+        card.setListDirection(LinearLayout.LAYOUT_DIRECTION_RTL);
         addChildFragment(card, R.id.detox_settings_list, true);
 
         return card;
     }
-
-
-
 }

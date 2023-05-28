@@ -354,7 +354,7 @@ public class GardenFragment extends GiickosFragment {
     }
     private TextField addTextField(int iconID, String label, int[] colors, String inputLabel, int inputType, @Nullable TextWatcher listener, int color) {
         FancyFormCard field = addField(iconID, label, colors);
-        return field.addTextFieldColor(inputType, inputLabel, listener, "title...", color, true);
+        return field.addTextFieldColor(inputType, inputLabel, listener, getString(R.string.bamboo_form_title), color, true);
     }
     private FancyFormCard addField(int iconID, String label, int[] colors) {
         FancyFormCard field = FancyFormCard.newInstance(iconID, label,colors[0] ,colors[1], colors[2]);
