@@ -41,7 +41,7 @@ public class ViewModel extends androidx.lifecycle.ViewModel{
     public MutableLiveData<Long> textPomodoroPicker, textBreakPicker;
     public MutableLiveData<Integer> oldTaskIndex, newTaskIndex;
     public MutableLiveData<Boolean> visibilityResetButton, visibilityStartPauseButton,
-            visibilitySelectTaskSpinner, visibilityDetoxCheckBox, isTaskSelected;
+            visibilitySelectTaskSpinner, visibilityDetoxCheckBox;
 
     private ProjectManager model;
 
@@ -64,7 +64,6 @@ public class ViewModel extends androidx.lifecycle.ViewModel{
         visibilityStartPauseButton = new MutableLiveData<>(true);
         visibilitySelectTaskSpinner = new MutableLiveData<>(true);
         visibilityDetoxCheckBox = new MutableLiveData<>(true);
-        isTaskSelected = new MutableLiveData<>(false);
         editMode = new MutableLiveData<>(false);
 
         this.model = ModelHolder.INSTANCE.getProjectManager();
@@ -91,7 +90,6 @@ public class ViewModel extends androidx.lifecycle.ViewModel{
     public LiveData<Boolean> getVisibilityStartPauseButton() {return visibilityStartPauseButton;}
     public LiveData<Boolean> getVisibilitySelectTaskSpinner() {return visibilitySelectTaskSpinner;}
     public LiveData<Boolean> getVisibilityDetoxCheckBox() {return visibilityDetoxCheckBox;}
-    public LiveData<Boolean> getIsTaskSelected() {return isTaskSelected;}
 
     public LiveData<Boolean> getEditMode() {return editMode;}
 
@@ -258,21 +256,19 @@ public class ViewModel extends androidx.lifecycle.ViewModel{
 
     public void selectTask(@Nullable ViewModelHelpers.TaskData task) {
         syncTask();
-        selectedTask.setValue(task);
 
         if (task != null) {
             // Set timer duration from task duration
             if (task.durationInMinutes > 0) {
                 long millis = task.durationInMinutes * 60000L;
                 setTime(millis);
-                isTaskSelected.setValue(true);
-            }else{
-                setTime(0);
             }
-        }else{
-            isTaskSelected.setValue(false);
-
+            else {
+                setTime(60000L);
+            }
         }
+
+        selectedTask.setValue(task);
     }
 
     public void toggleEditMode() {

@@ -88,16 +88,8 @@ public class TimerFragment extends Fragment {
 
         List<ViewModelHelpers.TaskData> tasks = viewModel.getTasks().getValue();
         List<Object> taskObjects = new ArrayList<>();
-        taskObjects.add(getString(R.string.generic_label_none));
+        taskObjects.add(getString(R.string.timer_notask));
         taskObjects.addAll(tasks);
-        /*
-        for (ViewModelHelpers.TaskData tasca: tasks) {
-            if (tasca.durationInMinutes > 0){
-                taskObjects.add(tasca);
-            }
-        }
-
-         */
 
         ArrayAdapter<Object> adapter = new ArrayAdapter<Object>(getContext(), android.R.layout.simple_spinner_item, taskObjects);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -353,17 +345,13 @@ public class TimerFragment extends Fragment {
 
 
 
-        final Observer<Boolean> observerIsTaskSelected = new Observer<Boolean>() {
+        final Observer<ViewModelHelpers.TaskData> observerIsTaskSelected = new Observer<ViewModelHelpers.TaskData>() {
             @Override
-            public void onChanged(Boolean visibilityIsTaskSelected) {
-                pomodoroTextView.setVisibility(!visibilityIsTaskSelected? View.VISIBLE : View.INVISIBLE);
-                pomodoroTimePicker.setVisibility(!visibilityIsTaskSelected? View.VISIBLE : View.INVISIBLE);
+            public void onChanged(ViewModelHelpers.TaskData task) {
+                updatePickers();
             }
         };
-        viewModel.getIsTaskSelected().observe(this.getViewLifecycleOwner(), observerIsTaskSelected);
-
-
-
+        viewModel.getSelectedTask().observe(this.getViewLifecycleOwner(), observerIsTaskSelected);
     }
 
     @Override

@@ -154,6 +154,7 @@
     <string name="timer_option_blocknotifications">Block notifications</string>
     <string name="timer_option_blockapps">Block other apps</string>
     <string name="timer_tab_timer">Pomodoro</string>
+    <string name="timer_notask">No task selected</string>
     <string name="select_task_prompt">Select a task</string>
 
 
